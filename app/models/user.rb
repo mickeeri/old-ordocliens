@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :firm, required: true
+  has_many :clients, dependent: :destroy
   before_save { self.email = email.downcase }
   has_secure_password
   # VALIDATION
