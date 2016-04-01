@@ -1,0 +1,45 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  Exclude:
+    - tmp/**/*
+    - bin/*
+    - Capfile
+    - config/application.rb
+    - config/boot.rb
+    - config/environment.rb
+    - config/environments/*
+    - config/initializers/*
+    - config.ru
+    - db/schema.rb
+    - db/migrate/*
+    - Gemfile
+    - Guardfile
+    - Rakefile
+    - spec/*_helper.rb
+    - vendor/bundle/**/*
+
+Rails:
+  Enabled: true
+
+Metrics/LineLength:
+  Exclude:
+    - "config/**/*"
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrivialAccessors:
+  AllowPredicates: true
