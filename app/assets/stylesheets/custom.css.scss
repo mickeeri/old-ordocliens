@@ -1,0 +1,19 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+// VARIABLES AND MIXINS //
+
+// LAYOUT //
+main {
+  padding: 40px;
+  min-height: 50%;
+}
+
+// FORMS //
+.form-control {
+  height: 28px;
+  padding: 0;
+  padding-left: 5px;
+  width: 100%;
+  border-radius: 0;
+}

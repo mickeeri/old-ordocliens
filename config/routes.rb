@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
-  mount Knock::Engine => "/knock"
+  # get 'users/edit'
+  # get 'users/update'
+  # get 'users/show'
+  # get 'sessions/new'
+  # mount Knock::Engine => "/knock"
   resources :clients
+  root "sessions#new"
+  #get    "login"   => "sessions#new"
+  post   "login"   => "sessions#create"
+  delete "logout"  => "sessions#destroy"
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

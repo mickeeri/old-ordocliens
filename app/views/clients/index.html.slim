@@ -1,0 +1,18 @@
+h1 Alla klienter
+
+div.row
+  table.table.table-striped 
+    thead
+      tr
+        th Förnamn
+        th Efternamn
+        th Personnummer
+        th Tillhör
+    tbody        
+    - @clients.each do |c|
+      tr
+        td = c.first_name
+        td = c.last_name
+        td = c.ssn
+        td = c.user.full_name        
+      

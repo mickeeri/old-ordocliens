@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_action :authenticate
+  #before_action :authenticate
 
   def index
     @clients = Client.all

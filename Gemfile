@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use SCSS for stylesheets
@@ -26,10 +26,12 @@ gem 'faker', '~> 1.6', '>= 1.6.3'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 gem 'will_paginate', '~> 3.1'
-gem 'knock'
+#gem 'knock'
 gem 'responders', '~> 2.1', '>= 2.1.2'
-gem 'rabl'
-gem 'oj'
+#gem 'rabl'
+#gem 'oj'
+
+gem "slim"
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -44,6 +46,7 @@ group :development, :test do
   gem 'rubocop', '~> 0.39.0', require: false
   gem 'sqlite3'
   gem 'factory_girl_rails', '~> 4.6'
+  gem 'capybara', '~> 2.6', '>= 2.6.2'
 end
 
 group :development do
