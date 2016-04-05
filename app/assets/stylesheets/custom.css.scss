@@ -22,6 +22,17 @@ main {
   margin-top: 100px;
 }
 
+.form-inline {
+  .form-control {
+    margin: 0 5px;
+    width: 400px;
+  }
+
+  .btn {
+    padding: 4px 30px;
+  }
+}
+
 // MESSAGES //
 .alert {
   position: absolute;

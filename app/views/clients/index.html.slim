@@ -1,9 +1,16 @@
-= link_to "Logga ut", logout_path, method: :delete
-
 h1 Alla klienter
 
-div.row
-  table.table.table-striped 
+.row.panel.panel-default
+  form.panel-body.form-inline
+    .form-group
+      label for="search" Sök klient: 
+      input.form-control name="search" autofocus="true"
+    button.btn.btn-primary Sök
+  
+.row.panel.panel-default
+  .panel-heading
+    p = "Visar #{@clients.per_page} av #{@clients.total_entries} klienter."
+  table.table.table-striped.panel-body 
     thead
       tr
         th Förnamn

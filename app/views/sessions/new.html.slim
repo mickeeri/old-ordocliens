@@ -5,12 +5,10 @@
       = form_for(:session, url: root_path) do |f|
         .form-group
           = f.label :user_name
-          = f.text_field :user_name, autofocus: true, class: "form-control"
+          = f.text_field :user_name, autofocus: true, class: "form-control", value: "micke"
         
         .form-group
           = f.label :password
-          = f.password_field :password, autocomlete: "off", class: "form-control"
+          = f.password_field :password, autocomlete: "off", class: "form-control", value: "password"
         
         = f.submit "Logga in", class: "btn btn-primary pull-right"
-      
-  
