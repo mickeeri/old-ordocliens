@@ -6,7 +6,7 @@ nav.navbar.navbar-default role="navigation"
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      = link_to "Juristappen", root_url, class: "navbar-brand"
+      = link_to "Juristappen", "#", class: "navbar-brand"
     #navbar-collapse.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
         li.dropdown
@@ -18,7 +18,7 @@ nav.navbar.navbar-default role="navigation"
               span.glyphicon.glyphicon-user
               = "Min profil"
             end
-            li = link_to logout_path, method: :delete do
+            li = link_to destroy_user_session_path, method: :delete do
               span.glyphicon.glyphicon-log-out
               = "Logga ut"
             end

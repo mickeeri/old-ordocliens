@@ -1,15 +1,30 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { sessions: "users/sessions" }
   # get 'users/edit'
   # get 'users/update'
   # get 'users/show'
   # get 'sessions/new'
   # mount Knock::Engine => "/knock"
+
+  #root "clients#index"
+  #root "users/sessions#new"
+
+  devise_scope :user do
+    authenticated :user do
+      root 'clients#index', as: :authenticated_root
+    end
+
+    unauthenticated do
+      root 'users/sessions#new', as: :unauthenticated_root
+    end
+  end
+
   resources :clients
-  root "sessions#new"
-  # get    "login"   => "sessions#new"
-  post "/" => "sessions#create"
-  delete "logout" => "sessions#destroy"
-  resources :users
+  # #root "sessions#new"
+  # # get    "login"   => "sessions#new"
+  # post "/" => "sessions#create"
+  # delete "logout" => "sessions#destroy"
+  # resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
