@@ -46,6 +46,11 @@ group :development, :test do
   gem 'rubocop', '~> 0.39.0', require: false
   gem 'sqlite3'
   gem 'factory_girl_rails', '~> 4.6'
+end
+
+group :test do
+  #gem 'selenium-webdriver'
+  gem 'shoulda-matchers'
   gem 'capybara', '~> 2.6', '>= 2.6.2'
 end
 

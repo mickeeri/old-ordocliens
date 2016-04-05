@@ -1,7 +1,4 @@
 class SessionsController < ApplicationController
-  def new
-  end
-
   def create
     user = User.find_by(user_name: params[:session][:user_name])
     if user && user.authenticate(params[:session][:password])
@@ -10,11 +7,12 @@ class SessionsController < ApplicationController
       redirect_back_or clients_path
     else
       flash.now[:danger] = "Kan inte hitta någon användare med de uppgifterna."
-      render "new"
+      render 'new'
     end
   end
 
   def destroy
-
+    log_out # Called in sessions_helper
+    redirect_to root_url
   end
 end

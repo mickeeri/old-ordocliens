@@ -1,8 +1,8 @@
 class ClientsController < ApplicationController
-  #before_action :authenticate
+  before_action :check_if_logged_in
 
   def index
-    @clients = Client.all
+    @clients = current_user.clients
   end
 
   def show

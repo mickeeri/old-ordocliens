@@ -1,15 +1,16 @@
-.row
-  .col-md-6.col-md-offset-3
-    h2 Logga in
-    = form_for(:session, url: login_path) do |f|
-      .form-group
-        = f.label :user_name
-        = f.text_field :user_name, autofocus: true, class: "form-control"
-      
-      .form-group
-        = f.label :password
-        = f.password_field :password, autocomlete: "off", class: "form-control"
-      
-      = f.submit "Logga in", class: "btn btn-primary pull-right"
+.row.login-form
+  .col-md-6.col-md-offset-3.panel.panel-default
+    .panel-body
+      h2 Logga in
+      = form_for(:session, url: root_path) do |f|
+        .form-group
+          = f.label :user_name
+          = f.text_field :user_name, autofocus: true, class: "form-control"
+        
+        .form-group
+          = f.label :password
+          = f.password_field :password, autocomlete: "off", class: "form-control"
+        
+        = f.submit "Logga in", class: "btn btn-primary pull-right"
       
   
