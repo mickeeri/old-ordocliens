@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   def check_if_logged_in
     unless logged_in? # called in sessions_helper
       store_location # sessions_helper
-      flash[:danger] = "Var god logga in."
+      #flash[:danger] = "Var god logga in."
       redirect_to root_path
     end
     current_user

@@ -17,11 +17,14 @@ h1 Alla klienter
         th Efternamn
         th Personnummer
         th Tillhör
+        th
     tbody        
     - @clients.each do |c|
       tr
         td = c.first_name
         td = c.last_name
         td = c.ssn
-        td = c.user.full_name        
+        td = c.user.full_name
+        td = link_to "Mer info", client_path(c)        
+
       

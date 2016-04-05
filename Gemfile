@@ -29,9 +29,13 @@ gem 'responders', '~> 2.1', '>= 2.1.2'
 
 gem "slim"
 
+gem 'react-rails', '~> 1.6.0'
+
+gem 'devise'
+
 
 group :assets do
-  gem "angularjs-rails"
+  #gem "angularjs-rails"
   gem 'sass-rails', '~> 5.0'
   # Use Uglifier as compressor for JavaScript assets
   gem 'uglifier', '>= 1.3.0'
