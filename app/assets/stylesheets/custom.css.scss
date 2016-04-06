@@ -33,12 +33,33 @@ main {
   }
 }
 
+// PANELS //
+.panel-body {
+  color: #666;
+}
+
+.align-panel  {
+  .btn {
+    float: right;
+  }
+
+  h4 {
+    margin-top: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: bold;
+    color: #666;
+  }
+}
+
 // MESSAGES //
-.alert {
-  position: absolute;
-  top: 65px;
-  right: 25%;
-  left: 25%;
+#error_explanation {
+  border: 1px dotted #ddd;
+  padding-left: 10px;
+
+  h2 {
+    font-size: 16px;
+  }
 }
 
 .alert-notice {
@@ -62,6 +83,11 @@ main {
    text-align: left;
 }
 
+// MISC //
 .glyphicon {
   margin-right: 2px;
+}
+
+.breadcrumb {
+  font-weight: bold;
 }

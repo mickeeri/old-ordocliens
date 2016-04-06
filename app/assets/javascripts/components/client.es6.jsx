@@ -4,6 +4,7 @@ class Client extends React.Component {
       <div>
         <div>First Name: {this.props.firstName}</div>
         <div>Last Name: {this.props.lastName}</div>
+        <div>Personnummer: {this.props.ssn}</div>
       </div>
     );
   }
@@ -11,5 +12,6 @@ class Client extends React.Component {
 
 Client.propTypes = {
   firstName: React.PropTypes.string,
-  lastName: React.PropTypes.string
+  lastName: React.PropTypes.string,
+  ssn: React.PropTypes.string
 };

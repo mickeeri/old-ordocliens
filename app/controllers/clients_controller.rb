@@ -5,7 +5,7 @@ class ClientsController < ApplicationController
     @clients = current_user.clients.paginate(page: params[:page]).order("last_name ASC")
   end
 
-  def show
+  def show    
     @client = Client.find(params[:id])
   end
 

@@ -1,0 +1,14 @@
+.row.login-form
+  .col-md-6.col-md-offset-3.panel.panel-default
+    .panel-body
+      h2 Logga in
+      =form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .form-group
+          = f.label :email
+          = f.text_field :email, autofocus: true, class: "form-control", value: "micke@mail.com"    
+        .form-group
+          = f.label :password
+          = f.password_field :password, autocomlete: "off", class: "form-control", value: "password"      
+        .actions
+          = f.submit "Logga in", class: "btn btn-primary pull-right"
+      = render "users/shared/links"

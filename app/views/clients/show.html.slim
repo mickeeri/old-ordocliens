@@ -1,3 +1,8 @@
-.panel.panel-default
-  .panel-body
-    = react_component("Client", {lastName: @client.last_name, firstName: @client.first_name}, {prerender: true})
+.row
+  ol.breadcrumb
+    li = link_to "Klienter", clients_path
+    li.active = "#{@client.first_name} #{@client.last_name}" 
+.row
+  .panel.panel-default
+    .panel-body
+      = react_component("Client", {lastName: @client.last_name, firstName: @client.first_name, ssn: @client.ssn}, {prerender: true})
