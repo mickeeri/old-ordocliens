@@ -6,7 +6,7 @@ nav.navbar.navbar-default role="navigation"
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      = link_to "Juristappen", "#", class: "navbar-brand"
+      = link_to "Juristappen", clients_path, class: "navbar-brand"
     #navbar-collapse.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
         li = link_to edit_user_registration_path do
@@ -16,8 +16,8 @@ nav.navbar.navbar-default role="navigation"
           span.glyphicon.glyphicon-log-out
           = "Logga ut"
         li.dropdown
-          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" 
-            span.glyphicon.glyphicon-user 
+          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+            span.glyphicon.glyphicon-user
             span.caret
           ul.dropdown-menu
             li = link_to edit_user_registration_path do

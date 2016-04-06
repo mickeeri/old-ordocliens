@@ -3,10 +3,19 @@
 
 // VARIABLES AND MIXINS //
 
+body {
+  background-color: #E9EAED;
+}
+
 // LAYOUT //
 main {
   padding: 40px;
   min-height: 50%;
+}
+
+// NAVBAR //
+.navbar {
+  margin-bottom: 0;
 }
 
 // FORMS //
@@ -34,6 +43,10 @@ main {
 }
 
 // PANELS //
+.panel-heading {
+  background-color: white !important;
+}
+
 .panel-body {
   color: #666;
 
@@ -88,14 +101,6 @@ main {
    text-align: left;
 }
 
-// MISC //
-.glyphicon {
-  margin-right: 2px;
-}
-
-.breadcrumb {
-  font-weight: bold;
-}
 
 // LISTS //
 .list-group-item {
@@ -114,4 +119,16 @@ main {
       text-decoration: none;
     }
   }
+}
+
+// MISC //
+.glyphicon {
+  margin-right: 2px;
+}
+
+.breadcrumb {
+  font-weight: bold;
+  background-color: #FFFFFF !important;
+  border: 1px solid transparent;
+  border-color: #ddd;
 }

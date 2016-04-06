@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   # get 'sessions/new'
   # mount Knock::Engine => "/knock"
 
-  #root "clients#index"
-  #root "users/sessions#new"
+  # root "clients#index"
+  # root "users/sessions#new"
 
   devise_scope :user do
     authenticated :user do
