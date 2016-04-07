@@ -7,4 +7,7 @@ class Client < ActiveRecord::Base
                   length: { maximum: 10 },
                   numericality: { only_integer: true }
   # TODO: add slug.
+
+  scope :sorted, ->{order(last_name: :asc)}
+  scope :search, -> (last_name) {where("last_name like ?", "#{last_name}%")}
 end

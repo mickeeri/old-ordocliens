@@ -1,8 +1,18 @@
 class ClientsController < ApplicationController
   before_action :authenticate_user!
 
+
   def index
-    @clients = current_user.clients.paginate(page: params[:page]).order("last_name ASC")
+    render json: {
+      clients: @clients,
+      meta: {
+        currentPage: @clients.current_page,
+        nextPage: @clients.next_page,
+        previousPage: @clients.previous_page,
+        totalPages: @clients.total_pages,
+        totalEntries: @clients.total_entries
+      }
+    }
   end
 
   def show
@@ -10,5 +20,15 @@ class ClientsController < ApplicationController
   end
 
   def new
+  end
+
+  private
+
+  def search_clients
+    @clients = if params[:search].present?
+      Client.search(params[:search])
+    else
+      Client.all
+    end.sorted.page(params[:page])
   end
 end

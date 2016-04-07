@@ -27,12 +27,20 @@ gem 'will_paginate', '~> 3.1'
 gem 'responders', '~> 2.1', '>= 2.1.2'
 #gem 'rabl'
 #gem 'oj'
+gem "active_model_serializers",  '~> 0.8.0'
 
 gem "slim"
 
 gem 'react-rails', '~> 1.6.0'
 
 gem 'devise'
+
+gem 'rack-mini-profiler'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-es6-promise'
+  gem 'rails-assets-fetch'
+end
 
 
 group :assets do
@@ -70,6 +78,7 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+  gem 'better_errors'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
