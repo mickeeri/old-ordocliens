@@ -9,5 +9,6 @@ class Client < ActiveRecord::Base
   # TODO: add slug.
 
   scope :sorted, ->{order(last_name: :asc)}
-  scope :search, -> (last_name) {where("last_name like ?", "#{last_name}%")}
+  #scope :search, -> (query) {where("first_name LIKE ? OR last_name LIKE ?", "#{query}%", "#{query}%")}
+  scope :search, -> (query) {where("first_name LIKE ? OR last_name LIKE ?", "#{query}%", "#{query}%")}
 end

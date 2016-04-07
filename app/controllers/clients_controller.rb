@@ -1,18 +1,25 @@
 class ClientsController < ApplicationController
   before_action :authenticate_user!
+  before_action :search_clients
 
+#  respond_to :json, :html
 
   def index
-    render json: {
-      clients: @clients,
-      meta: {
-        currentPage: @clients.current_page,
-        nextPage: @clients.next_page,
-        previousPage: @clients.previous_page,
-        totalPages: @clients.total_pages,
-        totalEntries: @clients.total_entries
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: {
+          clients: @clients,
+          meta: {
+            currentPage: @clients.current_page,
+            nextPage: @clients.next_page,
+            previousPage: @clients.previous_page,
+            totalPages: @clients.total_pages,
+            totalEntries: @clients.total_entries
+          }
+        }
       }
-    }
+    end
   end
 
   def show
@@ -29,6 +36,6 @@ class ClientsController < ApplicationController
       Client.search(params[:search])
     else
       Client.all
-    end.sorted.page(params[:page])
+    end.sorted.page(params[:page]).per_page(20)
   end
 end
