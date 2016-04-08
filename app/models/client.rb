@@ -1,4 +1,6 @@
 class Client < ActiveRecord::Base
+  include PgSearch
+
   belongs_to :user, required: true
   has_many :legal_cases, dependent: :destroy
   validates :first_name, presence: true, length: { maximum: 40 }
@@ -9,6 +11,17 @@ class Client < ActiveRecord::Base
   # TODO: add slug.
 
   scope :sorted, ->{order(last_name: :asc)}
-  #scope :search, -> (query) {where("first_name LIKE ? OR last_name LIKE ?", "#{query}%", "#{query}%")}
-  scope :search, -> (query) {where("first_name LIKE ? OR last_name LIKE ?", "#{query}%", "#{query}%")}
+  #cope :search, -> (query) {where("first_name LIKE ? OR last_name LIKE ?", "#{query}%", "#{query}%")}
+  pg_search_scope :search,
+    against: [
+      :first_name,
+      :last_name,
+      :ssn
+    ],
+    using: {
+      tsearch: {
+        prefix: true,
+        normalization: 2
+      }
+    }
 end

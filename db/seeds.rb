@@ -19,7 +19,8 @@ firm.users.create(
 )
 
 User.all.each do |user|
-  number_of_clients = rand(40..100)
+  number_of_clients = rand(100..200)
+  sentece_lenght = rand(10..100)
   number_of_clients.times do
     client = user.clients.create(
       last_name: Faker::Name.last_name,
@@ -28,7 +29,7 @@ User.all.each do |user|
       street: Faker::Address.street_address,
       post_code: Faker::Address.postcode,
       city: Faker::Address.city,
-      note: Faker::Lorem.sentence(100)
+      note: Faker::Lorem.sentence(sentece_lenght)
     )
 
     number_of_cases = rand(2..6)

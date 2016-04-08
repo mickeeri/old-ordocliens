@@ -2,11 +2,13 @@ class ClientsController < ApplicationController
   before_action :authenticate_user!
   before_action :search_clients
 
-#  respond_to :json, :html
+  respond_to :json, :html
 
   def index
     respond_to do |format|
-      format.html
+      format.html do
+        render component: "ClientsIndex", props: {}, tag: 'div'
+      end
       format.json {
         render json: {
           clients: @clients,

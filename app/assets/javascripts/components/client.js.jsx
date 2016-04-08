@@ -27,6 +27,6 @@ var Client = React.createClass({
           <div>{this.props.note}</div>
         </div>
       </div>
-    )
+    );
   }
 });

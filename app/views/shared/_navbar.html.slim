@@ -1,5 +1,5 @@
 nav.navbar.navbar-default role="navigation"
-  .container
+  .container-fluid
     .navbar-header
       button.navbar-toggle type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"
         span.sr-only Öppna navigering
@@ -15,16 +15,3 @@ nav.navbar.navbar-default role="navigation"
         li = link_to destroy_user_session_path, method: :delete do
           span.glyphicon.glyphicon-log-out
           = "Logga ut"
-        li.dropdown
-          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-            span.glyphicon.glyphicon-user
-            span.caret
-          ul.dropdown-menu
-            li = link_to edit_user_registration_path do
-              span.glyphicon.glyphicon-user
-              = "Min profil"
-            end
-            li = link_to destroy_user_session_path, method: :delete do
-              span.glyphicon.glyphicon-log-out
-              = "Logga ut"
-            end

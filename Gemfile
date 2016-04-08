@@ -27,7 +27,7 @@ gem 'will_paginate', '~> 3.1'
 gem 'responders', '~> 2.1', '>= 2.1.2'
 #gem 'rabl'
 #gem 'oj'
-gem "active_model_serializers",  '~> 0.8.0'
+#gem "active_model_serializers",  '~> 0.8.0'
 
 gem "slim"
 
@@ -35,7 +35,12 @@ gem 'react-rails', '~> 1.6.0'
 
 gem 'devise'
 
-gem 'rack-mini-profiler'
+
+gem 'pg'
+gem 'pg_search'
+
+gem 'active_model_serializers'
+
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-es6-promise'
@@ -50,8 +55,6 @@ group :assets do
   gem 'uglifier', '>= 1.3.0'
   # Use CoffeeScript for .coffee assets and views
   gem 'coffee-rails', '~> 4.1.0'
-
-
 end
 
 # Use Unicorn as the app server
@@ -65,7 +68,7 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.4'
   gem 'rubocop', '~> 0.39.0', require: false
-  gem 'sqlite3'
+  #gem 'sqlite3'
   gem 'factory_girl_rails', '~> 4.6'
 end
 
@@ -79,7 +82,13 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
   gem 'better_errors'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'rack-mini-profiler'
+
+end
+
+group :production do
+  gem 'unicorn'
+  gem 'rails_12factor'
 end

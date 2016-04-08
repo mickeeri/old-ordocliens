@@ -18,6 +18,6 @@ function get(url, options={}) {
     },
     credentials: 'same-origin'
   };
-
+  // TODO: Object.assign does not work in IE. 
   return _fetch(url, Object.assign({}, defaultOptions, options));
 }
