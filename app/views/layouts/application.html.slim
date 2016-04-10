@@ -2,7 +2,8 @@ doctype html
 html
   head
     title Juristappen
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true      
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true  
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true    
     = csrf_meta_tags
   body
     -if user_signed_in?  
@@ -11,4 +12,4 @@ html
       main
         = render "shared/flash_messages"
         = yield
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    

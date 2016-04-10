@@ -1,14 +1,11 @@
 class ClientsIndex extends React.Component {
   constructor(props) {
     super(props);
-    // Setting initial state.
+
+    // Initializing state.
     this.state = {
-      clients: [],
-      meta: {
-        totalPages: 0,
-        currentPage: 1,
-        totalEntries: 0
-      },
+      clients: props.data.clients,
+      meta: props.data.meta,
       fetchData: {
         search: '',
         page: 1
@@ -23,8 +20,6 @@ class ClientsIndex extends React.Component {
 
   componentDidMount() {
     console.log("mount index");
-    // Fetch clients on page load.
-    this.fetchClients();
   }
 
   componentWillUnmount() {
@@ -67,7 +62,6 @@ class ClientsIndex extends React.Component {
     });
 
     return (
-      // Seach bar. TODO: Place in own component.
       <div className="panel panel-default">
         <div className="panel-heading">
           <form>
