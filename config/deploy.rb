@@ -59,6 +59,18 @@ namespace :deploy do
     end
   end
 
+  # desc 'Resets DB without create/drop'
+  # task :reset do
+  #   on primary :db do
+  #     within release_path do
+  #       with rails_env: fetch(:stage) do
+  #         execute :rake, 'db:schema:load'
+  #         execute :rake, 'db:seed'
+  #       end
+  #     end
+  #   end
+  # end
+
   # Add this in config/deploy.rb
   # and run 'cap production deploy:seed' to seed your database
   desc 'Runs rake db:seed'
@@ -66,7 +78,8 @@ namespace :deploy do
     on primary fetch(:migration_role) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, "db:seed"
+          execute :rake, "db:reset"
+        #  execute :rake, "db:seed"
         end
       end
     end
