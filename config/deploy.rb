@@ -1,5 +1,5 @@
 # Change these
-server '46.101.223.22', port: your_port_num, roles: [:web, :app, :db], primary: true
+server '46.101.223.22', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:me222wm/1dv42e-me222wm.git'
 set :application,     '1dv42e-me222wm'
