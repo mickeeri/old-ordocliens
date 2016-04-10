@@ -48,6 +48,14 @@ namespace :puma do
   before :start, :make_dirs
 end
 
+namespace :rake do
+  desc "Invoke rake task"
+  task :invoke do
+    run "cd #{deploy_to}/current"
+    run "bundle exec rake #{ENV['task']} RAILS_ENV=#{rails_env}"
+  end
+end
+
 namespace :deploy do
   desc "Make sure local git is in sync with remote."
   task :check_revision do
@@ -59,6 +67,7 @@ namespace :deploy do
       end
     end
   end
+
 
   desc 'Initial Deploy'
   task :initial do
