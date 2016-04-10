@@ -11,7 +11,7 @@ Rails.application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
-  config.consider_all_requests_local       = true # TODO: change to false. 
+  config.consider_all_requests_local       = true # TODO: change to false.
   config.action_controller.perform_caching = true
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
@@ -80,4 +80,8 @@ Rails.application.configure do
   # React
   config.react.variant = :production
   config.react.addons = true
+  
+  config.react.server_renderer_options = {
+    files: ["server_rendering.js"], # files to load for prerendering
+  }
 end
