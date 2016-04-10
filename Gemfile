@@ -1,3 +1,4 @@
+
 source 'https://rubygems.org'
 
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
@@ -50,14 +51,14 @@ source 'https://rails-assets.org' do
 end
 
 
-group :assets do
-  #gem "angularjs-rails"
-  gem 'sass-rails', '~> 5.0'
-  # Use Uglifier as compressor for JavaScript assets
-  gem 'uglifier', '>= 1.3.0'
-  # Use CoffeeScript for .coffee assets and views
-  gem 'coffee-rails', '~> 4.1.0'
-end
+
+#gem "angularjs-rails"
+gem 'sass-rails', '~> 5.0'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# Use CoffeeScript for .coffee assets and views
+gem 'coffee-rails', '~> 4.1.0'
+
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -98,5 +99,5 @@ end
 
 group :production do
   gem 'puma'
-  gem 'rails_12factor'
+  #gem 'rails_12factor'
 end
