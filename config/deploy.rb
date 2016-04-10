@@ -31,8 +31,7 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 # set :keep_releases, 5
 
 ## Linked Files & Directories (Default None):
-set :linked_files, fetch(:linked_files, []).push('config/secrets.yml')
-set :linked_files, fetch(:linked_files, []).push('config/database.yml')
+set :linked_files, fetch(:linked_files, []).push('config/secrets.yml', 'config/database.yml')
 #set :linked_files, %w{config/database.yml}
 # set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
@@ -48,14 +47,6 @@ namespace :puma do
   before :start, :make_dirs
 end
 
-namespace :rake do
-  desc "Invoke rake task"
-  task :invoke do
-    run "cd #{deploy_to}/current"
-    run "bundle exec rake #{ENV['task']} RAILS_ENV=#{rails_env}"
-  end
-end
-
 namespace :deploy do
   desc "Make sure local git is in sync with remote."
   task :check_revision do
@@ -64,6 +55,19 @@ namespace :deploy do
         puts "WARNING: HEAD is not the same as origin/master"
         puts "Run `git push` to sync changes."
         exit
+      end
+    end
+  end
+
+  # Add this in config/deploy.rb
+  # and run 'cap production deploy:seed' to seed your database
+  desc 'Runs rake db:seed'
+  task :seed => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "db:seed"
+        end
       end
     end
   end
@@ -86,6 +90,7 @@ namespace :deploy do
 
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
+  after  :finishing,    :seed
   after  :finishing,    :cleanup
   after  :finishing,    :restart
 end
