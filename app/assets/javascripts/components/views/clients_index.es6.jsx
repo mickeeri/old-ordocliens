@@ -32,7 +32,7 @@ class ClientsIndex extends React.Component {
 
     // Building uri:s with query string parameters.
     if (data.search) {
-      endpoint = '/clients?page='+data.page+'&search='+data.search;
+      endpoint = '/clients?search='+data.search;
     } else {
       endpoint = '/clients?page='+data.page;
     }
@@ -68,7 +68,7 @@ class ClientsIndex extends React.Component {
             <input
               className="form-control"
               placeholder="Sök på namn eller personnummer"
-              autofocus="true"
+              autoFocus="true"
               onChange={this.handleOnSearch}
               ref="search"
             />

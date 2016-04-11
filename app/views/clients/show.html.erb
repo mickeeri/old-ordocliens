@@ -15,7 +15,7 @@
         street: @client.street,
         postCode: @client.post_code,
         city: @client.city,
-        note: @client.note}) %>
+        note: @client.note}, {prerender: true}) %>
   </div>
   <div class="col-md-3">
     <ul class="list-group">
@@ -35,7 +35,7 @@
       <div class="panel-heading">
         <h3 class="panel-title">Klientens ärenden</h3>
       </div>
-      <%# react_component("LegalCases", {legalCases: @client.legal_cases}) %>
+      <%= react_component("LegalCases", {legalCases: @client.legal_cases}, {prerender: true}) %>
     </div>
   </div>
   <div class="col-md-3">
