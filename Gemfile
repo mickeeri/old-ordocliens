@@ -72,12 +72,14 @@ group :development, :test do
   gem 'rubocop', '~> 0.39.0', require: false
   #gem 'sqlite3'
   gem 'factory_girl_rails', '~> 4.6'
+  gem 'spring-commands-rspec'
 end
 
 group :test do
   #gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'capybara', '~> 2.6', '>= 2.6.2'
+  gem 'database_cleaner'
 end
 
 group :development do

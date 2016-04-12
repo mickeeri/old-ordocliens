@@ -5,15 +5,6 @@ class ClientsController < ApplicationController
   respond_to :json, :html
 
   def index
-
-    # @clients.meta = {
-    #   currentPage: @clients.current_page,
-    #   nextPage: @clients.next_page,
-    #   previousPage: @clients.previous_page,
-    #   totalPages: @clients.total_pages,
-    #   totalEntries: @clients.total_entries
-    # }
-
     @data = {
       clients: @clients,
       meta: {
@@ -29,38 +20,6 @@ class ClientsController < ApplicationController
       format.html { render component: "ClientsIndex", props: {data: @data}, tag: 'div'}
       format.json { render json: @data }
     end
-
-
-
-    # @clients = {
-    #   clients: @clients,
-    #   meta: {
-    #     currentPage: @clients.current_page,
-    #     nextPage: @clients.next_page,
-    #     previousPage: @clients.previous_page,
-    #     totalPages: @clients.total_pages,
-    #     totalEntries: @clients.total_entries
-    #   }
-    # }
-
-
-
-
-    # respond_to do |format|
-    #   format.html
-    #   format.json {
-    #     render json: {
-    #       clients: @clients,
-    #       meta: {
-            # currentPage: @clients.current_page,
-            # nextPage: @clients.next_page,
-            # previousPage: @clients.previous_page,
-            # totalPages: @clients.total_pages,
-            # totalEntries: @clients.total_entries
-    #       }
-    #     }
-    #   }
-    # end
   end
 
   def show

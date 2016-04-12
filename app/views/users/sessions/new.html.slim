@@ -9,6 +9,12 @@
         .form-group
           = f.label :password
           = f.password_field :password, autocomlete: "off", class: "form-control", value: "password"      
+          
+        - if devise_mapping.rememberable?
+          .form-group
+            = f.check_box :remember_me
+            = f.label :rememeber_me
+          
         .actions
           = f.submit "Logga in", class: "btn btn-primary pull-right"
       = render "users/shared/links"
