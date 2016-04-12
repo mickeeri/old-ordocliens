@@ -1,0 +1,42 @@
+.row
+  .col-md-12
+    ol.breadcrumb
+      li = link_to "Klienter", clients_path
+      li.active = "#{@client.first_name} #{@client.last_name}"
+      
+.row
+  = react_component("ClientShow", {client: @client}, {prerender: true})
+
+
+
+/   <div class="col-md-3">
+/     <ul class="list-group">
+/       <li class="list-group-item">
+/         <a href="#"><span class="glyphicon glyphicon-pencil"></span> Redigera klient</a>
+/       </li>
+/       <li class="list-group-item">
+/         <a href="#"><span class="glyphicon glyphicon-remove"></span> Ta bort klient</a>
+/       </li>
+/     </ul>
+/   </div>
+/ </div>
+
+/ <div class="row">
+/   <div class="col-md-9">
+/     <div class="panel panel-default">
+/       <div class="panel-heading">
+/         <h3 class="panel-title">Klientens ärenden</h3>
+/       </div>
+/       <%= react_component("LegalCases", {legalCases: @client.legal_cases}, {prerender: true}) %>
+/     </div>
+/   </div>
+/   <div class="col-md-3">
+/     <ul class="list-group">
+/       <li class="list-group-item">
+/         <a href="#">
+/           <span class="glyphicon glyphicon-plus"></span> Lägg till ärende
+/         </a>
+/       </li>
+/     </ul>
+/   </div>
+/ </div>

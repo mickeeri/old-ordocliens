@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160405202850) do
+ActiveRecord::Schema.define(version: 20160412180123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,23 @@ ActiveRecord::Schema.define(version: 20160405202850) do
   add_index "clients", ["last_name"], name: "index_clients_on_last_name", using: :btree
   add_index "clients", ["ssn"], name: "index_clients_on_ssn", using: :btree
   add_index "clients", ["user_id"], name: "index_clients_on_user_id", using: :btree
+
+  create_table "contact_types", force: :cascade do |t|
+    t.string   "contact_type_name"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string   "contact"
+    t.integer  "client_id"
+    t.integer  "contact_type_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "contacts", ["client_id"], name: "index_contacts_on_client_id", using: :btree
+  add_index "contacts", ["contact_type_id"], name: "index_contacts_on_contact_type_id", using: :btree
 
   create_table "firms", force: :cascade do |t|
     t.string   "name"
@@ -74,6 +91,8 @@ ActiveRecord::Schema.define(version: 20160405202850) do
   add_index "users", ["user_name"], name: "index_users_on_user_name", using: :btree
 
   add_foreign_key "clients", "users"
+  add_foreign_key "contacts", "clients"
+  add_foreign_key "contacts", "contact_types"
   add_foreign_key "legal_cases", "clients"
   add_foreign_key "users", "firms"
 end
