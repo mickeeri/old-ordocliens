@@ -23,7 +23,16 @@ class ClientsController < ApplicationController
   end
 
   def show
-    @client = Client.find(params[:id])    
+    @client = Client.find(params[:id])
+    @contacts = []
+    @client.contacts.each do |contact|
+      contactInfo = {
+        id: contact.id,
+        contact_type: contact.contact_type.contact_type_name,
+        contact: contact.contact
+      }
+      @contacts.push(contactInfo)
+    end
   end
 
   def new
