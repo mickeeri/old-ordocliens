@@ -42,8 +42,10 @@ class ClientShow extends React.Component {
   }
 
   deleteClient() {
-    console.log("delete client now");
-    window.location = '/';
+    var url = Routes.client_path(this.state.client.id);
+    var request = deleteRequest(url);
+    console.log(request);
+    window.location = Routes.clients_path();
   }
 
   render(){

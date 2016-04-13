@@ -44,6 +44,7 @@ gem 'pg_search'
 
 gem 'active_model_serializers'
 
+gem "js-routes"
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-es6-promise'

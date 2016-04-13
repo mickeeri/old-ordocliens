@@ -38,6 +38,13 @@ class ClientsController < ApplicationController
   def new
   end
 
+  def destroy
+    client = Client.find(params[:id])
+    client.destroy
+    flash[:success] = "#{client.first_name} #{client.last_name} är raderad."
+    render json: { success_message: "#{client.first_name} #{client.last_name} är raderad.", status: :accepted }
+  end
+
   private
 
   def search_clients
