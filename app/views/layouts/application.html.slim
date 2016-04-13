@@ -13,6 +13,7 @@ html
       = render "shared/navbar"
     .container
       main
-        = render "shared/flash_messages"
+        .message-container
+          = render "shared/flash_messages"
         = yield
     

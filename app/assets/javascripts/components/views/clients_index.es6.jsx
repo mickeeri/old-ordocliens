@@ -20,6 +20,7 @@ class ClientsIndex extends React.Component {
 
   componentDidMount() {
     //console.log("mount index");
+    console.log(this.state.meta.totalEntries);
   }
 
   componentWillUnmount() {

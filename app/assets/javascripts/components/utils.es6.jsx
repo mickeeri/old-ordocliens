@@ -2,7 +2,6 @@ function _fetch(url, options) {
   return fetch(url, options)
     .then(response=>{
       if (response.status >= 200 && response.status < 300) {
-        console.log(response);
         return response.json();
       } else {
         console.log('Ett problem uppstod. Status: ' + response.status);

@@ -51,4 +51,22 @@ RSpec.describe ClientsController, type: :controller do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    context "when not signed in" do
+      it "should not delete the client" do
+        delete :destroy, format: :json, id: client.id
+        expect(response).to have_http_status(401)
+        expect(Client.where(id: client.id)).to exist
+      end
+    end
+
+    context "when signed in" do
+      it "should delete the client" do
+        sign_in user
+        delete :destroy, format: :json, id: client.id
+        expect(Client.where(id: client.id)).to be_empty
+      end
+    end
+  end
 end
