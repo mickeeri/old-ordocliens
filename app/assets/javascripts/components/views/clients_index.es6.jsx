@@ -19,30 +19,29 @@ class ClientsIndex extends React.Component {
   }
 
   componentDidMount() {
-    console.log("mount index");
+    //console.log("mount index");
   }
 
   componentWillUnmount() {
-    console.log("unmounting index");
+    //console.log("unmounting index");
   }
 
   fetchClients() {
-    var endpoint;
+    var url;
     var data = this.state.fetchData;
 
     // Building uri:s with query string parameters.
     if (data.search) {
-      endpoint = '/clients?search='+data.search;
+      url = '/clients?search='+data.search;
     } else {
-      endpoint = '/clients?page='+data.page;
+      url = '/clients?page='+data.page;
     }
-
     // Calling get method in utils.
-    get(endpoint, data.page)
-    .then(json=>{
-      // Updating state with new data.
-      this.setState({clients: json.clients, meta: json.meta});
-    });
+    get(url)
+      .then(json=>{
+        // Updating state with new data.
+        this.setState({clients: json.clients, meta: json.meta});
+      });
   }
 
   handleOnSearch() {

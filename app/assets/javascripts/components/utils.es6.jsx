@@ -1,26 +1,26 @@
 function _fetch(url, options) {
   return fetch(url, options)
     .then(response=>{
-      if (response.status !== 200) {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
         console.log('Ett problem uppstod. Status: ' + response.status);
         return;
       }
-      return response.json();
     })
     .catch(err=>{
-      console.log('Ett problem uppstod: ' + err);    
+      console.log('Ett problem uppstod: ' + err);
     });
 }
 
-function get(url, options={}) {
-
-  const defaultOptions = {
+function get(url) {
+  var options = {
     headers: {
       'Accept':       'application/json',
       'Content-Type': 'application/json'
     },
     credentials: 'same-origin'
   };
-  // TODO: Object.assign does not work in IE.
-  return _fetch(url, Object.assign({}, defaultOptions, options));
+
+  return _fetch(url, options);
 }

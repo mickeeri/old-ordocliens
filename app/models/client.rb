@@ -4,7 +4,7 @@ class Client < ActiveRecord::Base
   belongs_to :user, required: true
   has_many :legal_cases, dependent: :destroy
   has_many :contact_types, through: :contacts
-  has_many :contacts
+  has_many :contacts, dependent: :destroy
 
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }
