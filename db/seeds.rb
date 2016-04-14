@@ -18,10 +18,10 @@ firm.users.create(
   password_confirmation: "password"
 )
 
-mobile = ContactType.create(contact_type_name: "Mobil")
-phone_home = ContactType.create(contact_type_name: "Telefon Hem")
-phone_work = ContactType.create(contact_type_name: "Telefon Arbete")
-e_mail_contact_type = ContactType.create(contact_type_name: "E-post")
+ContactType.create(contact_type_name: "Mobil")
+ContactType.create(contact_type_name: "Telefon Hem")
+ContactType.create(contact_type_name: "Telefon Arbete")
+ContactType.create(contact_type_name: "E-post")
 
 User.all.each do |user|
   number_of_clients = rand(100..200)
@@ -39,10 +39,12 @@ User.all.each do |user|
 
     client_name = "#{client.last_name} #{client.first_name}"
 
-    client.contacts.create(contact: Faker::PhoneNumber.cell_phone,
+    client.contacts.create(
+      contact: Faker::PhoneNumber.cell_phone,
       contact_type_id: mobile.id)
 
-    client.contacts.create(contact: Faker::Internet.email(client_name),
+    client.contacts.create(
+      contact: Faker::Internet.email(client_name),
       contact_type_id: e_mail_contact_type.id)
 
     number_of_cases = rand(2..6)

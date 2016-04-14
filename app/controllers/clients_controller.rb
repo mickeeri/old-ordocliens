@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_action :authenticate_user!
-  before_action :search_clients
+  before_action :search_clients, only: [:index]
 
   respond_to :json, :html
 
@@ -8,16 +8,16 @@ class ClientsController < ApplicationController
     @data = {
       clients: @clients,
       meta: {
-          currentPage: @clients.current_page,
-          nextPage: @clients.next_page,
-          previousPage: @clients.previous_page,
-          totalPages: @clients.total_pages,
-          totalEntries: @clients.total_entries
+        currentPage: @clients.current_page,
+        nextPage: @clients.next_page,
+        previousPage: @clients.previous_page,
+        totalPages: @clients.total_pages,
+        totalEntries: @clients.total_entries
       }
     }
 
     respond_to do |format|
-      format.html { render component: "ClientsIndex", props: {data: @data}, tag: 'div'}
+      format.html { render component: "ClientsIndex", props: { data: @data }, tag: "div" }
       format.json { render json: @data }
     end
   end
@@ -26,12 +26,12 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
     @contacts = []
     @client.contacts.each do |contact|
-      contactInfo = {
+      contact_info = {
         id: contact.id,
         contact_type: contact.contact_type.contact_type_name,
         contact: contact.contact
       }
-      @contacts.push(contactInfo)
+      @contacts.push(contact_info)
     end
   end
 
@@ -49,9 +49,9 @@ class ClientsController < ApplicationController
 
   def search_clients
     @clients = if params[:search].present?
-      Client.search(params[:search])
-    else
-      Client.all
-    end.sorted.page(params[:page]).per_page(20)
+                 Client.search(params[:search])
+               else
+                 Client.all
+               end.sorted.page(params[:page]).per_page(20)
   end
 end

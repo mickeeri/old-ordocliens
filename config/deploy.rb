@@ -1,9 +1,8 @@
-# Change these
-server '188.166.165.105', port: 22, roles: [:web, :app, :db], primary: true
+server "188.166.165.105", port: 22, roles: [:web, :app, :db], primary: true
 
-set :repo_url,        'git@github.com:me222wm/1dv42e-me222wm.git'
-set :application,     'lawfirm'
-set :user,            'deployer'
+set :repo_url,        "git@github.com:me222wm/1dv42e-me222wm.git"
+set :application,     "lawfirm"
+set :user,            "deployer"
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
@@ -18,10 +17,10 @@ set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
 set :puma_access_log, "#{release_path}/log/puma.error.log"
 set :puma_error_log,  "#{release_path}/log/puma.access.log"
-set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
+set :ssh_options,     forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub)
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
-set :puma_init_active_record, true  # Change to false when not using ActiveRecord
+set :puma_init_active_record, true # Change to false when not using ActiveRecord
 
 ## Defaults:
 # set :scm,           :git
@@ -30,13 +29,13 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 # set :log_level,     :debug
 # set :keep_releases, 5
 
-## Linked Files & Directories (Default None):
-set :linked_files, fetch(:linked_files, []).push('config/secrets.yml', 'config/database.yml')
-#set :linked_files, %w{config/database.yml}
+# Linked Files & Directories (Default None):
+set :linked_files, fetch(:linked_files, []).push("config/secrets.yml", "config/database.yml")
+# set :linked_files, %w{config/database.yml}
 # set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 namespace :puma do
-  desc 'Create Directories for Puma Pids and Socket'
+  desc "Create Directories for Puma Pids and Socket"
   task :make_dirs do
     on roles(:app) do
       execute "mkdir #{shared_path}/tmp/sockets -p"
@@ -52,52 +51,38 @@ namespace :deploy do
   task :check_revision do
     on roles(:app) do
       unless `git rev-parse HEAD` == `git rev-parse origin/master`
-        puts "WARNING: HEAD is not the same as origin/master"
-        puts "Run `git push` to sync changes."
+        logger.fatal "WARNING: HEAD is not the same as origin/master"
+        logger.fatal "Run `git push` to sync changes."
         exit
       end
     end
   end
 
-  # desc 'Resets DB without create/drop'
-  # task :reset do
-  #   on primary :db do
-  #     within release_path do
-  #       with rails_env: fetch(:stage) do
-  #         execute :rake, 'db:schema:load'
-  #         execute :rake, 'db:seed'
-  #       end
-  #     end
-  #   end
-  # end
-
-  # Add this in config/deploy.rb
-  # and run 'cap production deploy:seed' to seed your database
-  desc 'Runs rake db:seed'
-  task :seed => [:set_rails_env] do
+  # Reset and seed database for every deployment.
+  desc "Runs rake db:seed"
+  task seed: [:set_rails_env] do
     on primary fetch(:migration_role) do
       within release_path do
         with rails_env: fetch(:rails_env) do
           execute :rake, "db:reset"
-        #  execute :rake, "db:seed"
+          # execute :rake, "db:seed"
         end
       end
     end
   end
 
-
-  desc 'Initial Deploy'
+  desc "Initial Deploy"
   task :initial do
     on roles(:app) do
-      before 'deploy:restart', 'puma:start'
-      invoke 'deploy'
+      before "deploy:restart", "puma:start"
+      invoke "deploy"
     end
   end
 
-  desc 'Restart application'
+  desc "Restart application"
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      invoke 'puma:restart'
+      invoke "puma:restart"
     end
   end
 
