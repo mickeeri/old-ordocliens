@@ -7,9 +7,10 @@ class ClientInfo extends React.Component {
 
   render() {
     var client = this.props.client;
-    var contactInfo = this.props.contacts.map(contact=>{
-      return <ContactCard key={contact.id} contact={contact} />
-    });
+
+    // var contactInfo = this.props.contacts.map(contact=>{
+    //   return <ContactCard key={contact.id} contact={contact} />
+    // });
     return (
       <div className="col-md-9">
         <div className="panel panel-default">
@@ -24,9 +25,6 @@ class ClientInfo extends React.Component {
             {client.street} <br/>
             {client.post_code} {client.city}
             <hr/>
-            <h4>Kontakt</h4>
-            {contactInfo}
-            <hr />
             <h4>Anteckning</h4>
             <div>{client.note}</div>
           </div>

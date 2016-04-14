@@ -6,6 +6,8 @@ class Client < ActiveRecord::Base
   has_many :contact_types, through: :contacts
   has_many :contacts, dependent: :destroy
 
+  attr_accessor :contact_info
+
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }
   validates :last_name, presence: true, length: { maximum: 60 }

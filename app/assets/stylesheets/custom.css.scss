@@ -15,6 +15,14 @@ $medium-grey: #666;
 $light-grey: #DDD;
 $danger-red: #b94a48;
 
+@mixin transition {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
 // LAYOUT //
 body {
   background-color: $background-color;
@@ -22,6 +30,8 @@ body {
 
 main {
   min-height: 1000px;
+  margin-top: 30px;
+  @include transition;
 }
 
 // NAVBAR //
@@ -80,11 +90,6 @@ main {
 }
 
 // MESSAGES //
-.message-container {
-  height: 52px;
-  margin: 10px 0;
-}
-
 #error_explanation {
   border: 1px dotted $light-grey;
   padding-left: 10px;

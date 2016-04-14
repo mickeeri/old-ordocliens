@@ -1,5 +1,5 @@
 class ClientShowButtons extends React.Component {
-  displayName: 'ClientShowButtons'
+  displayName: 'ClientShowButtons';
   constructor(props) {
     super(props);
     this.handleEditButtonClic = this.handleEditButtonClick.bind(this);
@@ -16,7 +16,7 @@ class ClientShowButtons extends React.Component {
     PubSub.publish('deleteButtonClicked');
   }
 
-  render(){
+  render() {
     return (
       <div className="panel-body">
         <ConfirmDeleteModal />
@@ -26,7 +26,8 @@ class ClientShowButtons extends React.Component {
               <span className="pull-right glyphicon glyphicon-pencil"></span></a>
           </li>
           <li className="list-group-item">
-            <a className="remove-client-link" href="#" data-toggle="modal" data-target="#confirmDeleteClientModal">Ta bort klient<span
+            <a className="remove-client-link" href="#" data-toggle="modal"
+              data-target="#confirmDeleteClientModal">Ta bort klient<span
               className="pull-right glyphicon glyphicon-remove"></span></a>
           </li>
         </ul>
@@ -42,21 +43,26 @@ class ConfirmDeleteModal extends React.Component {
     PubSub.publish('deleteClientConfirmed');
   }
 
-  render(){
+  render() {
     return (
-      <div className="modal fade" id="confirmDeleteClientModal" tabIndex={-1} role="dialog" aria-labelledby="myModalLabel">
+      <div className="modal fade" id="confirmDeleteClientModal"
+        tabIndex={-1} role="dialog" aria-labelledby="myModalLabel">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <button type="button" className="close"
+                data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
               <h4 className="modal-title" id="myModalLabel">Bekräfta borttagning</h4>
             </div>
             <div className="modal-body">
               Är du säker?
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-default" data-dismiss="modal">Avbryt</button>
-              <button type="button" className="btn btn-danger" onClick={this.handleOnConfirmDeleteClick}>Ja</button>
+              <button type="button" className="btn btn-default"
+                data-dismiss="modal">Avbryt</button>
+              <button type="button" className="btn btn-danger"
+                onClick={this.handleOnConfirmDeleteClick}>Ja</button>
             </div>
           </div>
         </div>

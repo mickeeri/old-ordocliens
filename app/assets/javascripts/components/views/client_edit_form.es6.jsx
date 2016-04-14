@@ -3,14 +3,26 @@ class ClientEditForm extends React.Component {
 
   constructor(props)  {
     super(props);
-    this.state = props;
+    this.state = props.client;
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
+    this.handleChangeOnClientInput = this.handleChangeOnClientInput.bind(this);
   }
 
   handleOnSubmit(e) {
-    this.setState({value: e.target.value});
-    console.log(this.state);
+    e.preventDefault();
+    makePutRequest(Routes.client_path(this.state.id), this.state)
+      .then(response=> {
+        if (response.status === 200) {
+          PubSub.publish('clientUpdated');
+        }
+      });
+  }
+
+  handleChangeOnClientInput(event) {
+    var nextState = {};
+    nextState[event.target.name] = event.target.value;
+    this.setState(nextState);
   }
 
   handleCancelButtonClick(e) {
@@ -19,10 +31,9 @@ class ClientEditForm extends React.Component {
   }
 
   render() {
-    var client = this.state.client;
-    var contactInfo = this.state.contacts.map(contact=>{
-      return <ContactCardEditable key={contact.id} contact={contact} />
-    });
+    // var contactInfo = this.state.contacts.map(contact =>
+    //   <ContactCardEditable key={contact.id} contact={contact} />);
+
     return (
       <div className="col-md-9">
         <div className="panel panel-default">
@@ -30,41 +41,61 @@ class ClientEditForm extends React.Component {
             <h3 className="panel-title">Redigera</h3>
           </div>
           <div className="panel-body">
-            <form onChange={this.handleOnSubmit}>
-              <div className="form-group">
-                <label htmlFor="first_name">Förnamn</label>
-                <input className="form-control" type="text" defaultValue={client.first_name} id="first_name" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="last_name">Efternamn</label>
-                <input className="form-control" type="text" defaultValue={client.last_name} id="last_name" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="ssn">Personnummer</label>
-                <input className="form-control" type="text" defaultValue={client.ssn} id="ssn" />
-              </div>
+            <form onSubmit={this.handleOnSubmit}>
+              <FormGroup
+                name="first_name"
+                type="text"
+                value={this.state.first_name}
+                changeEvent={this.handleChangeOnClientInput}
+                label="Förnamn"
+              />
+              <FormGroup
+                name="last_name"
+                type="text"
+                value={this.state.last_name}
+                changeEvent={this.handleChangeOnClientInput}
+                label="Efternamn"
+              />
+              <FormGroup
+                name="ssn"
+                type="text"
+                value={this.state.ssn}
+                changeEvent={this.handleChangeOnClientInput}
+                label="Personnummer"
+              />
               <hr/>
-              <div className="form-group">
-                <label htmlFor="street">Gatuadress</label>
-                <input className="form-control" type="text" defaultValue={client.street} id="street" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="postCode">Postnummer</label>
-                <input className="form-control" type="text" defaultValue={client.post_code} id="postCode" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="city">Ort</label>
-                <input className="form-control" type="text" defaultValue={client.city} id="city" />
-              </div>
-              <hr/>
-              {contactInfo}
+              <FormGroup
+                name="street"
+                type="text"
+                value={this.state.street}
+                changeEvent={this.handleChangeOnClientInput}
+                label="Gatuadress"
+              />
+              <FormGroup
+                name="post_code"
+                type="text"
+                value={this.state.post_code}
+                changeEvent={this.handleChangeOnClientInput}
+                label="Postnummer"
+              />
+              <FormGroup
+                name="city"
+                type="text"
+                value={this.state.city}
+                changeEvent={this.handleChangeOnClientInput}
+                label="Ort"
+              />
               <hr/>
               <div className="form-group">
                 <label htmlFor="note">Anteckningar</label>
-                <textarea className="form-control" type="text-area" defaultValue={client.note} id="note" rows="4" />
+                <textarea className="form-control" type="text-area"
+                  defaultValue={this.state.note} name="note" rows="4"
+                  onChange={this.handleChangeOnClientInput} />
               </div>
+              <hr/>
               <div className="action pull-right">
-                <button className="btn btn-default" onClick={this.handleCancelButtonClick}>Avbryt</button>
+                <button className="btn btn-default"
+                  onClick={this.handleCancelButtonClick}>Avbryt</button>
                 <button className="btn btn-success" type="submit">Spara</button>
               </div>
             </form>
@@ -73,4 +104,29 @@ class ClientEditForm extends React.Component {
       </div>
     );
   }
+}
+
+class FormGroup extends React.Component {
+  displayName: 'FormGroup';
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+
+    return (
+      <div className="form-group">
+        <label htmlFor={this.props.name}>{this.props.label}</label>
+        <input
+          className="form-control"
+          type={this.props.type}
+          name={this.props.name}
+          defaultValue={this.props.value}
+          onChange={this.props.changeEvent}
+        />
+      </div>
+    );
+  }
+
 }

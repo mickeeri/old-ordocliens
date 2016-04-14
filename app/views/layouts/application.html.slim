@@ -11,9 +11,8 @@ html
   body
     -if user_signed_in?  
       = render "shared/navbar"
-    .container
-      main
-        .message-container
-          = render "shared/flash_messages"
+    .container      
+      main        
+        = render "shared/flash_messages"
         = yield
     

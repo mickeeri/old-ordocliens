@@ -6,10 +6,10 @@ class ClientRow extends React.Component {
 
   }
 
-  render(){
+  render() {
 
     var client = this.props.client;
-    var clientPath = "clients/"+client.id;
+    var clientPath = 'clients/' + client.id;
     return (
       <tr>
         <td>{client.first_name}</td>

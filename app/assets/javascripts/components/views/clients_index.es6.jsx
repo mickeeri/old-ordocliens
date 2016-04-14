@@ -8,8 +8,8 @@ class ClientsIndex extends React.Component {
       meta: props.data.meta,
       fetchData: {
         search: '',
-        page: 1
-      }
+        page: 1,
+      },
     };
 
     // Binding functions.
@@ -33,15 +33,15 @@ class ClientsIndex extends React.Component {
 
     // Building uri:s with query string parameters.
     if (data.search) {
-      url = '/clients?search='+data.search;
+      url = '/clients?search=' + data.search;
     } else {
-      url = '/clients?page='+data.page;
+      url = '/clients?page=' + data.page;
     }
+
     // Calling get method in utils.
-    get(url)
-      .then(json=>{
-        // Updating state with new data.
-        this.setState({clients: json.clients, meta: json.meta});
+    makeGetRequest(url)
+      .then(response=> {
+        this.setState({ clients: response.clients, meta: response.meta });
       });
   }
 
@@ -57,9 +57,8 @@ class ClientsIndex extends React.Component {
 
   render() {
     // Table rows with clients.
-    var clientRows = this.state.clients.map(client=>{
-      return <ClientRow key={client.id} client={client} />
-    });
+    var clientRows = this.state.clients.map(client =>
+      <ClientRow key={client.id} client={client} />);
 
     return (
       <div className="panel panel-default">
@@ -88,7 +87,10 @@ class ClientsIndex extends React.Component {
           </tbody>
         </table>
         <div className="panel-footer">
-          <ClientPagination totalPages={this.state.meta.totalPages} currentPage={this.state.meta.currentPage} onPaginate={this.handleOnPaginate} />
+          <ClientPagination
+            totalPages={this.state.meta.totalPages}
+            currentPage={this.state.meta.currentPage}
+            onPaginate={this.handleOnPaginate} />
         </div>
       </div>
     );

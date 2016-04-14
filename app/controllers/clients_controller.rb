@@ -15,7 +15,6 @@ class ClientsController < ApplicationController
         totalEntries: @clients.total_entries
       }
     }
-
     respond_to do |format|
       format.html { render component: "ClientsIndex", props: { data: @data }, tag: "div" }
       format.json { render json: @data }
@@ -24,6 +23,7 @@ class ClientsController < ApplicationController
 
   def show
     @client = Client.find(params[:id])
+    # Rendering contact info with contact type as string, not just id.
     @contacts = []
     @client.contacts.each do |contact|
       contact_info = {
@@ -33,9 +33,24 @@ class ClientsController < ApplicationController
       }
       @contacts.push(contact_info)
     end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: { client: @client } }
+    end
   end
 
   def new
+    @client = Client.find(params[:id])
+  end
+
+  def update
+    @client = Client.find(params[:id])
+    if @client.update_attributes(client_params)
+      render json: { client: @client, status: 200 }
+    else
+      render json: { response: "Update failed", status: 400 }
+    end
   end
 
   def destroy
@@ -46,6 +61,9 @@ class ClientsController < ApplicationController
   end
 
   private
+  def client_params
+    params.require(:client).permit(:last_name, :first_name, :ssn, :street, :post_code, :city, :note)
+  end
 
   def search_clients
     @clients = if params[:search].present?
