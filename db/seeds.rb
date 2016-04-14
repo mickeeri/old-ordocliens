@@ -18,10 +18,10 @@ firm.users.create(
   password_confirmation: "password"
 )
 
-ContactType.create(contact_type_name: "Mobil")
+mobile = ContactType.create(contact_type_name: "Mobil")
 ContactType.create(contact_type_name: "Telefon Hem")
 ContactType.create(contact_type_name: "Telefon Arbete")
-ContactType.create(contact_type_name: "E-post")
+email = ContactType.create(contact_type_name: "E-post")
 
 User.all.each do |user|
   number_of_clients = rand(100..200)
