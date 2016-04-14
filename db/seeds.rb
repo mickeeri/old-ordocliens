@@ -25,7 +25,7 @@ e_mail_contact_type = ContactType.create(contact_type_name: "E-post")
 
 User.all.each do |user|
   number_of_clients = rand(100..200)
-  sentece_lenght = rand(10..100)
+  sentece_lenght = rand(10..30)
   number_of_clients.times do
     client = user.clients.create(
       last_name: Faker::Name.last_name,

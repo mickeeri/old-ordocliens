@@ -33,7 +33,6 @@ class ClientsController < ApplicationController
       }
       @contacts.push(contact_info)
     end
-
     respond_to do |format|
       format.html
       format.json { render json: { client: @client } }

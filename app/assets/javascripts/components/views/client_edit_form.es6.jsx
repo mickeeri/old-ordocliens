@@ -107,14 +107,7 @@ class ClientEditForm extends React.Component {
 }
 
 class FormGroup extends React.Component {
-  displayName: 'FormGroup';
-
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-
     return (
       <div className="form-group">
         <label htmlFor={this.props.name}>{this.props.label}</label>
@@ -128,5 +121,4 @@ class FormGroup extends React.Component {
       </div>
     );
   }
-
 }
