@@ -6,27 +6,17 @@ class ClientShow extends React.Component {
       editMode: false,
       showConfirmDelete: false, };
     this.toggleEditMode = this.toggleEditMode.bind(this);
-    this.subscribeToEvents = this.subscribeToEvents.bind(this);
-    this.unsubscribeToEvents = this.unsubscribeToEvents.bind(this);
     this.deleteClient = this.deleteClient.bind(this);
     this.refreshClient = this.refreshClient.bind(this);
   }
 
   componentDidMount() {
-    this.subscribeToEvents();
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeToEvents();
-  }
-
-  subscribeToEvents() {
     PubSub.subscribe('editModeButtonClicked', this.toggleEditMode);
     PubSub.subscribe('deleteClientConfirmed', this.deleteClient);
     PubSub.subscribe('clientUpdated', this.refreshClient);
   }
 
-  unsubscribeToEvents() {
+  componentWillUnmount() {
     PubSub.unsubscribe('editModeButtonClicked');
     PubSub.unsubscribe('deleteClientConfirmed');
     PubSub.unsubscribe('clientUpdated');
@@ -35,8 +25,8 @@ class ClientShow extends React.Component {
   refreshClient () {
     makeGetRequest(Routes.client_path(this.state.client.id))
       .then(response=> {
-        console.log(response);
-        this.setState({ client: response.client, editMode: false });
+        this.toggleEditMode();
+        this.setState({ client: response.client });
       });
   }
 
@@ -44,13 +34,16 @@ class ClientShow extends React.Component {
   toggleEditMode() {
     if (this.state.editMode) {
       this.setState({ editMode: false });
+      $('.edit-client-button').removeClass('active');
     } else {
       this.setState({ editMode: true });
+      $('.edit-client-button').addClass('active');
     }
   }
 
   deleteClient() {
-    deleteRequest(Routes.client_path(props.client.id))
+    // TODO: Loading after clicking delete button.
+    deleteRequest(Routes.client_path(this.state.client.id))
       .then(response=> {
         if (response.status === 200) {
           window.location = Routes.clients_path();

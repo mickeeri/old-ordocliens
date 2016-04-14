@@ -31,9 +31,6 @@ class ClientEditForm extends React.Component {
   }
 
   render() {
-    // var contactInfo = this.state.contacts.map(contact =>
-    //   <ContactCardEditable key={contact.id} contact={contact} />);
-
     return (
       <div className="col-md-9">
         <div className="panel panel-default">
@@ -47,56 +44,51 @@ class ClientEditForm extends React.Component {
                 type="text"
                 value={this.state.first_name}
                 changeEvent={this.handleChangeOnClientInput}
-                label="Förnamn"
-              />
+                label="Förnamn"/>
               <FormGroup
                 name="last_name"
                 type="text"
                 value={this.state.last_name}
                 changeEvent={this.handleChangeOnClientInput}
-                label="Efternamn"
-              />
+                label="Efternamn"/>
               <FormGroup
                 name="ssn"
                 type="text"
                 value={this.state.ssn}
                 changeEvent={this.handleChangeOnClientInput}
-                label="Personnummer"
-              />
+                label="Personnummer"/>
               <hr/>
               <FormGroup
                 name="street"
                 type="text"
                 value={this.state.street}
                 changeEvent={this.handleChangeOnClientInput}
-                label="Gatuadress"
-              />
+                label="Gatuadress"/>
               <FormGroup
                 name="post_code"
                 type="text"
                 value={this.state.post_code}
                 changeEvent={this.handleChangeOnClientInput}
-                label="Postnummer"
-              />
+                label="Postnummer"/>
               <FormGroup
                 name="city"
                 type="text"
                 value={this.state.city}
                 changeEvent={this.handleChangeOnClientInput}
-                label="Ort"
-              />
+                label="Ort"/>
               <hr/>
               <div className="form-group">
                 <label htmlFor="note">Anteckningar</label>
                 <textarea className="form-control" type="text-area"
                   defaultValue={this.state.note} name="note" rows="4"
-                  onChange={this.handleChangeOnClientInput} />
+                  onChange={this.handleChangeOnClientInput}>
+                </textarea>
               </div>
               <hr/>
-              <div className="action pull-right">
-                <button className="btn btn-default"
+              <div className="action">
+                <button className="button button-success" type="submit">Spara</button>
+                <button className="button button-default"
                   onClick={this.handleCancelButtonClick}>Avbryt</button>
-                <button className="btn btn-success" type="submit">Spara</button>
               </div>
             </form>
           </div>
@@ -116,8 +108,7 @@ class FormGroup extends React.Component {
           type={this.props.type}
           name={this.props.name}
           defaultValue={this.props.value}
-          onChange={this.props.changeEvent}
-        />
+          onChange={this.props.changeEvent}/>
       </div>
     );
   }

@@ -3,7 +3,6 @@
     ol.breadcrumb
       li = link_to "Klienter", clients_path
       li.active = "#{@client.first_name} #{@client.last_name}"
-      
-
+    
 = react_component("ClientShow", { client: @client }, { prerender: true })
-= react_component("ClientContactInfo", { contacts: @contacts }, { prerender: true} )
+= react_component("ClientContactInfo", { contacts: @contacts }, { prerender: true})

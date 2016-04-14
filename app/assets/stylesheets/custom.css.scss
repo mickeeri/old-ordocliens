@@ -120,6 +120,75 @@ main {
    text-align: left;
 }
 
+// BUTTONS //
+.button {
+  font-weight: bold;
+  display: block;
+  color: #333;
+  padding: 6px 15px;
+  background-color: #eee;
+  border: 1px solid #d5d5d5;
+  background-image: linear-gradient(#fcfcfc, #eee);
+  background-image: -webkit-linear-gradient(#fcfcfc, #eee);
+  &:hover {
+    text-decoration: none;
+    background-color: #ddd;
+    background-image: -webkit-linear-gradient(#eee, #ddd);
+    background-image: linear-gradient(#eee, #ddd);
+    border-color: #ccc;
+  }
+}
+
+
+button.active {
+  background-color: #dcdcdc;
+  background-image: none;
+  border-color: #b5b5b5;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+}
+
+
+.button-danger {
+  color: #900;
+  &:hover {
+    color: $white;
+    background-color: #b33630;
+    background-image: -webkit-linear-gradient(#dc5f59, #b33630);
+    background-image: linear-gradient(#dc5f59, #b33630);
+    border-color: #cd504a;
+  }
+}
+
+.button-success {
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.15);
+  background-color: #60b044;
+  background-image: -webkit-linear-gradient(#8add6d, #60b044);
+  background-image: linear-gradient(#8add6d, #60b044);
+  border-color: #5ca941;
+  &:hover {
+    color: #fff;
+    background-color: #569e3d;
+    background-image: -webkit-linear-gradient(#79d858, #569e3d);
+    background-image: linear-gradient(#79d858, #569e3d);
+    border-color: #4a993e;
+  }
+}
+
+.button-menu {
+  .button {
+    width: 100%;
+  }
+}
+
+.action {
+  .button {
+    float: right;
+    margin-left: 4px;
+    width: 120px;
+  }
+}
+
 
 // LISTS //
 ul {
@@ -141,26 +210,11 @@ ul {
   margin-bottom: 4px;
 
   a {
-    font-weight: bold;
-    display: block;
-    color: #333;
-    padding: 9px 15px;
-    background-color: #eee;
-    background-image: linear-gradient(#fcfcfc, #eee);
-    background-image: -webkit-linear-gradient(#fcfcfc, #eee);
-    //border: 1px solid #d5d5d5;
 
-    .glyphicon {
-      margin-top: 2px;
-    }
+    //
 
-    &:hover {
-      text-decoration: none;
-      background-color: #ddd;
-      background-image: -webkit-linear-gradient(#eee, #ddd);
-      background-image: linear-gradient(#eee, #ddd);
-      border-color: #ccc;
-    }
+
+
 
     &:active {
       text-decoration: none;
@@ -168,14 +222,7 @@ ul {
   }
 
   .remove-client-link {
-    color: #900;
-    &:hover {
-      color: $white;
-      background-color: #b33630;
-      background-image: -webkit-linear-gradient(#dc5f59, #b33630);
-      background-image: linear-gradient(#dc5f59, #b33630);
-      border-color: #cd504a;
-    }
+
   }
 
 }

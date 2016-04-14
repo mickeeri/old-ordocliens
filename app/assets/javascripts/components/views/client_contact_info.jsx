@@ -1,7 +1,6 @@
 class ClientContactInfo extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       contacts: props.contacts,
       editMode: false,
@@ -42,8 +41,13 @@ class ClientContactInfo extends React.Component {
           </div>
         </div>
         <div className="col-md-3">
-          <button className="btn btn-default toggle-edit"
-            onClick={this.toggleEditMode}>Ändra kontaktuppgifter</button>
+          <div className="panel panel-default">
+            <div className="panel-body button-menu" role="group">
+              <button className="button toggle-edit"
+                onClick={this.toggleEditMode}>Ändra kontaktuppgifter
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -65,21 +69,6 @@ class ContactInfo extends React.Component {
   }
 }
 
-class ContactInfoMenu extends React.Component {
-  render() {
-    return (
-      <div className="panel-body">
-        <ul className="list-group">
-          <li className="list-group-item">
-            <a href="#">Redigera kontaktuppgifter
-              <span className="pull-right glyphicon glyphicon-pencil"></span></a>
-          </li>
-        </ul>
-      </div>
-    );
-  }
-}
-
 class EditContactsForm extends React.Component {
 
   constructor(props) {
@@ -89,7 +78,6 @@ class EditContactsForm extends React.Component {
 
   handleOnClick(event) {
     event.preventDefault();
-    console.log(this.props);
     this.props.toggleEdit();
   }
 
@@ -102,17 +90,17 @@ class EditContactsForm extends React.Component {
           className="form-control"
           type="text"
           defaultValue={contact.contact}
-          id={contact.contact_type.toLowerCase()}
-        />
+          id={contact.contact_type.toLowerCase()} />
       </div>);
 
     return (
       <form>
         {contactFormGroups}
+        <hr/>
         <div className="action">
-          <button className="btn btn-default pull-right"
+          <button className="button button-success">Spara</button>
+          <button className="button"
             onClick={this.handleOnClick}>Avbryt</button>
-          <button className="btn btn-success pull-right">Spara</button>
         </div>
       </form>
     );

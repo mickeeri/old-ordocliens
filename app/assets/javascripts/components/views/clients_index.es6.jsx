@@ -18,15 +18,6 @@ class ClientsIndex extends React.Component {
     this.handleOnPaginate = this.handleOnPaginate.bind(this);
   }
 
-  componentDidMount() {
-    //console.log("mount index");
-    console.log(this.state.meta.totalEntries);
-  }
-
-  componentWillUnmount() {
-    //console.log("unmounting index");
-  }
-
   fetchClients() {
     var url;
     var data = this.state.fetchData;

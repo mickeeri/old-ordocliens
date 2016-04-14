@@ -9,9 +9,9 @@ RSpec.describe ClientsController, type: :controller do
     create(:user)
   end
 
-  let(:new_attributes) {
+  let(:new_attributes) do
     { last_name: "Edited last name", first_name: "Edited first name" }
-  }
+  end
 
   it { should use_before_action(:authenticate_user!) }
 
@@ -75,7 +75,7 @@ RSpec.describe ClientsController, type: :controller do
   describe "PUT #update" do
     context "when not signed in" do
       it "should not edit the client" do
-        put :update, { id: client.id, client: new_attributes, format: :json }
+        put :update, id: client.id, client: new_attributes, format: :json
         expect(response).to have_http_status(401)
         client.reload
         expect(client.last_name).to_not eq("Edited last name")
@@ -84,22 +84,27 @@ RSpec.describe ClientsController, type: :controller do
     end
 
     context "when signed in" do
-
       it "should update client" do
         sign_in user
-        put :update, { id: client.id, client: new_attributes, format: :json }
+        put :update, id: client.id, client: new_attributes, format: :json
         expect(response).to have_http_status(200)
         client.reload
         expect(client.last_name).to eq("Edited last name")
         expect(client.first_name).to eq("Edited first name")
       end
-      let(:new_attributes_with_id) {
-        { id: 89, last_name: "Edited last name", first_name: "Edited first name", user_id: 500 }
-      }
+
+      let(:new_attributes_with_id) do
+        {
+          id: 89,
+          last_name: "Edited last name",
+          first_name: "Edited first name",
+          user_id: 500
+        }
+      end
 
       it "should not be able to edit id or user_id attribute" do
         sign_in user
-        put :update, { id: client.id, client: new_attributes, format: :json }
+        put :update, id: client.id, client: new_attributes, format: :json
         client.reload
         expect(client.id).to_not eq(89)
         expect(client.user_id).to_not eq(500)

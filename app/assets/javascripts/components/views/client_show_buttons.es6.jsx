@@ -6,13 +6,12 @@ class ClientShowButtons extends React.Component {
     this.handleOnDeleteButtonClick = this.handleOnDeleteButtonClick.bind(this);
   }
 
-  handleEditButtonClick(e) {
-    e.preventDefault();
+  handleEditButtonClick(event) {
     PubSub.publish('editModeButtonClicked');
   }
 
-  handleOnDeleteButtonClick(e) {
-    e.preventDefault();
+  handleOnDeleteButtonClick(event) {
+    event.preventDefault();
     PubSub.publish('deleteButtonClicked');
   }
 
@@ -20,17 +19,14 @@ class ClientShowButtons extends React.Component {
     return (
       <div className="panel-body">
         <ConfirmDeleteModal />
-        <ul className="list-group">
-          <li className="list-group-item">
-            <a href="#" onClick={this.handleEditButtonClick}>Redigera klient
-              <span className="pull-right glyphicon glyphicon-pencil"></span></a>
-          </li>
-          <li className="list-group-item">
-            <a className="remove-client-link" href="#" data-toggle="modal"
-              data-target="#confirmDeleteClientModal">Ta bort klient<span
-              className="pull-right glyphicon glyphicon-remove"></span></a>
-          </li>
-        </ul>
+        <div className="button-menu" role="group" aria-label="...">
+          <button className="button edit-client-button"
+            onClick={this.handleEditButtonClick}>Redigera klient
+          </button>
+          <button className="button button-danger" data-toggle="modal"
+            data-target="#confirmDeleteClientModal">Ta bort klient
+          </button>
+        </div>
       </div>
     );
   }
@@ -58,11 +54,11 @@ class ConfirmDeleteModal extends React.Component {
             <div className="modal-body">
               Är du säker?
             </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-default"
-                data-dismiss="modal">Avbryt</button>
-              <button type="button" className="btn btn-danger"
+            <div className="modal-footer action">
+              <button type="button" className="button button-danger"
                 onClick={this.handleOnConfirmDeleteClick}>Ja</button>
+              <button type="button" className="button"
+                data-dismiss="modal">Avbryt</button>
             </div>
           </div>
         </div>
