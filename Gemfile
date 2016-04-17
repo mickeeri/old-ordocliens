@@ -81,6 +81,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara', '~> 2.6', '>= 2.6.2'
   gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :development do

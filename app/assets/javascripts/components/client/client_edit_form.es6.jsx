@@ -11,12 +11,21 @@ class ClientEditForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    makePutRequest(Routes.client_path(this.state.id), this.state)
-      .then(response=> {
-        if (response.status === 200) {
-          PubSub.publish('clientUpdated');
-        }
-      });
+    if (this.state.id) {
+      makePutRequest(Routes.client_path(this.state.id), this.state)
+        .then(response=> {
+          if (response.status === 200) {
+            PubSub.publish('clientUpdated');
+          }
+        });
+    } else {
+      makePostRequest('/clients', this.state)
+        .then(response=> {
+          if (response.status === 201) {
+            window.location = Routes.client_path(response.client.id);
+          }
+        });
+    }
   }
 
   handleChangeOnClientInput(event) {
@@ -42,45 +51,45 @@ class ClientEditForm extends React.Component {
               <FormGroup
                 name="first_name"
                 type="text"
-                value={this.state.first_name}
+                value={this.state ? this.state.first_name : ''}
                 changeEvent={this.handleChangeOnClientInput}
                 label="Förnamn"/>
               <FormGroup
                 name="last_name"
                 type="text"
-                value={this.state.last_name}
+                value={this.state ? this.state.last_name : ''}
                 changeEvent={this.handleChangeOnClientInput}
                 label="Efternamn"/>
               <FormGroup
                 name="ssn"
                 type="text"
-                value={this.state.ssn}
+                value={this.state ? this.state.ssn : ''}
                 changeEvent={this.handleChangeOnClientInput}
                 label="Personnummer"/>
               <hr/>
               <FormGroup
                 name="street"
                 type="text"
-                value={this.state.street}
+                value={this.state ? this.state.street : ''}
                 changeEvent={this.handleChangeOnClientInput}
                 label="Gatuadress"/>
               <FormGroup
                 name="post_code"
                 type="text"
-                value={this.state.post_code}
+                value={this.state ? this.state.post_code : ''}
                 changeEvent={this.handleChangeOnClientInput}
                 label="Postnummer"/>
               <FormGroup
                 name="city"
                 type="text"
-                value={this.state.city}
+                value={this.state ? this.state.city : ''}
                 changeEvent={this.handleChangeOnClientInput}
                 label="Ort"/>
               <hr/>
               <div className="form-group">
                 <label htmlFor="note">Anteckningar</label>
                 <textarea className="form-control" type="text-area"
-                  defaultValue={this.state.note} name="note" rows="4"
+                  value={this.state ? this.state.note : ''} name="note" rows="4"
                   onChange={this.handleChangeOnClientInput}>
                 </textarea>
               </div>

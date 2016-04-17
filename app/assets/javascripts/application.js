@@ -14,10 +14,11 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
+//= require es5-shim
+//= require js-routes
 //= require react
 //= require react_ujs
 //= require components
 //= require pubsub
-//= require js-routes
 //= require_tree .
 //= require bootstrap-sprockets

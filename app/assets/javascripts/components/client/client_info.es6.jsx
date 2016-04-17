@@ -8,7 +8,6 @@ class ClientInfo extends React.Component {
   render() {
     var client = this.props.client;
 
-
     return (
       <div className="col-md-9">
         <div className="panel panel-default">

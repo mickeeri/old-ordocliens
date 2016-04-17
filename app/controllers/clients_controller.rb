@@ -22,7 +22,22 @@ class ClientsController < ApplicationController
   end
 
   def new
-    @client = Client.find(params[:id])
+    @client = Client.new
+    respond_to do |format|
+      format.html { render component: "ClientNew", props: { client: @client }, tag: "div" }
+      format.json { render json: { client: @client } }
+    end
+  end
+
+  def create
+    @client = current_user.clients.build(client_params)
+    if @client.save
+      flash[:success] = "Klient sparad!"
+      render json: { client: @client, status: 201 }
+    else
+      # TODO: render all errors.
+      render json: {statusText: "Sparning misslyckades: #{@client.errors.full_messages.first}"}, status: :bad_request
+    end
   end
 
   def update

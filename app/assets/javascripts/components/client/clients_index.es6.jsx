@@ -46,6 +46,10 @@ class ClientsIndex extends React.Component {
     this.fetchClients();
   }
 
+  handleAddClientButtonClick(event) {
+    window.location = Routes.new_client_path();
+  }
+
   render() {
     // Table rows with clients.
     var clientRows = this.state.clients.map(client =>
@@ -70,7 +74,7 @@ class ClientsIndex extends React.Component {
               <th>Förnamn</th>
               <th>Efternamn</th>
               <th>Personnummer</th>
-              <th></th>
+              <th className="np"></th>
             </tr>
           </thead>
           <tbody>
@@ -82,6 +86,10 @@ class ClientsIndex extends React.Component {
             totalPages={this.state.meta.totalPages}
             currentPage={this.state.meta.currentPage}
             onPaginate={this.handleOnPaginate} />
+            <div className="action">
+            <button className="button button-success" onClick={this.handleAddClientButtonClick}
+                >Lägg till klient</button>
+            </div>
         </div>
       </div>
     );
