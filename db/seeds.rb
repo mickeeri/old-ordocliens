@@ -47,12 +47,23 @@ User.all.each do |user|
       contact: Faker::Internet.email(client_name),
       contact_type_id: e_mail_contact_type.id)
 
-    number_of_cases = rand(2..6)
+    number_of_cases = rand(1..3)
     number_of_cases.times do
-      client.legal_cases.create(
+      l_case = client.legal_cases.create(
         name: Faker::Lorem.characters(10),
         active: Faker::Boolean.boolean
       )
+
+      number_of_tasks = rand(5..15)
+
+      number_of_tasks.times do
+        l_case.tasks.create!(
+          name: Faker::Lorem.characters(5),
+          entry: Faker::Lorem.sentence(rand(10..30)),
+          date: Faker::Time.between(2.days.ago, Date.today, :day),
+          worked_hours: rand(1..8)
+        )
+      end
     end
   end
 end

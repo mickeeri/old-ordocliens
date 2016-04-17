@@ -17,7 +17,7 @@ class ClientShowButtons extends React.Component {
 
   render() {
     return (
-      <div className="panel-body">
+      <div className="panel-body np">
         <ConfirmDeleteModal />
         <div className="button-menu" role="group" aria-label="...">
           <button className="button edit-client-button"

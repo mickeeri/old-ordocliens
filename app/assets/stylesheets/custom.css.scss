@@ -243,3 +243,10 @@ ul {
   border: 1px solid transparent;
   border-color: $light-grey;
 }
+
+@media print {
+  .button-menu, .breadcrumb, .np { display: none; }
+  main {
+    min-height: inherit;
+  }
+}
