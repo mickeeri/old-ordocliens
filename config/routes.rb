@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :clients
+  resources :contacts
 
   get 'contact_types' => 'contacts#get_contact_types'
   # #root "sessions#new"

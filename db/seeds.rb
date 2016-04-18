@@ -18,11 +18,6 @@ firm.users.create(
   password_confirmation: "password"
 )
 
-mobile = ContactType.create(contact_type_name: "Mobil")
-ContactType.create(contact_type_name: "Telefon Hem")
-ContactType.create(contact_type_name: "Telefon Arbete")
-e_mail_contact_type = ContactType.create(contact_type_name: "E-post")
-
 User.all.each do |user|
   number_of_clients = rand(100..200)
   sentece_lenght = rand(10..30)
@@ -31,21 +26,14 @@ User.all.each do |user|
       last_name: Faker::Name.last_name,
       first_name: Faker::Name.first_name,
       ssn: Faker::Number.number(10),
+      email: Faker::Internet.email,
+      phone_number: Faker::PhoneNumber.cell_phone,
       street: Faker::Address.street_address,
       post_code: Faker::Address.postcode,
       city: Faker::Address.city,
       note: Faker::Lorem.sentence(sentece_lenght)
     )
-
     client_name = "#{client.last_name} #{client.first_name}"
-
-    client.contacts.create(
-      contact: Faker::PhoneNumber.cell_phone,
-      contact_type_id: mobile.id)
-
-    client.contacts.create(
-      contact: Faker::Internet.email(client_name),
-      contact_type_id: e_mail_contact_type.id)
 
     number_of_cases = rand(1..3)
     number_of_cases.times do

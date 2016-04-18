@@ -11,6 +11,11 @@ class ClientInfo extends React.Component {
           <h4>Personnummer</h4>
           {client.ssn}
           <hr/>
+          <h4>E-post</h4>
+          {client.email}
+          <h4>Telefonnummer</h4>
+          {client.phone_number}
+          <hr/>
           <h4>Adress</h4>
           {client.street} <br/>
           {client.post_code} {client.city}

@@ -2,7 +2,6 @@ class ClientsController < ApplicationController
   before_action :authenticate_user!
   before_action :search_clients, only: [:index]
   before_action :fetch_client, only: [:show, :update, :destroy]
-  before_action :fetch_contacts, only: [:show]
   before_action :fetch_data, only: [:index]
 
   respond_to :json, :html
@@ -35,19 +34,13 @@ class ClientsController < ApplicationController
       flash[:success] = "Klient sparad!"
       render json: { client: @client, status: 201 }
     else
-      # TODO: render all errors.
-      #render json: {statusText: "Sparning misslyckades: #{@client.errors.full_messages.first}"}, status: :bad_request
       respond_with @client
     end
   end
 
   def update
-    if @client.update_attributes(client_params)
-      respond_with @client
-    else
-      #render json: { response: "Update failed", status: 400 }
-      respond_with @client
-    end
+    @client.update_attributes(client_params)
+    respond_with @client
   end
 
   def destroy
@@ -64,6 +57,8 @@ class ClientsController < ApplicationController
       :last_name,
       :first_name,
       :ssn,
+      :email,
+      :phone_number,
       :street,
       :post_code,
       :city,
@@ -80,19 +75,6 @@ class ClientsController < ApplicationController
 
   def fetch_client
     @client = Client.find(params[:id])
-  end
-
-  def fetch_contacts
-    # Rendering contact info with contact type as string, not just id.
-    @contacts = []
-    @client.contacts.each do |contact|
-      contact_info = {
-        id: contact.id,
-        contact_type: contact.contact_type.contact_type_name,
-        contact: contact.contact
-      }
-      @contacts.push(contact_info)
-    end
   end
 
   def fetch_data

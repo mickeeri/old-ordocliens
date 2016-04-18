@@ -79,6 +79,17 @@ main {
   }
 }
 
+.contact-form {
+  .action {
+    margin-top: 20px;
+  }
+}
+
+.contact-list-item {
+  border-bottom: 1px solid #eeeeee;
+  padding: 10px 0;
+}
+
 .contact-form-group {
   border-bottom: 1px solid #eeeeee;
   margin: 0 1px;
@@ -228,6 +239,14 @@ button.active {
   }
 }
 
+.small-button-group {
+  .button {
+    float: right;
+    width: 80px;
+    height: 35px;
+    margin-left: 4px;
+  }
+}
 
 // LISTS //
 ul {
