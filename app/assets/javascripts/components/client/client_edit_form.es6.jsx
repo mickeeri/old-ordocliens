@@ -62,6 +62,19 @@ class ClientEditForm extends React.Component {
               label="Personnummer"/>
             <hr/>
             <FormGroup
+              name="email"
+              type="text"
+              value={this.state ? this.state.email : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              label="E-post"/>
+            <FormGroup
+              name="phone_number"
+              type="text"
+              value={this.state ? this.state.phone_number : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              label="Telefonnummer"/>
+            <hr/>
+            <FormGroup
               name="street"
               type="text"
               value={this.state ? this.state.street : ''}

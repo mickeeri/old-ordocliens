@@ -10,6 +10,4 @@ RSpec.describe Client, type: :model do
   it { should have_db_index(:last_name) }
   it { should belong_to :user }
   it { should have_many :legal_cases }
-  it { should have_many(:contacts) }
-  it { should have_many(:contact_types).through(:contacts) }
 end

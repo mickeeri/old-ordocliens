@@ -3,10 +3,6 @@ class Client < ActiveRecord::Base
   # Relations
   belongs_to :user, required: true
   has_many :legal_cases, dependent: :destroy
-  has_many :contact_types, through: :contacts
-  has_many :contacts, dependent: :destroy
-
-  attr_accessor :contact_info
 
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }
@@ -14,7 +10,6 @@ class Client < ActiveRecord::Base
   validates :ssn, presence: true,
                   length: { maximum: 10 },
                   numericality: { only_integer: true }
-  # TODO: add slug.
 
   # Scopes
   scope :sorted, -> { order(last_name: :asc) }

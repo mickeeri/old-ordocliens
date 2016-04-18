@@ -1,4 +1,4 @@
-function makePostOrPutRequest (url, method, data) {
+function makePostOrPutRequest(url, method, data) {
   $.ajax({
     url: url,
     dataType: 'json',
@@ -18,10 +18,17 @@ function makePostOrPutRequest (url, method, data) {
   });
 }
 
-function makeGetRequest (url) {
+function makeGetRequest(url) {
   return $.ajax({
     url: url,
     dataType: 'json',
     cache: false,
+  });
+}
+
+function makeDeleteRequest(url) {
+  return $.ajax({
+    url: url,
+    method: 'DELETE',
   });
 }

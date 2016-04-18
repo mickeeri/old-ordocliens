@@ -87,7 +87,7 @@ RSpec.describe ClientsController, type: :controller do
       it "should update client" do
         sign_in user
         put :update, id: client.id, client: new_attributes, format: :json
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(204)
         client.reload
         expect(client.last_name).to eq("Edited last name")
         expect(client.first_name).to eq("Edited first name")

@@ -1,10 +1,13 @@
 class ClientShow extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       client: props.client,
       editMode: false,
-      showConfirmDelete: false, };
+      showConfirmDelete: false,
+    };
+
     this.toggleEditMode = this.toggleEditMode.bind(this);
     this.deleteClient = this.deleteClient.bind(this);
     this.refreshClient = this.refreshClient.bind(this);
@@ -24,9 +27,12 @@ class ClientShow extends React.Component {
 
   refreshClient () {
     makeGetRequest(Routes.client_path(this.state.client.id))
-      .then(response=> {
+      .success(response=> {
         this.toggleEditMode();
         this.setState({ client: response.client });
+      })
+      .error(xhr=> {
+        console.error(url, xhr.status, xhr.statusText);
       });
   }
 
@@ -41,13 +47,15 @@ class ClientShow extends React.Component {
     }
   }
 
+  // Call delete in utils.
   deleteClient() {
-    // TODO: Loading after clicking delete button.
-    deleteRequest(Routes.client_path(this.state.client.id))
-      .then(response=> {
-        if (response.status === 200) {
-          window.location = Routes.clients_path();
-        }
+    makeDeleteRequest(Routes.client_path(this.state.client.id))
+      .success(response=> {
+        console.log(response);
+        window.location = Routes.clients_path();
+      })
+      .error(xhr=> {
+        console.error(url, xhr.status, xhr.statusText);
       });
   }
 

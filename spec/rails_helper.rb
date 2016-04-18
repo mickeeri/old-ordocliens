@@ -9,10 +9,6 @@ require 'rspec/rails'
 # Including settings i spec/support folder.
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
-# Poltergeist as js driver.
-require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
-
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
