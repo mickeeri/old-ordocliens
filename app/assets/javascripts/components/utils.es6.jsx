@@ -1,71 +1,27 @@
-function _fetch(url, options) {
-  return fetch(url, options)
-    .then(response=> {
-      console.log(response);
-      if (response.status >= 200 && response.status < 300) {
-        return response.json();
+function makePostOrPutRequest (url, method, data) {
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    type: method,
+    data: data,
+    success: function (data) {
+      if (method === 'POST') {
+        window.location = Routes.client_path(data.client.id);
       } else {
-        console.log('Ett problem uppstod. Status: ' + response.status);
-        return;
+        PubSub.publish('clientUpdated');
       }
-    })
-    .catch(err=> {
-      console.log('Ett problem uppstod: ' + err);
-    });
+    },
+
+    error: function (xhr) {
+      console.error(xhr.responseText, xhr.status, xhr.statusText);
+    },
+  });
 }
 
-function makeGetRequest(url) {
-  var options = {
-    headers: {
-      Accept:         'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'same-origin',
-  };
-
-  return _fetch(url, options);
-}
-
-function makePostRequest(url, payload) {
-  var options = {
-    method: 'POST',
-    body: JSON.stringify(payload),
-    headers: {
-      'X-CSRF-Token':  document.getElementsByName('csrf-token')[0].content,
-      Accept:         'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'same-origin',
-  };
-
-  return _fetch(url, options);
-}
-
-function makePutRequest(url, payload) {
-  var options = {
-    method: 'PUT',
-    body: JSON.stringify(payload),
-    headers: {
-      'X-CSRF-Token':  document.getElementsByName('csrf-token')[0].content,
-      Accept:         'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'same-origin',
-  };
-
-  return _fetch(url, options);
-}
-
-function deleteRequest(url) {
-  var options = {
-    method:'DELETE',
-    headers: {
-      'X-CSRF-Token':  document.getElementsByName('csrf-token')[0].content,
-      Accept:       'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'same-origin',
-  };
-
-  return _fetch(url, options);
+function makeGetRequest (url) {
+  return $.ajax({
+    url: url,
+    dataType: 'json',
+    cache: false,
+  });
 }

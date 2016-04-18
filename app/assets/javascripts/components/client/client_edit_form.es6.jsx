@@ -9,22 +9,12 @@ class ClientEditForm extends React.Component {
     this.handleChangeOnClientInput = this.handleChangeOnClientInput.bind(this);
   }
 
-  handleOnSubmit(e) {
-    e.preventDefault();
-    if (this.state.id) {
-      makePutRequest(Routes.client_path(this.state.id), this.state)
-        .then(response=> {
-          if (response.status === 200) {
-            PubSub.publish('clientUpdated');
-          }
-        });
+  handleOnSubmit(event) {
+    event.preventDefault();
+    if (this.state && this.state.id) {
+      makePostOrPutRequest(Routes.client_path(this.state.id), 'PUT', { client: this.state });
     } else {
-      makePostRequest('/clients', this.state)
-        .then(response=> {
-          if (response.status === 201) {
-            window.location = Routes.client_path(response.client.id);
-          }
-        });
+      makePostOrPutRequest('/clients', 'POST', { client: this.state });
     }
   }
 
@@ -34,73 +24,76 @@ class ClientEditForm extends React.Component {
     this.setState(nextState);
   }
 
-  handleCancelButtonClick(e) {
-    e.preventDefault();
-    PubSub.publish('editModeButtonClicked');
+  handleCancelButtonClick(event) {
+    event.preventDefault();
+    if (this.state && this.state.id) {
+      PubSub.publish('editModeButtonClicked');
+    } else {
+      window.location = Routes.clients_path();
+    }
   }
 
   render() {
     return (
-      <div className="col-md-9">
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">Redigera</h3>
-          </div>
-          <div className="panel-body">
-            <form onSubmit={this.handleOnSubmit}>
-              <FormGroup
-                name="first_name"
-                type="text"
-                value={this.state ? this.state.first_name : ''}
-                changeEvent={this.handleChangeOnClientInput}
-                label="Förnamn"/>
-              <FormGroup
-                name="last_name"
-                type="text"
-                value={this.state ? this.state.last_name : ''}
-                changeEvent={this.handleChangeOnClientInput}
-                label="Efternamn"/>
-              <FormGroup
-                name="ssn"
-                type="text"
-                value={this.state ? this.state.ssn : ''}
-                changeEvent={this.handleChangeOnClientInput}
-                label="Personnummer"/>
-              <hr/>
-              <FormGroup
-                name="street"
-                type="text"
-                value={this.state ? this.state.street : ''}
-                changeEvent={this.handleChangeOnClientInput}
-                label="Gatuadress"/>
-              <FormGroup
-                name="post_code"
-                type="text"
-                value={this.state ? this.state.post_code : ''}
-                changeEvent={this.handleChangeOnClientInput}
-                label="Postnummer"/>
-              <FormGroup
-                name="city"
-                type="text"
-                value={this.state ? this.state.city : ''}
-                changeEvent={this.handleChangeOnClientInput}
-                label="Ort"/>
-              <hr/>
-              <div className="form-group">
-                <label htmlFor="note">Anteckningar</label>
-                <textarea className="form-control" type="text-area"
-                  value={this.state ? this.state.note : ''} name="note" rows="4"
-                  onChange={this.handleChangeOnClientInput}>
-                </textarea>
-              </div>
-              <hr/>
-              <div className="action">
-                <button className="button button-success" type="submit">Spara</button>
-                <button className="button button-default"
-                  onClick={this.handleCancelButtonClick}>Avbryt</button>
-              </div>
-            </form>
-          </div>
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <h3 className="panel-title">{this.props.header}</h3>
+        </div>
+        <div className="panel-body">
+          <form className="form-inline" onSubmit={this.handleOnSubmit}>
+            <FormGroup
+              name="first_name"
+              type="text"
+              value={this.state ? this.state.first_name : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              autoFocus="true"
+              label="Förnamn"/>
+            <FormGroup
+              name="last_name"
+              type="text"
+              value={this.state ? this.state.last_name : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              label="Efternamn"/>
+            <FormGroup
+              name="ssn"
+              type="text"
+              value={this.state ? this.state.ssn : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              label="Personnummer"/>
+            <hr/>
+            <FormGroup
+              name="street"
+              type="text"
+              value={this.state ? this.state.street : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              label="Gatuadress"/>
+            <FormGroup
+              name="post_code"
+              type="text"
+              value={this.state ? this.state.post_code : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              label="Postnummer"/>
+            <FormGroup
+              name="city"
+              type="text"
+              value={this.state ? this.state.city : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              label="Ort"/>
+            <hr/>
+            <div className="form-group form-group-textarea">
+              <label htmlFor="note">Anteckningar</label>
+              <textarea className="form-control" type="text-area"
+                value={this.state ? this.state.note : ''} name="note" rows="4"
+                onChange={this.handleChangeOnClientInput}>
+              </textarea>
+            </div>
+            <hr/>
+            <div className="action">
+              <button className="button button-success" type="submit">Spara</button>
+              <button className="button button-default"
+                onClick={this.handleCancelButtonClick}>Avbryt</button>
+            </div>
+          </form>
         </div>
       </div>
     );

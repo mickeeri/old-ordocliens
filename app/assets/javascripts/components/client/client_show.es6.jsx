@@ -56,14 +56,16 @@ class ClientShow extends React.Component {
 
     // Showing either form or regular text based on value of boolean editMode.
     if (this.state.editMode) {
-      content = <ClientEditForm client={this.state.client} editMode={this.state.editMode} />;
+      content = <ClientEditForm client={this.state.client} header="Redigera" />;
     } else {
       content = <ClientInfo client={this.state.client} />;
     }
 
     return (
       <div className="row">
-        {content}
+        <div className="col-md-9">
+          {content}
+        </div>
         <div className="col-md-3">
           <div className="panel panel-default">
             <ClientShowButtons />

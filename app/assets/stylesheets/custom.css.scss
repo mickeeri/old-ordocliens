@@ -53,9 +53,25 @@ main {
 }
 
 .form-inline {
-  .form-control {
-    margin: 0 5px;
-    width: 400px;
+  .form-group {
+    min-height: 40px;
+    display: block;
+
+    .form-control {
+      margin: 0 5px;
+      width: 400px;
+      float: right;
+
+      // TODO: input width for sc.
+    }
+
+    label {
+      float: left;
+    }
+  }
+
+  .form-group-textarea {
+    min-height: 100px;
   }
 
   .btn {

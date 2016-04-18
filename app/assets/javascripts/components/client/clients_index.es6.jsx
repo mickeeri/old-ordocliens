@@ -23,16 +23,15 @@ class ClientsIndex extends React.Component {
     var data = this.state.fetchData;
 
     // Building uri:s with query string parameters.
-    if (data.search) {
-      url = '/clients?search=' + data.search;
-    } else {
-      url = '/clients?page=' + data.page;
-    }
+    url = data.search ? Routes.clients_path() + '?search=' + data.search :
+      Routes.clients_path() + '?page=' + data.page;
 
-    // Calling get method in utils.
     makeGetRequest(url)
-      .then(response=> {
+      .success(response=> {
         this.setState({ clients: response.clients, meta: response.meta });
+      })
+      .error(xhr=> {
+        console.error(url, xhr.status, xhr.statusText);
       });
   }
 
@@ -86,10 +85,9 @@ class ClientsIndex extends React.Component {
             totalPages={this.state.meta.totalPages}
             currentPage={this.state.meta.currentPage}
             onPaginate={this.handleOnPaginate} />
-            <div className="action">
-            <button className="button button-success" onClick={this.handleAddClientButtonClick}
-                >Lägg till klient</button>
-            </div>
+
+          <button className="button button-success pull-right"
+            onClick={this.handleAddClientButtonClick}>Lägg till klient</button>
         </div>
       </div>
     );

@@ -36,15 +36,17 @@ class ClientsController < ApplicationController
       render json: { client: @client, status: 201 }
     else
       # TODO: render all errors.
-      render json: {statusText: "Sparning misslyckades: #{@client.errors.full_messages.first}"}, status: :bad_request
+      #render json: {statusText: "Sparning misslyckades: #{@client.errors.full_messages.first}"}, status: :bad_request
+      respond_with @client
     end
   end
 
   def update
     if @client.update_attributes(client_params)
-      render json: { client: @client, status: 200 }
+      respond_with @client
     else
-      render json: { response: "Update failed", status: 400 }
+      #render json: { response: "Update failed", status: 400 }
+      respond_with @client
     end
   end
 
