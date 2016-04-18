@@ -79,6 +79,29 @@ main {
   }
 }
 
+.contact-form-group {
+  border-bottom: 1px solid #eeeeee;
+  margin: 0 1px;
+  padding: 10px 0 20px 0;
+
+  select {
+    width: 200px;
+  }
+
+  input {
+    width: 300px;
+  }
+
+  select, input {
+    display: inline;
+    margin-left: 10px;
+  }
+
+  div {
+    padding: 0;
+  }
+}
+
 // PANELS //
 .panel-heading {
   background-color: $white !important;

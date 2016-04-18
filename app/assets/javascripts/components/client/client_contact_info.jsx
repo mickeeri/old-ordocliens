@@ -19,7 +19,6 @@ class ClientContactInfo extends React.Component {
   }
 
   render() {
-
     var content;
     if (this.state.editMode) {
       content = <EditContactsForm contacts={this.state.contacts}
@@ -73,7 +72,13 @@ class EditContactsForm extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      contacts: props.contacts,
+      contactTypes: [],
+    };
+    this.getContactTypes();
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.getContactTypes = this.getContactTypes.bind(this);
   }
 
   handleOnClick(event) {
@@ -81,28 +86,64 @@ class EditContactsForm extends React.Component {
     this.props.toggleEdit();
   }
 
+  getContactTypes() {
+    makeGetRequest('/contact_types')
+      .success(data=> {
+        this.setState({ contactTypes: data.contact_types });
+      })
+      .error(xhr=> {
+        console.error(url, xhr.status, xhr.statusText);
+      });
+  }
+
   render() {
-    var contactFormGroups = this.props.contacts.map(contact =>
-      <div key={contact.id} className="form-group">
-        <label htmlFor={contact.contact_type.toLowerCase()}>
-          {contact.contact_type}</label>
-        <input
-          className="form-control"
-          type="text"
-          defaultValue={contact.contact}
-          id={contact.contact_type.toLowerCase()} />
-      </div>);
+    var formGroups;
+    if (this.state.contacts.length > 0) {
+      formGroups = this.state.contacts.map(contact =>
+        <ContactFormGroup key={contact.id} contact={contact}
+          contactTypes={this.state.contactTypes} />);
+    } else {
+      formGroups = <ContactFormGroup contactTypes={this.state.contactTypes} />;
+    }
 
     return (
-      <form>
-        {contactFormGroups}
-        <hr/>
+      <form className="contact-form">
+        {formGroups}
         <div className="action">
           <button className="button button-success">Spara</button>
           <button className="button"
             onClick={this.handleOnClick}>Avbryt</button>
         </div>
       </form>
+    );
+  }
+}
+
+class ContactFormGroup extends React.Component {
+
+  render() {
+    var contact = this.props.contact ? this.props.contact : null;
+    var contactTypeOptions = this.props.contactTypes.map(contactType =>
+      <option key={contactType.id}>{contactType.contact_type_name}</option>);
+
+    return (
+      <div className="row contact-form-group">
+        <div className="col-md-6">
+          <label>Kontakttyp</label>
+          <select className="form-control"
+            value={contact ? contact.contact_type : ''}>
+            {contactTypeOptions}
+          </select>
+        </div>
+        <div className="col-md-6">
+          <label>Kontakt</label>
+          <input
+            className="form-control"
+            type="text"
+            value={contact ? contact.contact : ''}
+            />
+        </div>
+      </div>
     );
   }
 }
