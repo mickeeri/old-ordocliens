@@ -1,24 +1,13 @@
-# RSpec.feature "User visits default page", js: true do
-#   let(:user) do
-#     create(:user)
-#   end
+# require "rails_helper"
 #
-#   let(:client) do
-#     create(:client)
-#   end
-#
+# RSpec.feature "User visits default page", :js => true do
 #   it "should display client" do
-#     sign_in_with(user.email, user.password)
+#     client = create(:client)
+#     user = create(:user)
+#     login_as(user, :scope => :user, :run_callbacks => false)
+#     visit "clients/#{client.id}"
+#     expect(User.where(id: client.id)).to exist
 #     expect(page).to have_content("Logga ut")
 #     expect(page).to have_content(client.first_name)
-#   end
-#
-#
-#
-#   def sign_in_with(email, password)
-#     visit "/"
-#     fill_in "Email", with: email
-#     fill_in "Password", with: password
-#     click_button "Logga in"
 #   end
 # end
