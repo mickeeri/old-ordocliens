@@ -70,15 +70,18 @@ class ClientShow extends React.Component {
     }
 
     return (
-      <div className="row">
-        <div className="col-md-9">
-          {content}
-        </div>
-        <div className="col-md-3">
-          <div className="panel panel-default">
-            <ClientShowButtons />
+      <div>
+        <div className="row">
+          <div className="col-md-9">
+            {content}
+          </div>
+          <div className="col-md-3">
+            <div className="panel panel-default">
+              <ClientShowButtons />
+            </div>
           </div>
         </div>
+        <LegalCasesIndex legalCases={this.props.legal_cases} />
       </div>
     );
   }

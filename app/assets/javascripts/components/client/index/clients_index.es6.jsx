@@ -85,7 +85,6 @@ class ClientsIndex extends React.Component {
             totalPages={this.state.meta.totalPages}
             currentPage={this.state.meta.currentPage}
             onPaginate={this.handleOnPaginate} />
-
           <button className="button button-success pull-right"
             onClick={this.handleAddClientButtonClick}>Lägg till klient</button>
         </div>

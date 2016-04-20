@@ -15,7 +15,7 @@ class ClientsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html
+      format.html { render component: "ClientShow", props: { client: @client, legal_cases: @client.legal_cases }, tag: "div" }
       format.json { render json: { client: @client } }
     end
   end
@@ -23,7 +23,7 @@ class ClientsController < ApplicationController
   def new
     @client = Client.new
     respond_to do |format|
-      format.html { render component: "ClientNew", props: { client: @client }, tag: "div" }
+      format.html { render component: "ClientNew", props: { client: @client } }
       format.json { render json: { client: @client } }
     end
   end

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :clients
+  resources :legal_cases
 
   # #root "sessions#new"
   # # get    "login"   => "sessions#new"
