@@ -286,9 +286,9 @@ ul {
 }
 
 // TABLE //
-// .clients-table {
-//   min-height: 927px;
-// }
+.table-hover tr {
+  cursor: pointer;
+}
 
 // MISC //
 .glyphicon {

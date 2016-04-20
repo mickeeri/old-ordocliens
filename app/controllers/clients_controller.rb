@@ -15,7 +15,10 @@ class ClientsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { render component: "ClientShow", props: { client: @client, legal_cases: @client.legal_cases }, tag: "div" }
+      format.html { render component: "ClientShow", props:
+        { client: @client,
+          legal_cases: @client.legal_cases,
+          links: [{ id: rand(100), name: "Klienter", path: clients_path }]} }
       format.json { render json: { client: @client } }
     end
   end

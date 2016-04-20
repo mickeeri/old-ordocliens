@@ -6,6 +6,7 @@ class ClientShow extends React.Component {
       client: props.client,
       editMode: false,
       showConfirmDelete: false,
+      links: props.links,
     };
 
     this.toggleEditMode = this.toggleEditMode.bind(this);
@@ -51,7 +52,6 @@ class ClientShow extends React.Component {
   deleteClient() {
     makeDeleteRequest(Routes.client_path(this.state.client.id))
       .success(response=> {
-        console.log(response);
         window.location = Routes.clients_path();
       })
       .error(xhr=> {
@@ -71,6 +71,7 @@ class ClientShow extends React.Component {
 
     return (
       <div>
+        <BreadCrumb active={this.state.client.first_name + ' ' + this.state.client.last_name} links={this.state.links}/>
         <div className="row">
           <div className="col-md-9">
             {content}

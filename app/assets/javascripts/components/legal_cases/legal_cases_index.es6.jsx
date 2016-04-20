@@ -2,8 +2,6 @@ class LegalCasesIndex extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(props);
-
     this.state = {
       legalCases: props.legalCases,
     };
@@ -14,7 +12,7 @@ class LegalCasesIndex extends React.Component {
 
   render() {
     var legalCaseRows = this.state.legalCases.map(legalCase=>
-      <LegalCaseRow legalCase={legalCase} />
+      <LegalCaseRow key={legalCase.id} legalCase={legalCase} />
     );
 
     return (
@@ -62,3 +60,7 @@ class LegalCaseRow extends React.Component {
     );
   }
 }
+
+LegalCaseRow.propTypes = {
+  legalCase: React.PropTypes.object.isRequired,
+};
