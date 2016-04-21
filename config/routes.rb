@@ -8,9 +8,6 @@ Rails.application.routes.draw do
 
   # root "clients#index"
   # root "users/sessions#new"
-
-
-
   devise_scope :user do
     authenticated :user do
       root 'clients#index', as: :authenticated_root
@@ -24,9 +21,6 @@ Rails.application.routes.draw do
   resources :clients do
     resources :legal_cases # show, index
   end
-
-
-
   # #root "sessions#new"
   # # get    "login"   => "sessions#new"
   # post "/" => "sessions#create"

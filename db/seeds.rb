@@ -34,6 +34,7 @@ User.all.each do |user|
       note: Faker::Lorem.sentence(sentece_lenght)
     )
     client_name = "#{client.last_name} #{client.first_name}"
+    client.email = Faker::Internet.email(client_name)
 
     number_of_cases = rand(1..3)
     number_of_cases.times do
@@ -48,7 +49,7 @@ User.all.each do |user|
         l_case.tasks.create!(
           name: Faker::Lorem.characters(5),
           entry: Faker::Lorem.sentence(rand(10..30)),
-          date: Faker::Time.between(2.days.ago, Date.today, :day),
+          date: Faker::Time.between(2.days.ago, Time.zone.today, :day),
           worked_hours: rand(1..8)
         )
       end

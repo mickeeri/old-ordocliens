@@ -72,6 +72,7 @@ RSpec.describe ClientsController, type: :controller do
       end
     end
   end
+
   describe "PUT #update" do
     context "when not signed in" do
       it "should not edit the client" do
@@ -104,7 +105,10 @@ RSpec.describe ClientsController, type: :controller do
 
       it "should not be able to edit id or user_id attribute" do
         sign_in user
-        put :update, id: client.id, client: new_attributes, format: :json
+        put :update,
+            id: client.id,
+            client: new_attributes_with_id,
+            format: :json
         client.reload
         expect(client.id).to_not eq(89)
         expect(client.user_id).to_not eq(500)

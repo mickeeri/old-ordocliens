@@ -5,31 +5,25 @@ class LegalCasesController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { render component: "LegalCaseShow", props:
-        { legal_case: @legal_case,
+      format.html do
+        render component: "LegalCaseShow", props: {
+          legal_case: @legal_case,
           client_id: @legal_case.client.id,
-          links: [
-            { id: rand(100), name: "Klienter", path: clients_path },
-            { id: rand(100),
-              name: "#{@legal_case.client.first_name} #{@legal_case.client.last_name}",
-              path: client_path(@legal_case.client.id)
-            }
-          ]
-        } }
+          links: render_links }
+      end
       format.json { render json: { legal_case: @legal_case } }
     end
   end
 
   def new
-    render component: "LegalCaseNew", props: { client_id: params[:client_id].to_i }
+    render component: "LegalCaseNew", props: {
+      client_id: params[:client_id].to_i }
   end
 
   def create
     client = Client.find(params[:client_id])
     legal_case = client.legal_cases.build(legal_case_params)
-    if legal_case.save
-      flash[:success] = "Ärende sparat!"
-    end
+    flash[:success] = "Ärende sparat!" if legal_case.save
     respond_with(client, legal_case)
   end
 
@@ -47,10 +41,18 @@ class LegalCasesController < ApplicationController
   private
 
   def legal_case_params
-    params.require(:legal_case).permit(:name, :active);
+    params.require(:legal_case).permit(:name, :active)
   end
 
   def fetch_legal_case
     @legal_case = LegalCase.find(params[:id])
+  end
+
+  def render_links
+    name = "#{@legal_case.client.first_name} #{@legal_case.client.last_name}"
+    [{ id: rand(100), name: "Klienter", path: clients_path },
+     {  id: rand(100),
+        name: name,
+        path: client_path(@legal_case.client.id) }]
   end
 end

@@ -11,11 +11,12 @@ class ClientEditForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    if (this.state && this.state.id) { // If it shas id it is an update.
-      makePutRequest(Routes.client_path(this.state.id), { client: this.state });
+    if (this.state && this.state.id) { // If it has id it is an update.
+      makePutRequest(Routes.client_path(this.state.id),
+        { client: this.state }, 'clientUpdated');
     } else {
-      if (this.state) {
-        makePostRequest('/clients', { client: this.state });
+      if (this.state) { // Otherwise create new client.
+        makePostRequest(Routes.clients_path(), { client: this.state });
       }
     }
   }

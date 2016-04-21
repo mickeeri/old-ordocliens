@@ -48,8 +48,6 @@ group :test do
   gem 'capybara', '~> 2.6', '>= 2.6.2'
   gem 'database_cleaner'
   gem 'sqlite3'
-  gem 'poltergeist'
-  gem 'phantomjs2', '>=2.0.0',  :require => 'phantomjs/poltergeist'
 end
 
 group :development do

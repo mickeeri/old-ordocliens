@@ -7,17 +7,19 @@ class ClientsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.html { render component: "ClientsIndex", props: { data: @data }, tag: "div" }
+      format.html { render component: "ClientsIndex", props: { data: @data } }
       format.json { render json: @data }
     end
   end
 
   def show
     respond_to do |format|
-      format.html { render component: "ClientShow", props:
-        { client: @client,
-          legal_cases: @client.legal_cases,
-          links: [{ id: rand(100), name: "Klienter", path: clients_path }]} }
+      format.html do
+        render component: "ClientShow", props:
+          { client: @client,
+            legal_cases: @client.legal_cases,
+            links: [{ id: rand(100), name: "Klienter", path: clients_path }] }
+      end
       format.json { render json: { client: @client } }
     end
   end
@@ -28,9 +30,7 @@ class ClientsController < ApplicationController
 
   def create
     @client = current_user.clients.build(client_params)
-    if @client.save
-      flash[:success] = "Klient sparad!"
-    end
+    flash[:success] = "Klient sparad!" if @client.save
     respond_with @client
   end
 
