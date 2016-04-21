@@ -1,17 +1,17 @@
-class ClientShowButtons extends React.Component {
-  displayName: 'ClientShowButtons';
+class ClientShowMenu extends React.Component {
+  displayName: 'ClientShowMenu';
   constructor(props) {
     super(props);
     this.handleEditButtonClic = this.handleEditButtonClick.bind(this);
     this.handleOnDeleteButtonClick = this.handleOnDeleteButtonClick.bind(this);
   }
 
-  handleEditButtonClick(event) {
+  handleEditButtonClick(e) {
     PubSub.publish('editModeButtonClicked');
   }
 
-  handleOnDeleteButtonClick(event) {
-    event.preventDefault();
+  handleOnDeleteButtonClick(e) {
+    e.preventDefault();
     PubSub.publish('deleteButtonClicked');
   }
 
@@ -21,10 +21,10 @@ class ClientShowButtons extends React.Component {
         <ConfirmDeleteModal />
         <div className="button-menu" role="group" aria-label="...">
           <button className="button edit-client-button"
-            onClick={this.handleEditButtonClick}>Redigera klient
+            onClick={this.handleEditButtonClick}>Redigera ärende
           </button>
           <button className="button button-danger" data-toggle="modal"
-            data-target="#confirmDeleteClientModal">Ta bort klient
+            data-target="#confirmDeleteClientModal">Ta bort ärende
           </button>
         </div>
       </div>
@@ -36,7 +36,7 @@ class ConfirmDeleteModal extends React.Component {
   displayName: 'ConfirmDeleteModal';
 
   handleOnConfirmDeleteClick() {
-    PubSub.publish('deleteClientConfirmed');
+    PubSub.publish('deleteLegalCaseConfirmed');
   }
 
   render() {

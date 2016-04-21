@@ -71,14 +71,15 @@ class ClientShow extends React.Component {
 
     return (
       <div>
-        <BreadCrumb active={this.state.client.first_name + ' ' + this.state.client.last_name} links={this.state.links}/>
+        <BreadCrumb active={this.state.client.first_name + ' ' +
+          this.state.client.last_name} links={this.state.links}/>
         <div className="row">
           <div className="col-md-9">
             {content}
           </div>
           <div className="col-md-3">
             <div className="panel panel-default">
-              <ClientShowButtons />
+              <ClientShowMenu />
             </div>
           </div>
         </div>
