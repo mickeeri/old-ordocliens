@@ -21,8 +21,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :clients
-  resources :legal_cases # show
+  resources :clients do
+    resources :legal_cases # show, index
+  end
+
+
 
   # #root "sessions#new"
   # # get    "login"   => "sessions#new"

@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160418185554) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "clients", force: :cascade do |t|
     t.string   "last_name"
     t.string   "first_name"
@@ -31,27 +28,10 @@ ActiveRecord::Schema.define(version: 20160418185554) do
     t.string   "phone_number"
   end
 
-  add_index "clients", ["first_name"], name: "index_clients_on_first_name", using: :btree
-  add_index "clients", ["last_name"], name: "index_clients_on_last_name", using: :btree
-  add_index "clients", ["ssn"], name: "index_clients_on_ssn", using: :btree
-  add_index "clients", ["user_id"], name: "index_clients_on_user_id", using: :btree
-
-  create_table "contact_types", force: :cascade do |t|
-    t.string   "contact_type_name"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  create_table "contacts", force: :cascade do |t|
-    t.string   "contact"
-    t.integer  "client_id"
-    t.integer  "contact_type_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "contacts", ["client_id"], name: "index_contacts_on_client_id", using: :btree
-  add_index "contacts", ["contact_type_id"], name: "index_contacts_on_contact_type_id", using: :btree
+  add_index "clients", ["first_name"], name: "index_clients_on_first_name"
+  add_index "clients", ["last_name"], name: "index_clients_on_last_name"
+  add_index "clients", ["ssn"], name: "index_clients_on_ssn"
+  add_index "clients", ["user_id"], name: "index_clients_on_user_id"
 
   create_table "firms", force: :cascade do |t|
     t.string   "name"
@@ -62,12 +42,12 @@ ActiveRecord::Schema.define(version: 20160418185554) do
   create_table "legal_cases", force: :cascade do |t|
     t.integer  "client_id"
     t.string   "name"
-    t.boolean  "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "active",     default: true
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
-  add_index "legal_cases", ["client_id"], name: "index_legal_cases_on_client_id", using: :btree
+  add_index "legal_cases", ["client_id"], name: "index_legal_cases_on_client_id"
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name"
@@ -79,7 +59,7 @@ ActiveRecord::Schema.define(version: 20160418185554) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "tasks", ["legal_case_id"], name: "index_tasks_on_legal_case_id", using: :btree
+  add_index "tasks", ["legal_case_id"], name: "index_tasks_on_legal_case_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "full_name"
@@ -99,15 +79,9 @@ ActiveRecord::Schema.define(version: 20160418185554) do
     t.string   "last_sign_in_ip"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["firm_id"], name: "index_users_on_firm_id", using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["user_name"], name: "index_users_on_user_name", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["firm_id"], name: "index_users_on_firm_id"
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["user_name"], name: "index_users_on_user_name"
 
-  add_foreign_key "clients", "users"
-  add_foreign_key "contacts", "clients"
-  add_foreign_key "contacts", "contact_types"
-  add_foreign_key "legal_cases", "clients"
-  add_foreign_key "tasks", "legal_cases"
-  add_foreign_key "users", "firms"
 end

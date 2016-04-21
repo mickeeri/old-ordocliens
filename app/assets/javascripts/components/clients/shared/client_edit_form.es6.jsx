@@ -9,23 +9,25 @@ class ClientEditForm extends React.Component {
     this.handleChangeOnClientInput = this.handleChangeOnClientInput.bind(this);
   }
 
-  handleOnSubmit(event) {
-    event.preventDefault();
-    if (this.state && this.state.id) {
-      makePostOrPutRequest(Routes.client_path(this.state.id), 'PUT', { client: this.state });
+  handleOnSubmit(e) {
+    e.preventDefault();
+    if (this.state && this.state.id) { // If it shas id it is an update.
+      makePutRequest(Routes.client_path(this.state.id), { client: this.state });
     } else {
-      makePostOrPutRequest('/clients', 'POST', { client: this.state });
+      if (this.state) {
+        makePostRequest('/clients', { client: this.state });
+      }
     }
   }
 
-  handleChangeOnClientInput(event) {
+  handleChangeOnClientInput(e) {
     var nextState = {};
-    nextState[event.target.name] = event.target.value;
+    nextState[e.target.name] = e.target.value;
     this.setState(nextState);
   }
 
-  handleCancelButtonClick(event) {
-    event.preventDefault();
+  handleCancelButtonClick(e) {
+    e.preventDefault();
     if (this.state && this.state.id) {
       PubSub.publish('editModeButtonClicked');
     } else {
@@ -108,22 +110,6 @@ class ClientEditForm extends React.Component {
             </div>
           </form>
         </div>
-      </div>
-    );
-  }
-}
-
-class FormGroup extends React.Component {
-  render() {
-    return (
-      <div className="form-group">
-        <label htmlFor={this.props.name}>{this.props.label}</label>
-        <input
-          className="form-control"
-          type={this.props.type}
-          name={this.props.name}
-          defaultValue={this.props.value}
-          onChange={this.props.changeEvent}/>
       </div>
     );
   }

@@ -1,6 +1,5 @@
 class BreadCrumb extends React.Component {
   render() {
-    console.log(this.props);
     var links = this.props.links.map(link=>
       <li key={link.id}><a href={link.path}>{link.name}</a></li>
     );

@@ -1,66 +1,31 @@
 class LegalCasesIndex extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      legalCases: props.legalCases,
-    };
-
-    // this.toggleEditMode = this.toggleEditMode.bind(this);
-
-  }
-
   render() {
-    var legalCaseRows = this.state.legalCases.map(legalCase=>
-      <LegalCaseRow key={legalCase.id} legalCase={legalCase} />
+    var legalCaseRows = this.props.legalCases.map(legalCase=>
+      <LegalCaseRow key={legalCase.id} legalCase={legalCase} clientId={this.props.clientId }/>
     );
 
     return (
-      <div className="row">
-        <div className="col-md-9">
-          <div className="panel panel-default">
-            <table className="panel-body table table-hover">
-              <thead>
-                <tr>
-                  <th>Namn</th>
-                  <th>Ärende</th>
-                  <th>Aktivt</th>
-                </tr>
-              </thead>
-              <tbody>
-                {legalCaseRows}
-              </tbody>
-            </table>
-          </div>
+      <div className="col-md-9">
+        <div className="panel panel-default">
+          <table className="panel-body table table-hover">
+            <thead>
+              <tr>
+                <th>Namn</th>
+                <th>Ärende</th>
+                <th>Aktivt</th>
+              </tr>
+            </thead>
+            <tbody>
+              {legalCaseRows}
+            </tbody>
+          </table>
         </div>
       </div>
     );
   }
 }
 
-class LegalCaseRow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClickOnTableRow = this.handleClickOnTableRow.bind(this);
-  }
-
-  handleClickOnTableRow(e) {
-    window.location = Routes.legal_case_path(this.props.legalCase.id);
-  }
-
-  render() {
-    var legalCase = this.props.legalCase;
-    var active = legalCase.active ? 'Ja' : 'Nej';
-    return (
-      <tr onClick={this.handleClickOnTableRow}>
-        <td>{legalCase.name}</td>
-        <td>{legalCase.id}</td>
-        <td>{active}</td>
-      </tr>
-    );
-  }
-}
-
-LegalCaseRow.propTypes = {
-  legalCase: React.PropTypes.object.isRequired,
+LegalCasesIndex.propTypes = {
+  legalCases: React.PropTypes.array.isRequired,
+  clientId: React.PropTypes.number.isRequired,
 };

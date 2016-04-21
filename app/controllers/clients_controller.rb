@@ -3,7 +3,6 @@ class ClientsController < ApplicationController
   before_action :search_clients, only: [:index]
   before_action :fetch_client, only: [:show, :update, :destroy]
   before_action :fetch_data, only: [:index]
-
   respond_to :json, :html
 
   def index
@@ -24,21 +23,15 @@ class ClientsController < ApplicationController
   end
 
   def new
-    @client = Client.new
-    respond_to do |format|
-      format.html { render component: "ClientNew", props: { client: @client } }
-      format.json { render json: { client: @client } }
-    end
+    render component: "ClientNew"
   end
 
   def create
     @client = current_user.clients.build(client_params)
     if @client.save
       flash[:success] = "Klient sparad!"
-      render json: { client: @client, status: 201 }
-    else
-      respond_with @client
     end
+    respond_with @client
   end
 
   def update
@@ -50,7 +43,7 @@ class ClientsController < ApplicationController
     @client.destroy
     flash.keep[:notice] = "#{@client.first_name}
       #{@client.last_name} är raderad."
-    render json: { status: 200 }
+    respond_with @client
   end
 
   private

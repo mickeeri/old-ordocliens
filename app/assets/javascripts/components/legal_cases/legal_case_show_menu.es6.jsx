@@ -1,5 +1,5 @@
-class ClientShowMenu extends React.Component {
-  displayName: 'ClientShowMenu';
+class LegalCaseShowMenu extends React.Component {
+  displayName: 'LegalCaseShowMenu';
   constructor(props) {
     super(props);
     this.handleEditButtonClic = this.handleEditButtonClick.bind(this);
@@ -18,13 +18,13 @@ class ClientShowMenu extends React.Component {
   render() {
     return (
       <div className="panel-body np">
-        <ConfirmDeleteModal />
+        <ConfirmDeleteModal target="deleteLegalCase" subToPublish="deleteLegalCaseConfirmed" />
         <div className="button-menu" role="group" aria-label="...">
-          <button className="button edit-client-button"
+          <button className="button edit-button"
             onClick={this.handleEditButtonClick}>Redigera ärende
           </button>
           <button className="button button-danger" data-toggle="modal"
-            data-target="#confirmDeleteClientModal">Ta bort ärende
+            data-target="#deleteLegalCase">Ta bort ärende
           </button>
         </div>
       </div>
@@ -41,7 +41,7 @@ class ConfirmDeleteModal extends React.Component {
 
   render() {
     return (
-      <div className="modal fade" id="confirmDeleteClientModal"
+      <div className="modal fade" id="confirmDeleteCaseModal"
         tabIndex={-1} role="dialog" aria-labelledby="myModalLabel">
         <div className="modal-dialog" role="document">
           <div className="modal-content">

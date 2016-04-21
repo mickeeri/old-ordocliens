@@ -5,7 +5,6 @@ class ClientShow extends React.Component {
     this.state = {
       client: props.client,
       editMode: false,
-      showConfirmDelete: false,
       links: props.links,
     };
 
@@ -83,7 +82,17 @@ class ClientShow extends React.Component {
             </div>
           </div>
         </div>
-        <LegalCasesIndex legalCases={this.props.legal_cases} />
+        <div className="row">
+          <LegalCasesIndex legalCases={this.props.legal_cases} clientId={this.props.client.id} />
+          <div className="col-md-3">
+            <div className="panel panel-default">
+              <div className="panel-body">
+                <a className="button" href={Routes.new_client_legal_case_path
+                    (this.props.client.id)}>Lägg till ärende</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
