@@ -16,15 +16,19 @@ function makePutRequest(url, payload, subToPublish) {
   });
 }
 
-function makePostRequest(url, payload) {
+function makePostRequest(url, payload, action) {
   $.ajax({
     url: url,
     dataType: 'json',
     type: 'POST',
     data: payload,
     success: function (data) {
-      // Redirect to show page of returned object.
-      window.location = url + '/' + data.id;
+      if (action === 'redirect') {
+        // Redirect to show page of returned object.
+        window.location = url + '/' + data.id;
+      } else {
+        PubSub.publish(action);
+      }
     },
 
     error: function (xhr) {

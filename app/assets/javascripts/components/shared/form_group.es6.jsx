@@ -13,7 +13,8 @@ class FormGroup extends React.Component {
           required={this.props.required}
           maxLength={this.props.maxLength}
           pattern={this.props.pattern}
-          minLength={this.props.minLength}/>
+          minLength={this.props.minLength}
+          min={this.props.min}/>
       </div>
     );
   }

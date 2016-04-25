@@ -19,7 +19,9 @@ Rails.application.routes.draw do
   end
 
   resources :clients do
-    resources :legal_cases # show, index
+    resources :legal_cases do # show, index
+      resources :tasks
+    end
   end
   # #root "sessions#new"
   # # get    "login"   => "sessions#new"

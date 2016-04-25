@@ -1,6 +1,4 @@
 class ConfirmDeleteModal extends React.Component {
-  displayName: 'ConfirmDeleteModal';
-
   handleOnConfirmDeleteClick() {
     PubSub.publish(this.props.subToPublish);
   }

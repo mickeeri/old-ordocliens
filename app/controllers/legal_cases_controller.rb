@@ -9,6 +9,7 @@ class LegalCasesController < ApplicationController
         render component: "LegalCaseShow", props: {
           legal_case: @legal_case,
           client_id: @legal_case.client.id,
+          tasks: @legal_case.tasks.sorted_by_date,
           links: render_links }
       end
       format.json { render json: { legal_case: @legal_case } }

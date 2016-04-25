@@ -36,7 +36,8 @@ class LegalCaseShow extends React.Component {
   }
 
   refreshLegalCase () {
-    makeGetRequest(Routes.client_legal_case_path(this.props.client_id, this.state.legal_case.id))
+    var url = Routes.client_legal_case_path(this.props.client_id, this.state.legal_case.id);
+    makeGetRequest(url)
       .success(response=> {
         this.toggleEditMode();
         this.setState({ legal_case: response.legal_case });
@@ -79,6 +80,10 @@ class LegalCaseShow extends React.Component {
             </div>
           </div>
         </div>
+        <div className="row">
+          <TasksIndex initialTasks={this.props.tasks} legalCaseId={this.props.legal_case.id}
+            clientId={this.props.client_id}/>
+        </div>
       </div>
     );
   }
@@ -87,5 +92,6 @@ class LegalCaseShow extends React.Component {
 LegalCaseShow.propTypes = {
   client_id: React.PropTypes.number.isRequired,
   legal_case: React.PropTypes.object.isRequired,
+  tasks: React.PropTypes.array,
   links: React.PropTypes.array.isRequired,
 };
