@@ -9,7 +9,11 @@ class FormGroup extends React.Component {
           name={this.props.name}
           defaultValue={this.props.value}
           autoFocus={this.props.autoFocus ? this.props.autoFocus : false}
-          onChange={this.props.changeEvent}/>
+          onChange={this.props.changeEvent}
+          required={this.props.required}
+          maxLength={this.props.maxLength}
+          pattern={this.props.pattern}
+          minLength={this.props.minLength}/>
       </div>
     );
   }

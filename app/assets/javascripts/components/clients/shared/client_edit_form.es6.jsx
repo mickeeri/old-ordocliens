@@ -1,6 +1,4 @@
 class ClientEditForm extends React.Component {
-  displayName: 'ClientEditForm';
-
   constructor(props)  {
     super(props);
     this.state = props.client;
@@ -50,29 +48,35 @@ class ClientEditForm extends React.Component {
               value={this.state ? this.state.first_name : ''}
               changeEvent={this.handleChangeOnClientInput}
               autoFocus="true"
-              label="Förnamn"/>
+              label="Förnamn"
+              required={true}/>
             <FormGroup
               name="last_name"
               type="text"
               value={this.state ? this.state.last_name : ''}
               changeEvent={this.handleChangeOnClientInput}
-              label="Efternamn"/>
+              label="Efternamn"
+              required={true}/>
             <FormGroup
               name="ssn"
-              type="text"
+              type="tel"
               value={this.state ? this.state.ssn : ''}
               changeEvent={this.handleChangeOnClientInput}
-              label="Personnummer"/>
+              label="Personnummer"
+              pattern='\d*'
+              required={true}
+              maxLength={10}
+              minLength={10}/>
             <hr/>
             <FormGroup
               name="email"
-              type="text"
+              type="email"
               value={this.state ? this.state.email : ''}
               changeEvent={this.handleChangeOnClientInput}
               label="E-post"/>
             <FormGroup
               name="phone_number"
-              type="text"
+              type="tel"
               value={this.state ? this.state.phone_number : ''}
               changeEvent={this.handleChangeOnClientInput}
               label="Telefonnummer"/>
@@ -85,9 +89,10 @@ class ClientEditForm extends React.Component {
               label="Gatuadress"/>
             <FormGroup
               name="post_code"
-              type="text"
+              type="tel"
               value={this.state ? this.state.post_code : ''}
               changeEvent={this.handleChangeOnClientInput}
+              pattern='\d*'
               label="Postnummer"/>
             <FormGroup
               name="city"

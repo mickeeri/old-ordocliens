@@ -47,7 +47,9 @@ class LegalCaseEditForm extends React.Component {
               value={this.state ? this.state.name : ''}
               changeEvent={this.handleNameChange}
               autoFocus="true"
-              label="Ärendenamn"/>
+              label="Ärendenamn"
+              required={true}
+            />
             <hr/>
             <div className="action">
               <button className="button button-success" type="submit">Spara</button>
