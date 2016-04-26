@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
+gem 'sass-rails', '~> 5.0'
 gem 'rails', '4.2.6'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5.0.0.beta'
@@ -27,7 +28,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-fetch'
 end
 
-gem 'sass-rails', '~> 5.0'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views

@@ -18,6 +18,11 @@ firm.users.create(
   password_confirmation: "password"
 )
 
+PriceCategory.create(name: "Tidsspillan (låg)", price: 700.00)
+PriceCategory.create(name: "Tidsspillan (hög)", price: 1250.00)
+PriceCategory.create(name: "Utlägg", price: 0.00)
+PriceCategory.create(name: "Arbete", price: 1302.00)
+
 User.all.each do |user|
   number_of_clients = rand(100..200)
   sentece_lenght = rand(10..30)
@@ -47,10 +52,10 @@ User.all.each do |user|
 
       number_of_tasks.times do
         l_case.tasks.create!(
-          name: Faker::Lorem.characters(5),
           entry: Faker::Lorem.sentence(rand(10..30)),
           date: Faker::Time.between(2.days.ago, Time.zone.today, :day),
-          worked_hours: rand(1..8)
+          worked_hours: rand(1..8),
+          price_category_id: PriceCategory.offset(rand(PriceCategory.count)).first.id
         )
       end
     end

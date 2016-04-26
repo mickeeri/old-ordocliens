@@ -33,7 +33,8 @@ class TasksIndex extends React.Component {
 
     return (
       <div className="col-md-12">
-        <EditTaskModal legalCaseId={this.props.legalCaseId} clientId={this.props.clientId} />
+        <EditTaskModal legalCaseId={this.props.legalCaseId} clientId={this.props.clientId}
+          priceCategories={this.props.priceCategories}/>
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">Specifikation avseende arbeten</h3>
@@ -44,6 +45,7 @@ class TasksIndex extends React.Component {
                 <th>Datum</th>
                 <th>Notering</th>
                 <th className="nowrap">Arbetad tid</th>
+                <th className="nowrap">Priskategori</th>
               </tr>
             </thead>
             <tbody>
@@ -63,4 +65,5 @@ TasksIndex.propTypes = {
   initialTasks: React.PropTypes.array.isRequired,
   legalCaseId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number.isRequired,
+  priceCategories: React.PropTypes.array.isRequired,
 };

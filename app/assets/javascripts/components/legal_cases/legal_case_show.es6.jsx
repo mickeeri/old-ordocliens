@@ -82,7 +82,7 @@ class LegalCaseShow extends React.Component {
         </div>
         <div className="row">
           <TasksIndex initialTasks={this.props.tasks} legalCaseId={this.props.legal_case.id}
-            clientId={this.props.client_id}/>
+            clientId={this.props.client_id} priceCategories={this.props.price_categories}/>
         </div>
       </div>
     );
@@ -93,5 +93,6 @@ LegalCaseShow.propTypes = {
   client_id: React.PropTypes.number.isRequired,
   legal_case: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,
+  price_categories: React.PropTypes.array.isRequired,
   links: React.PropTypes.array.isRequired,
 };

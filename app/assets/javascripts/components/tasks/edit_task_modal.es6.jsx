@@ -12,7 +12,8 @@ class EditTaskModal extends React.Component {
               <h4 className="modal-title" id="modalLabel">Lägg till uppgift</h4>
             </div>
             <div className="modal-body">
-              <EditTaskForm legalCaseId={this.props.legalCaseId} clientId={this.props.clientId}/>
+              <EditTaskForm legalCaseId={this.props.legalCaseId} clientId={this.props.clientId}
+                priceCategories={this.props.priceCategories}/>
             </div>
           </div>
         </div>
@@ -24,4 +25,5 @@ class EditTaskModal extends React.Component {
 EditTaskModal.propTypes = {
   legalCaseId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number.isRequired,
+  priceCategories: React.PropTypes.array.isRequired,
 };

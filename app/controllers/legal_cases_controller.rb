@@ -9,7 +9,8 @@ class LegalCasesController < ApplicationController
         render component: "LegalCaseShow", props: {
           legal_case: @legal_case,
           client_id: @legal_case.client.id,
-          tasks: @legal_case.tasks.sorted_by_date,
+          tasks: prepare_array(@legal_case.tasks.sorted_by_date),
+          price_categories: prepare_array(PriceCategory.all),
           links: render_links }
       end
       format.json { render json: { legal_case: @legal_case } }
@@ -55,5 +56,21 @@ class LegalCasesController < ApplicationController
      {  id: rand(100),
         name: name,
         path: client_path(@legal_case.client.id) }]
+  end
+
+  def prepare_array(array)
+    ActiveModel::ArraySerializer.new(array, each_serializer: serializer(array))
+  end
+
+  def prepare(resource)
+    serializer(resource).new(resource)
+  end
+
+  def serializer(resource)
+    if resource.respond_to? :name
+      "#{resource.name}Serializer".safe_constantize
+    else
+      "#{resource.class}Serializer".safe_constantize
+    end
   end
 end

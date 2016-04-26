@@ -10,6 +10,7 @@ class TaskRow extends React.Component {
         <td className="nowrap">{task.date}</td>
         <td>{task.entry}</td>
         <td>{task.worked_hours}</td>
+        <td className="nowrap">{task.price_category.name}</td>
       </tr>
     );
   }

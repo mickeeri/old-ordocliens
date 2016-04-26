@@ -5,6 +5,7 @@ class EditTaskForm extends React.Component {
       date: new Date().toISOString().substring(0, 10),
       entry: '',
       worked_hours: 0,
+      price_category_id: 0,
     };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -31,6 +32,10 @@ class EditTaskForm extends React.Component {
   }
 
   render() {
+    var priceCategoriesOptions = this.props.priceCategories.map(priceCategory=>
+      <option key={priceCategory.id} value={priceCategory.id}>
+        {priceCategory.name}</option>
+    );
     return (
       <form className="form-inline" onSubmit={this.handleOnSubmit}>
         <FormGroup
@@ -54,7 +59,14 @@ class EditTaskForm extends React.Component {
             changeEvent={this.handleInputChange}
             label="Arbetade timmar"
             min="0"
+            step="0.01"
             required={true} />
+          <div className="form-group">
+            <select className="form-control" onChange={this.handleInputChange}
+              name="price_category_id">
+              {priceCategoriesOptions}
+            </select>
+          </div>
         <hr/>
         <div className="action">
           <button className="button button-success" type="submit">Spara</button>
@@ -68,4 +80,5 @@ class EditTaskForm extends React.Component {
 EditTaskForm.propTypes = {
   legalCaseId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number.isRequired,
+  priceCategories: React.PropTypes.array.isRequired,
 };

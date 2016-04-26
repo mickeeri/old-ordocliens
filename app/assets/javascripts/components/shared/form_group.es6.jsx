@@ -14,6 +14,7 @@ class FormGroup extends React.Component {
           maxLength={this.props.maxLength}
           pattern={this.props.pattern}
           minLength={this.props.minLength}
+          step={this.props.step}
           min={this.props.min}/>
       </div>
     );
