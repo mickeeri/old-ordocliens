@@ -45,7 +45,7 @@ class ClientsIndex extends React.Component {
     this.fetchClients();
   }
 
-  handleAddClientButtonClick(event) {
+  addClientClick(event) {
     window.location = Routes.new_client_path();
   }
 
@@ -81,12 +81,18 @@ class ClientsIndex extends React.Component {
           </tbody>
         </table>
         <div className="panel-footer">
-          <ClientPagination
-            totalPages={this.state.meta.totalPages}
-            currentPage={this.state.meta.currentPage}
-            onPaginate={this.handleOnPaginate} />
-          <button className="button button-success pull-right"
-            onClick={this.handleAddClientButtonClick}>Lägg till klient</button>
+          <div className="row">
+            <ClientPagination
+              totalPages={this.state.meta.totalPages}
+              currentPage={this.state.meta.currentPage}
+              onPaginate={this.handleOnPaginate} />
+          </div>
+          <div className="row">
+            <button
+              className="btn btn-primary"
+              onClick={this.addClientClick}>Lägg till klient
+            </button>
+          </div>
         </div>
       </div>
     );

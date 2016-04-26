@@ -1,6 +1,19 @@
 class ConfirmDeleteModal extends React.Component {
   handleOnConfirmDeleteClick() {
-    PubSub.publish(this.props.subToPublish);
+    makeDeleteRequest(this.props.url)
+      .success(response=> {
+        // Either redirect to other page or publish subscription.
+        if (this.props.redirectTo) {
+          window.location = this.props.redirectTo;
+        } else {
+          // Redirect and hide modal.
+          PubSub.publish(this.props.subToPublish);
+          $('#' + this.props.target).modal('hide');
+        }
+      })
+      .error(xhr=> {
+        console.error(url, xhr.status, xhr.statusText);
+      });
   }
 
   render() {
@@ -33,5 +46,7 @@ class ConfirmDeleteModal extends React.Component {
 
 ConfirmDeleteModal.propTypes = {
   target: React.PropTypes.string.isRequired,
-  subToPublish: React.PropTypes.string.isRequired,
+  subToPublish: React.PropTypes.string,
+  url: React.PropTypes.string,
+  redirectTo: React.PropTypes.string,
 };

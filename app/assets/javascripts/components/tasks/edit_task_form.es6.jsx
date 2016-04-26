@@ -21,7 +21,7 @@ class EditTaskForm extends React.Component {
       makePostRequest(
         Routes.client_legal_case_tasks_path(this.props.clientId, this.props.legalCaseId),
         { task: this.state },
-        'taskAdded');
+        'tasksTouched');
     }
   }
 

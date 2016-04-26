@@ -1,17 +1,17 @@
 class ClientShowMenu extends React.Component {
-  displayName: 'ClientShowMenu';
   constructor(props) {
     super(props);
     this.handleEditButtonClic = this.handleEditButtonClick.bind(this);
     this.handleOnDeleteButtonClick = this.handleOnDeleteButtonClick.bind(this);
   }
 
-  handleEditButtonClick(event) {
+  handleEditButtonClick() {
     PubSub.publish('editModeButtonClicked');
   }
 
-  handleOnDeleteButtonClick(event) {
-    event.preventDefault();
+  handleOnDeleteButtonClick(e) {
+    console.log('Clicked delete button. Client show menu');
+    e.preventDefault();
     PubSub.publish('deleteButtonClicked');
   }
 

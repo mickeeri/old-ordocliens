@@ -7,6 +7,10 @@ class LegalCasesIndex extends React.Component {
     return (
       <div className="col-md-9">
         <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">Klientens ärenden</h3>
+            <small>Klicka för att visa detaljer</small>
+          </div>
           <table className="panel-body table table-hover">
             <thead>
               <tr>

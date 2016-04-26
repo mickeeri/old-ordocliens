@@ -23,6 +23,12 @@ $danger-red: #b94a48;
   transition: all 0.5s ease;
 }
 
+@mixin button-gradient($color1, $color2) {
+  background-color: $color1;
+  background-image: linear-gradient($color2, $color1);
+  background-image: -webkit-linear-gradient($color2, $color1);
+}
+
 // LAYOUT //
 body {
   background-color: $background-color;
@@ -113,6 +119,12 @@ main {
   }
 }
 
+.modal-body {
+  .action {
+    height: 40px;
+  }
+}
+
 // PANELS //
 .panel-heading {
   background-color: $white !important;
@@ -176,10 +188,9 @@ main {
   display: block;
   color: #333;
   padding: 6px 15px;
-  background-color: #eee;
+  @include button-gradient(#eee, #fcfcfc);
   border: 1px solid #d5d5d5;
-  background-image: linear-gradient(#fcfcfc, #eee);
-  background-image: -webkit-linear-gradient(#fcfcfc, #eee);
+
   &:hover {
     text-decoration: none;
     background-color: #ddd;
@@ -233,11 +244,11 @@ button.active {
 
 .action {
   display: block;
-  height: 40px;
   .button {
     float: right;
     margin-left: 4px;
-    width: 120px;
+    width: 100px;
+    padding: 5px;
   }
 }
 
@@ -270,12 +281,6 @@ ul {
   margin-bottom: 4px;
 
   a {
-
-    //
-
-
-
-
     &:active {
       text-decoration: none;
     }

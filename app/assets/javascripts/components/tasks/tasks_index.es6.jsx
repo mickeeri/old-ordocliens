@@ -6,11 +6,11 @@ class TasksIndex extends React.Component {
   }
 
   componentDidMount() {
-    PubSub.subscribe('taskAdded', this.refreshTasks);
+    PubSub.subscribe('tasksTouched', this.refreshTasks);
   }
 
   componentWillUnmount() {
-    PubSub.unsubscribe('taskAdded');
+    PubSub.unsubscribe('tasksTouched');
   }
 
   refreshTasks() {
@@ -28,11 +28,16 @@ class TasksIndex extends React.Component {
 
   render() {
     var taskRows = this.state.tasks.map(task=>
-      <TaskRow key={task.id} task={task} legalCaseId={this.props.legalCaseId }/>
+      <TaskRow
+        key={task.id}
+        task={task}
+        legalCaseId={this.props.legalCaseId}
+        clientId={this.props.clientId} />
     );
 
     return (
       <div className="col-md-12">
+        <div id="tasksModalContainer"></div>
         <EditTaskModal legalCaseId={this.props.legalCaseId} clientId={this.props.clientId}
           priceCategories={this.props.priceCategories}/>
         <div className="panel panel-default">
@@ -46,6 +51,7 @@ class TasksIndex extends React.Component {
                 <th>Notering</th>
                 <th className="nowrap">Arbetad tid</th>
                 <th className="nowrap">Priskategori</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -53,7 +59,10 @@ class TasksIndex extends React.Component {
             </tbody>
           </table>
           <div className="panel-footer">
-            <a href="#" data-toggle="modal" data-target="#editTaskModal">Lägg till uppgift</a>
+            <a
+              href="#" data-toggle="modal"
+              data-target="#editTaskModal">Lägg till uppgift
+            </a>
           </div>
         </div>
       </div>
