@@ -3,14 +3,17 @@ class TasksIndex extends React.Component {
     super(props);
     this.state = { tasks: this.props.initialTasks };
     this.refreshTasks = this.refreshTasks.bind(this);
+    this.addTaskClicked = this.addTaskClicked.bind(this);
   }
 
   componentDidMount() {
     PubSub.subscribe('tasksTouched', this.refreshTasks);
+    PubSub.subscribe('dismissEdit', this.removeEditTaskModal);
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe('tasksTouched');
+    PubSub.unsubscribe('dismissEdit');
   }
 
   refreshTasks() {
@@ -18,12 +21,34 @@ class TasksIndex extends React.Component {
     makeGetRequest(url)
       .success(response=> {
         this.setState({ tasks: response.tasks });
-        $('#editTaskModal').modal('hide');
-        $('#editTaskModal').find('form').trigger('reset');
+        this.removeEditTaskModal();
+
+        // $('#editTaskModal').find('form').trigger('reset'); // Clear input fields in modal.
       })
       .error(xhr=> {
         console.error(url, xhr.status, xhr.statusText);
       });
+  }
+
+  // Remove modal from DOM.
+  removeEditTaskModal() {
+    $('#editTaskModal').modal('hide');
+    ReactDOM.unmountComponentAtNode(document.getElementById('tasksModalContainer'));
+  }
+
+  addTaskClicked(e) {
+    e.preventDefault();
+
+    // Render modal...
+    ReactDOM.render(
+      <EditTaskModal
+        legalCaseId={this.props.legalCaseId}
+        clientId={this.props.clientId}
+        priceCategories={this.props.priceCategories}
+      />,
+      document.getElementById('tasksModalContainer')
+    );
+    $('#editTaskModal').modal(); // ...and display it.
   }
 
   render() {
@@ -32,14 +57,14 @@ class TasksIndex extends React.Component {
         key={task.id}
         task={task}
         legalCaseId={this.props.legalCaseId}
-        clientId={this.props.clientId} />
+        clientId={this.props.clientId}
+        priceCategories={this.props.priceCategories}
+      />
     );
 
     return (
       <div className="col-md-12">
         <div id="tasksModalContainer"></div>
-        <EditTaskModal legalCaseId={this.props.legalCaseId} clientId={this.props.clientId}
-          priceCategories={this.props.priceCategories}/>
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">Specifikation avseende arbeten</h3>
@@ -52,6 +77,7 @@ class TasksIndex extends React.Component {
                 <th className="nowrap">Arbetad tid</th>
                 <th className="nowrap">Priskategori</th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -59,10 +85,7 @@ class TasksIndex extends React.Component {
             </tbody>
           </table>
           <div className="panel-footer">
-            <a
-              href="#" data-toggle="modal"
-              data-target="#editTaskModal">Lägg till uppgift
-            </a>
+            <a href="#" onClick={this.addTaskClicked}>Lägg till uppgift</a>
           </div>
         </div>
       </div>

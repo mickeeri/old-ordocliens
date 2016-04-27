@@ -1,11 +1,12 @@
 class EditTaskForm extends React.Component {
   constructor(props)  {
     super(props);
-    this.state = {
-      date: new Date().toISOString().substring(0, 10),
-      entry: '',
-      worked_hours: 0,
-      price_category_id: 0,
+    this.state = { // Initialize state.
+      id: props.initialTask ? props.initialTask.id : '',
+      date: props.initialTask ? props.initialTask.date : new Date().toISOString().substring(0, 10),
+      entry: props.initialTask ? props.initialTask.entry : '',
+      worked_hours: props.initialTask ? props.initialTask.worked_hours : '',
+      price_category_id: props.initialTask ? props.initialTask.price_category_id : '',
     };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -14,14 +15,25 @@ class EditTaskForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    if (this.state && this.state.id) { // If it has id it is update.
-      // makePutRequest(Routes.client_legal_case_path(this.props.client_id, this.state.id),
-      //   { task: this.state }, 'taskUpdated');
+    if (this.state.id) { // If it has id it is update.
+      makePutRequest(
+        Routes.client_legal_case_task_path(
+          this.props.clientId,
+          this.props.legalCaseId,
+          this.state.id
+        ),
+        { task: this.state },
+        'tasksTouched'
+      );
     } else { // Otherwise post.
       makePostRequest(
-        Routes.client_legal_case_tasks_path(this.props.clientId, this.props.legalCaseId),
+        Routes.client_legal_case_tasks_path(
+          this.props.clientId,
+          this.props.legalCaseId
+        ),
         { task: this.state },
-        'tasksTouched');
+        'tasksTouched'
+      );
     }
   }
 
@@ -29,6 +41,11 @@ class EditTaskForm extends React.Component {
     var nextState = {};
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);
+  }
+
+  dismissBtnClicked(e) {
+    e.preventDefault();
+    PubSub.publish('dismissEdit');
   }
 
   render() {
@@ -41,36 +58,48 @@ class EditTaskForm extends React.Component {
         <FormGroup
           name="date"
           type="date"
-          value={this.state ? this.state.date : ''}
+          value={this.state.date}
           changeEvent={this.handleInputChange}
           label="Datum"
-          required={true} />
-          <div className="form-group form-group-textarea">
-            <label htmlFor="entry">Notering</label>
-            <textarea className="form-control" type="text-area"
-              value={this.state ? this.state.entry : ''} name="entry"
-              onChange={this.handleInputChange}>
-            </textarea>
-          </div>
-          <FormGroup
-            name="worked_hours"
-            type="number"
-            value={this.state ? this.state.worked_hours : ''}
-            changeEvent={this.handleInputChange}
-            label="Arbetade timmar"
-            min="0"
-            step="0.01"
-            required={true} />
-          <div className="form-group">
-            <select className="form-control" onChange={this.handleInputChange}
-              name="price_category_id">
-              {priceCategoriesOptions}
-            </select>
-          </div>
+          required={true}
+        />
+        <div className="form-group form-group-textarea">
+          <label htmlFor="entry">Notering</label>
+          <textarea
+            className="form-control"
+            type="text-area"
+            value={this.state.entry}
+            name="entry"
+            rows="3"
+            onChange={this.handleInputChange}
+            required>
+          </textarea>
+        </div>
+        <FormGroup
+          name="worked_hours"
+          type="number"
+          value={this.state.worked_hours}
+          changeEvent={this.handleInputChange}
+          label="Arbetade timmar"
+          min="0"
+          step="0.05"
+          required={true}
+        />
+        <div className="form-group">
+          <label htmlFor="price_category_id">Priskategori</label>
+          <select className="form-control"
+            onChange={this.handleInputChange}
+            name="price_category_id"
+            value={this.state.price_category_id}
+            required>
+            <option value="" disabled>Välj en priskategori</option>
+            {priceCategoriesOptions}
+          </select>
+        </div>
         <hr/>
         <div className="action">
           <button className="button button-success" type="submit">Spara</button>
-          <button className="button button-default" data-dismiss="modal">Avbryt</button>
+          <button className="button button-default" onClick={this.dismissBtnClicked}>Avbryt</button>
         </div>
       </form>
     );
@@ -81,4 +110,5 @@ EditTaskForm.propTypes = {
   legalCaseId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number.isRequired,
   priceCategories: React.PropTypes.array.isRequired,
+  initialTask: React.PropTypes.object,
 };

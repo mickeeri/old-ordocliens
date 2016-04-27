@@ -21,6 +21,12 @@ class TasksController < ApplicationController
     respond_with @task
   end
 
+  def update
+    @task = Task.find(params[:id])
+    @task.update_attributes(task_params)
+    respond_with @task
+  end
+
   private
   def task_params
     params.require(:task).permit(:date, :entry, :worked_hours, :price_category_id)

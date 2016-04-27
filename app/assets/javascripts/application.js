@@ -15,7 +15,6 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
-//# require es5-shim
 //= require react
 //= require react_ujs
 //= require components

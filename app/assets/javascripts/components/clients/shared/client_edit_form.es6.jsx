@@ -49,14 +49,16 @@ class ClientEditForm extends React.Component {
               changeEvent={this.handleChangeOnClientInput}
               autoFocus="true"
               label="Förnamn"
-              required={true}/>
+              required={true}
+            />
             <FormGroup
               name="last_name"
               type="text"
               value={this.state ? this.state.last_name : ''}
               changeEvent={this.handleChangeOnClientInput}
               label="Efternamn"
-              required={true}/>
+              required={true}
+            />
             <FormGroup
               name="ssn"
               type="tel"
@@ -66,53 +68,68 @@ class ClientEditForm extends React.Component {
               pattern='\d*'
               required={true}
               maxLength={10}
-              minLength={10}/>
+              minLength={10}
+            />
             <hr/>
             <FormGroup
               name="email"
               type="email"
               value={this.state ? this.state.email : ''}
               changeEvent={this.handleChangeOnClientInput}
-              label="E-post"/>
+              label="E-post"
+            />
             <FormGroup
               name="phone_number"
               type="tel"
               value={this.state ? this.state.phone_number : ''}
               changeEvent={this.handleChangeOnClientInput}
-              label="Telefonnummer"/>
+              label="Telefonnummer"
+            />
             <hr/>
             <FormGroup
               name="street"
               type="text"
               value={this.state ? this.state.street : ''}
               changeEvent={this.handleChangeOnClientInput}
-              label="Gatuadress"/>
+              label="Gatuadress"
+            />
             <FormGroup
               name="post_code"
               type="tel"
               value={this.state ? this.state.post_code : ''}
               changeEvent={this.handleChangeOnClientInput}
               pattern='\d*'
-              label="Postnummer"/>
+              label="Postnummer"
+            />
             <FormGroup
               name="city"
               type="text"
               value={this.state ? this.state.city : ''}
               changeEvent={this.handleChangeOnClientInput}
-              label="Ort"/>
+              label="Ort"
+            />
             <hr/>
             <div className="form-group form-group-textarea">
               <label htmlFor="note">Anteckningar</label>
-              <textarea className="form-control" type="text-area"
-                value={this.state ? this.state.note : ''} name="note" rows="4"
+              <textarea
+                className="form-control"
+                type="text-area"
+                value={this.state ? this.state.note : ''}
+                name="note"
+                rows="4"
                 onChange={this.handleChangeOnClientInput}>
               </textarea>
             </div>
             <hr/>
             <div className="action">
-              <button className="button button-success" type="submit">Spara</button>
-              <button className="button button-default"
-                onClick={this.handleCancelButtonClick}>Avbryt</button>
+              <button
+                className="button button-success"
+                type="submit">Spara
+              </button>
+              <button
+                className="button button-default"
+                onClick={this.handleCancelButtonClick}>Avbryt
+              </button>
             </div>
           </form>
         </div>
