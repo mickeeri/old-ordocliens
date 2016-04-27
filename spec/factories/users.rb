@@ -10,7 +10,7 @@ FactoryGirl.define do
     password_confirmation password
   end
 
-  factory :another_user, class: User do
+  factory :another_user, class: User do # TODO: never used I think.
     firm
     full_name Faker::Name.name
     user_name Faker::Internet.user_name

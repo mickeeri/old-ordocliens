@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :task do
-    name "MyString"
-    enty "MyText"
+    entry "MyText"
     date "2016-04-17"
-    worked_hours "9.99"
-    legal_case nil
+    worked_hours "9.25"
+    legal_case
+    price_category
   end
 end
