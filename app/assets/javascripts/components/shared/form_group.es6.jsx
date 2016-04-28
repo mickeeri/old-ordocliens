@@ -4,7 +4,7 @@ class FormGroup extends React.Component {
       <div className="form-group">
         <label htmlFor={this.props.name}>{this.props.label}</label>
         <input
-          className="form-control"
+          className="form-control form-control-sm"
           type={this.props.type}
           name={this.props.name}
           defaultValue={this.props.value}

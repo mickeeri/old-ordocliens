@@ -1,29 +1,29 @@
 class ClientInfo extends React.Component {
-  displayName: 'ClientInfo';
   render() {
     var client = this.props.client;
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">{client.first_name} {client.last_name}</h3>
-        </div>
-        <div className="panel-body">
-          <h4>Personnummer</h4>
-          {client.ssn}
-          <hr/>
-          <h4>E-post</h4>
-          {client.email}
-          <h4>Telefonnummer</h4>
-          {client.phone_number}
-          <hr/>
-          <h4>Adress</h4>
-          {client.street} <br/>
-          {client.post_code} {client.city}
-          <hr/>
-          <h4>Anteckning</h4>
-          <div>{client.note}</div>
+      <div className="card">
+        <div className="card-block">
+          <h4 className="card-title">{client.first_name} {client.last_name}</h4>
+          <dl>
+            <dt>Personnummer</dt>
+            <dd>{client.ssn}</dd>
+            <dt>E-post</dt>
+            <dd>{client.email}</dd>
+            <dt>Mobil</dt>
+            <dd>{client.phone_number}</dd>
+            <dt>Adress</dt>
+            <dd>{client.street}<br/>
+                {client.post_code} {client.city}
+            </dd>
+            <dt>Anteckning</dt>
+            <dd>{client.note}</dd>
+          </dl>
         </div>
       </div>
     );
   }
 }
+ClientInfo.propTypes = {
+  client: React.PropTypes.object.isRequired,
+};

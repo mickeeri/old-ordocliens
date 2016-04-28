@@ -4,6 +4,7 @@
 // LAYOUT
 main {
   margin-top: 40px;
+  min-height: 1000px;
 }
 
 // NAVBAR
@@ -23,4 +24,43 @@ table {
 // TYPOGRAPHY
 h1 {
   line-height: 0.9;
+}
+
+// PAGINATOR
+.paginator {
+  margin-top: 15px;
+  text-align: center;
+
+  .btn, input, p, div {
+    display: inline-block;
+  }
+
+  p { margin: 0 5px; }
+
+  input { width: 50px; }
+}
+
+// CARD
+.lc-card {
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ECEEEF;
+  }
+  p {
+    margin-bottom: 5px;
+  }
+}
+
+.card-block button {
+  margin: 0 10px;
+}
+
+// MISC
+.center-content {
+  text-align: center;
+}
+
+.content-right {
+  text-align: right;
 }

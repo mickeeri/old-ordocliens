@@ -69,11 +69,21 @@ class ClientsIndex extends React.Component {
                 onChange={this.handleOnSearch}
                 ref="search"
               />
+              { this.state.meta.totalPages == 1 ? '' :
+                <Paginator
+                  totalPages={this.state.meta.totalPages}
+                  currentPage={this.state.meta.currentPage}
+                  nextPage={this.state.meta.nextPage}
+                  prevPage={this.state.meta.previousPage}
+                  onPaginate={this.handleOnPaginate}
+                />
+              }
             </form>
+
           </div>
         </div>
         <div className="row">
-          <table className="table col-md-12">
+          <table className="table table-bordered table-striped col-md-12">
             <thead>
               <tr>
                 <th>Klientnummer</th>
@@ -85,18 +95,6 @@ class ClientsIndex extends React.Component {
               {clientRows}
             </tbody>
           </table>
-          <div className="row">
-            <ClientPagination
-              totalPages={this.state.meta.totalPages}
-              currentPage={this.state.meta.currentPage}
-              onPaginate={this.handleOnPaginate} />
-          </div>
-          <div className="row">
-            <button
-              className="btn btn-primary"
-              onClick={this.addClientClick}>Lägg till klient
-            </button>
-          </div>
         </div>
       </div>
     );

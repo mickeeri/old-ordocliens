@@ -36,12 +36,10 @@ class ClientEditForm extends React.Component {
 
   render() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">{this.props.header}</h3>
-        </div>
-        <div className="panel-body">
-          <form className="form-inline" onSubmit={this.handleOnSubmit}>
+      <div className="card">
+        <div className="card-block">
+          <h3 className="card-title">{this.props.header} klient</h3>
+          <form className="form" onSubmit={this.handleOnSubmit}>
             <FormGroup
               name="first_name"
               type="text"
@@ -83,7 +81,7 @@ class ClientEditForm extends React.Component {
               type="tel"
               value={this.state ? this.state.phone_number : ''}
               changeEvent={this.handleChangeOnClientInput}
-              label="Telefonnummer"
+              label="Mobil"
             />
             <hr/>
             <FormGroup
@@ -93,21 +91,27 @@ class ClientEditForm extends React.Component {
               changeEvent={this.handleChangeOnClientInput}
               label="Gatuadress"
             />
-            <FormGroup
-              name="post_code"
-              type="tel"
-              value={this.state ? this.state.post_code : ''}
-              changeEvent={this.handleChangeOnClientInput}
-              pattern='\d*'
-              label="Postnummer"
-            />
-            <FormGroup
-              name="city"
-              type="text"
-              value={this.state ? this.state.city : ''}
-              changeEvent={this.handleChangeOnClientInput}
-              label="Ort"
-            />
+            <div className="row">
+              <div className="col-md-6">
+                <FormGroup
+                  name="post_code"
+                  type="tel"
+                  value={this.state ? this.state.post_code : ''}
+                  changeEvent={this.handleChangeOnClientInput}
+                  pattern='\d*'
+                  label="Postnummer"
+                />
+              </div>
+              <div className="col-md-6">
+                <FormGroup
+                  name="city"
+                  type="text"
+                  value={this.state ? this.state.city : ''}
+                  changeEvent={this.handleChangeOnClientInput}
+                  label="Ort"
+                />
+              </div>
+            </div>
             <hr/>
             <div className="form-group form-group-textarea">
               <label htmlFor="note">Anteckningar</label>
@@ -121,14 +125,14 @@ class ClientEditForm extends React.Component {
               </textarea>
             </div>
             <hr/>
-            <div className="action">
+            <div className="action content-right">
               <button
-                className="button button-success"
-                type="submit">Spara
+                className="btn btn-secondary"
+                onClick={this.handleCancelButtonClick}>Avbryt
               </button>
               <button
-                className="button button-default"
-                onClick={this.handleCancelButtonClick}>Avbryt
+                className="btn btn-success"
+                type="submit">Spara
               </button>
             </div>
           </form>

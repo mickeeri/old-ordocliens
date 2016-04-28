@@ -1,5 +1,5 @@
 class EditTaskModal extends React.Component {
-  closeBtnClicked() {
+  closeBtnClicked(e) {
     PubSub.publish('dismissEdit');
   }
 
@@ -20,12 +20,7 @@ class EditTaskModal extends React.Component {
               <h4 className="modal-title" id="modalLabel">Lägg till uppgift</h4>
             </div>
             <div className="modal-body">
-              <EditTaskForm
-                legalCaseId={this.props.legalCaseId}
-                clientId={this.props.clientId}
-                priceCategories={this.props.priceCategories}
-                initialTask={this.props.task}
-              />
+              {this.props.form}
             </div>
           </div>
         </div>
@@ -34,9 +29,16 @@ class EditTaskModal extends React.Component {
   }
 }
 
-EditTaskModal.propTypes = {
-  legalCaseId: React.PropTypes.number.isRequired,
-  clientId: React.PropTypes.number.isRequired,
-  priceCategories: React.PropTypes.array.isRequired,
-  task: React.PropTypes.object,
-};
+// <EditTaskForm
+//   legalCaseId={this.props.legalCaseId}
+//   clientId={this.props.clientId}
+//   priceCategories={this.props.priceCategories}
+//   initialTask={this.props.task}
+// />
+
+// EditTaskModal.propTypes = {
+//   legalCaseId: React.PropTypes.number.isRequired,
+//   clientId: React.PropTypes.number.isRequired,
+//   priceCategories: React.PropTypes.array.isRequired,
+//   task: React.PropTypes.object,
+// };

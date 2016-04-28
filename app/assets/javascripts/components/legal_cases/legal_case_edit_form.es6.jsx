@@ -1,6 +1,4 @@
 class LegalCaseEditForm extends React.Component {
-  displayName: 'LegalCaseEditForm';
-
   constructor(props)  {
     super(props);
     this.state = props.legal_case;
@@ -12,11 +10,11 @@ class LegalCaseEditForm extends React.Component {
   handleOnSubmit(e) {
     e.preventDefault();
     if (this.state && this.state.id) { // If it has id it is update.
-      makePutRequest(Routes.client_legal_case_path(this.props.client_id, this.state.id),
-        { legal_case: this.state }, 'legalCaseUpdated');
+      makePutRequest(Routes.client_legal_case_path(this.props.clientId, this.state.id),
+        { legal_case: this.state }, 'legalCasesTouched');
     } else { // Otherwise post.
-      makePostRequest(Routes.client_legal_cases_path(this.props.client_id),
-        { legal_case: this.state });
+      makePostRequest(Routes.client_legal_cases_path(this.props.clientId),
+        { legal_case: this.state }, 'legalCasesTouched');
     }
   }
 
@@ -26,11 +24,7 @@ class LegalCaseEditForm extends React.Component {
 
   handleCancelButtonClick(e) {
     e.preventDefault();
-    if (this.state && this.state.id) {
-      PubSub.publish('editModeButtonClicked');
-    } else {
-      window.location = Routes.client_path(this.props.client_id);
-    }
+    PubSub.publish('dismissEdit');
   }
 
   render() {
@@ -65,5 +59,5 @@ class LegalCaseEditForm extends React.Component {
 
 LegalCaseEditForm.propTypes = {
   legal_case: React.PropTypes.object,
-  client_id: React.PropTypes.number.isRequired,
+  clientId: React.PropTypes.number.isRequired,
 };

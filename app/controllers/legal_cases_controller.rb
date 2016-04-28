@@ -3,10 +3,15 @@ class LegalCasesController < ApplicationController
   before_action :fetch_legal_case, only: [:show, :update, :destroy]
   respond_to :json, :html
 
+  def index
+    @legal_cases = Client.find(params[:client_id]).legal_cases
+    respond_with @legal_cases
+  end
+
   def show
     respond_to do |format|
       format.html do
-        render component: "LegalCaseShow", props: {
+        render component: "LegalCaseShow", props: { # TODO: serializer
           legal_case: @legal_case,
           client_id: @legal_case.client.id,
           tasks: prepare_array(@legal_case.tasks.sorted_by_date),
@@ -24,8 +29,7 @@ class LegalCasesController < ApplicationController
 
   def create
     client = Client.find(params[:client_id])
-    legal_case = client.legal_cases.build(legal_case_params)
-    flash[:success] = "Ärende sparat!" if legal_case.save
+    legal_case = client.legal_cases.create(legal_case_params)
     respond_with(client, legal_case)
   end
 
@@ -36,7 +40,6 @@ class LegalCasesController < ApplicationController
 
   def destroy
     @legal_case.destroy
-    flash.keep[:notice] = "Ärende #{@legal_case.name} är raderat"
     respond_with @legal_case
   end
 

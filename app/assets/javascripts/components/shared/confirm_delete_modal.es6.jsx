@@ -32,10 +32,10 @@ class ConfirmDeleteModal extends React.Component {
               Är du säker?
             </div>
             <div className="modal-footer action">
-              <button type="button" className="button button-danger"
-                onClick={this.handleOnConfirmDeleteClick.bind(this)}>Ja</button>
-              <button type="button" className="button"
+              <button type="button" className="btn btn-secondary"
                 data-dismiss="modal">Avbryt</button>
+              <button type="button" className="btn btn-danger"
+                onClick={this.handleOnConfirmDeleteClick.bind(this)}>Radera</button>
             </div>
           </div>
         </div>

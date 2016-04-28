@@ -48,7 +48,7 @@ class ClientShow extends React.Component {
   }
 
   // Call delete in utils.
-  deleteClient() {
+  deleteClient() { // TODO: Maybee remove
     makeDeleteRequest(Routes.client_path(this.state.client.id))
       .success(response=> {
         window.location = Routes.clients_path();
@@ -62,7 +62,7 @@ class ClientShow extends React.Component {
     var content;
 
     // Showing either form or regular text based on value of boolean editMode.
-    if (this.state.editMode) {
+    if (!this.state.editMode) {
       content = <ClientEditForm client={this.state.client} header="Redigera" />;
     } else {
       content = <ClientInfo client={this.state.client} />;
@@ -71,24 +71,28 @@ class ClientShow extends React.Component {
     return (
       <div>
         <BreadCrumb active={this.state.client.first_name + ' ' +
-          this.state.client.last_name} links={this.state.links}/>
+          this.state.client.last_name}
+          links={this.state.links}
+        />
         <div className="row">
-          <div className="col-md-9">
+          <div className="col-md-6">
             {content}
           </div>
-          <div className="col-md-3">
-            <div className="panel panel-default">
-              <ClientShowMenu />
+          <div className="col-md-6">
+            <div className="row">
+              <div className="col-md-12">
+            <LegalCasesIndex legalCases={this.props.legal_cases}
+              clientId={this.props.client.id} />
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <LegalCasesIndex legalCases={this.props.legal_cases} clientId={this.props.client.id} />
-          <div className="col-md-3">
-            <div className="panel panel-default">
-              <div className="panel-body">
-                <a className="button" href={Routes.new_client_legal_case_path
-                    (this.props.client.id)}>Lägg till ärende</a>
+            <div className="row">
+              <div className="col-md-12">
+                <AddLegalCaseButton clientId={this.props.client.id} />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <ClientDeleteButton clientId={this.props.client.id} />
               </div>
             </div>
           </div>
