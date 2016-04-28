@@ -19,5 +19,6 @@
 //= require react_ujs
 //= require components
 //= require pubsub
+//= require tether
 //= require bootstrap-sprockets
 //= require_tree .

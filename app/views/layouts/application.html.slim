@@ -9,9 +9,9 @@ html
     = csrf_meta_tags
     title Juristappen
   body
-    -if user_signed_in?  
-      = render "shared/navbar"
-    .container      
+    .container
+      -if user_signed_in?  
+        = render "shared/navbar"          
       main        
         = render "shared/flash_messages"
         = yield

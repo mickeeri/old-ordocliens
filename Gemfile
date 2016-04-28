@@ -1,8 +1,9 @@
 
 source 'https://rubygems.org'
 
-gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
+gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'sass-rails', '~> 5.0'
+gem "font-awesome-rails"
 gem 'rails', '4.2.6'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5.0.0.beta'
@@ -25,7 +26,7 @@ gem "js-routes"
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-es6-promise'
-  gem 'rails-assets-fetch'
+  gem 'rails-assets-tether', '>= 1.1.0'
 end
 
 

@@ -55,32 +55,36 @@ class ClientsIndex extends React.Component {
       <ClientRow key={client.id} client={client} />);
 
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <form>
-            <input
-              className="form-control"
-              placeholder="Sök på namn eller personnummer"
-              autoFocus="true"
-              onChange={this.handleOnSearch}
-              ref="search"
-            />
-          </form>
+      <div>
+        <div className="row">
+          <div className="col-md-4">
+            <h1>Klientregister</h1>
+          </div>
+          <div className="col-md-8">
+            <form>
+              <input
+                className="form-control"
+                placeholder="Sök på namn eller personnummer"
+                autoFocus="true"
+                onChange={this.handleOnSearch}
+                ref="search"
+              />
+            </form>
+          </div>
         </div>
-        <table className="panel-body table table-bordered table-striped clients-table">
-          <thead>
-            <tr>
-              <th>Förnamn</th>
-              <th>Efternamn</th>
-              <th>Personnummer</th>
-              <th className="np"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {clientRows}
-          </tbody>
-        </table>
-        <div className="panel-footer">
+        <div className="row">
+          <table className="table col-md-12">
+            <thead>
+              <tr>
+                <th>Klientnummer</th>
+                <th>Namn</th>
+                <th>Personnummer</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clientRows}
+            </tbody>
+          </table>
           <div className="row">
             <ClientPagination
               totalPages={this.state.meta.totalPages}

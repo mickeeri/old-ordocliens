@@ -1,0 +1,23 @@
+<ul class="nav nav-inline">
+  <li class="nav-item">
+    <%= link_to "Klienter", clients_path, class: "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Ärenden</a>
+  </li>
+  <li class="nav-item dropdown pull-xs-right">
+    <button type="button" class="nav-link btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+       href="#" role="button" aria-haspopup="true" aria-expanded="false">
+      <i class="fa fa-cog" aria-hidden="true"></i>
+    </button>
+    <div class="dropdown-menu">
+      <%= link_to "Min profil", edit_user_registration_path, class: "dropdown-item" %>
+      <%= link_to "Logga ut", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+    </div>
+  </li>
+  <% if current_page?(clients_path) || current_page?(authenticated_root_path) %>
+    <li class="nav-item pull-xs-right">
+      <%= link_to "Lägg till klient", new_client_path, class: "nav-link btn btn-success" %>
+    </li>
+  <% end %>
+</ul>
