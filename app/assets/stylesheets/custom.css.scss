@@ -57,6 +57,29 @@ h1 {
   margin: 0 10px;
 }
 
+// FORMS
+.form-inline {
+  .form-group {
+    min-height: 40px;
+    display: block;
+
+    .form-control {
+      margin: 0 5px;
+      width: 300px;
+      float: right;
+
+      // TODO: input width for sc.
+    }
+
+    label {
+      float: left;
+    }
+  }
+
+  .form-group-textarea {
+    min-height: 100px;
+  }
+}
 // MISC
 .center-content {
   text-align: center;

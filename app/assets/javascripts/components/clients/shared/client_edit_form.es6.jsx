@@ -35,6 +35,7 @@ class ClientEditForm extends React.Component {
   }
 
   render() {
+    var edit = true;
     return (
       <div className="card">
         <div className="card-block">
@@ -125,14 +126,15 @@ class ClientEditForm extends React.Component {
               </textarea>
             </div>
             <hr/>
-            <div className="action content-right">
-              <button
-                className="btn btn-secondary"
-                onClick={this.handleCancelButtonClick}>Avbryt
-              </button>
+            <div className="content-right">
+              {edit ? '' :
+                <button
+                  className="btn btn-secondary"
+                  onClick={this.handleCancelButtonClick}>Avbryt
+                </button>}
               <button
                 className="btn btn-success"
-                type="submit">Spara
+                type="submit">{edit ? 'Uppdatera' : 'Spara klient'}
               </button>
             </div>
           </form>

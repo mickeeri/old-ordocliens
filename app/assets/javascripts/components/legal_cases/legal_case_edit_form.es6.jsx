@@ -40,7 +40,7 @@ class LegalCaseEditForm extends React.Component {
           required={true}
         />
         <hr/>
-        <div className="action">
+        <div className="content-right">
           <button className="btn btn-secondary"
             onClick={this.handleCancelButtonClick}>Avbryt
           </button>

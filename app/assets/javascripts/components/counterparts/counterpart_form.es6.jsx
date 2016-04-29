@@ -2,7 +2,7 @@ class CounterPartForm extends React.Component {
   constructor(props)  {
     super(props);
     this.state = {
-      name: props.initialCounterpart ? props.initialCounterpart.id : '',
+      id: props.initialCounterpart ? props.initialCounterpart.id : '',
       name: props.initialCounterpart ? props.initialCounterpart.name : '',
       personal_number: props.initialCounterpart ? props.initialCounterpart.personal_number : '',
       representative: props.initialCounterpart ? props.initialCounterpart.representative : '',

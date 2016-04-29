@@ -17,6 +17,7 @@ class CounterPartRow extends React.Component {
     var counterpart = this.props.counterpart;
     return (
       <div>
+        <hr/>
         <a onClick={this.handleOnClick.bind(this)} href="#">{counterpart.name}</a>
       </div>
     );
