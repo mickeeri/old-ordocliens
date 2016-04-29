@@ -1,15 +1,13 @@
 class ClientShow extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      client: props.client,
+      client: props.initial_client,
       editMode: false,
       links: props.links,
     };
 
     this.toggleEditMode = this.toggleEditMode.bind(this);
-    this.deleteClient = this.deleteClient.bind(this);
     this.refreshClient = this.refreshClient.bind(this);
   }
 
@@ -47,17 +45,6 @@ class ClientShow extends React.Component {
     }
   }
 
-  // Call delete in utils.
-  deleteClient() { // TODO: Maybee remove
-    makeDeleteRequest(Routes.client_path(this.state.client.id))
-      .success(response=> {
-        window.location = Routes.clients_path();
-      })
-      .error(xhr=> {
-        console.error(url, xhr.status, xhr.statusText);
-      });
-  }
-
   render() {
     var content;
 
@@ -70,29 +57,35 @@ class ClientShow extends React.Component {
 
     return (
       <div>
-        <BreadCrumb active={this.state.client.first_name + ' ' +
-          this.state.client.last_name}
+        <BreadCrumb
+          active={this.state.client.first_name + ' ' + this.state.client.last_name}
           links={this.state.links}
         />
         <div className="row">
           <div className="col-md-6">
-            {content}
+            <div className="row">
+              <div className="col-md-12">
+                {content}
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <ClientDeleteButton clientId={this.props.initial_client.id} />
+              </div>
+            </div>
           </div>
           <div className="col-md-6">
             <div className="row">
               <div className="col-md-12">
-            <LegalCasesIndex legalCases={this.props.legal_cases}
-              clientId={this.props.client.id} />
+                <LegalCasesIndex legalCases={this.props.initial_client.legal_cases}
+                  clientId={this.props.initial_client.id} />
               </div>
             </div>
             <div className="row">
               <div className="col-md-12">
-                <AddLegalCaseButton clientId={this.props.client.id} />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <ClientDeleteButton clientId={this.props.client.id} />
+                <CounterpartsIndex
+                  initialCounterparts={this.props.initial_client.counterparts}
+                  clientId={this.props.initial_client.id} />
               </div>
             </div>
           </div>
@@ -101,3 +94,9 @@ class ClientShow extends React.Component {
     );
   }
 }
+
+ClientShow.PropTypes = {
+  initial_client: React.PropTypes.object.isRequired,
+  legal_cases: React.PropTypes.array,
+  links: React.PropTypes.array.isRequired,
+};

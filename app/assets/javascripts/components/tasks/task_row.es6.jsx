@@ -24,7 +24,7 @@ class TaskRow extends React.Component {
   editTaskButtonClicked (e) {
     e.preventDefault();
     ReactDOM.render(
-      <EditTaskModal
+      <EditFormModal
         task={this.props.task}
         legalCaseId={this.props.legalCaseId}
         clientId={this.props.clientId}
@@ -32,7 +32,7 @@ class TaskRow extends React.Component {
       />,
       document.getElementById('tasksModalContainer')
     );
-    $('#editTaskModal').modal();
+    $('#editFormModal').modal();
   }
 
   render() {

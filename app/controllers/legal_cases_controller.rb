@@ -61,19 +61,5 @@ class LegalCasesController < ApplicationController
         path: client_path(@legal_case.client.id) }]
   end
 
-  def prepare_array(array)
-    ActiveModel::ArraySerializer.new(array, each_serializer: serializer(array))
-  end
 
-  def prepare(resource)
-    serializer(resource).new(resource)
-  end
-
-  def serializer(resource)
-    if resource.respond_to? :name
-      "#{resource.name}Serializer".safe_constantize
-    else
-      "#{resource.class}Serializer".safe_constantize
-    end
-  end
 end

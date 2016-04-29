@@ -4,8 +4,8 @@ class ClientsIndex extends React.Component {
 
     // Initializing state.
     this.state = {
-      clients: props.data.clients,
-      meta: props.data.meta,
+      clients: props.clients,
+      meta: props.meta,
       fetchData: {
         search: '',
         page: 1,
@@ -69,12 +69,12 @@ class ClientsIndex extends React.Component {
                 onChange={this.handleOnSearch}
                 ref="search"
               />
-              { this.state.meta.totalPages == 1 ? '' :
+            { this.state.meta.total_pages == 1 ? '' :
                 <Paginator
-                  totalPages={this.state.meta.totalPages}
-                  currentPage={this.state.meta.currentPage}
-                  nextPage={this.state.meta.nextPage}
-                  prevPage={this.state.meta.previousPage}
+                  totalPages={this.state.meta.total_pages}
+                  currentPage={this.state.meta.current_page}
+                  nextPage={this.state.meta.next_page}
+                  prevPage={this.state.meta.previous_page}
                   onPaginate={this.handleOnPaginate}
                 />
               }
@@ -100,3 +100,8 @@ class ClientsIndex extends React.Component {
     );
   }
 }
+
+ClientsIndex.PropTypes = {
+  clients: React.PropTypes.array.isRequired,
+  meta: React.PropTypes.object.isRequired,
+};

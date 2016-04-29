@@ -9,7 +9,7 @@ class LegalCaseShow extends React.Component {
 
     this.toggleEditMode = this.toggleEditMode.bind(this);
     this.refreshLegalCase = this.refreshLegalCase.bind(this);
-    this.deleteLegalCase = this.deleteLegalCase.bind(this);
+  //  this.deleteLegalCase = this.deleteLegalCase.bind(this);
   }
 
   componentDidMount() {
@@ -24,16 +24,16 @@ class LegalCaseShow extends React.Component {
     PubSub.unsubscribe('deleteLegalCaseConfirmed');
   }
 
-  deleteLegalCase() { // Call delete in utils.
-    makeDeleteRequest(Routes.client_legal_case_path(this.props.client_id,
-                                                    this.props.legal_case.id))
-      .success(response=> {
-        window.location = Routes.client_path(this.props.client_id);
-      })
-      .error(xhr=> {
-        console.error(url, xhr.status, xhr.statusText);
-      });
-  }
+  // deleteLegalCase() { // Call delete in utils.
+  //   makeDeleteRequest(Routes.client_legal_case_path(this.props.client_id,
+  //       this.props.legal_case.id))
+  //     .success(response=> {
+  //       window.location = Routes.client_path(this.props.client_id);
+  //     })
+  //     .error(xhr=> {
+  //       console.error(url, xhr.status, xhr.statusText);
+  //     });
+  // }
 
   refreshLegalCase () {
     var url = Routes.client_legal_case_path(this.props.client_id, this.state.legal_case.id);
@@ -68,7 +68,7 @@ class LegalCaseShow extends React.Component {
     }
 
     return (
-      <div>
+      <div>        
         <BreadCrumb active={this.state.legal_case.name} links={this.state.links} />
         <div className="row">
           <div className="col-md-9">

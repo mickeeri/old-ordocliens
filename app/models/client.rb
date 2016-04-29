@@ -3,6 +3,7 @@ class Client < ActiveRecord::Base
   # Relations
   belongs_to :user, required: true
   has_many :legal_cases, dependent: :destroy
+  has_many :counterparts
 
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }

@@ -8,7 +8,7 @@ class TasksIndex extends React.Component {
 
   componentDidMount() {
     PubSub.subscribe('tasksTouched', this.refreshTasks);
-    PubSub.subscribe('dismissEdit', this.removeEditTaskModal);
+    PubSub.subscribe('dismissEdit', this.removeEditFormModal);
   }
 
   componentWillUnmount() {
@@ -21,9 +21,9 @@ class TasksIndex extends React.Component {
     makeGetRequest(url)
       .success(response=> {
         this.setState({ tasks: response.tasks });
-        this.removeEditTaskModal();
+        this.removeEditFormModal();
 
-        // $('#editTaskModal').find('form').trigger('reset'); // Clear input fields in modal.
+        // $('#editFormModal').find('form').trigger('reset'); // Clear input fields in modal.
       })
       .error(xhr=> {
         console.error(url, xhr.status, xhr.statusText);
@@ -31,8 +31,8 @@ class TasksIndex extends React.Component {
   }
 
   // Remove modal from DOM.
-  removeEditTaskModal() {
-    $('#editTaskModal').modal('hide');
+  removeEditFormModal() {
+    $('#editFormModal').modal('hide');
     ReactDOM.unmountComponentAtNode(document.getElementById('tasksModalContainer'));
   }
 
@@ -41,14 +41,14 @@ class TasksIndex extends React.Component {
 
     // Render modal...
     ReactDOM.render(
-      <EditTaskModal
+      <EditFormModal
         legalCaseId={this.props.legalCaseId}
         clientId={this.props.clientId}
         priceCategories={this.props.priceCategories}
       />,
       document.getElementById('tasksModalContainer')
     );
-    $('#editTaskModal').modal(); // ...and display it.
+    $('#editFormModal').modal(); // ...and display it.
   }
 
   render() {

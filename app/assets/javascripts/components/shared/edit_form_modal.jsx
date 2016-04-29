@@ -1,11 +1,11 @@
-class EditTaskModal extends React.Component {
+class EditFormModal extends React.Component {
   closeBtnClicked(e) {
     PubSub.publish('dismissEdit');
   }
 
   render() {
     return (
-      <div className="modal fade" id="editTaskModal"
+      <div className="modal fade" id="editFormModal"
         tabIndex={-1} role="dialog" aria-labelledby="modalLabel">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
@@ -17,7 +17,7 @@ class EditTaskModal extends React.Component {
                 aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
-              <h4 className="modal-title" id="modalLabel">Lägg till uppgift</h4>
+              <h4 className="modal-title" id="modalLabel">{this.props.header}</h4>
             </div>
             <div className="modal-body">
               {this.props.form}
@@ -29,16 +29,7 @@ class EditTaskModal extends React.Component {
   }
 }
 
-// <EditTaskForm
-//   legalCaseId={this.props.legalCaseId}
-//   clientId={this.props.clientId}
-//   priceCategories={this.props.priceCategories}
-//   initialTask={this.props.task}
-// />
-
-// EditTaskModal.propTypes = {
-//   legalCaseId: React.PropTypes.number.isRequired,
-//   clientId: React.PropTypes.number.isRequired,
-//   priceCategories: React.PropTypes.array.isRequired,
-//   task: React.PropTypes.object,
-// };
+EditFormModal.propTypes = {
+  form: React.PropTypes.element.isRequired,
+  header: React.PropTypes.string.isRequired,
+};

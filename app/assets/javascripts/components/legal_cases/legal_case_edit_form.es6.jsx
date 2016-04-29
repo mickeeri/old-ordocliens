@@ -1,7 +1,7 @@
 class LegalCaseEditForm extends React.Component {
   constructor(props)  {
     super(props);
-    this.state = props.legal_case;
+    this.state = props.legal_case; // TODO: rename to initialLegalCase
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -29,30 +29,26 @@ class LegalCaseEditForm extends React.Component {
 
   render() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">{this.props.header} ärende</h3>
+      <form className="form" onSubmit={this.handleOnSubmit}>
+        <FormGroup
+          name="name"
+          type="text"
+          value={this.state ? this.state.name : ''}
+          changeEvent={this.handleNameChange}
+          autoFocus="true"
+          label="Ärendenamn"
+          required={true}
+        />
+        <hr/>
+        <div className="action">
+          <button className="btn btn-secondary"
+            onClick={this.handleCancelButtonClick}>Avbryt
+          </button>
+          <button className="btn btn-success-outline" type="submit">
+            Spara
+          </button>
         </div>
-        <div className="panel-body">
-          <form className="form-inline" onSubmit={this.handleOnSubmit}>
-            <FormGroup
-              name="name"
-              type="text"
-              value={this.state ? this.state.name : ''}
-              changeEvent={this.handleNameChange}
-              autoFocus="true"
-              label="Ärendenamn"
-              required={true}
-            />
-            <hr/>
-            <div className="action">
-              <button className="button button-success" type="submit">Spara</button>
-              <button className="button button-default"
-                onClick={this.handleCancelButtonClick}>Avbryt</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      </form>
     );
   }
 }

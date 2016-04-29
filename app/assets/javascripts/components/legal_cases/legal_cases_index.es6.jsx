@@ -7,7 +7,7 @@ class LegalCasesIndex extends React.Component {
 
   componentDidMount() {
     PubSub.subscribe('legalCasesTouched', this.refreshLegalCases.bind(this));
-    PubSub.subscribe('dismissEdit', this.removeEditTaskModal);
+    PubSub.subscribe('dismissEdit', this.removeEditFormModal);
   }
 
   componentWillUnmount() {
@@ -16,8 +16,8 @@ class LegalCasesIndex extends React.Component {
   }
 
   // Remove modal from DOM.
-  removeEditTaskModal() {
-    $('#editTaskModal').modal('hide');
+  removeEditFormModal() { // TODO: maybee move to EditFormModal
+    $('#editFormModal').modal('hide');
     ReactDOM.unmountComponentAtNode(document.getElementById('tasksModalContainer'));
   }
 
@@ -26,7 +26,7 @@ class LegalCasesIndex extends React.Component {
     makeGetRequest(url)
       .success(response=> {
         this.setState({ legalCases: response.legal_cases });
-        this.removeEditTaskModal();
+        this.removeEditFormModal();
       })
       .error(xhr=> {
         console.error(url, xhr.status, xhr.statusText);
@@ -43,6 +43,7 @@ class LegalCasesIndex extends React.Component {
         <div className="card-block">
           <h3 className="card-title">Klientens mål</h3>
           {legalCaseRows}
+          <AddLegalCaseButton clientId={this.props.clientId} />
         </div>
       </div>
     );

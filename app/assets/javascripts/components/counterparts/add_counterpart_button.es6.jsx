@@ -1,10 +1,10 @@
-class AddLegalCaseButton extends React.Component {
-  handleAddLegalCaseClick(e) {
+class AddCounterpartButton extends React.Component {
+  handleOnClick(e) {
     e.preventDefault();
     ReactDOM.render(
       <EditFormModal
-        form={<LegalCaseEditForm clientId={this.props.clientId}/>}
-        header="Lägg till mål"
+        form={<CounterpartForm clientId={this.props.clientId}/>}
+        header="Lätt till motpart"
       />,
     document.getElementById('editModalContainer')
     );
@@ -17,7 +17,7 @@ class AddLegalCaseButton extends React.Component {
         <div id="editModalContainer"></div>
           <div className="content-right">
             <hr/>
-            <a onClick={this.handleAddLegalCaseClick.bind(this)}
+            <a onClick={this.handleOnClick.bind(this)}
               className="btn btn-success-outline">Lägg till mål
             </a>
           </div>
@@ -25,6 +25,6 @@ class AddLegalCaseButton extends React.Component {
     );
   }
 }
-AddLegalCaseButton.propTypes = {
+AddCounterpartButton.propTypes = {
   clientId: React.PropTypes.number.isRequired,
 };
