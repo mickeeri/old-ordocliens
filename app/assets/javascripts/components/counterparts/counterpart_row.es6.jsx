@@ -1,13 +1,23 @@
 class CounterPartRow extends React.Component {
-  handleClickOnTableRow(e) {
+  handleOnClick(e) {
     e.preventDefault();
+    ReactDOM.render(
+      <EditFormModal
+        form={<CounterPartForm
+          clientId={this.props.clientId}
+          initialCounterpart={this.props.counterpart}/>}
+        header="Motpart"
+      />,
+    document.getElementById('editModalContainer')
+    );
+    $('#editFormModal').modal();
   }
 
   render() {
     var counterpart = this.props.counterpart;
     return (
       <div>
-        <a href="#">{counterpart.name}</a>
+        <a onClick={this.handleOnClick.bind(this)} href="#">{counterpart.name}</a>
       </div>
     );
   }

@@ -3,8 +3,8 @@ class AddCounterpartButton extends React.Component {
     e.preventDefault();
     ReactDOM.render(
       <EditFormModal
-        form={<CounterpartForm clientId={this.props.clientId}/>}
-        header="Lätt till motpart"
+        form={<CounterPartForm clientId={this.props.clientId}/>}
+        header="Lägg till motpart"
       />,
     document.getElementById('editModalContainer')
     );
@@ -18,7 +18,7 @@ class AddCounterpartButton extends React.Component {
           <div className="content-right">
             <hr/>
             <a onClick={this.handleOnClick.bind(this)}
-              className="btn btn-success-outline">Lägg till mål
+              className="btn btn-success-outline">Lägg till motpart
             </a>
           </div>
       </div>

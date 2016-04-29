@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   end
 
   resources :clients do
+    resources :counterparts
+
     resources :legal_cases do # show, index
       resources :tasks
     end

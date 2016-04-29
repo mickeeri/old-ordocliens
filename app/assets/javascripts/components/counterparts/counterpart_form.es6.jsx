@@ -2,6 +2,7 @@ class CounterPartForm extends React.Component {
   constructor(props)  {
     super(props);
     this.state = {
+      name: props.initialCounterpart ? props.initialCounterpart.id : '',
       name: props.initialCounterpart ? props.initialCounterpart.name : '',
       personal_number: props.initialCounterpart ? props.initialCounterpart.personal_number : '',
       representative: props.initialCounterpart ? props.initialCounterpart.representative : '',
@@ -10,12 +11,12 @@ class CounterPartForm extends React.Component {
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   handleOnSubmit(e) {
     e.preventDefault();
-    if (this.state && this.state.id) { // If it has id it is update.
+    if (this.state.id) { // If it has id it is update.
       makePutRequest(Routes.client_counterpart_path(this.props.clientId, this.state.id),
         { counterpart: this.state }, 'counterpartsTouched');
     } else { // Otherwise post.
@@ -77,7 +78,7 @@ class CounterPartForm extends React.Component {
           </textarea>
         </div>
         <hr/>
-        <div className="action">
+        <div className="content-right">
           <button className="btn btn-secondary"
             onClick={this.handleCancelButtonClick}>Avbryt
           </button>

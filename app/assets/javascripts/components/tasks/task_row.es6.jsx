@@ -16,7 +16,7 @@ class TaskRow extends React.Component {
           )
         }
       />,
-      document.getElementById('tasksModalContainer')
+      document.getElementById('editModalContainer')
     );
     $('#deleteTask').modal();
   }
@@ -30,7 +30,7 @@ class TaskRow extends React.Component {
         clientId={this.props.clientId}
         priceCategories={this.props.priceCategories}
       />,
-      document.getElementById('tasksModalContainer')
+      document.getElementById('editModalContainer')
     );
     $('#editFormModal').modal();
   }

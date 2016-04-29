@@ -33,7 +33,7 @@ class TasksIndex extends React.Component {
   // Remove modal from DOM.
   removeEditFormModal() {
     $('#editFormModal').modal('hide');
-    ReactDOM.unmountComponentAtNode(document.getElementById('tasksModalContainer'));
+    ReactDOM.unmountComponentAtNode(document.getElementById('editModalContainer'));
   }
 
   addTaskClicked(e) {
@@ -46,7 +46,7 @@ class TasksIndex extends React.Component {
         clientId={this.props.clientId}
         priceCategories={this.props.priceCategories}
       />,
-      document.getElementById('tasksModalContainer')
+      document.getElementById('editModalContainer')
     );
     $('#editFormModal').modal(); // ...and display it.
   }
@@ -64,7 +64,7 @@ class TasksIndex extends React.Component {
 
     return (
       <div className="col-md-12">
-        <div id="tasksModalContainer"></div>
+        <div id="editModalContainer"></div>
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">Specifikation avseende arbeten</h3>

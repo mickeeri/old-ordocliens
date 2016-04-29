@@ -18,7 +18,7 @@ class LegalCasesIndex extends React.Component {
   // Remove modal from DOM.
   removeEditFormModal() { // TODO: maybee move to EditFormModal
     $('#editFormModal').modal('hide');
-    ReactDOM.unmountComponentAtNode(document.getElementById('tasksModalContainer'));
+    ReactDOM.unmountComponentAtNode(document.getElementById('editModalContainer'));
   }
 
   refreshLegalCases() {
