@@ -7,10 +7,14 @@ class ClientsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.html { render component: "ClientsIndex", props:
-        { clients: prepare_array(@clients),
-          meta: pagination_dict(@clients) } }
-      format.json { render json: {clients: @clients, meta: pagination_dict(@clients)} }
+      format.html do
+        render component: "ClientsIndex", props:
+          { clients: prepare_array(@clients),
+            meta: pagination_dict(@clients) }
+      end
+      format.json do
+        render json: { clients: @clients, meta: pagination_dict(@clients) }
+      end
     end
   end
 
@@ -18,11 +22,12 @@ class ClientsController < ApplicationController
     respond_to do |format|
       format.html do
         render component: "ClientShow", props: {
-          initial_client: prepare(@client, ClientShowSerializer, {root: false}),
-          links: [{ id: rand(100), name: "Klienter", path: clients_path }]
-        }
+          initial_client: prepare(@client, ClientShowSerializer, root: false),
+          links: [{ id: rand(100), name: "Klienter", path: clients_path }] }
       end
-      format.json { render json: {client: @client, serializer: ClientShowSerializer} }
+      format.json do
+        render json: { client: @client, serializer: ClientShowSerializer }
+      end
     end
   end
 
@@ -77,19 +82,6 @@ class ClientsController < ApplicationController
   end
 
   def default_serializer_options
-    {root: false}
+    { root: false }
   end
-
-  # def fetch_data
-  #   @data = {
-  #     clients: @clients,
-  #     meta: {
-  #       currentPage: @clients.current_page,
-  #       nextPage: @clients.next_page,
-  #       previousPage: @clients.previous_page,
-  #       totalPages: @clients.total_pages,
-  #       totalEntries: @clients.total_entries
-  #     }
-  #   }
-  # end
 end

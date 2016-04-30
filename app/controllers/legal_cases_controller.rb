@@ -60,6 +60,4 @@ class LegalCasesController < ApplicationController
         name: name,
         path: client_path(@legal_case.client.id) }]
   end
-
-
 end

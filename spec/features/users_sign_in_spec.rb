@@ -37,7 +37,7 @@ RSpec.feature "User signs in", type: :feature do
     click_link "Logga ut"
     expect(page).to have_content("Logga in")
   end
-  
+
   def sign_in_with(email, password)
     visit "/"
     fill_in "Email", with: email

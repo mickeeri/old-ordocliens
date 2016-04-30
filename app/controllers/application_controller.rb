@@ -8,13 +8,13 @@ class ApplicationController < ActionController::Base
 
   # To render pagination info as json.
   def pagination_dict(object)
-  {
-    current_page: object.current_page,
-    next_page: object.next_page,
-    previous_page: object.previous_page,
-    total_pages: object.total_pages,
-    total_entries: object.total_entries
-  }
+    {
+      current_page: object.current_page,
+      next_page: object.next_page,
+      previous_page: object.previous_page,
+      total_pages: object.total_pages,
+      total_entries: object.total_entries
+    }
   end
 
   # To serialize data to React components if not json.
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     ActiveModel::ArraySerializer.new(array, each_serializer: serializer(array))
   end
 
-  def prepare(resource, pref_serializer = nil, options = {})
+  def prepare(resource, pref_serializer=nil, options={})
     if pref_serializer
       pref_serializer.new(resource, options)
     else
