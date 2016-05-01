@@ -63,7 +63,7 @@ class EditTaskForm extends React.Component {
           label="Datum"
           required={true}
         />
-        <div className="form-group form-group-textarea">
+      <div className="form-group form-group-textarea">
           <label htmlFor="entry">Notering</label>
           <textarea
             className="form-control"
@@ -97,9 +97,9 @@ class EditTaskForm extends React.Component {
           </select>
         </div>
         <hr/>
-        <div className="action">
-          <button className="button button-success" type="submit">Spara</button>
-          <button className="button button-default" onClick={this.dismissBtnClicked}>Avbryt</button>
+        <div className="content-right">
+          <button className="btn btn-secondary" onClick={this.dismissBtnClicked}>Avbryt</button>
+          <button className="btn btn-success" type="submit">Spara</button>
         </div>
       </form>
     );

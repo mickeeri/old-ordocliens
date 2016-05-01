@@ -42,9 +42,13 @@ class TasksIndex extends React.Component {
     // Render modal...
     ReactDOM.render(
       <EditFormModal
-        legalCaseId={this.props.legalCaseId}
-        clientId={this.props.clientId}
-        priceCategories={this.props.priceCategories}
+        header="Lägg till tidkort"
+        form={
+          <EditTaskForm
+            legalCaseId={this.props.legalCaseId}
+            clientId={this.props.clientId}
+            priceCategories={this.props.priceCategories} />
+        }
       />,
       document.getElementById('editModalContainer')
     );
@@ -65,17 +69,17 @@ class TasksIndex extends React.Component {
     return (
       <div className="col-md-12">
         <div id="editModalContainer"></div>
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">Specifikation avseende arbeten</h3>
+        <div className="card">
+          <div className="card-header">
+            <h3 className="card-title">Specifikation avseende arbeten</h3>
           </div>
-          <table className="panel-body table table-hover">
+          <table className="card-block table table-striped">
             <thead>
               <tr>
                 <th>Datum</th>
                 <th>Notering</th>
-                <th className="nowrap">Arbetad tid</th>
-                <th className="nowrap">Priskategori</th>
+                <th className="text-nowrap">Arbetad tid</th>
+                <th className="text-nowrap">Priskategori</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -84,8 +88,11 @@ class TasksIndex extends React.Component {
               {taskRows}
             </tbody>
           </table>
-          <div className="panel-footer">
-            <a href="#" onClick={this.addTaskClicked}>Lägg till uppgift</a>
+          <div className="card-footer content-right">
+            <button
+              className="btn btn-success"
+              onClick={this.addTaskClicked}>Lägg till uppgift
+            </button>
           </div>
         </div>
       </div>

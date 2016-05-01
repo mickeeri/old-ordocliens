@@ -11,12 +11,7 @@ class LegalCasesController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        render component: "LegalCaseShow", props: { # TODO: serializer
-          legal_case: @legal_case,
-          client_id: @legal_case.client.id,
-          tasks: prepare_array(@legal_case.tasks.sorted_by_date),
-          price_categories: prepare_array(PriceCategory.all),
-          links: render_links }
+        render component: "LegalCaseShow", props: props
       end
       format.json { render json: { legal_case: @legal_case } }
     end
@@ -53,11 +48,19 @@ class LegalCasesController < ApplicationController
     @legal_case = LegalCase.find(params[:id])
   end
 
-  def render_links
+  def links
     name = "#{@legal_case.client.first_name} #{@legal_case.client.last_name}"
     [{ id: rand(100), name: "Klienter", path: clients_path },
      {  id: rand(100),
         name: name,
         path: client_path(@legal_case.client.id) }]
+  end
+
+  def props
+    { init_legal_case: prepare(@legal_case, LegalCaseSerializer, root: false),
+      client_id: @legal_case.client.id,
+      tasks: prepare_array(@legal_case.tasks.sorted_by_date),
+      price_categories: prepare_array(PriceCategory.all),
+      links: links }
   end
 end

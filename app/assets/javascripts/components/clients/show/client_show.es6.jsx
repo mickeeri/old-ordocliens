@@ -50,7 +50,7 @@ class ClientShow extends React.Component {
 
     // Showing either form or regular text based on value of boolean editMode.
     if (!this.state.editMode) {
-      content = <ClientEditForm client={this.state.client} header="Redigera" />;
+      content = <ClientEditForm client={this.state.client} header="" />;
     } else {
       content = <ClientInfo client={this.state.client} />;
     }

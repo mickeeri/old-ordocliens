@@ -2,44 +2,26 @@ class LegalCaseShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      legal_case: props.legal_case,
-      links: props.links,
+      legal_case: props.init_legal_case,
       editMode: false,
     };
-
-    this.toggleEditMode = this.toggleEditMode.bind(this);
     this.refreshLegalCase = this.refreshLegalCase.bind(this);
-  //  this.deleteLegalCase = this.deleteLegalCase.bind(this);
   }
 
   componentDidMount() {
-    PubSub.subscribe('editModeButtonClicked', this.toggleEditMode);
-    PubSub.subscribe('legalCaseUpdated', this.refreshLegalCase);
-    PubSub.subscribe('deleteLegalCaseConfirmed', this.deleteLegalCase);
+    PubSub.subscribe('legalCaseTouched', this.refreshLegalCase);
   }
 
   componentWillUnmount() {
-    PubSub.unsubscribe('editModeButtonClicked');
-    PubSub.unsubscribe('legalCaseUpdated');
-    PubSub.unsubscribe('deleteLegalCaseConfirmed');
+    PubSub.unsubscribe('legalCaseTouched');
   }
 
-  // deleteLegalCase() { // Call delete in utils.
-  //   makeDeleteRequest(Routes.client_legal_case_path(this.props.client_id,
-  //       this.props.legal_case.id))
-  //     .success(response=> {
-  //       window.location = Routes.client_path(this.props.client_id);
-  //     })
-  //     .error(xhr=> {
-  //       console.error(url, xhr.status, xhr.statusText);
-  //     });
-  // }
-
-  refreshLegalCase () {
-    var url = Routes.client_legal_case_path(this.props.client_id, this.state.legal_case.id);
+  refreshLegalCase () { // Refresh legal case from server.
+    var url = Routes.client_legal_case_path(
+      this.props.client_id,
+      this.props.init_legal_case.id);
     makeGetRequest(url)
       .success(response=> {
-        this.toggleEditMode();
         this.setState({ legal_case: response.legal_case });
       })
       .error(xhr=> {
@@ -47,42 +29,30 @@ class LegalCaseShow extends React.Component {
       });
   }
 
-  // Toggle boolean editMode.
-  toggleEditMode() {
-    if (this.state.editMode) {
-      this.setState({ editMode: false });
-      $('.edit-button').removeClass('active');
-    } else {
-      this.setState({ editMode: true });
-      $('.edit-button').addClass('active');
-    }
-  }
-
   render() {
-    var content;
-    if (this.state.editMode) {
-      content = <LegalCaseEditForm legal_case={this.state.legal_case}
-        client_id={this.props.client_id} header="Redigera" />;
-    } else {
-      content = <LegalCaseInfo legal_case={this.state.legal_case} />;
-    }
-
     return (
-      <div>        
-        <BreadCrumb active={this.state.legal_case.name} links={this.state.links} />
+      <div>
+        <BreadCrumb active={this.state.legal_case.name} links={this.props.links} />
         <div className="row">
           <div className="col-md-9">
-            {content}
+            <div className="card card-block">
+              <LegalCaseEditForm
+                initialLegalCase={this.state.legal_case}
+                clientId={this.props.client_id} />
+            </div>
           </div>
           <div className="col-md-3">
-            <div className="panel panel-default">
-              <LegalCaseShowMenu />
-            </div>
+            <DeleteLegalCaseButton
+              clientId={this.props.client_id}
+              legalCaseId={this.props.init_legal_case.id} />
           </div>
         </div>
         <div className="row">
-          <TasksIndex initialTasks={this.props.tasks} legalCaseId={this.props.legal_case.id}
-            clientId={this.props.client_id} priceCategories={this.props.price_categories}/>
+          <TasksIndex
+            initialTasks={this.props.tasks}
+            legalCaseId={this.props.init_legal_case.id}
+            clientId={this.props.client_id}
+            priceCategories={this.props.price_categories} />
         </div>
       </div>
     );
@@ -91,7 +61,7 @@ class LegalCaseShow extends React.Component {
 
 LegalCaseShow.propTypes = {
   client_id: React.PropTypes.number.isRequired,
-  legal_case: React.PropTypes.object.isRequired,
+  init_legal_case: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,
   price_categories: React.PropTypes.array.isRequired,
   links: React.PropTypes.array.isRequired,

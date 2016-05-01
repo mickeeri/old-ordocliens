@@ -39,8 +39,8 @@ class ClientEditForm extends React.Component {
     return (
       <div className="card">
         <div className="card-block">
-          <h3 className="card-title">{this.props.header} klient</h3>
-          <form className="form" onSubmit={this.handleOnSubmit}>
+          <h3 className="card-title">{this.props.header}</h3>
+          <form className="form-inline" onSubmit={this.handleOnSubmit}>
             <FormGroup
               name="first_name"
               type="text"
@@ -92,27 +92,21 @@ class ClientEditForm extends React.Component {
               changeEvent={this.handleChangeOnClientInput}
               label="Gatuadress"
             />
-            <div className="row">
-              <div className="col-md-6">
-                <FormGroup
-                  name="post_code"
-                  type="tel"
-                  value={this.state ? this.state.post_code : ''}
-                  changeEvent={this.handleChangeOnClientInput}
-                  pattern='\d*'
-                  label="Postnummer"
-                />
-              </div>
-              <div className="col-md-6">
-                <FormGroup
-                  name="city"
-                  type="text"
-                  value={this.state ? this.state.city : ''}
-                  changeEvent={this.handleChangeOnClientInput}
-                  label="Ort"
-                />
-              </div>
-            </div>
+            <FormGroup
+              name="post_code"
+              type="tel"
+              value={this.state ? this.state.post_code : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              pattern='\d*'
+              label="Postnummer"
+            />
+            <FormGroup
+              name="city"
+              type="text"
+              value={this.state ? this.state.city : ''}
+              changeEvent={this.handleChangeOnClientInput}
+              label="Ort"
+            />
             <hr/>
             <div className="form-group form-group-textarea">
               <label htmlFor="note">Anteckningar</label>

@@ -23,30 +23,36 @@ class TaskRow extends React.Component {
 
   editTaskButtonClicked (e) {
     e.preventDefault();
+
+    // Render modal...
     ReactDOM.render(
       <EditFormModal
-        task={this.props.task}
-        legalCaseId={this.props.legalCaseId}
-        clientId={this.props.clientId}
-        priceCategories={this.props.priceCategories}
+        header="Redigera tidkort"
+        form={
+          <EditTaskForm
+            legalCaseId={this.props.legalCaseId}
+            clientId={this.props.clientId}
+            priceCategories={this.props.priceCategories}
+            initialTask={this.props.task} />
+        }
       />,
       document.getElementById('editModalContainer')
     );
-    $('#editFormModal').modal();
+    $('#editFormModal').modal(); // ...and display it.
   }
 
   render() {
     var task = this.props.task;
     return (
       <tr>
-        <td className="nowrap">{task.date}</td>
+        <td className="text-nowrap">{task.date}</td>
         <td>{task.entry}</td>
         <td>{task.worked_hours}</td>
-        <td className="nowrap">{task.price_category.name}</td>
+        <td className="text-nowrap">{task.price_category.name}</td>
         <td>
           <a href="#" onClick={this.editTaskButtonClicked.bind(this)}>Redigera</a>
         </td>
-        <td className="nowrap">
+        <td className="text-nowrap">
           <a href="#" onClick={this.deleteTaskButtonClicked.bind(this)}>Ta bort</a>
         </td>
       </tr>
