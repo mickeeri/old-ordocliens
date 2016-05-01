@@ -14,7 +14,7 @@ class ClientEditForm extends React.Component {
         { client: this.state }, 'clientUpdated');
     } else {
       if (this.state) { // Otherwise create new client.
-        makePostRequest(Routes.clients_path(), { client: this.state });
+        makePostRequest(Routes.clients_path(), { client: this.state }, 'redirect');
       }
     }
   }

@@ -1,9 +1,10 @@
 class ClientDeleteButton extends React.Component {
   render() {
+    var target = 'deleteClient';
     return (
       <div className="card">
         <ConfirmDeleteModal
-          target="deleteClient"
+          target={target}
           url={Routes.client_path(this.props.clientId)}
           redirectTo={Routes.clients_path()}
           subToPublish="deleteClientConfirmed"
@@ -17,7 +18,7 @@ class ClientDeleteButton extends React.Component {
           <div className="col-md-4">
             <a href="#" className="btn btn-danger-outline"
               data-toggle="modal"
-              data-target="#deleteClient">Radera klient
+              data-target="#{target}">Radera klient
             </a>
           </div>
           </div>
