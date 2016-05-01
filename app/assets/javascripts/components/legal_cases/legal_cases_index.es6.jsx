@@ -41,7 +41,7 @@ class LegalCasesIndex extends React.Component {
     return (
       <div className="card">
         <div className="card-block">
-          <h3 className="card-title">Klientens mål</h3>
+          <h3 className="card-title">Mål</h3>
           {legalCaseRows}
           <AddLegalCaseButton clientId={this.props.clientId} />
         </div>

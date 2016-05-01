@@ -1,7 +1,7 @@
 class ClientEditForm extends React.Component {
   constructor(props)  {
     super(props);
-    this.state = props.client;
+    this.state = props.client; // TODO: define properties here.
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
     this.handleChangeOnClientInput = this.handleChangeOnClientInput.bind(this);
@@ -35,7 +35,7 @@ class ClientEditForm extends React.Component {
   }
 
   render() {
-    var edit = true;
+    var isEdit = this.state !== null && this.state.id !== null;
     return (
       <div className="card">
         <div className="card-block">
@@ -121,14 +121,14 @@ class ClientEditForm extends React.Component {
             </div>
             <hr/>
             <div className="content-right">
-              {edit ? '' :
+              {isEdit ? '' :
                 <button
                   className="btn btn-secondary"
                   onClick={this.handleCancelButtonClick}>Avbryt
                 </button>}
               <button
                 className="btn btn-success"
-                type="submit">{edit ? 'Uppdatera' : 'Spara klient'}
+                type="submit">{isEdit ? 'Uppdatera' : 'Spara klient'}
               </button>
             </div>
           </form>

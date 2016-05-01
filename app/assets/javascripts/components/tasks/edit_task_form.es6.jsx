@@ -54,7 +54,7 @@ class EditTaskForm extends React.Component {
         {priceCategory.name}</option>
     );
     return (
-      <form className="form-inline" onSubmit={this.handleOnSubmit}>
+      <form className="form-inline task-form" onSubmit={this.handleOnSubmit}>
         <FormGroup
           name="date"
           type="date"
@@ -70,7 +70,7 @@ class EditTaskForm extends React.Component {
             type="text-area"
             value={this.state.entry}
             name="entry"
-            rows="3"
+            rows="5"
             onChange={this.handleInputChange}
             required>
           </textarea>

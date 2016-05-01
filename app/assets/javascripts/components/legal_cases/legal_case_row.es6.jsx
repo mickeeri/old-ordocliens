@@ -1,5 +1,5 @@
 class LegalCaseRow extends React.Component {
-  handleClickOnTableRow(e) {
+  handleClick(e) {
     window.location = Routes.client_legal_case_path(this.props.clientId, this.props.legalCase.id);
   }
 
@@ -7,13 +7,13 @@ class LegalCaseRow extends React.Component {
     var legalCase = this.props.legalCase;
     var active = legalCase.active ? 'Ja' : 'Nej';
     return (
-      <div className="card" onClick={this.handleClickOnTableRow.bind(this)}>
-        <div className="card-block lc-card">
-          <p><strong>Domstol: </strong>{legalCase.name}</p>
-          <p><strong>Målnummer: </strong>{legalCase.id}</p>
-          <p><strong>Uppdrag: </strong>Lorem ipsum</p>
-          <p><strong>Aktivt: </strong>{active}</p>
-        </div>
+      <div>
+        <hr/>
+        <a
+          href={Routes.client_legal_case_path(
+            this.props.clientId,
+            this.props.legalCase.id)}>{this.props.legalCase.name}
+        </a>
       </div>
     );
   }

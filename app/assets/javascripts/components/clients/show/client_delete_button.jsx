@@ -18,7 +18,7 @@ class ClientDeleteButton extends React.Component {
           <div className="col-md-4">
             <a href="#" className="btn btn-danger-outline"
               data-toggle="modal"
-              data-target="#{target}">Radera klient
+              data-target={'#' + target}>Radera klient
             </a>
           </div>
           </div>
