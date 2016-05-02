@@ -67,7 +67,7 @@ RSpec.describe LegalCasesController, type: :controller do
         expect(response).to have_http_status(401)
         legal_case.reload
         expect(legal_case.name).to_not eq("Edited name")
-        expect(legal_case.active).to_not eq(false)
+        expect(legal_case.closed).to_not eq(false)
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.describe LegalCasesController, type: :controller do
         expect(response).to have_http_status(204)
         legal_case.reload
         expect(legal_case.name).to eq("Edited name")
-        expect(legal_case.active).to eq(false)
+        expect(legal_case.closed).to eq(false)
       end
 
       let(:new_attributes_with_id) do

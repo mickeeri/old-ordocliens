@@ -4,11 +4,13 @@ class LegalCaseEditForm extends React.Component {
     this.state = {
       id: props.initialLegalCase ? props.initialLegalCase.id : '',
       name: props.initialLegalCase ? props.initialLegalCase.name : '',
-      active: props.initialLegalCase ? props.initialLegalCase.active : '',
+      court: props.initialLegalCase ? props.initialLegalCase.court : '',
+      case_number: props.initialLegalCase ? props.initialLegalCase.case_number : '',
+      closed: props.initialLegalCase ? props.initialLegalCase.closed : '',
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
   }
 
@@ -23,12 +25,14 @@ class LegalCaseEditForm extends React.Component {
     }
   }
 
-  handleNameChange(e) {
-    this.setState({ name: e.target.value });
+  handleInputChange(e) {
+    var nextState = {};
+    nextState[e.target.name] = e.target.value;
+    this.setState(nextState);
   }
 
   handleCheckBoxChange(e) {
-    this.setState({ active: e.target.checked });
+    this.setState({ closed: e.target.checked });
   }
 
   handleCancelButtonClick(e) {
@@ -39,25 +43,39 @@ class LegalCaseEditForm extends React.Component {
   render() {
     var isEdit = this.state.id ? true : false;
     return (
-      <form className="form" onSubmit={this.handleOnSubmit}>
+      <form className="form form-inline" onSubmit={this.handleOnSubmit}>
         <FormGroup
           name="name"
           type="text"
-          value={this.state ? this.state.name : ''}
-          changeEvent={this.handleNameChange}
+          value={this.state.name}
+          changeEvent={this.handleInputChange}
           autoFocus="true"
-          label="Ärendenamn"
+          label="Uppdrag"
           required={true} />
+        <FormGroup
+          name="court"
+          type="text"
+          value={this.state.court}
+          changeEvent={this.handleInputChange}
+          label="Domstol"
+          required={false} />
+        <FormGroup
+          name="case_number"
+          type="text"
+          value={this.state.case_number}
+          changeEvent={this.handleInputChange}
+          label="Målnummer"
+          required={false} />
         <div className="checkbox">
           { isEdit ?
             <label className="c-input c-checkbox">
               <input
                 type="checkbox"
-                id="active"
-                checked={this.state.active}
+                id="closed"
+                checked={this.state.closed}
                 onChange={this.handleCheckBoxChange}/>
               <span className="c-indicator"></span>
-                Aktivt
+                Avslutat
             </label> : '' }
         </div>
         <hr/>

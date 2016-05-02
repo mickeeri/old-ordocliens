@@ -1,7 +1,7 @@
 // class LegalCaseInfo extends React.Component {
 //   render() {
 //     var legalCase = this.props.legal_case;
-//     var active = legalCase.active ? 'Ja' : 'Nej';
+//     var active = legalCase.closed ? 'Ja' : 'Nej';
 //     var created = new Date(legalCase.created_at);
 //     var updated = new Date(legalCase.updated_at);
 //     return (

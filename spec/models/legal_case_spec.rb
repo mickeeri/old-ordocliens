@@ -8,6 +8,6 @@ RSpec.describe LegalCase, type: :model do
   it "active should have default value true" do
     client = build(:client)
     legal_case = client.legal_cases.build(name: "Legal case example")
-    expect(legal_case.active).to eq(true)
+    expect(legal_case.closed).to eq(true)
   end
 end

@@ -5,7 +5,8 @@ class LegalCaseRow extends React.Component {
 
   render() {
     var legalCase = this.props.legalCase;
-    var active = legalCase.active ? 'Ja' : 'Nej';
+    
+    // var closed = legalCase.closed ? 'Ja' : 'Nej';
     return (
       <div>
         <hr/>

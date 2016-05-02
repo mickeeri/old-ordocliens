@@ -1,6 +1,7 @@
 class LegalCaseNew extends React.Component {
   displayName: 'LegalCaseNew';
   render() {
+    // TODO: used?
     return (
       <div className="row">
         <div className="col-md-9 col-md-offset-2">

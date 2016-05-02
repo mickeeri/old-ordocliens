@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429081627) do
+ActiveRecord::Schema.define(version: 20160502190655) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "last_name"
@@ -45,6 +45,17 @@ ActiveRecord::Schema.define(version: 20160429081627) do
 
   add_index "counterparts", ["client_id"], name: "index_counterparts_on_client_id"
 
+  create_table "expenses", force: :cascade do |t|
+    t.text     "entry"
+    t.decimal  "price"
+    t.date     "date"
+    t.integer  "legal_case_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "expenses", ["legal_case_id"], name: "index_expenses_on_legal_case_id"
+
   create_table "firms", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -54,9 +65,11 @@ ActiveRecord::Schema.define(version: 20160429081627) do
   create_table "legal_cases", force: :cascade do |t|
     t.integer  "client_id"
     t.string   "name"
-    t.boolean  "active",     default: true
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.boolean  "closed",      default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "court"
+    t.string   "case_number"
   end
 
   add_index "legal_cases", ["client_id"], name: "index_legal_cases_on_client_id"

@@ -21,7 +21,6 @@ firm.users.create(
 # Price Categories
 PriceCategory.create(name: "Tidsspillan (låg)", price: 700.00)
 PriceCategory.create(name: "Tidsspillan (hög)", price: 1250.00)
-PriceCategory.create(name: "Utlägg", price: 0.00)
 PriceCategory.create(name: "Arbete", price: 1302.00)
 
 User.all.each do |user|
@@ -59,7 +58,7 @@ User.all.each do |user|
     number_of_cases.times do
       l_case = client.legal_cases.create(
         name: Faker::Lorem.characters(10),
-        active: Faker::Boolean.boolean
+        closed: Faker::Boolean.boolean
       )
 
       # Tasks
@@ -69,7 +68,7 @@ User.all.each do |user|
         l_case.tasks.create!(
           entry: Faker::Lorem.sentence(rand(10..30)),
           date: Faker::Time.between(2.days.ago, Time.zone.today, :day),
-          worked_hours: rand(1..8),
+          worked_hours: rand(1.25..8.35),
           price_category_id: random_pc_id
         )
       end

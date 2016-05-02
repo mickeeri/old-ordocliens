@@ -50,7 +50,7 @@ class LegalCasesController < ApplicationController
   private
 
   def legal_case_params
-    params.require(:legal_case).permit(:name, :active)
+    params.require(:legal_case).permit(:name, :closed, :court, :case_number)
   end
 
   def fetch_legal_case
