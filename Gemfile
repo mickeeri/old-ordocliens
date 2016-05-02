@@ -23,6 +23,8 @@ gem 'pg'
 gem 'pg_search'
 gem 'active_model_serializers'
 gem "js-routes"
+gem 'htmltoword'
+gem 'caracal-rails'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-es6-promise'

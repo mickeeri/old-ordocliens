@@ -1,7 +1,7 @@
 class LegalCasesController < ApplicationController
   before_action :authenticate_user!
-  before_action :fetch_legal_case, only: [:show, :update, :destroy]
-  respond_to :json, :html
+  before_action :fetch_legal_case, only: [:show, :update, :destroy, :report]
+  respond_to :json, :html, :docx
 
   def index
     @legal_cases = Client.find(params[:client_id]).legal_cases
@@ -36,6 +36,15 @@ class LegalCasesController < ApplicationController
   def destroy
     @legal_case.destroy
     respond_with @legal_case
+  end
+
+  def report
+    @price_categories = PriceCategory.all
+    respond_to do |format|
+      format.docx do
+        render docx: 'report', filename: 'Kostnadsuträkning.docx', word_template: 'custom.docx'
+      end
+    end
   end
 
   private

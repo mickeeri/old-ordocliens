@@ -42,7 +42,7 @@ h1 {
 }
 
 // CARD
-.lc-card {
+.lc-card { // TODO: not used.
   padding: 10px;
   cursor: pointer;
   &:hover {
@@ -113,6 +113,15 @@ h1 {
     width: 300px;
   }
 }
+// ICONS
+.fa-pencil-square-o, .fa-times {
+  font-size: 22px !important;
+  cursor: pointer;
+  &:hover {
+    color: #2E2E2E;
+  }
+}
+
 // MISC
 .center-content {
   text-align: center;

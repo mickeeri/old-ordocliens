@@ -1,0 +1,14 @@
+
+docx.font name: 'Courier New'
+
+docx.p do
+  text 'Ärende '
+  text @legal_case.name
+end
+
+docx.p 'This sentence is rendered in 12pt.', size: 24
+docx.hr
+docx.p 'Specifikation avseende arbete'
+@legal_case.tasks.each do |task|
+  docx.p task.entry
+end

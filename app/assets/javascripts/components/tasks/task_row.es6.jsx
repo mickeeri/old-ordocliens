@@ -50,10 +50,18 @@ class TaskRow extends React.Component {
         <td>{task.worked_hours}</td>
         <td className="text-nowrap">{task.price_category.name}</td>
         <td>
-          <a href="#" onClick={this.editTaskButtonClicked.bind(this)}>Redigera</a>
+          <i
+            className="fa fa-pencil-square-o"
+            onClick={this.editTaskButtonClicked.bind(this)}
+            aria-hidden="true">
+          </i>
         </td>
         <td className="text-nowrap">
-          <a href="#" onClick={this.deleteTaskButtonClicked.bind(this)}>Ta bort</a>
+          <i
+            className="fa fa-times"
+            onClick={this.deleteTaskButtonClicked.bind(this)}
+            aria-hidden="true">
+          </i>
         </td>
       </tr>
     );

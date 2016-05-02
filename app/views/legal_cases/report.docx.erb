@@ -1,0 +1,30 @@
+<html>
+  <body>
+    <h1>Min rapport</h1>
+    <p>Ärende: <%= @legal_case.name %></p>
+    <em>Specifikation avseende arbete:</em>
+    <% @price_categories.each do |pc| %>
+      <h2 class="strong"><%= pc.name %></h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Notering</th>
+            <th>Arbetad tid</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% pc.tasks.where(legal_case_id: @legal_case.id).each do |task| %>
+            <tr>
+              <td><%= task.date %></td>
+              <td><%= task.entry %></td>
+              <td><%= task.worked_hours %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p class="right">-----------------------------------</p>
+      <p class="right"><%= pc.tasks.where(legal_case_id: @legal_case.id).sum(:worked_hours) %></p>
+    <% end %>
+  </body>
+</html>

@@ -69,11 +69,19 @@ class TasksIndex extends React.Component {
     return (
       <div className="col-md-12">
         <div id="editModalContainer"></div>
-        <div className="card">
-          <div className="card-header">
-            <h3 className="card-title">Specifikation avseende arbeten</h3>
+        <div className="card card-block">
+          <h3 className="card-title">Specifikation avseende arbeten</h3>
+          <div className="content-right">
+            <a
+              href={'/report/' + this.props.legalCaseId + '.docx'}
+              className="btn btn-primary">Rapport .docx
+            </a>
+            <button
+              className="btn btn-success"
+              onClick={this.addTaskClicked}>Lägg till uppgift
+            </button>
           </div>
-          <table className="card-block table table-striped">
+          <table className="table">
             <thead>
               <tr>
                 <th>Datum</th>
@@ -88,12 +96,6 @@ class TasksIndex extends React.Component {
               {taskRows}
             </tbody>
           </table>
-          <div className="card-footer content-right">
-            <button
-              className="btn btn-success"
-              onClick={this.addTaskClicked}>Lägg till uppgift
-            </button>
-          </div>
         </div>
       </div>
     );
