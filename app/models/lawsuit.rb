@@ -1,5 +1,6 @@
-class LegalCase < ActiveRecord::Base
-  belongs_to :client, required: true
+class Lawsuit < ActiveRecord::Base
+  has_and_belongs_to_many :clients
+  has_many :counterparts
   has_many :tasks, dependent: :destroy
   has_many :expenses, dependent: :destroy
 

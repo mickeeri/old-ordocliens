@@ -25,8 +25,8 @@ PriceCategory.create(name: "Arbete", price: 1302.00)
 
 User.all.each do |user|
   # Clients
-  number_of_clients = rand(200..500)
-  sentece_lenght = rand(10..25)
+  number_of_clients = rand(50)
+  sentece_lenght = rand(6..25)
   number_of_clients.times do
     client = user.clients.create(
       last_name: Faker::Name.last_name,
@@ -42,30 +42,35 @@ User.all.each do |user|
     client_name = "#{client.last_name} #{client.first_name}"
     client.email = Faker::Internet.email(client_name)
 
-    # Counterparts
-    number_of_counterparts = rand(1..10)
-    number_of_counterparts.times do
-      client.counterparts.create(
-        name: Faker::Name.name,
-        personal_number: Faker::Number.number(10),
-        info: Faker::Lorem.sentence(sentece_lenght),
-        representative: Faker::Name.name
-      )
-    end
-
     # Legal Cases
     number_of_cases = rand(1..3)
     number_of_cases.times do
-      l_case = client.legal_cases.create(
+      lawsuit = client.lawsuits.create(
         name: Faker::Lorem.characters(10),
         closed: Faker::Boolean.boolean
       )
+
+      10.times do
+        random_client = Client.offset(rand(Client.count)).first
+        random_client.lawsuits << lawsuit
+      end
+
+      # Counterparts
+      number_of_counterparts = rand(1..10)
+      number_of_counterparts.times do
+        lawsuit.counterparts.create(
+          name: Faker::Name.name,
+          personal_number: Faker::Number.number(10),
+          info: Faker::Lorem.sentence(sentece_lenght),
+          representative: Faker::Name.name
+        )
+      end
 
       # Tasks
       number_of_tasks = rand(5..15)
       number_of_tasks.times do
         random_pc_id = PriceCategory.offset(rand(PriceCategory.count)).first.id
-        l_case.tasks.create!(
+        lawsuit.tasks.create!(
           entry: Faker::Lorem.sentence(rand(10..30)),
           date: Faker::Time.between(2.days.ago, Time.zone.today, :day),
           worked_hours: rand(1.25..8.35),

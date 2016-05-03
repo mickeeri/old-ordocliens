@@ -1,6 +1,5 @@
 FactoryGirl.define do
-  factory :legal_case do
-    client
+  factory :lawsuit do
     name "Legal case 50232"
     active true
   end

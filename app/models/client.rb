@@ -2,8 +2,8 @@ class Client < ActiveRecord::Base
   include PgSearch
   # Relations
   belongs_to :user, required: true
-  has_many :legal_cases, dependent: :destroy
-  has_many :counterparts
+  has_and_belongs_to_many :lawsuits
+  
 
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }

@@ -10,6 +10,6 @@ class ClientShowSerializer < ActiveModel::Serializer
              :email,
              :phone_number
 
-  has_many :counterparts
-  has_many :legal_cases
+  # has_many :counterparts
+  # has_many :legal_cases
 end

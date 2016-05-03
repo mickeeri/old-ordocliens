@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160502190655) do
+ActiveRecord::Schema.define(version: 20160503143051) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "last_name"
@@ -33,28 +33,36 @@ ActiveRecord::Schema.define(version: 20160502190655) do
   add_index "clients", ["ssn"], name: "index_clients_on_ssn"
   add_index "clients", ["user_id"], name: "index_clients_on_user_id"
 
+  create_table "clients_lawsuits", id: false, force: :cascade do |t|
+    t.integer "client_id",  null: false
+    t.integer "lawsuit_id", null: false
+  end
+
+  add_index "clients_lawsuits", ["client_id", "lawsuit_id"], name: "index_clients_lawsuits_on_client_id_and_lawsuit_id"
+  add_index "clients_lawsuits", ["lawsuit_id", "client_id"], name: "index_clients_lawsuits_on_lawsuit_id_and_client_id"
+
   create_table "counterparts", force: :cascade do |t|
     t.string   "name"
     t.string   "personal_number"
     t.text     "info"
     t.string   "representative"
-    t.integer  "client_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "lawsuit_id"
   end
 
-  add_index "counterparts", ["client_id"], name: "index_counterparts_on_client_id"
+  add_index "counterparts", ["lawsuit_id"], name: "index_counterparts_on_lawsuit_id"
 
   create_table "expenses", force: :cascade do |t|
     t.text     "entry"
     t.decimal  "price"
     t.date     "date"
-    t.integer  "legal_case_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "lawsuit_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "expenses", ["legal_case_id"], name: "index_expenses_on_legal_case_id"
+  add_index "expenses", ["lawsuit_id"], name: "index_expenses_on_lawsuit_id"
 
   create_table "firms", force: :cascade do |t|
     t.string   "name"
@@ -62,8 +70,7 @@ ActiveRecord::Schema.define(version: 20160502190655) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "legal_cases", force: :cascade do |t|
-    t.integer  "client_id"
+  create_table "lawsuits", force: :cascade do |t|
     t.string   "name"
     t.boolean  "closed",      default: false
     t.datetime "created_at",                  null: false
@@ -71,8 +78,6 @@ ActiveRecord::Schema.define(version: 20160502190655) do
     t.string   "court"
     t.string   "case_number"
   end
-
-  add_index "legal_cases", ["client_id"], name: "index_legal_cases_on_client_id"
 
   create_table "price_categories", force: :cascade do |t|
     t.string   "name"
@@ -85,13 +90,13 @@ ActiveRecord::Schema.define(version: 20160502190655) do
     t.text     "entry"
     t.date     "date"
     t.decimal  "worked_hours"
-    t.integer  "legal_case_id"
+    t.integer  "lawsuit_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "price_category_id"
   end
 
-  add_index "tasks", ["legal_case_id"], name: "index_tasks_on_legal_case_id"
+  add_index "tasks", ["lawsuit_id"], name: "index_tasks_on_lawsuit_id"
   add_index "tasks", ["price_category_id"], name: "index_tasks_on_price_category_id"
 
   create_table "users", force: :cascade do |t|

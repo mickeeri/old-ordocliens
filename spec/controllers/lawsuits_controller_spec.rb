@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe LegalCasesController, type: :controller do
-  let(:legal_case) do
-    create(:legal_case)
+RSpec.describe LawsuitsController, type: :controller do
+  let(:lawsuit) do
+    create(:lawsuit)
   end
 
   let(:user) do
@@ -18,7 +18,7 @@ RSpec.describe LegalCasesController, type: :controller do
   describe "GET show" do
     context "when not signed in" do
       it "should fail" do
-        get :show, id: legal_case.id, client_id: client.id
+        get :show, id: lawsuit.id, client_id: client.id
         expect(response).to_not be_success
         expect(response).to redirect_to(new_user_session_path)
         expect(flash[:alert]).to be_present
@@ -28,7 +28,7 @@ RSpec.describe LegalCasesController, type: :controller do
     context "when signed in" do
       it "should succeed" do
         sign_in user
-        get :show, id: legal_case.id, client_id: client.id
+        get :show, id: lawsuit.id, client_id: client.id
         expect(response).to have_http_status(200)
       end
     end
@@ -36,18 +36,18 @@ RSpec.describe LegalCasesController, type: :controller do
 
   describe "DELETE destroy" do
     context "when not signed in" do
-      it "should not delete the legal_case" do
-        delete :destroy, format: :json, id: legal_case.id, client_id: client.id
+      it "should not delete the lawsuit" do
+        delete :destroy, format: :json, id: lawsuit.id, client_id: client.id
         expect(response).to have_http_status(401)
-        expect(LegalCase.where(id: legal_case.id)).to exist
+        expect(LegalCase.where(id: lawsuit.id)).to exist
       end
     end
 
     context "when signed in" do
-      it "should delete the legal_case" do
+      it "should delete the lawsuit" do
         sign_in user
-        delete :destroy, format: :json, id: legal_case.id, client_id: client.id
-        expect(LegalCase.where(id: legal_case.id)).to be_empty
+        delete :destroy, format: :json, id: lawsuit.id, client_id: client.id
+        expect(LegalCase.where(id: lawsuit.id)).to be_empty
       end
     end
   end
@@ -60,14 +60,14 @@ RSpec.describe LegalCasesController, type: :controller do
     context "when not signed in" do
       it "should not edit the legal case" do
         put :update,
-            id: legal_case.id,
+            id: lawsuit.id,
             client_id: client.id,
-            legal_case: new_attributes,
+            lawsuit: new_attributes,
             format: :json
         expect(response).to have_http_status(401)
-        legal_case.reload
-        expect(legal_case.name).to_not eq("Edited name")
-        expect(legal_case.closed).to_not eq(false)
+        lawsuit.reload
+        expect(lawsuit.name).to_not eq("Edited name")
+        expect(lawsuit.closed).to_not eq(false)
       end
     end
 
@@ -75,14 +75,14 @@ RSpec.describe LegalCasesController, type: :controller do
       it "should update legal case" do
         sign_in user
         put :update,
-            id: legal_case.id,
+            id: lawsuit.id,
             client_id: client.id,
-            legal_case: new_attributes,
+            lawsuit: new_attributes,
             format: :json
         expect(response).to have_http_status(204)
-        legal_case.reload
-        expect(legal_case.name).to eq("Edited name")
-        expect(legal_case.closed).to eq(false)
+        lawsuit.reload
+        expect(lawsuit.name).to eq("Edited name")
+        expect(lawsuit.closed).to eq(false)
       end
 
       let(:new_attributes_with_id) do
@@ -97,12 +97,12 @@ RSpec.describe LegalCasesController, type: :controller do
       it "should not be able to edit id attribute" do
         sign_in user
         put :update,
-            id: legal_case.id,
+            id: lawsuit.id,
             client_id: client.id,
-            legal_case: new_attributes_with_id,
+            lawsuit: new_attributes_with_id,
             format: :json
-        legal_case.reload
-        expect(legal_case.id).to_not eq(89)
+        lawsuit.reload
+        expect(lawsuit.id).to_not eq(89)
       end
     end
   end
