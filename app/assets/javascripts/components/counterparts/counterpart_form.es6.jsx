@@ -85,7 +85,7 @@ class CounterPartForm extends React.Component {
           <button className="btn btn-success-outline" type="submit">
             Spara
           </button>
-        </div>
+        </div>        
       </form>
     );
   }

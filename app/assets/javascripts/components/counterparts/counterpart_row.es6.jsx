@@ -1,11 +1,23 @@
+/* global React */
+/* global ReactDOM */
+/* global $ */
+/* global CounterPartForm */
+/* global EditFormModal */
+
 class CounterPartRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleOnClick = this.handleOnClick.bind(this);
+  }
+
   handleOnClick(e) {
     e.preventDefault();
     ReactDOM.render(
       <EditFormModal
         form={<CounterPartForm
           clientId={this.props.clientId}
-          initialCounterpart={this.props.counterpart}/>}
+          initialCounterpart={this.props.counterpart}
+        />}
         header="Motpart"
       />,
     document.getElementById('editModalContainer')
@@ -14,11 +26,15 @@ class CounterPartRow extends React.Component {
   }
 
   render() {
-    var counterpart = this.props.counterpart;
+    const counterpart = this.props.counterpart;
     return (
       <div>
-        <hr/>
-        <a onClick={this.handleOnClick.bind(this)} href="#">{counterpart.name}</a>
+        <hr />
+        <a
+          onClick={this.handleOnClick}
+          href="#"
+        >{counterpart.name}
+        </a><span> ({counterpart.personal_number})</span>
       </div>
     );
   }
@@ -28,26 +44,3 @@ CounterPartRow.propTypes = {
   counterpart: React.PropTypes.object.isRequired,
   clientId: React.PropTypes.number.isRequired,
 };
-
-// render() {
-//   var counterpart = this.props.counterpart;
-//   return (
-//     <div>
-//         <button
-//           className="btn btn-link"
-//           data-toggle="collapse"
-//           data-target={'#' + counterpart.id}
-//           aria-expanded="false"
-//           aria-controls={counterpart.id}>{counterpart.name}
-//         </button>
-//         <div className="collapse" id={counterpart.id}>
-//           <div className="card card-block">
-//             <p><strong>Personnummer: </strong>{counterpart.personal_number}</p>
-//             <p><strong>Motpartsombud: </strong>{counterpart.representative}</p>
-//             <p><strong>Kontaktuppgift: </strong>{counterpart.info}</p>
-//           </div>
-//         </div>
-//     </div>
-//   );
-// }
-// }

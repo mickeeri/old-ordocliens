@@ -1,3 +1,9 @@
+/* global React */
+/* global Routes */
+/* global makeGetRequest */
+/* global ClientRow */
+/* global Paginator */
+
 class ClientsIndex extends React.Component {
   constructor(props) {
     super(props);
@@ -19,18 +25,17 @@ class ClientsIndex extends React.Component {
   }
 
   fetchClients() {
-    var url;
-    var data = this.state.fetchData;
+    const data = this.state.fetchData;
 
     // Building uri:s with query string parameters.
-    url = data.search ? Routes.clients_path() + '?search=' + data.search :
-      Routes.clients_path() + '?page=' + data.page;
+    const url = data.search ? `${Routes.clients_path()}?search=${data.search}` :
+      `${Routes.clients_path()}?page=${data.page}`;
 
     makeGetRequest(url)
-      .success(response=> {
+      .success(response => {
         this.setState({ clients: response.clients, meta: response.meta });
       })
-      .error(xhr=> {
+      .error(xhr => {
         console.error(url, xhr.status, xhr.statusText);
       });
   }
@@ -45,13 +50,13 @@ class ClientsIndex extends React.Component {
     this.fetchClients();
   }
 
-  addClientClick(event) {
+  addClientClick() {
     window.location = Routes.new_client_path();
   }
 
   render() {
     // Table rows with clients.
-    var clientRows = this.state.clients.map(client =>
+    let clientRows = this.state.clients.map(client =>
       <ClientRow key={client.id} client={client} />);
 
     return (
@@ -69,15 +74,15 @@ class ClientsIndex extends React.Component {
                 onChange={this.handleOnSearch}
                 ref="search"
               />
-            { this.state.meta.total_pages == 1 ? '' :
-                <Paginator
-                  totalPages={this.state.meta.total_pages}
-                  currentPage={this.state.meta.current_page}
-                  nextPage={this.state.meta.next_page}
-                  prevPage={this.state.meta.previous_page}
-                  onPaginate={this.handleOnPaginate}
-                />
-              }
+            {this.state.meta.total_pages === 1 ? '' :
+              <Paginator
+                totalPages={this.state.meta.total_pages}
+                currentPage={this.state.meta.current_page}
+                nextPage={this.state.meta.next_page}
+                prevPage={this.state.meta.previous_page}
+                onPaginate={this.handleOnPaginate}
+              />
+             }
             </form>
 
           </div>
@@ -101,7 +106,7 @@ class ClientsIndex extends React.Component {
   }
 }
 
-ClientsIndex.PropTypes = {
+ClientsIndex.propTypes = {
   clients: React.PropTypes.array.isRequired,
   meta: React.PropTypes.object.isRequired,
 };

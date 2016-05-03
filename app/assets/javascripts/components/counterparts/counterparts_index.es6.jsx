@@ -1,3 +1,11 @@
+/* global React */
+/* global PubSub */
+/* global Routes */
+/* global CounterPartRow */
+/* global AddCounterpartButton */
+/* global makeGetRequest */
+/* global ReactDOM */
+
 class CounterpartsIndex extends React.Component {
   constructor(props) {
     super(props);
@@ -21,22 +29,24 @@ class CounterpartsIndex extends React.Component {
   }
 
   refreshCounterParts() {
-    var url = Routes.client_counterparts_path(this.props.clientId);
+    const url = Routes.client_counterparts_path(this.props.clientId);
     makeGetRequest(url)
-      .success(response=> {
+      .success(response => {
         this.setState({ counterparts: response.counterparts });
         this.removeEditFormModal();
       })
-      .error(xhr=> {
+      .error(xhr => {
         console.error(url, xhr.status, xhr.statusText);
       });
   }
 
   render() {
-    var counterpartRows = this.state.counterparts.map(counterpart=>
-      <CounterPartRow key={counterpart.id}
+    let counterpartRows = this.state.counterparts.map(counterpart =>
+      <CounterPartRow
+        key={counterpart.id}
         counterpart={counterpart}
-        clientId={this.props.clientId }/>
+        clientId={this.props.clientId}
+      />
     );
 
     return (

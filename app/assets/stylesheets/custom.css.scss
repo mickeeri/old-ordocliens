@@ -7,14 +7,41 @@ main {
   margin-bottom: 100px;
   min-height: 1000px;
 }
-
-// NAVBAR
 .nav {
   margin-top: 30px;
-}
+  .nav-item {
+    .nav-link {
+      font-weight: 600;
+    }
 
-.nav-link {
-  font-weight: 600;
+  }
+
+}
+// NAVBAR
+.nav-li {
+  .nav-link {
+    display: block;
+    height: 50px;
+    color: #666;
+    &:hover {
+      color: #0275d8;
+      &:after {
+        content: '';
+        display: block;
+        background: #0275d8;
+        width: 100%;
+        height: 2px;
+      }
+    }
+  }
+
+  .active {
+    color: #0275d8;
+  }
+
+  .btn-success {
+    color: #FFFFFF;
+  }
 }
 
 // TABLE
