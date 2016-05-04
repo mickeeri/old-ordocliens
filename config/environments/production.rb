@@ -77,10 +77,10 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # React
+  # React (use minified version in production)
   config.react.variant = :production
   config.react.addons = true
-  
+
   config.react.server_renderer_options = {
     files: ["server_rendering.js"], # files to load for prerendering
   }

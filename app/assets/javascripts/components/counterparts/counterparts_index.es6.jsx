@@ -58,5 +58,5 @@ class CounterpartsIndex extends React.Component {
 
 CounterpartsIndex.propTypes = {
   initialCounterparts: React.PropTypes.array.isRequired,
-  lawsuits: React.PropTypes.number.isRequired,
+  lawsuits: React.PropTypes.array.isRequired,
 };

@@ -15,7 +15,7 @@ class CounterPartRow extends React.Component {
     ReactDOM.render(
       <EditFormModal
         form={<CounterPartForm
-          clientId={this.props.clientId}
+          clientId={this.props.clientId ? this.props.clientId : ''}
           initialCounterpart={this.props.counterpart}
         />}
         header="Motpart"
@@ -42,5 +42,5 @@ class CounterPartRow extends React.Component {
 
 CounterPartRow.propTypes = {
   counterpart: React.PropTypes.object.isRequired,
-  clientId: React.PropTypes.number.isRequired,
+  clientId: React.PropTypes.number,
 };

@@ -52,7 +52,8 @@ User.all.each do |user|
 
       10.times do
         random_client = Client.offset(rand(Client.count)).first
-        random_client.lawsuits << lawsuit
+        random_client.lawsuits << lawsuit unless
+          random_client.lawsuits.include?(lawsuit)
       end
 
       # Counterparts

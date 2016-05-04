@@ -15,8 +15,15 @@ main {
     }
 
   }
-
 }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+}
+
+
 // NAVBAR
 .nav-li {
   .nav-link {

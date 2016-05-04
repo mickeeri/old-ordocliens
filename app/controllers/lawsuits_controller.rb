@@ -58,16 +58,11 @@ class LawsuitsController < ApplicationController
   end
 
   def links
-    name = "#{@lawsuit.client.first_name} #{@lawsuit.client.last_name}"
-    [{ id: rand(100), name: "Klienter", path: clients_path },
-     {  id: rand(100),
-        name: name,
-        path: client_path(@lawsuit.client.id) }]
+    [{ id: rand(100), name: "Ärenden", path: lawsuits_path }]
   end
 
   def props
-    { init_lawsuit: prepare(@lawsuit, LawsuitSerializer, root: false),
-      client_id: @lawsuit.client.id,
+    { initial_lawsuit: @lawsuit,
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),
       price_categories: prepare_array(PriceCategory.all),
       links: links }

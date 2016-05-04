@@ -11,9 +11,7 @@ class ClientsController < ApplicationController
           { clients: prepare_array(@clients),
             meta: pagination_dict(@clients) }
       end
-      format.json do
-        render json: { clients: @clients, meta: pagination_dict(@clients) }
-      end
+      format.json { render json: @clients, meta: pagination_dict(@clients) }
     end
   end
 
@@ -79,10 +77,6 @@ class ClientsController < ApplicationController
 
   def fetch_client
     @client = Client.find(params[:id])
-  end
-
-  def default_serializer_options
-    { root: false }
   end
 
   def get_counterparts

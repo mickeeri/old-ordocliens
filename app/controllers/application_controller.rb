@@ -3,17 +3,20 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
   protect_from_forgery with: :null_session
+  # include ActionController::Serialization
+  # before_filter :deep_snake_case_params!
+
 
   private
 
   # To render pagination info as json.
   def pagination_dict(object)
     {
-      current_page: object.current_page,
-      next_page: object.next_page,
-      previous_page: object.previous_page,
-      total_pages: object.total_pages,
-      total_entries: object.total_entries
+      currentPage: object.current_page,
+      nextPage: object.next_page,
+      previousPage: object.previous_page,
+      totalPages: object.total_pages,
+      totalEntries: object.total_entries
     }
   end
 
@@ -37,4 +40,24 @@ class ApplicationController < ActionController::Base
       "#{resource.class}Serializer".safe_constantize
     end
   end
+
+  # Convert lowerCamelCase params to snake_case automatically
+  # def deep_snake_case_params!(val = params)
+  #   case val
+  #   when Array
+  #     val.map {|v| deep_snake_case_params! v }
+  #   when Hash
+  #     val.keys.each do |k, v = val[k]|
+  #       val.delete k
+  #       val[k.underscore] = deep_snake_case_params!(v)
+  #     end
+  #     val
+  #   else
+  #     val
+  #   end
+  # end
+
+  # def default_serializer_options
+  #   {root: false}
+  # end
 end

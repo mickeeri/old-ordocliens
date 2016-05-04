@@ -1,5 +1,5 @@
 function ClientRow({ client }) {
-  const fullName = `${client.first_name} ${client.last_name}`;
+  const fullName = `${client.firstName} ${client.lastName}`;
   return (
     <tr>
       <td>{client.id}</td>

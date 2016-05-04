@@ -2,7 +2,7 @@ class LawsuitShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      legal_case: props.init_legal_case,
+      legal_case: props.initialLawsuit,
       editMode: false,
     };
     this.refreshLawsuit = this.refreshLawsuit.bind(this);
@@ -16,12 +16,12 @@ class LawsuitShow extends React.Component {
     PubSub.unsubscribe('legalCaseTouched');
   }
 
-  refreshLawsuit () { // Refresh legal case from server.
-    var url = Routes.client_legal_case_path(
-      this.props.client_id,
-      this.props.init_legal_case.id);
+  refreshLawsuit() { // Refresh legal case from server.
+    const url = Routes.client_legal_case_path(
+      this.props.clientId,
+      this.props.initialLawsuit.id);
     makeGetRequest(url)
-      .success(response=> {
+      .success(response => {
         this.setState({ legal_case: response.legal_case });
       })
       .error(xhr=> {
@@ -36,23 +36,24 @@ class LawsuitShow extends React.Component {
         <div className="row">
           <div className="col-md-9">
             <div className="card card-block">
-              <LawsuitEditForm
+              <LawsuitForm
                 initialLawsuit={this.state.legal_case}
-                clientId={this.props.client_id} />
+                clientId={this.props.clientId} />
             </div>
           </div>
           <div className="col-md-3">
             <DeleteLawsuitButton
-              clientId={this.props.client_id}
-              legalCaseId={this.props.init_legal_case.id} />
+              clientId={this.props.clientId}
+              legalCaseId={this.props.initialLawsuit.id} />
           </div>
         </div>
         <div className="row">
           <TasksIndex
             initialTasks={this.props.tasks}
-            legalCaseId={this.props.init_legal_case.id}
-            clientId={this.props.client_id}
-            priceCategories={this.props.price_categories} />
+            legalCaseId={this.props.initialLawsuit.id}
+            clientId={this.props.clientId}
+            priceCategories={this.props.priceCategories}
+          />
         </div>
       </div>
     );
@@ -60,9 +61,9 @@ class LawsuitShow extends React.Component {
 }
 
 LawsuitShow.propTypes = {
-  client_id: React.PropTypes.number.isRequired,
-  init_legal_case: React.PropTypes.object.isRequired,
+  clientId: React.PropTypes.number,
+  initialLawsuit: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,
-  price_categories: React.PropTypes.array.isRequired,
+  priceCategories: React.PropTypes.array.isRequired,
   links: React.PropTypes.array.isRequired,
 };

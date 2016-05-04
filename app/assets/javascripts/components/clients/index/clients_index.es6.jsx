@@ -76,15 +76,14 @@ class ClientsIndex extends React.Component {
               />
             {this.state.meta.total_pages === 1 ? '' :
               <Paginator
-                totalPages={this.state.meta.total_pages}
-                currentPage={this.state.meta.current_page}
-                nextPage={this.state.meta.next_page}
-                prevPage={this.state.meta.previous_page}
+                totalPages={this.state.meta.totalPages}
+                currentPage={this.state.meta.currentPage}
+                nextPage={this.state.meta.nextPage}
+                prevPage={this.state.meta.previousPage}
                 onPaginate={this.handleOnPaginate}
               />
              }
             </form>
-
           </div>
         </div>
         <div className="row">
