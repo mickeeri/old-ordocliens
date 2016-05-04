@@ -73,7 +73,7 @@ User.all.each do |user|
         lawsuit.tasks.create!(
           entry: Faker::Lorem.sentence(rand(10..30)),
           date: Faker::Time.between(2.days.ago, Time.zone.today, :day),
-          worked_hours: rand(1.25..8.35),
+          worked_hours: rand(1.5..8.5),
           price_category_id: random_pc_id
         )
       end

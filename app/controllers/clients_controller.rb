@@ -2,7 +2,6 @@ class ClientsController < ApplicationController
   before_action :authenticate_user!
   before_action :search_clients, only: [:index]
   before_action :fetch_client, only: [:show, :update, :destroy]
-  # before_action :fetch_data, only: [:index]
   respond_to :json, :html
 
   def index
@@ -23,7 +22,8 @@ class ClientsController < ApplicationController
       format.html do
         render component: "ClientShow", props: {
           initial_client: prepare(@client, ClientShowSerializer, root: false),
-          links: [{ id: rand(100), name: "Klienter", path: clients_path }] }
+          links: [{ id: rand(100), name: "Klienter", path: clients_path }],
+          counterparts: Counterpart.where(lawsuit: @client.lawsuits) }
       end
       format.json do
         render json: { client: @client, serializer: ClientShowSerializer }
@@ -83,5 +83,13 @@ class ClientsController < ApplicationController
 
   def default_serializer_options
     { root: false }
+  end
+
+  def get_counterparts
+    counterparts = []
+    @client.lawsuits.each do |lawsuit|
+      counterparts.push(lawsuit.counterparts)
+    end
+    return counterparts;
   end
 end

@@ -1,22 +1,22 @@
-class LegalCaseShow extends React.Component {
+class LawsuitShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       legal_case: props.init_legal_case,
       editMode: false,
     };
-    this.refreshLegalCase = this.refreshLegalCase.bind(this);
+    this.refreshLawsuit = this.refreshLawsuit.bind(this);
   }
 
   componentDidMount() {
-    PubSub.subscribe('legalCaseTouched', this.refreshLegalCase);
+    PubSub.subscribe('legalCaseTouched', this.refreshLawsuit);
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe('legalCaseTouched');
   }
 
-  refreshLegalCase () { // Refresh legal case from server.
+  refreshLawsuit () { // Refresh legal case from server.
     var url = Routes.client_legal_case_path(
       this.props.client_id,
       this.props.init_legal_case.id);
@@ -36,13 +36,13 @@ class LegalCaseShow extends React.Component {
         <div className="row">
           <div className="col-md-9">
             <div className="card card-block">
-              <LegalCaseEditForm
-                initialLegalCase={this.state.legal_case}
+              <LawsuitEditForm
+                initialLawsuit={this.state.legal_case}
                 clientId={this.props.client_id} />
             </div>
           </div>
           <div className="col-md-3">
-            <DeleteLegalCaseButton
+            <DeleteLawsuitButton
               clientId={this.props.client_id}
               legalCaseId={this.props.init_legal_case.id} />
           </div>
@@ -59,7 +59,7 @@ class LegalCaseShow extends React.Component {
   }
 }
 
-LegalCaseShow.propTypes = {
+LawsuitShow.propTypes = {
   client_id: React.PropTypes.number.isRequired,
   init_legal_case: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,

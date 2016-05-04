@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe LegalCase, type: :model do
+RSpec.describe Lawsuit, type: :model do
   it { should belong_to :client }
   it { should have_many :tasks }
   it { should validate_presence_of :name }

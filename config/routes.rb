@@ -20,12 +20,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :clients do
+  resources :clients
+  resources :lawsuits do # show, index
+    resources :tasks
     resources :counterparts
-
-    resources :legal_cases do # show, index
-      resources :tasks
-    end
   end
   # #root "sessions#new"
   # # get    "login"   => "sessions#new"

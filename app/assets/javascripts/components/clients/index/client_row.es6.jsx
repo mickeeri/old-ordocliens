@@ -1,6 +1,3 @@
-/* global React */
-/* global Routes */
-
 function ClientRow({ client }) {
   const fullName = `${client.first_name} ${client.last_name}`;
   return (

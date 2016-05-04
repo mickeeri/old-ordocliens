@@ -1,4 +1,4 @@
-// class LegalCaseInfo extends React.Component {
+// class LawsuitInfo extends React.Component {
 //   render() {
 //     var legalCase = this.props.legal_case;
 //     var active = legalCase.closed ? 'Ja' : 'Nej';

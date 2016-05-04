@@ -39,7 +39,7 @@ RSpec.describe LawsuitsController, type: :controller do
       it "should not delete the lawsuit" do
         delete :destroy, format: :json, id: lawsuit.id, client_id: client.id
         expect(response).to have_http_status(401)
-        expect(LegalCase.where(id: lawsuit.id)).to exist
+        expect(Lawsuit.where(id: lawsuit.id)).to exist
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe LawsuitsController, type: :controller do
       it "should delete the lawsuit" do
         sign_in user
         delete :destroy, format: :json, id: lawsuit.id, client_id: client.id
-        expect(LegalCase.where(id: lawsuit.id)).to be_empty
+        expect(Lawsuit.where(id: lawsuit.id)).to be_empty
       end
     end
   end

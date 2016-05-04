@@ -1,10 +1,6 @@
-/* global React */
-/* global PubSub */
-/* global Routes */
 /* global CounterPartRow */
 /* global AddCounterpartButton */
 /* global makeGetRequest */
-/* global ReactDOM */
 
 class CounterpartsIndex extends React.Component {
   constructor(props) {
@@ -45,15 +41,16 @@ class CounterpartsIndex extends React.Component {
       <CounterPartRow
         key={counterpart.id}
         counterpart={counterpart}
-        clientId={this.props.clientId}
       />
     );
+
+    // {counterpartRows}
+    // <AddCounterpartButton clientId={this.props.clientId} />
 
     return (
       <div className="card card-block">
         <h3 className="card-title">Motparter</h3>
         {counterpartRows}
-        <AddCounterpartButton clientId={this.props.clientId} />
       </div>
     );
   }
@@ -61,5 +58,5 @@ class CounterpartsIndex extends React.Component {
 
 CounterpartsIndex.propTypes = {
   initialCounterparts: React.PropTypes.array.isRequired,
-  clientId: React.PropTypes.number.isRequired,
+  lawsuits: React.PropTypes.number.isRequired,
 };

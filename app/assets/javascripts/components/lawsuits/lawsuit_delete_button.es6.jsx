@@ -1,6 +1,6 @@
-class DeleteLegalCaseButton extends React.Component {
+class DeleteLawsuitButton extends React.Component {
   render() {
-    var target = 'deleteLegalCase';
+    var target = 'deleteLawsuit';
     return (
       <div className="card card-block">
         <ConfirmDeleteModal
@@ -24,7 +24,7 @@ class DeleteLegalCaseButton extends React.Component {
   }
 }
 
-DeleteLegalCaseButton.propTypes = {
+DeleteLawsuitButton.propTypes = {
   clientId: React.PropTypes.number.isRequired,
   legalCaseId: React.PropTypes.number.isRequired,
 };

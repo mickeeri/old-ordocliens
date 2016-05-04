@@ -11,21 +11,21 @@ class LawsuitsController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        render component: "LegalCaseShow", props: props
+        render component: "LawsuitShow", props: props
       end
       format.json { render json: { lawsuit: @lawsuit } }
     end
   end
 
   def new
-    render component: "LegalCaseNew", props: {
+    render component: "LawsuitNew", props: {
       client_id: params[:client_id].to_i }
   end
 
   def create
     client = Client.find(params[:client_id])
     lawsuit = client.lawsuits.create(lawsuit_params)
-    respond_with(client, lawsuit)
+    respond_with(lawsuit)
   end
 
   def update
@@ -54,7 +54,7 @@ class LawsuitsController < ApplicationController
   end
 
   def fetch_lawsuit
-    @lawsuit = LegalCase.find(params[:id])
+    @lawsuit = Lawsuit.find(params[:id])
   end
 
   def links
@@ -66,7 +66,7 @@ class LawsuitsController < ApplicationController
   end
 
   def props
-    { init_lawsuit: prepare(@lawsuit, LegalCaseSerializer, root: false),
+    { init_lawsuit: prepare(@lawsuit, LawsuitSerializer, root: false),
       client_id: @lawsuit.client.id,
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),
       price_categories: prepare_array(PriceCategory.all),
