@@ -26,13 +26,7 @@ class ClientForm extends React.Component {
         { client: this.state }, 'clientUpdated');
     } else {
       if (this.state) { // Otherwise create new client.
-        // makePostRequest(Routes.clients_path(), { client: this.state }, 'redirect');
-        $.post(Routes.clients_path(), { client: this.state }, res => {
-          window.location = Routes.client_path(res.client.id);
-        })
-        .fail(xhr => {
-          console.error(xhr.responseText, xhr.status, xhr.statusText);
-        });
+        makePostRequest(Routes.clients_path(), { client: this.state }, 'redirect');
       }
     }
   }

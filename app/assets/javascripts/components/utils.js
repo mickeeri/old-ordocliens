@@ -15,24 +15,11 @@ function makePutRequest(url, payload, subToPublish) {
 }
 
 function makePostRequest(url, payload, action) {
-  $.ajax({
-    url: url,
-    dataType: 'json',
-    type: 'POST',
-    data: payload,
-    success: function (data) {
-      if (action === 'redirect') {
-        // Redirect to show page of returned object.
-        console.log(data);
-        window.location = url + '/' + data.id;
-      } else {
-        PubSub.publish(action);
-      }
-    },
-
-    error: function (xhr) {
-      console.error(xhr.responseText, xhr.status, xhr.statusText);
-    },
+  $.post(url, payload, res => {
+    window.location = Routes.client_path(res.client.id);
+  })
+  .fail(xhr => {
+    console.error(xhr.responseText, xhr.status, xhr.statusText);
   });
 }
 
