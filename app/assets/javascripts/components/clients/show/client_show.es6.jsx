@@ -1,6 +1,6 @@
 /* global makeGetRequest */
 /* global BreadCrumb */
-/* global ClientEditForm */
+/* global ClientForm */
 /* global LawsuitIndex */
 /* global ClientDeleteButton */
 /* global CounterpartsIndex */
@@ -32,7 +32,6 @@ class ClientShow extends React.Component {
   refreshClient() {
     makeGetRequest(Routes.client_path(this.state.client.id))
       .success(response => {
-        this.toggleEditMode();
         this.setState({ client: response.client });
       })
       .error(xhr => {
@@ -51,7 +50,7 @@ class ClientShow extends React.Component {
           <div className="col-md-6">
             <div className="row">
               <div className="col-md-12">
-                <ClientEditForm client={this.state.client} header="" />
+                <ClientForm client={this.state.client} header="" />
               </div>
             </div>
             <div className="row">

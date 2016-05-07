@@ -35,7 +35,7 @@ User.all.each do |user|
       email: Faker::Internet.email,
       phone_number: Faker::PhoneNumber.cell_phone,
       street: Faker::Address.street_address,
-      post_code: Faker::Address.postcode,
+      post_code: Faker::Number.number(5),
       city: Faker::Address.city,
       note: Faker::Lorem.sentence(sentece_lenght)
     )

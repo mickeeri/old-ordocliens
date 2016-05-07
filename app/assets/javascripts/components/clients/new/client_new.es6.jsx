@@ -4,7 +4,7 @@ class ClientNew extends React.Component {
     return (
       <div className="row">
         <div className="col-md-9 col-md-offset-2">
-          <ClientEditForm header="Lägg till klient" />
+          <ClientForm header="Lägg till klient" />
         </div>
       </div>
     );

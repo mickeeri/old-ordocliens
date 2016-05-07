@@ -1,5 +1,3 @@
-'use strict';
-
 function makePutRequest(url, payload, subToPublish) {
   $.ajax({
     url: url,
@@ -25,6 +23,7 @@ function makePostRequest(url, payload, action) {
     success: function (data) {
       if (action === 'redirect') {
         // Redirect to show page of returned object.
+        console.log(data);
         window.location = url + '/' + data.id;
       } else {
         PubSub.publish(action);

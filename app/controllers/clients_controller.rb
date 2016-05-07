@@ -37,6 +37,7 @@ class ClientsController < ApplicationController
     @client = current_user.clients.build(client_params)
     flash[:success] = "Klient sparad!" if @client.save
     respond_with @client
+    # render json: { client: @client, serializer: ClientSerializer }
   end
 
   def update
@@ -46,8 +47,7 @@ class ClientsController < ApplicationController
 
   def destroy
     @client.destroy
-    flash.keep[:notice] = "#{@client.first_name}
-      #{@client.last_name} är raderad."
+    flash.keep[:notice] = "#{@client.first_name} #{@client.last_name} är raderad."
     respond_with @client
   end
 
