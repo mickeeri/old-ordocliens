@@ -1,9 +1,3 @@
-/* global React */
-/* global Routes */
-/* global makeGetRequest */
-/* global ClientRow */
-/* global Paginator */
-
 class ClientsIndex extends React.Component {
   constructor(props) {
     super(props);

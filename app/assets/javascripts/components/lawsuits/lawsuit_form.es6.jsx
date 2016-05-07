@@ -1,7 +1,3 @@
-/* global makePutRequest */
-/* global makePostRequest */
-/* global FormGroup */
-
 class LawsuitForm extends React.Component {
   constructor(props) {
     super(props);
@@ -25,8 +21,10 @@ class LawsuitForm extends React.Component {
         { lawsuit: this.state }, 'lawsuitTouched');
     } else { // Otherwise post.
       const url = `${Routes.lawsuits_path()}?client_id=${this.props.clientId}`;
-      makePostRequest(url,
-        { lawsuit: this.state }, 'lawsuitsTouched');
+      makePostRequest(
+        url,
+        { lawsuit: this.state },
+        'lawsuitsTouched');
     }
   }
 
@@ -112,5 +110,5 @@ class LawsuitForm extends React.Component {
 
 LawsuitForm.propTypes = {
   initialLawsuit: React.PropTypes.object,
-  clientId: React.PropTypes.number.isRequired,
+  clientId: React.PropTypes.number,
 };

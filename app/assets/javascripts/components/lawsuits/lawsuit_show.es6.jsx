@@ -17,14 +17,12 @@ class LawsuitShow extends React.Component {
   }
 
   refreshLawsuit() { // Refresh legal case from server.
-    const url = Routes.client_legal_case_path(
-      this.props.clientId,
-      this.props.initialLawsuit.id);
+    const url = Routes.lawsuit_path(this.props.initialLawsuit.id);
     makeGetRequest(url)
       .success(response => {
         this.setState({ legal_case: response.legal_case });
       })
-      .error(xhr=> {
+      .error(xhr => {
         console.error(url, xhr.status, xhr.statusText);
       });
   }
@@ -38,13 +36,15 @@ class LawsuitShow extends React.Component {
             <div className="card card-block">
               <LawsuitForm
                 initialLawsuit={this.state.legal_case}
-                clientId={this.props.clientId} />
+                clientId={this.props.clientId}
+              />
             </div>
           </div>
           <div className="col-md-3">
             <DeleteLawsuitButton
+              legalCaseId={this.props.initialLawsuit.id}
               clientId={this.props.clientId}
-              legalCaseId={this.props.initialLawsuit.id} />
+            />
           </div>
         </div>
         <div className="row">

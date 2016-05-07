@@ -1,11 +1,13 @@
 class EditFormModal extends React.Component {
-  closeBtnClicked(e) {
+  closeBtnClicked() {
     PubSub.publish('dismissEdit');
   }
 
   render() {
     return (
-      <div className="modal fade" id="editFormModal"
+      <div
+        className="modal fade"
+        id="editFormModal"
         tabIndex={-1} role="dialog" aria-labelledby="modalLabel">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
@@ -14,7 +16,8 @@ class EditFormModal extends React.Component {
                 type="button"
                 className="close"
                 onClick={this.closeBtnClicked.bind(this)}
-                aria-label="Close">
+                aria-label="Close"
+              >
                 <span aria-hidden="true">×</span>
               </button>
               <h4 className="modal-title" id="modalLabel">{this.props.header}</h4>

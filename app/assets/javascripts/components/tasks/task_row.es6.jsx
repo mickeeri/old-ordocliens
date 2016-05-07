@@ -1,5 +1,5 @@
 class TaskRow extends React.Component {
-  deleteTaskButtonClicked (e) {
+  deleteTaskButtonClicked(e) {
     e.preventDefault();
 
     // Show modal with modal id, url for DELETE method and subscription to publish
@@ -21,7 +21,7 @@ class TaskRow extends React.Component {
     $('#deleteTask').modal();
   }
 
-  editTaskButtonClicked (e) {
+  editTaskButtonClicked(e) {
     e.preventDefault();
 
     // Render modal...
@@ -33,7 +33,8 @@ class TaskRow extends React.Component {
             legalCaseId={this.props.legalCaseId}
             clientId={this.props.clientId}
             priceCategories={this.props.priceCategories}
-            initialTask={this.props.task} />
+            initialTask={this.props.task}
+          />
         }
       />,
       document.getElementById('editModalContainer')
@@ -42,25 +43,27 @@ class TaskRow extends React.Component {
   }
 
   render() {
-    var task = this.props.task;
+    const task = this.props.task;
     return (
       <tr>
         <td className="text-nowrap">{task.date}</td>
         <td>{task.entry}</td>
         <td>{task.worked_hours}</td>
-        <td className="text-nowrap">{task.price_category.name}</td>
+        <td className="text-nowrap">{task.priceCategory.name}</td>
         <td>
           <i
             className="fa fa-pencil-square-o"
             onClick={this.editTaskButtonClicked.bind(this)}
-            aria-hidden="true">
+            aria-hidden="true"
+          >
           </i>
         </td>
         <td className="text-nowrap">
           <i
             className="fa fa-times"
             onClick={this.deleteTaskButtonClicked.bind(this)}
-            aria-hidden="true">
+            aria-hidden="true"
+          >
           </i>
         </td>
       </tr>

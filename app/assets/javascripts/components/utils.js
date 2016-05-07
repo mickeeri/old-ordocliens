@@ -1,14 +1,15 @@
+
 function makePutRequest(url, payload, subToPublish) {
   $.ajax({
-    url: url,
+    url,
     dataType: 'json',
     type: 'PUT',
     data: payload,
-    success: function (data) {
+    success: () => {
       PubSub.publish(subToPublish);
     },
 
-    error: function (xhr) {
+    error: (xhr) => {
       console.error(xhr.responseText, xhr.status, xhr.statusText);
     },
   });
@@ -16,7 +17,11 @@ function makePutRequest(url, payload, subToPublish) {
 
 function makePostRequest(url, payload, action) {
   $.post(url, payload, res => {
-    window.location = Routes.client_path(res.client.id);
+    if (action === 'redirect') {
+      window.location = Routes.client_path(res.link);
+    } else {
+      PubSub.publish(action);
+    }
   })
   .fail(xhr => {
     console.error(xhr.responseText, xhr.status, xhr.statusText);
@@ -33,7 +38,7 @@ function makeGetRequest(url) {
 
 function makeDeleteRequest(url) {
   return $.ajax({
-    url: url,
+    url,
     method: 'DELETE',
   });
 }
