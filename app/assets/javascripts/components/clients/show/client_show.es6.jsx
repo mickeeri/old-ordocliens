@@ -4,7 +4,7 @@ class ClientShow extends React.Component {
     this.state = {
       client: props.initialClient,
       editMode: false,
-      links: [{id: 1, path: Routes.clients_path(), name: "Klienter"}],
+      links: [{ id: 1, path: Routes.clients_path(), name: 'Klienter' }],
     };
 
     this.refreshClient = this.refreshClient.bind(this);

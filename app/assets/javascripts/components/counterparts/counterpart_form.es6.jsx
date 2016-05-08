@@ -38,7 +38,7 @@ class CounterPartForm extends React.Component {
 
   render() {
     return (
-      <form className="form" onSubmit={this.handleOnSubmit}>
+      <form className="form form-inline" onSubmit={this.handleOnSubmit}>
         <FormGroup
           name="name"
           type="text"
@@ -65,7 +65,7 @@ class CounterPartForm extends React.Component {
           changeEvent={this.handleInputChange}
           label="Motpartsombud"
         />
-        <div className="form-group">
+        <div className="form-group form-group-textarea">
           <label htmlFor="info">Kontaktinfo</label>
           <textarea
             className="form-control"
