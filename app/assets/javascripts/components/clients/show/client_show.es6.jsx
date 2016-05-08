@@ -1,10 +1,3 @@
-/* global makeGetRequest */
-/* global BreadCrumb */
-/* global ClientForm */
-/* global LawsuitIndex */
-/* global ClientDeleteButton */
-/* global CounterpartsIndex */
-
 class ClientShow extends React.Component {
   constructor(props) {
     super(props);

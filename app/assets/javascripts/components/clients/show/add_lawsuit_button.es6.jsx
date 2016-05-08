@@ -1,6 +1,3 @@
-/* global EditFormModal */
-/* global LawsuitForm */
-
 class AddLawsuitButton extends React.Component {
   constructor(props) {
     super(props);
