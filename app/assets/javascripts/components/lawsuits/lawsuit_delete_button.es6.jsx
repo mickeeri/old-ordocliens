@@ -12,16 +12,15 @@ class DeleteLawsuitButton extends React.Component {
         />
         <div className="row">
           <div className="col-md-12">
-            <h3>Radera mål</h3>
-            Radera mål och tillhörande tidrapport.
+            <h3>Radera ärende</h3>
           </div>
           <div className="col-md-12">
             <a
               href="#"
-              className="btn btn-danger-outline"
+              className="btn btn-danger-outline width-fill"
               data-toggle="modal"
               data-target={'#' + target}
-            >Radera mål
+            >Radera ärende
             </a>
           </div>
         </div>

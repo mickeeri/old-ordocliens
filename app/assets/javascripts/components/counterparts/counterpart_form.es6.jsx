@@ -1,5 +1,5 @@
 class CounterPartForm extends React.Component {
-  constructor(props)  {
+  constructor(props) {
     super(props);
     this.state = {
       id: props.initialCounterpart ? props.initialCounterpart.id : '',
@@ -17,10 +17,10 @@ class CounterPartForm extends React.Component {
   handleOnSubmit(e) {
     e.preventDefault();
     if (this.state.id) { // If it has id it is update.
-      makePutRequest(Routes.client_counterpart_path(this.props.clientId, this.state.id),
+      makePutRequest(Routes.lawsuit_counterpart_path(this.props.lawsuitId, this.state.id),
         { counterpart: this.state }, 'counterpartsTouched');
     } else { // Otherwise post.
-      makePostRequest(Routes.client_counterparts_path(this.props.clientId),
+      makePostRequest(Routes.lawsuit_counterparts_path(this.props.lawsuitId),
         { counterpart: this.state }, 'counterpartsTouched');
     }
   }
@@ -54,10 +54,9 @@ class CounterPartForm extends React.Component {
           value={this.state.personal_number}
           changeEvent={this.handleInputChange}
           label="Personnummer"
-          pattern='\d*'
           required={true}
-          maxLength={10}
-          minLength={10}
+          maxLength={11}
+          minLength={11}
         />
         <FormGroup
           name="representative"
@@ -85,7 +84,7 @@ class CounterPartForm extends React.Component {
           <button className="btn btn-success-outline" type="submit">
             Spara
           </button>
-        </div>        
+        </div>
       </form>
     );
   }
@@ -93,5 +92,5 @@ class CounterPartForm extends React.Component {
 
 CounterPartForm.propTypes = {
   initialCounterpart: React.PropTypes.object,
-  clientId: React.PropTypes.number.isRequired,
+  lawsuitId: React.PropTypes.number.isRequired,
 };

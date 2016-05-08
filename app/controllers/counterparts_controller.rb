@@ -3,14 +3,14 @@ class CounterpartsController < ApplicationController
   respond_to :json
 
   def index
-    @counterparts = Client.find(params[:client_id]).counterparts
+    @counterparts = Lawsuit.find(params[:lawsuit_id]).counterparts
     respond_with @counterparts
   end
 
   def create
-    client = Client.find(params[:client_id])
-    @counterpart = client.counterparts.create(counterpart_params)
-    respond_with(client, @counterpart)
+    lawsuit = Lawsuit.find(params[:lawsuit_id])
+    @counterpart = lawsuit.counterparts.create(counterpart_params)
+    respond_with(lawsuit, @counterpart)
   end
 
   def update

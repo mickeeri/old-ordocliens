@@ -24,8 +24,8 @@ class AddLawsuitButton extends React.Component {
           <hr />
           <a
             onClick={this.handleClick}
-            className="btn btn-success-outline"
-          >Lägg till mål
+            className="btn btn-success-outline btn-sm"
+          >Lägg till ärende
           </a>
         </div>
       </div>

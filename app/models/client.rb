@@ -8,9 +8,7 @@ class Client < ActiveRecord::Base
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }
   validates :last_name, presence: true, length: { maximum: 60 }
-  validates :ssn, presence: true,
-                  length: { maximum: 10 },
-                  numericality: { only_integer: true }
+  validates :ssn, presence: true, length: { maximum: 11 }
 
   # Scopes
   scope :sorted, -> { order(last_name: :asc) }

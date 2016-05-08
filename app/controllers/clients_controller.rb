@@ -34,8 +34,15 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @client = current_user.clients.build(client_params)
-    flash[:success] = "Klient sparad!" if @client.save
+    byebug
+    @client = current_user.clients.build(client_params.except(:lawsuit_id))
+    if @client.save
+      if client_params[:lawsuit_id]
+        add_client_to_lawsuit
+      else
+        flash[:success] = "Klient sparad!"
+      end
+    end
     respond_with @client
     # render json: { client: @client, serializer: ClientSerializer }
   end
@@ -63,7 +70,8 @@ class ClientsController < ApplicationController
       :street,
       :post_code,
       :city,
-      :note)
+      :note,
+      :lawsuit_id)
   end
 
   def search_clients
@@ -85,5 +93,11 @@ class ClientsController < ApplicationController
       counterparts.push(lawsuit.counterparts)
     end
     return counterparts;
+  end
+
+  def add_client_to_lawsuit
+    lawsuit = Lawsuit.find(client_params[:lawsuit_id])
+    @client.lawsuits << lawsuit unless
+      @client.lawsuits.include?(lawsuit)
   end
 end

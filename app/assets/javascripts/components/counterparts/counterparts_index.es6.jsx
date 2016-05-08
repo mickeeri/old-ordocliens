@@ -1,7 +1,3 @@
-/* global CounterPartRow */
-/* global AddCounterpartButton */
-/* global makeGetRequest */
-
 class CounterpartsIndex extends React.Component {
   constructor(props) {
     super(props);

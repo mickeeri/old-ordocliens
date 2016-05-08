@@ -1,6 +1,26 @@
 class EditFormModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.removeModal = this.removeModal.bind(this);
+    this.closeBtnClicked = this.closeBtnClicked.bind(this);
+  }
+
+  componentDidMount() {
+    PubSub.subscribe('dismissEdit', this.removeModal);
+  }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe('dismissEdit');
+  }
+
   closeBtnClicked() {
-    PubSub.publish('dismissEdit');
+    this.removeModal();
+  }
+
+  // Remove modal from DOM.
+  removeModal() {
+    $('#editFormModal').modal('hide');
+    ReactDOM.unmountComponentAtNode(document.getElementById('editModalContainer'));
   }
 
   render() {
@@ -8,7 +28,8 @@ class EditFormModal extends React.Component {
       <div
         className="modal fade"
         id="editFormModal"
-        tabIndex={-1} role="dialog" aria-labelledby="modalLabel">
+        tabIndex={-1} role="dialog" aria-labelledby="modalLabel"
+      >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">

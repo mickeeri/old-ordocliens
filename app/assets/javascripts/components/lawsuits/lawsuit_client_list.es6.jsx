@@ -17,6 +17,7 @@ class LawsuitClientList extends React.Component {
             </li>
           )}
         </ul>
+        <AddClientButton lawsuitId={this.props.lawsuitId} />
       </div>
     );
   }
@@ -24,4 +25,5 @@ class LawsuitClientList extends React.Component {
 
 LawsuitClientList.propTypes = {
   clients: React.PropTypes.array,
+  lawsuitId: React.PropTypes.number.isRequired,
 };

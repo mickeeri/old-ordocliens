@@ -4,6 +4,26 @@ class LawsuitCounterpartList extends React.Component {
     this.state = { counterparts: props.counterparts };
   }
 
+  componentDidMount() {
+    PubSub.subscribe('counterpartsTouched', this.refreshCounterParts.bind(this));
+  }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe('counterpartsTouched');
+  }
+
+  refreshCounterParts() {
+    const url = Routes.lawsuit_counterparts_path(this.props.lawsuitId);
+    makeGetRequest(url)
+      .success(res => {
+        this.setState({ counterparts: res.counterparts });
+        PubSub.publish('dismissEdit');
+      })
+      .error(xhr => {
+        console.error(url, xhr.status, xhr.statusText);
+      });
+  }
+
   render() {
     return (
       <div className="card card-block">
