@@ -1,7 +1,5 @@
-'use strict';
-
 class Paginator extends React.Component {
-  constructor(props)  {
+  constructor(props) {
     super(props);
     this.state = { currentPage: props.currentPage };
     this.handleNextClick = this.handleNextClick.bind(this);

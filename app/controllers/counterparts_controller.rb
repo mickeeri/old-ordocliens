@@ -2,6 +2,14 @@ class CounterpartsController < ApplicationController
   before_action :authenticate_user!
   respond_to :json
 
+  def show
+    respond_to do |format|
+      format.html do
+        render component: "CounterpartShow"
+      end
+    end
+  end
+
   def index
     @counterparts = Lawsuit.find(params[:lawsuit_id]).counterparts
     respond_with @counterparts

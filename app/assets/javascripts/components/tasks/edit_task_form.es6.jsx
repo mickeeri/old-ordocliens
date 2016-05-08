@@ -1,5 +1,5 @@
 class EditTaskForm extends React.Component {
-  constructor(props)  {
+  constructor(props) {
     super(props);
     this.state = { // Initialize state.
       id: props.initialTask ? props.initialTask.id : '',
@@ -49,7 +49,7 @@ class EditTaskForm extends React.Component {
   }
 
   render() {
-    var priceCategoriesOptions = this.props.priceCategories.map(priceCategory=>
+    let priceCategoriesOptions = this.props.priceCategories.map(priceCategory =>
       <option key={priceCategory.id} value={priceCategory.id}>
         {priceCategory.name}</option>
     );

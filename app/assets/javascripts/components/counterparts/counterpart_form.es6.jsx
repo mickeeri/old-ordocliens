@@ -76,7 +76,7 @@ class CounterPartForm extends React.Component {
             onChange={this.handleInputChange}>
           </textarea>
         </div>
-        <hr/>
+        <hr />
         <div className="content-right">
           <button className="btn btn-secondary"
             onClick={this.handleCancelButtonClick}>Avbryt
