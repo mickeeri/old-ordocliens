@@ -1,6 +1,4 @@
 class PaginatorLink extends React.Component {
-  displayName: 'PaginatorLink';
-
   constructor() {
     super();
     this.handleOnClick = this.handleOnClick.bind(this);

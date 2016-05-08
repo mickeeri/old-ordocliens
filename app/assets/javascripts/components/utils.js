@@ -30,7 +30,7 @@ function makePostRequest(url, payload, action) {
 
 function makeGetRequest(url) {
   return $.ajax({
-    url: url,
+    url,
     dataType: 'json',
     cache: false,
   });

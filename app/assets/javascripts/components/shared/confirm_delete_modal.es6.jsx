@@ -1,7 +1,7 @@
 class ConfirmDeleteModal extends React.Component {
   handleOnConfirmDeleteClick() {
     makeDeleteRequest(this.props.url)
-      .success(response=> {
+      .success(response => {
         // Either redirect to other page or publish subscription.
         if (this.props.redirectTo) {
           window.location = this.props.redirectTo;

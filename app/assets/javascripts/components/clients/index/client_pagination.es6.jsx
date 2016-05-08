@@ -14,6 +14,8 @@ class Paginator extends React.Component {
       this.setState({ currentPage: this.props.nextPage });
       return this.props.onPaginate(this.props.nextPage);
     }
+
+    return false;
   }
 
   handlePrevClick(e) {
@@ -23,19 +25,23 @@ class Paginator extends React.Component {
       this.setState({ currentPage: this.props.prevPage });
       return this.props.onPaginate(this.props.prevPage);
     }
+
+    return false;
   }
 
   handleNumChange(e) { // If page number is changed by input.
-    if (e.target.value <= this.props.totalPages || e.target.value == '') {
+    if (e.target.value <= this.props.totalPages || e.target.value === '') {
       this.setState({ currentPage: e.target.value });
       if (e.target.value !== '') {
         return this.props.onPaginate(parseInt(e.target.value));
       }
     }
+
+    return false;
   }
 
   handleOnFocus(e) { // Select text on focus.
-    var target = e.target;
+    const target = e.target;
     setTimeout(function () {
       target.select();
     }, 0);
