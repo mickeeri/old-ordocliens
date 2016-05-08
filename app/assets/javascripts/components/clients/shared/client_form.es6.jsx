@@ -84,8 +84,8 @@ class ClientForm extends React.Component {
               value={this.state.ssn}
               onChange={this.handleInputChange}
               required="true"
-              maxLength="10"
-              minLength="10"
+              maxLength="11"
+              minLength="11"
             />
           </div>
           <hr />
@@ -175,6 +175,6 @@ class ClientForm extends React.Component {
 
 ClientForm.propTypes = {
   client: React.PropTypes.object,
-  header: React.PropTypes.string.isRequired,
+  header: React.PropTypes.string,
   lawsuitId: React.PropTypes.number,
 };
