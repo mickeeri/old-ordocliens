@@ -11,7 +11,7 @@ class TaskRow extends React.Component {
         url={
           Routes.client_legal_case_task_path(
             this.props.clientId,
-            this.props.legalCaseId,
+            this.props.lawsuitId,
             this.props.task.id
           )
         }
@@ -30,7 +30,7 @@ class TaskRow extends React.Component {
         header="Redigera tidkort"
         form={
           <EditTaskForm
-            legalCaseId={this.props.legalCaseId}
+            lawsuitId={this.props.lawsuitId}
             clientId={this.props.clientId}
             priceCategories={this.props.priceCategories}
             initialTask={this.props.task}
@@ -73,7 +73,7 @@ class TaskRow extends React.Component {
 
 TaskRow.propTypes = {
   task: React.PropTypes.object.isRequired,
-  legalCaseId: React.PropTypes.number.isRequired,
-  clientId: React.PropTypes.number.isRequired,
+  lawsuitId: React.PropTypes.number.isRequired,
+  clientId: React.PropTypes.number,
   priceCategories: React.PropTypes.array.isRequired,
 };

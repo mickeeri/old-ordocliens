@@ -35,6 +35,7 @@ class LawsuitsController < ApplicationController
 
   def destroy
     @lawsuit.destroy
+    flash.keep[:notice] = "Ärende #{@lawsuit.name} är raderat."
     respond_with @lawsuit
   end
 
@@ -62,7 +63,7 @@ class LawsuitsController < ApplicationController
   end
 
   def props
-    { initial_lawsuit: @lawsuit,
+    { initial_lawsuit: prepare(@lawsuit, LawsuitSerializer, root: false),
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),
       price_categories: prepare_array(PriceCategory.all),
       links: links }

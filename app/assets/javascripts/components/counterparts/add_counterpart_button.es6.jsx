@@ -3,7 +3,7 @@ class AddCounterpartButton extends React.Component {
     e.preventDefault();
     ReactDOM.render(
       <EditFormModal
-        form={<CounterPartForm clientId={this.props.clientId}/>}
+        form={<CounterPartForm lawsuitId={this.props.lawsuitId} />}
         header="Lägg till motpart"
       />,
     document.getElementById('editModalContainer')
@@ -15,16 +15,15 @@ class AddCounterpartButton extends React.Component {
     return (
       <div>
         <div id="editModalContainer"></div>
-          <div className="content-right">
-            <hr/>
-            <a onClick={this.handleOnClick.bind(this)}
-              className="btn btn-success-outline">Lägg till motpart
-            </a>
-          </div>
+        <div className="content-right">
+          <a onClick={this.handleOnClick.bind(this)}
+            className="btn btn-success btn-sm">Lägg till motpart
+          </a>
+        </div>
       </div>
     );
   }
 }
 AddCounterpartButton.propTypes = {
-  clientId: React.PropTypes.number.isRequired,
+  lawsuitId: React.PropTypes.number.isRequired,
 };

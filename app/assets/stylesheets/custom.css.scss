@@ -76,17 +76,6 @@ h1 {
 }
 
 // CARD
-.lc-card { // TODO: not used.
-  padding: 10px;
-  cursor: pointer;
-  &:hover {
-    background-color: #ECEEEF;
-  }
-  p {
-    margin-bottom: 5px;
-  }
-}
-
 .card-block button {
   margin: 0 10px;
 }
@@ -158,6 +147,20 @@ h1 {
   cursor: pointer;
   &:hover {
     // color: #2E2E2E;
+  }
+}
+
+// LISTS
+.show-page-list {
+  list-style-type: none;
+  padding-left: 0;
+
+  li {
+    border-bottom: 1px solid #f2dede;
+    a {
+      line-height: 40px;
+      font-weight: 600;
+    }
   }
 }
 

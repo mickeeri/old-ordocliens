@@ -105,6 +105,6 @@ class TasksIndex extends React.Component {
 TasksIndex.propTypes = {
   initialTasks: React.PropTypes.array.isRequired,
   legalCaseId: React.PropTypes.number.isRequired,
-  clientId: React.PropTypes.number.isRequired,
+  clientId: React.PropTypes.number,
   priceCategories: React.PropTypes.array.isRequired,
 };

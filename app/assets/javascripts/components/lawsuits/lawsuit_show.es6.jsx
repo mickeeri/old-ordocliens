@@ -32,6 +32,15 @@ class LawsuitShow extends React.Component {
       <div>
         <BreadCrumb active={this.state.legal_case.name} links={this.props.links} />
         <div className="row">
+          <div className="col-md-4">
+            <h2>Ärende nr {this.props.initialLawsuit.id}</h2>
+          </div>
+          <div className="col-md-8 content-right">
+            <a href="#">Info</a>
+            <a href="#">Tidrapportering</a>
+          </div>
+        </div>
+        <div className="row">
           <div className="col-md-9">
             <div className="card card-block">
               <LawsuitForm
@@ -42,18 +51,24 @@ class LawsuitShow extends React.Component {
           </div>
           <div className="col-md-3">
             <DeleteLawsuitButton
-              legalCaseId={this.props.initialLawsuit.id}
+              lawsuitId={this.props.initialLawsuit.id}
               clientId={this.props.clientId}
             />
           </div>
         </div>
         <div className="row">
-          <TasksIndex
-            initialTasks={this.props.tasks}
-            legalCaseId={this.props.initialLawsuit.id}
-            clientId={this.props.clientId}
-            priceCategories={this.props.priceCategories}
-          />
+          <div className="col-md-6">
+            <LawsuitClientList
+              clients={this.props.initialLawsuit.clients}
+              lawsuitId={this.props.initialLawsuit.id}
+            />
+          </div>
+          <div className="col-md-6">
+            <LawsuitCounterpartList
+              counterparts={this.props.initialLawsuit.counterparts}
+              lawsuitId={this.props.initialLawsuit.id}
+            />
+          </div>
         </div>
       </div>
     );
