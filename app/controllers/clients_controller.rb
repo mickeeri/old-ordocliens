@@ -11,7 +11,13 @@ class ClientsController < ApplicationController
           { clients: prepare_array(@clients),
             meta: pagination_dict(@clients) }
       end
-      format.json { render json: @clients, meta: pagination_dict(@clients) }
+      format.json do
+        if params[:page].present?
+          render json: @clients, meta: pagination_dict(@clients)
+        else
+          respond_with Client.all.sorted
+        end
+      end
     end
   end
 
@@ -46,7 +52,11 @@ class ClientsController < ApplicationController
   end
 
   def update
-    @client.update_attributes(client_params)
+    if client_params[:lawsuit_id]
+      add_client_to_lawsuit
+    else
+      @client.update_attributes(client_params)
+    end
     respond_with @client
   end
 

@@ -22,8 +22,9 @@ class ClientsIndex extends React.Component {
     const data = this.state.fetchData;
 
     // Building uri:s with query string parameters.
-    const url = data.search ? `${Routes.clients_path()}?search=${data.search}` :
-      `${Routes.clients_path()}?page=${data.page}`;
+    const url = data.search
+      ? `${Routes.clients_path()}?search=${data.search}&page=1`
+      : `${Routes.clients_path()}?page=${data.page}`;
 
     makeGetRequest(url)
       .success(response => {
@@ -68,7 +69,7 @@ class ClientsIndex extends React.Component {
                 onChange={this.handleOnSearch}
                 ref="search"
               />
-            {this.state.meta.total_pages === 1 ? '' :
+            {this.state.meta.totalPages === 1 ? '' :
               <Paginator
                 totalPages={this.state.meta.totalPages}
                 currentPage={this.state.meta.currentPage}

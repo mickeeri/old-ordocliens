@@ -37,7 +37,17 @@ class LawsuitClientList extends React.Component {
             </li>
           )}
         </ul>
-        <AddClientButton lawsuitId={this.props.lawsuitId} />
+        <div id="editModalContainer"></div>
+        <div className="content-right">
+          <AddClientButton
+            addNewClient={false}
+            lawsuitId={this.props.lawsuitId}
+          />
+          <AddClientButton
+            addNewClient
+            lawsuitId={this.props.lawsuitId}
+          />
+        </div>
       </div>
     );
   }

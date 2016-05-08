@@ -6,10 +6,13 @@ class AddClientButton extends React.Component {
 
   handleOnClick(e) {
     e.preventDefault();
+    const form = this.props.addNewClient ?
+      <ClientForm lawsuitId={this.props.lawsuitId} /> :
+      <ClientsDropdown lawsuitId={this.props.lawsuitId} />;
     ReactDOM.render(
       <EditFormModal
-        form={<ClientForm lawsuitId={this.props.lawsuitId} />}
-        header="Lägg till klient"
+        form={form}
+        header="Lägg till klient till ärende"
       />,
     document.getElementById('editModalContainer')
     );
@@ -18,20 +21,17 @@ class AddClientButton extends React.Component {
 
   render() {
     return (
-      <div>
-        <div id="editModalContainer"></div>
-        <div className="content-right">
-          <a
-            onClick={this.handleOnClick}
-            className="btn btn-success btn-sm"
-          >Lägg till klient till ärendet
-          </a>
-        </div>
-      </div>
+      <a
+        onClick={this.handleOnClick}
+        className="btn btn-success btn-sm"
+      >{this.props.addNewClient ? 'Lägg till ny klient' :
+        'Lägg till befintlig klient'}
+      </a>
     );
   }
 }
 
 AddClientButton.propTypes = {
   lawsuitId: React.PropTypes.number.isRequired,
+  addNewClient: React.PropTypes.bool.isRequired,
 };
