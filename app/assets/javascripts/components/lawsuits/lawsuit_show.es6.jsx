@@ -4,6 +4,7 @@ class LawsuitShow extends React.Component {
     this.state = {
       legal_case: props.initialLawsuit,
       editMode: false,
+      links: props.links
     };
     this.refreshLawsuit = this.refreshLawsuit.bind(this);
   }
@@ -30,7 +31,7 @@ class LawsuitShow extends React.Component {
   render() {
     return (
       <div>
-        <BreadCrumb active={this.state.legal_case.name} links={this.props.links} />
+        <BreadCrumb active={this.state.legal_case.name} links={this.state.links} />
         <div className="row">
           <div className="col-md-4">
             <h2>Ärende nr {this.props.initialLawsuit.id}</h2>

@@ -4,6 +4,26 @@ class LawsuitClientList extends React.Component {
     this.state = { clients: props.clients };
   }
 
+  componentDidMount() {
+    PubSub.subscribe('clientListUpdated', this.refreshClients.bind(this));
+  }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe('clientListUpdated');
+  }
+
+  refreshClients() {
+    const url = `/lawsuits/${this.props.lawsuitId}/clients`;
+    makeGetRequest(url)
+      .success(res => {
+        this.setState({ clients: res.clients });
+        PubSub.publish('dismissEdit');
+      })
+      .error(xhr => {
+        console.error(url, xhr.status, xhr.statusText);
+      });
+  }
+
   render() {
     return (
       <div className="card card-block">

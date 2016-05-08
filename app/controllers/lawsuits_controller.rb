@@ -1,6 +1,6 @@
 class LawsuitsController < ApplicationController
   before_action :authenticate_user!
-  before_action :fetch_lawsuit, only: [:show, :update, :destroy, :report]
+  before_action :fetch_lawsuit, only: [:show, :update, :destroy, :report, :client_list]
   respond_to :json, :html, :docx
 
   def index

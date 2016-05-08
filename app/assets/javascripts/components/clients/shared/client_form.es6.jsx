@@ -27,7 +27,8 @@ class ClientForm extends React.Component {
         { client: this.state }, 'clientUpdated');
     } else {
       if (this.state) { // Otherwise create new client.
-        makePostRequest(Routes.clients_path(), { client: this.state }, 'redirect');
+        const action = this.props.lawsuitId ? 'clientListUpdated' : 'redirect';
+        makePostRequest(Routes.clients_path(), { client: this.state }, action);
       }
     }
   }

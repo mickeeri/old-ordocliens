@@ -24,7 +24,7 @@ class ClientsController < ApplicationController
           counterparts: Counterpart.where(lawsuit: @client.lawsuits) }
       end
       format.json do
-        render json: { client: @client, serializer: ClientShowSerializer }
+        respond_with @client
       end
     end
   end
@@ -34,7 +34,6 @@ class ClientsController < ApplicationController
   end
 
   def create
-    byebug
     @client = current_user.clients.build(client_params.except(:lawsuit_id))
     if @client.save
       if client_params[:lawsuit_id]
@@ -44,7 +43,6 @@ class ClientsController < ApplicationController
       end
     end
     respond_with @client
-    # render json: { client: @client, serializer: ClientSerializer }
   end
 
   def update
@@ -56,6 +54,11 @@ class ClientsController < ApplicationController
     @client.destroy
     flash.keep[:notice] = "#{@client.first_name} #{@client.last_name} är raderad."
     respond_with @client
+  end
+
+  def lawsuit_client_list
+    lawsuit = Lawsuit.find(params[:id])
+    respond_with lawsuit.clients
   end
 
   private
