@@ -36,8 +36,9 @@ class LawsuitShow extends React.Component {
           <div className="col-md-4">
             <h2>Ärende nr {this.props.initialLawsuit.id}</h2>
           </div>
-          <div className="col-md-8 content-right">
-            <a href="#">Info</a>
+          <div className="col-md-8 content-right lawsuit-menu">
+            <a className="active" href="#">Info</a>
+            <span className="divider">|</span>
             <a href="#">Tidrapportering</a>
           </div>
         </div>
