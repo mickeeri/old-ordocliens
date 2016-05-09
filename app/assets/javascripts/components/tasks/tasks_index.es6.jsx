@@ -15,7 +15,7 @@ class TasksIndex extends React.Component {
   }
 
   refreshTasks() {
-    const url = Routes.client_legal_case_tasks_path(this.props.clientId, this.props.legalCaseId);
+    const url = Routes.client_legal_case_tasks_path(this.props.clientId, this.props.lawsuitId);
     makeGetRequest(url)
       .success(response => {
         this.setState({ tasks: response.tasks });
@@ -37,7 +37,7 @@ class TasksIndex extends React.Component {
         header="Lägg till tidkort"
         form={
           <EditTaskForm
-            legalCaseId={this.props.legalCaseId}
+            lawsuitId={this.props.lawsuitId}
             clientId={this.props.clientId}
             priceCategories={this.props.priceCategories}
           />
@@ -53,43 +53,42 @@ class TasksIndex extends React.Component {
       <TaskRow
         key={task.id}
         task={task}
-        legalCaseId={this.props.legalCaseId}
+        lawsuitId={this.props.lawsuitId}
         clientId={this.props.clientId}
         priceCategories={this.props.priceCategories}
       />
     );
 
     return (
-      <div className="col-md-12">
+      <div>
         <div id="editModalContainer"></div>
-        <div className="card card-block">
-          <h3 className="card-title">Specifikation avseende arbeten</h3>
-          <div className="content-right">
-            <a
-              href={`/report/${this.props.legalCaseId}.docx`}
-              className="btn btn-primary"
-            >Rapport .docx</a>
-            <button
-              className="btn btn-success"
-              onClick={this.addTaskClicked}
-            >Lägg till uppgift</button>
-          </div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Datum</th>
-                <th>Notering</th>
-                <th className="text-nowrap">Arbetad tid</th>
-                <th className="text-nowrap">Priskategori</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {taskRows}
-            </tbody>
-          </table>
+        <hr />
+        <h3>Arbeten</h3>
+        <div className="content-right">
+          <a
+            href={`/report/${this.props.lawsuitId}.docx`}
+            className="btn btn-primary"
+          >Rapport .docx</a>
+          <button
+            className="btn btn-success"
+            onClick={this.addTaskClicked}
+          >Lägg till arbete</button>
         </div>
+        <table className="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Notering</th>
+              <th className="text-nowrap">Arbetad tid</th>
+              <th className="text-nowrap">Priskategori</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {taskRows}
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -97,7 +96,7 @@ class TasksIndex extends React.Component {
 
 TasksIndex.propTypes = {
   initialTasks: React.PropTypes.array.isRequired,
-  legalCaseId: React.PropTypes.number.isRequired,
+  lawsuitId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number,
   priceCategories: React.PropTypes.array.isRequired,
 };

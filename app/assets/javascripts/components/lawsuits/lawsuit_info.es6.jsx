@@ -1,27 +1,48 @@
-// class LawsuitInfo extends React.Component {
-//   render() {
-//     var legalCase = this.props.legal_case;
-//     var active = legalCase.closed ? 'Ja' : 'Nej';
-//     var created = new Date(legalCase.created_at);
-//     var updated = new Date(legalCase.updated_at);
-//     return (
-//       <div className="panel panel-default">
-//         <div className="panel-heading">
-//           <h3 className="panel-title">Ärende nr {legalCase.id}</h3>
-//         </div>
-//         <div className="panel-body">
-//           <h4>Ärendets namn</h4>
-//           {legalCase.name}
-//           <hr/>
-//           <h4>Aktivt</h4>
-//           {active}
-//           <hr/>
-//           <h4>Skapat</h4>
-//           {created.yyyymmdd()}
-//           <hr/>
-//           <small>Uppdaterat: {updated.yyyymmdd()}</small>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
+class LawsuitInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lawsuit: props.initialLawsuit,
+    };
+  }
+
+  render() {
+
+    return (
+      <div>
+        <div className="row">
+          <div className="col-md-9">
+            <div className="card card-block">
+              <LawsuitForm
+                initialLawsuit={this.state.lawsuit}
+              />
+            </div>
+          </div>
+          <div className="col-md-3">
+            <DeleteLawsuitButton
+              lawsuitId={this.props.initialLawsuit.id}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <LawsuitClientList
+              clients={this.props.initialLawsuit.clients}
+              lawsuitId={this.props.initialLawsuit.id}
+            />
+          </div>
+          <div className="col-md-6">
+            <LawsuitCounterpartList
+              counterparts={this.props.initialLawsuit.counterparts}
+              lawsuitId={this.props.initialLawsuit.id}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+LawsuitInfo.propTypes = {
+  initialLawsuit: React.PropTypes.object.isRequired,
+};
