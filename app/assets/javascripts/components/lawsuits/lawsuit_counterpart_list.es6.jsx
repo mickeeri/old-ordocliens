@@ -47,5 +47,5 @@ class LawsuitCounterpartList extends React.Component {
 
 LawsuitCounterpartList.propTypes = {
   counterparts: React.PropTypes.array.isRequired,
-  lawsuitId: React.PropTypes.number.isRequired,
+  lawsuitId: React.PropTypes.number,
 };

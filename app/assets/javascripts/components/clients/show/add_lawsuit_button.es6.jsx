@@ -21,7 +21,6 @@ class AddLawsuitButton extends React.Component {
       <div>
         <div id="editModalContainer"></div>
         <div className="content-right">
-          <hr />
           <a
             onClick={this.handleClick}
             className="btn btn-success-outline btn-sm"

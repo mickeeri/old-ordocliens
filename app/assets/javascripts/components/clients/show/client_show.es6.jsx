@@ -65,10 +65,17 @@ class ClientShow extends React.Component {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <CounterpartsIndex
-                  lawsuits={this.props.initialClient.lawsuits}
-                  initialCounterparts={this.props.counterparts}
-                />
+                <div className="card card-block">
+                  <ul className="show-page-list">
+                    {this.props.counterparts.map(counterpart =>
+                      <li key={counterpart.id}>
+                        <a href="#">
+                          {counterpart.name} ({counterpart.personalNumber})
+                        </a>
+                      </li>
+                    )}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

@@ -33,20 +33,14 @@ class CounterpartsIndex extends React.Component {
   }
 
   render() {
-    let counterpartRows = this.state.counterparts.map(counterpart =>
-      <CounterPartRow
-        key={counterpart.id}
-        counterpart={counterpart}
-      />
-    );
-
     // {counterpartRows}
     // <AddCounterpartButton clientId={this.props.clientId} />
 
     return (
       <div className="card card-block">
         <h3 className="card-title">Motparter</h3>
-        {counterpartRows}
+        <ul className="show-page-list">
+        </ul>
       </div>
     );
   }

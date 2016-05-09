@@ -27,7 +27,7 @@ class ClientsController < ApplicationController
         render component: "ClientShow", props: {
           initial_client: prepare(@client, ClientShowSerializer, root: false),
           links: [{ id: rand(100), name: "Klienter", path: clients_path }],
-          counterparts: Counterpart.where(lawsuit: @client.lawsuits) }
+          counterparts: prepare_array(Counterpart.where(lawsuit: @client.lawsuits)) }
       end
       format.json do
         respond_with @client
