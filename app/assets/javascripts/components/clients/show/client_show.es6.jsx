@@ -66,6 +66,7 @@ class ClientShow extends React.Component {
             <div className="row">
               <div className="col-md-12">
                 <div className="card card-block">
+                  <h3 className="card-title">Motparter</h3>
                   <ul className="show-page-list">
                     {this.props.counterparts.map(counterpart =>
                       <li key={counterpart.id}>
