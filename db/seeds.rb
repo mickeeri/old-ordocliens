@@ -65,7 +65,7 @@ User.all.each do |user|
           info: Faker::Lorem.sentence(sentece_lenght),
           representative: Faker::Name.name
         )
-      end,
+      end
 
       # Tasks
       number_of_tasks = rand(5..15)
