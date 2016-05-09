@@ -1,4 +1,4 @@
-class AlterLawsuitColumns < ActiveRecord::Migration
+class AlterLegalCaseColumns < ActiveRecord::Migration
   def change
     add_column :legal_cases, :court, :string
     change_column_default :legal_cases, :active, false
