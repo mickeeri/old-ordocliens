@@ -6,10 +6,13 @@ class AddCounterpartButton extends React.Component {
 
   handleOnClick(e) {
     e.preventDefault();
+    const form = this.props.addNewCounterpart ?
+      <CounterpartForm lawsuitId={this.props.lawsuitId} /> :
+      <CounterpartsDropdown lawsuitId={this.props.lawsuitId} />;
     ReactDOM.render(
       <EditFormModal
-        form={<CounterPartForm lawsuitId={this.props.lawsuitId} />}
-        header="Lägg till motpart"
+        form={form}
+        header="Lägg till motpart till ärende"
       />,
     document.getElementById('editModalContainer')
     );
@@ -18,16 +21,12 @@ class AddCounterpartButton extends React.Component {
 
   render() {
     return (
-      <div>
-        <div id="editModalContainer"></div>
-        <div className="content-right">
-          <a
-            onClick={this.handleOnClick}
-            className="btn btn-success btn-sm"
-          >Lägg till motpart
-          </a>
-        </div>
-      </div>
+      <a
+        onClick={this.handleOnClick}
+        className="btn btn-success btn-sm"
+      >{this.props.addNewCounterpart ? 'Lägg till ny motpart' :
+        'Lägg till befintlig motpart'}
+      </a>
     );
   }
 }

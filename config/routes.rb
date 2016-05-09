@@ -21,10 +21,10 @@ Rails.application.routes.draw do
   end
 
   resources :clients
+  resources :counterparts
 
   resources :lawsuits do # show, index
     resources :tasks
-    resources :counterparts
   end
   # #root "sessions#new"
   # # get    "login"   => "sessions#new"
@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   get 'lawsuits/:id/clients' => 'clients#lawsuit_client_list'
+  get 'lawsuits/:id/counterparts' => 'counterparts#lawsuit_counterpart_list'
   # post 'lawsuits/:id/clients' => 'clients#lawsuit_client_list'
 
   get 'report/:id' => 'lawsuits#report'

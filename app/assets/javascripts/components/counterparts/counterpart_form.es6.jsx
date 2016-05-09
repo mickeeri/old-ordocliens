@@ -1,12 +1,13 @@
-class CounterPartForm extends React.Component {
+class CounterpartForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: props.initialCounterpart ? props.initialCounterpart.id : '',
       name: props.initialCounterpart ? props.initialCounterpart.name : '',
-      personal_number: props.initialCounterpart ? props.initialCounterpart.personal_number : '',
+      personalNumber: props.initialCounterpart ? props.initialCounterpart.personalNumber : '',
       representative: props.initialCounterpart ? props.initialCounterpart.representative : '',
       info: props.initialCounterpart ? props.initialCounterpart.info : '',
+      lawsuitId: props.lawsuitId,
     };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -17,11 +18,12 @@ class CounterPartForm extends React.Component {
   handleOnSubmit(e) {
     e.preventDefault();
     if (this.state.id) { // If it has id it is update.
-      makePutRequest(Routes.lawsuit_counterpart_path(this.props.lawsuitId, this.state.id),
+      makePutRequest(Routes.counterpart_path(this.state.id),
         { counterpart: this.state }, 'counterpartsTouched');
     } else { // Otherwise post.
-      makePostRequest(Routes.lawsuit_counterparts_path(this.props.lawsuitId),
-        { counterpart: this.state }, 'counterpartsTouched');
+      const action = this.props.lawsuitId ? 'counterpartListUpdated' : 'redirect';
+      makePostRequest(Routes.counterparts_path(),
+        { counterpart: this.state }, action);
     }
   }
 
@@ -93,7 +95,7 @@ class CounterPartForm extends React.Component {
   }
 }
 
-CounterPartForm.propTypes = {
+CounterpartForm.propTypes = {
   initialCounterpart: React.PropTypes.object,
-  lawsuitId: React.PropTypes.number.isRequired,
+  lawsuitId: React.PropTypes.number,
 };

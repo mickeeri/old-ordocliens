@@ -5,15 +5,15 @@ class LawsuitCounterpartList extends React.Component {
   }
 
   componentDidMount() {
-    PubSub.subscribe('counterpartsTouched', this.refreshCounterParts.bind(this));
+    PubSub.subscribe('counterpartListUpdated', this.refreshCounterParts.bind(this));
   }
 
   componentWillUnmount() {
-    PubSub.unsubscribe('counterpartsTouched');
+    PubSub.unsubscribe('counterpartListUpdated');
   }
 
   refreshCounterParts() {
-    const url = Routes.lawsuit_counterparts_path(this.props.lawsuitId);
+    const url = `/lawsuits/${this.props.lawsuitId}/counterparts`;
     makeGetRequest(url)
       .success(res => {
         this.setState({ counterparts: res.counterparts });
@@ -33,13 +33,23 @@ class LawsuitCounterpartList extends React.Component {
         <ul className="show-page-list">
           {this.state.counterparts.map(counterpart =>
             <li key={counterpart.id}>
-              <a href={Routes.lawsuit_counterpart_path(this.props.lawsuitId, counterpart.id)}>
+              <a href={Routes.counterpart_path(counterpart.id)}>
                 {counterpart.name} ({counterpart.personalNumber})
               </a>
             </li>
           )}
         </ul>
-        <AddCounterpartButton lawsuitId={this.props.lawsuitId} />
+        <div id="editModalContainer"></div>
+        <div className="content-right">
+          <AddCounterpartButton
+            addNewCounterpart={false}
+            lawsuitId={this.props.lawsuitId}
+          />
+          <AddCounterpartButton
+            addNewCounterpart
+            lawsuitId={this.props.lawsuitId}
+          />
+        </div>
       </div>
     );
   }
@@ -47,5 +57,5 @@ class LawsuitCounterpartList extends React.Component {
 
 LawsuitCounterpartList.propTypes = {
   counterparts: React.PropTypes.array.isRequired,
-  lawsuitId: React.PropTypes.number,
+  lawsuitId: React.PropTypes.number.isRequired,
 };

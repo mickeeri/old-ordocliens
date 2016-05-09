@@ -3,9 +3,13 @@ class CounterpartsController < ApplicationController
   respond_to :json, :html
 
   def index
+    @counterparts = Counterpart.all.sorted
     respond_to do |format|
       format.html do
         render component: "CounterpartsIndex"
+      end
+      format.json do
+        render json: @counterparts
       end
     end
   end
@@ -18,21 +22,31 @@ class CounterpartsController < ApplicationController
     end
   end
 
-  def index
-    @counterparts = Lawsuit.find(params[:lawsuit_id]).counterparts
-    respond_with @counterparts
-  end
-
   def create
-    lawsuit = Lawsuit.find(params[:lawsuit_id])
-    @counterpart = lawsuit.counterparts.create(counterpart_params)
-    respond_with(lawsuit, @counterpart)
+    @counterpart = Counterpart.build(counterpart_params)
+    if @counterpart.save
+      if client_params[:lawsuit_id]
+        add_counterpart_to_lawsuit
+      else
+        flash[:success] = "Klient sparad!"
+      end
+    end
+    respond_with(@counterpart)
   end
 
   def update
     @counterpart = Counterpart.find(params[:id])
-    @counterpart.update_attributes(counterpart_params)
+    if counterpart_params[:lawsuit_id]
+      add_counterpart_to_lawsuit
+    else
+      @counterpart.update_attributes(counterpart_params)
+    end
     respond_with @counterpart
+  end
+
+  def lawsuit_counterpart_list
+    lawsuit = Lawsuit.find(params[:id])
+    respond_with lawsuit.counterparts
   end
 
   private
@@ -42,6 +56,13 @@ class CounterpartsController < ApplicationController
       :name,
       :personal_number,
       :representative,
-      :info)
+      :info,
+      :lawsuit_id)
+  end
+
+  def add_counterpart_to_lawsuit
+    lawsuit = Lawsuit.find(counterpart_params[:lawsuit_id])
+    @counterpart.lawsuits << lawsuit unless
+      @counterpart.lawsuits.include?(lawsuit)
   end
 end
