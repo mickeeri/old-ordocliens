@@ -4,8 +4,7 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   protect_from_forgery with: :null_session
   # include ActionController::Serialization
-  before_filter :deep_snake_case_params!
-
+  before_action :deep_snake_case_params!
 
   private
 
@@ -25,7 +24,7 @@ class ApplicationController < ActionController::Base
     ActiveModel::ArraySerializer.new(array, each_serializer: serializer(array))
   end
 
-  def prepare(resource, pref_serializer=nil, options={})
+  def prepare(resource, pref_serializer = nil, options = {})
     if pref_serializer
       pref_serializer.new(resource, options)
     else
@@ -45,7 +44,7 @@ class ApplicationController < ActionController::Base
   def deep_snake_case_params!(val = params)
     case val
     when Array
-      val.map {|v| deep_snake_case_params! v }
+      val.map { |v| deep_snake_case_params! v }
     when Hash
       val.keys.each do |k, v = val[k]|
         val.delete k

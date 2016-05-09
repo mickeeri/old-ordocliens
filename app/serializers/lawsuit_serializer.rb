@@ -4,6 +4,6 @@ class LawsuitSerializer < ActiveModel::Serializer
   has_many :clients
 
   def link
-    lawsuit_path(self.id)
+    lawsuit_path(id)
   end
 end

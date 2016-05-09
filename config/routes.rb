@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'reports/show'
+  get "reports/show"
 
   devise_for :users, controllers: { sessions: "users/sessions" }
   # get 'users/edit'
@@ -12,11 +12,11 @@ Rails.application.routes.draw do
   # root "users/sessions#new"
   devise_scope :user do
     authenticated :user do
-      root 'clients#index', as: :authenticated_root
+      root "clients#index", as: :authenticated_root
     end
 
     unauthenticated do
-      root 'users/sessions#new', as: :unauthenticated_root
+      root "users/sessions#new", as: :unauthenticated_root
     end
   end
 
@@ -37,11 +37,11 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-  get 'lawsuits/:id/clients' => 'clients#lawsuit_client_list'
-  get 'lawsuits/:id/counterparts' => 'counterparts#lawsuit_counterpart_list'
-  # post 'lawsuits/:id/clients' => 'clients#lawsuit_client_list'
+  get "lawsuits/:id/clients" => "clients#lawsuit_client_list"
+  get "lawsuits/:id/counterparts" => "counterparts#lawsuit_counterpart_list"
+  # post "lawsuits/:id/clients" => "clients#lawsuit_client_list"
 
-  get 'report/:id' => 'lawsuits#report'
+  get "report/:id" => "lawsuits#report"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

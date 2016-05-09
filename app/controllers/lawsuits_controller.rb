@@ -1,6 +1,10 @@
 class LawsuitsController < ApplicationController
   before_action :authenticate_user!
-  before_action :fetch_lawsuit, only: [:show, :update, :destroy, :report, :client_list]
+  before_action :fetch_lawsuit, only: [:show,
+                                       :update,
+                                       :destroy,
+                                       :report,
+                                       :client_list]
   respond_to :json, :html, :docx
 
   def index
@@ -50,7 +54,9 @@ class LawsuitsController < ApplicationController
     @price_categories = PriceCategory.all
     respond_to do |format|
       format.docx do
-        render docx: 'report', filename: 'Kostnadsuträkning.docx', word_template: 'custom.docx'
+        render docx: "report",
+               filename: "Kostnadsuträkning.docx",
+               word_template: "custom.docx"
       end
     end
   end

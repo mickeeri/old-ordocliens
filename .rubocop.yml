@@ -35,11 +35,14 @@ Style/Documentation:
 Style/DoubleNegation:
   Enabled: false
 
-Style/SpaceAroundEqualsInParameterDefault:
-  EnforcedStyle: no_space
+# Style/SpaceAroundEqualsInParameterDefault:
+#   EnforcedStyle: no_space
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
 Style/TrivialAccessors:
   AllowPredicates: true
+
+Metrics/MethodLength:
+  Enabled: false

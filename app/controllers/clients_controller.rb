@@ -24,10 +24,7 @@ class ClientsController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        render component: "ClientShow", props: {
-          initial_client: prepare(@client, ClientShowSerializer, root: false),
-          links: [{ id: rand(100), name: "Klienter", path: clients_path }],
-          counterparts: prepare_array(Counterpart.where(lawsuit: @client.lawsuits)) }
+        render component: "ClientShow", props: show_props
       end
       format.json do
         respond_with @client
@@ -62,7 +59,8 @@ class ClientsController < ApplicationController
 
   def destroy
     @client.destroy
-    flash.keep[:notice] = "#{@client.first_name} #{@client.last_name} är raderad."
+    flash.keep[:notice] =
+      "#{@client.first_name} #{@client.last_name} är raderad."
     respond_with @client
   end
 
@@ -100,17 +98,15 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
   end
 
-  def get_counterparts
-    counterparts = []
-    @client.lawsuits.each do |lawsuit|
-      counterparts.push(lawsuit.counterparts)
-    end
-    return counterparts;
-  end
-
   def add_client_to_lawsuit
     lawsuit = Lawsuit.find(client_params[:lawsuit_id])
     @client.lawsuits << lawsuit unless
       @client.lawsuits.include?(lawsuit)
+  end
+
+  def show_props
+    { initial_client: prepare(@client, ClientShowSerializer, root: false),
+      counterparts:
+        prepare_array(Counterpart.where(lawsuit: @client.lawsuits)) }
   end
 end
