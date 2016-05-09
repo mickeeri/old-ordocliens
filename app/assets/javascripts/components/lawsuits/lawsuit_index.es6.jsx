@@ -32,6 +32,7 @@ class LawsuitIndex extends React.Component {
           <h3 className="card-title">Ärenden</h3>
           <ul className="show-page-list">
           {this.state.lawsuits.map(lawsuit =>
+            <li key={lawsuit.id}><a href={Routes.lawsuit_path(lawsuit.id)}>{lawsuit.name}</a></li>
           )}
           </ul>
           <AddLawsuitButton clientId={this.props.clientId} />
