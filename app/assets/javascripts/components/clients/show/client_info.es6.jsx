@@ -1,6 +1,6 @@
 class ClientInfo extends React.Component {
   render() {
-    var client = this.props.client;
+    const client = this.props.client;
     return (
       <div className="card">
         <div className="card-block">
@@ -13,7 +13,7 @@ class ClientInfo extends React.Component {
             <dt>Mobil</dt>
             <dd>{client.phone_number}</dd>
             <dt>Adress</dt>
-            <dd>{client.street}<br/>
+            <dd>{client.street}<br />
                 {client.post_code} {client.city}
             </dd>
             <dt>Anteckning</dt>

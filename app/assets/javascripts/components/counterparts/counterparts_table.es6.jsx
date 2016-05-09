@@ -1,6 +1,3 @@
-/* global CounterPartRow */
-/* global Paginator */
-
 class CounterPartsTable extends React.Component {
   constructor(props) {
     super(props);

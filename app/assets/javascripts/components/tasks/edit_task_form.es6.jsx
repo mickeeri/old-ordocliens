@@ -38,7 +38,7 @@ class EditTaskForm extends React.Component {
   }
 
   handleInputChange(e) {
-    var nextState = {};
+    const nextState = {};
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);
   }
@@ -61,9 +61,9 @@ class EditTaskForm extends React.Component {
           value={this.state.date}
           changeEvent={this.handleInputChange}
           label="Datum"
-          required={true}
+          required
         />
-      <div className="form-group form-group-textarea">
+        <div className="form-group form-group-textarea">
           <label htmlFor="entry">Notering</label>
           <textarea
             className="form-control"
@@ -72,7 +72,8 @@ class EditTaskForm extends React.Component {
             name="entry"
             rows="5"
             onChange={this.handleInputChange}
-            required>
+            required
+          >
           </textarea>
         </div>
         <FormGroup
@@ -83,11 +84,12 @@ class EditTaskForm extends React.Component {
           label="Arbetade timmar"
           min="0"
           step="0.05"
-          required={true}
+          required
         />
         <div className="form-group">
           <label htmlFor="price_category_id">Priskategori</label>
-          <select className="form-control"
+          <select
+            className="form-control"
             onChange={this.handleInputChange}
             name="price_category_id"
             value={this.state.price_category_id}
@@ -96,7 +98,7 @@ class EditTaskForm extends React.Component {
             {priceCategoriesOptions}
           </select>
         </div>
-        <hr/>
+        <hr />
         <div className="content-right">
           <button className="btn btn-secondary" onClick={this.dismissBtnClicked}>Avbryt</button>
           <button className="btn btn-success" type="submit">Spara</button>

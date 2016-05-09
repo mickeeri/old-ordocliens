@@ -1,13 +1,12 @@
 class CounterpartShow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   render() {
     return (
       <div>
-        Under uppbyggnad.
+        <p>Under uppbyggnad.</p>
       </div>
     );
   }

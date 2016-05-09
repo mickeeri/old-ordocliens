@@ -4,7 +4,7 @@ class LawsuitShow extends React.Component {
     this.state = {
       legal_case: props.initialLawsuit,
       editMode: false,
-      links: props.links
+      links: props.links,
     };
     this.refreshLawsuit = this.refreshLawsuit.bind(this);
   }

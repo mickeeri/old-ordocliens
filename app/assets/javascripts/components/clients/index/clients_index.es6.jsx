@@ -91,7 +91,8 @@ class ClientsIndex extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {clientRows}
+              {this.state.clients.map(client =>
+                <ClientRow key={client.id} client={client} />)}
             </tbody>
           </table>
         </div>

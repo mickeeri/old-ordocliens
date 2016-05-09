@@ -2,7 +2,7 @@ class TestComp extends React.Component {
   render() {
     return (
       <div>
-        Testar
+        <p>Testar</p>
       </div>
     );
   }

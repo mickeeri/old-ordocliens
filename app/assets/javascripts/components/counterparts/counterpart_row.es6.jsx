@@ -1,9 +1,3 @@
-/* global React */
-/* global ReactDOM */
-/* global $ */
-/* global CounterPartForm */
-/* global EditFormModal */
-
 class CounterPartRow extends React.Component {
   constructor(props) {
     super(props);

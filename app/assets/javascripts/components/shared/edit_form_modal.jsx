@@ -36,7 +36,7 @@ class EditFormModal extends React.Component {
               <button
                 type="button"
                 className="close"
-                onClick={this.closeBtnClicked.bind(this)}
+                onClick={this.closeBtnClicked}
                 aria-label="Close"
               >
                 <span aria-hidden="true">×</span>

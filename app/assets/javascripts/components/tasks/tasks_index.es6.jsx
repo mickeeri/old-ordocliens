@@ -8,32 +8,24 @@ class TasksIndex extends React.Component {
 
   componentDidMount() {
     PubSub.subscribe('tasksTouched', this.refreshTasks);
-    PubSub.subscribe('dismissEdit', this.removeEditFormModal);
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe('tasksTouched');
-    PubSub.unsubscribe('dismissEdit');
   }
 
   refreshTasks() {
-    var url = Routes.client_legal_case_tasks_path(this.props.clientId, this.props.legalCaseId);
+    const url = Routes.client_legal_case_tasks_path(this.props.clientId, this.props.legalCaseId);
     makeGetRequest(url)
-      .success(response=> {
+      .success(response => {
         this.setState({ tasks: response.tasks });
-        this.removeEditFormModal();
+        PubSub.publish('dismissEdit');
 
         // $('#editFormModal').find('form').trigger('reset'); // Clear input fields in modal.
       })
-      .error(xhr=> {
+      .error(xhr => {
         console.error(url, xhr.status, xhr.statusText);
       });
-  }
-
-  // Remove modal from DOM.
-  removeEditFormModal() {
-    $('#editFormModal').modal('hide');
-    ReactDOM.unmountComponentAtNode(document.getElementById('editModalContainer'));
   }
 
   addTaskClicked(e) {
@@ -47,7 +39,8 @@ class TasksIndex extends React.Component {
           <EditTaskForm
             legalCaseId={this.props.legalCaseId}
             clientId={this.props.clientId}
-            priceCategories={this.props.priceCategories} />
+            priceCategories={this.props.priceCategories}
+          />
         }
       />,
       document.getElementById('editModalContainer')
@@ -56,7 +49,7 @@ class TasksIndex extends React.Component {
   }
 
   render() {
-    var taskRows = this.state.tasks.map(task=>
+    const taskRows = this.state.tasks.map(task =>
       <TaskRow
         key={task.id}
         task={task}
@@ -73,13 +66,13 @@ class TasksIndex extends React.Component {
           <h3 className="card-title">Specifikation avseende arbeten</h3>
           <div className="content-right">
             <a
-              href={'/report/' + this.props.legalCaseId + '.docx'}
-              className="btn btn-primary">Rapport .docx
-            </a>
+              href={`/report/${this.props.legalCaseId}.docx`}
+              className="btn btn-primary"
+            >Rapport .docx</a>
             <button
               className="btn btn-success"
-              onClick={this.addTaskClicked}>Lägg till uppgift
-            </button>
+              onClick={this.addTaskClicked}
+            >Lägg till uppgift</button>
           </div>
           <table className="table">
             <thead>

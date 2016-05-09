@@ -26,7 +26,7 @@ class CounterPartForm extends React.Component {
   }
 
   handleInputChange(e) {
-    var nextState = {};
+    const nextState = {};
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);
   }
@@ -46,7 +46,7 @@ class CounterPartForm extends React.Component {
           changeEvent={this.handleInputChange}
           autoFocus="true"
           label="Namn"
-          required={true}
+          required
         />
         <FormGroup
           name="personal_number"
@@ -54,7 +54,7 @@ class CounterPartForm extends React.Component {
           value={this.state.personal_number}
           changeEvent={this.handleInputChange}
           label="Personnummer"
-          required={true}
+          required
           maxLength={11}
           minLength={11}
         />
@@ -73,13 +73,16 @@ class CounterPartForm extends React.Component {
             value={this.state ? this.state.info : ''}
             name="info"
             rows="4"
-            onChange={this.handleInputChange}>
+            onChange={this.handleInputChange}
+          >
           </textarea>
         </div>
         <hr />
         <div className="content-right">
-          <button className="btn btn-secondary"
-            onClick={this.handleCancelButtonClick}>Avbryt
+          <button
+            className="btn btn-secondary"
+            onClick={this.handleCancelButtonClick}
+          >Avbryt
           </button>
           <button className="btn btn-success-outline" type="submit">
             Spara

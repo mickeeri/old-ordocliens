@@ -20,9 +20,8 @@ class LawsuitForm extends React.Component {
       makePutRequest(Routes.lawsuit_path(this.state.id, this.props.clientId),
         { lawsuit: this.state }, 'lawsuitTouched');
     } else { // Otherwise post.
-      const url = `${Routes.lawsuits_path()}?client_id=${this.props.clientId}`;
       makePostRequest(
-        url,
+        `${Routes.lawsuits_path()}?client_id=${this.props.clientId}`,
         { lawsuit: this.state },
         'lawsuitsTouched');
     }

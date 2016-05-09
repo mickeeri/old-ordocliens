@@ -33,7 +33,7 @@ class Paginator extends React.Component {
     if (e.target.value <= this.props.totalPages || e.target.value === '') {
       this.setState({ currentPage: e.target.value });
       if (e.target.value !== '') {
-        return this.props.onPaginate(parseInt(e.target.value));
+        return this.props.onPaginate(parseInt(e.target.value, 10));
       }
     }
 
@@ -42,7 +42,7 @@ class Paginator extends React.Component {
 
   handleOnFocus(e) { // Select text on focus.
     const target = e.target;
-    setTimeout(function () {
+    setTimeout(() => {
       target.select();
     }, 0);
   }
@@ -56,12 +56,14 @@ class Paginator extends React.Component {
             'btn btn-secondary btn-sm' :
             'btn btn-secondary btn-sm disabled'
           }
-          onClick={this.handlePrevClick}>
+          onClick={this.handlePrevClick}
+        >
           <span aria-hidden="true">« Föregående</span>
         </button>
         <div>
           <p>Sida: </p>
-          <input className="form-control form-control-sm page-number"
+          <input
+            className="form-control form-control-sm page-number"
             onChange={this.handleNumChange}
             type="text"
             value={this.state.currentPage}
@@ -69,12 +71,14 @@ class Paginator extends React.Component {
           </input>
           <p>av {this.props.totalPages}</p>
         </div>
-        <button className={
+        <button
+          className={
             this.props.nextPage ?
             'btn btn-secondary btn-sm' :
             'btn btn-secondary btn-sm disabled'
           }
-          onClick={this.handleNextClick}>
+          onClick={this.handleNextClick}
+        >
           <span aria-hidden="true">Nästa »</span>
         </button>
       </div>

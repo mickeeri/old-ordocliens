@@ -34,5 +34,5 @@ class AddLawsuitButton extends React.Component {
 }
 
 AddLawsuitButton.propTypes = {
-  clientId: React.PropTypes.number.isRequired,
+  clientId: React.PropTypes.number,
 };

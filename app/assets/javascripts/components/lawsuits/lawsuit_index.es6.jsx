@@ -1,8 +1,3 @@
-/* global makeGetRequest */
-/* global LawsuitRow */
-/* global AddLawsuitButton */
-/* global CounterpartsIndex */
-
 class LawsuitIndex extends React.Component {
   constructor(props) {
     super(props);
@@ -12,18 +7,10 @@ class LawsuitIndex extends React.Component {
 
   componentDidMount() {
     PubSub.subscribe('lawsuitsTouched', this.refreshLawsuits);
-    PubSub.subscribe('dismissEdit', this.removeEditFormModal);
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe('lawsuitsTouched');
-    PubSub.unsubscribe('dismissEdit');
-  }
-
-  // Remove modal from DOM.
-  removeEditFormModal() { // TODO: maybee move to EditFormModal
-    $('#editFormModal').modal('hide');
-    ReactDOM.unmountComponentAtNode(document.getElementById('editModalContainer'));
   }
 
   refreshLawsuits() {
@@ -31,7 +18,7 @@ class LawsuitIndex extends React.Component {
     makeGetRequest(url)
       .success(response => {
         this.setState({ lawsuits: response.lawsuits });
-        this.removeEditFormModal();
+        PubSub.publish('dismissEdit');
       })
       .error(xhr => {
         console.error(url, xhr.status, xhr.statusText);
@@ -39,18 +26,13 @@ class LawsuitIndex extends React.Component {
   }
 
   render() {
-    let lawsuitRows = this.state.lawsuits.map(lawsuit =>
-      <LawsuitRow
-        key={lawsuit.id}
-        lawsuit={lawsuit}
-      />
-    );
-
     return (
       <div className="card">
         <div className="card-block">
           <h3 className="card-title">Ärenden</h3>
-          {lawsuitRows}
+          {this.state.lawsuits.map(lawsuit =>
+            <a href={Routes.lawsuit_path(lawsuit.id)}>{lawsuit.name}</a>
+          )}
           <AddLawsuitButton clientId={this.props.clientId} />
         </div>
       </div>

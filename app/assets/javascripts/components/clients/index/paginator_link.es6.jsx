@@ -13,3 +13,8 @@ class PaginatorLink extends React.Component {
     return (<a href="#" onClick={this.handleOnClick}>{this.props.pageNumber}</a>);
   }
 }
+
+PaginatorLink.propTypes = {
+  onPaginatorLinkClick: React.PropTypes.function.isRequired,
+  pageNumber: React.PropTypes.number.isRequired,
+};
