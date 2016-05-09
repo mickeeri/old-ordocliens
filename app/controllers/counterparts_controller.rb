@@ -1,6 +1,14 @@
 class CounterpartsController < ApplicationController
   before_action :authenticate_user!
-  respond_to :json
+  respond_to :json, :html
+
+  def index
+    respond_to do |format|
+      format.html do
+        render component: "CounterpartsIndex"
+      end
+    end
+  end
 
   def show
     respond_to do |format|

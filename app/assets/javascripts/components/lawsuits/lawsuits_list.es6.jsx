@@ -1,4 +1,4 @@
-class LawsuitIndex extends React.Component {
+class LawsuitsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { lawsuits: props.lawsuits }; // TODO: rename to initial..
@@ -42,7 +42,7 @@ class LawsuitIndex extends React.Component {
   }
 }
 
-LawsuitIndex.propTypes = {
+LawsuitsList.propTypes = {
   lawsuits: React.PropTypes.array.isRequired,
   clientId: React.PropTypes.number.isRequired,
 };

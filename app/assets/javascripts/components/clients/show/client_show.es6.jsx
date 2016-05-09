@@ -57,7 +57,7 @@ class ClientShow extends React.Component {
           <div className="col-md-6">
             <div className="row">
               <div className="col-md-12">
-                <LawsuitIndex
+                <LawsuitsList
                   lawsuits={this.props.initialClient.lawsuits}
                   clientId={this.props.initialClient.id}
                 />

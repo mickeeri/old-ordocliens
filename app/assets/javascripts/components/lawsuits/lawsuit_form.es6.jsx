@@ -5,7 +5,7 @@ class LawsuitForm extends React.Component {
       id: props.initialLawsuit ? props.initialLawsuit.id : '',
       name: props.initialLawsuit ? props.initialLawsuit.name : '',
       court: props.initialLawsuit ? props.initialLawsuit.court : '',
-      case_number: props.initialLawsuit ? props.initialLawsuit.case_number : '',
+      caseNumber: props.initialLawsuit ? props.initialLawsuit.caseNumber : '',
       closed: props.initialLawsuit ? props.initialLawsuit.closed : '',
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -69,11 +69,11 @@ class LawsuitForm extends React.Component {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="case_number">Målnummer</label>
+          <label htmlFor="caseNumber">Målnummer</label>
           <input
-            name="case_number"
+            name="caseNumber"
             className="form-control form-control-sm"
-            value={this.state.case_number}
+            value={this.state.caseNumber}
             onChange={this.handleInputChange}
           />
         </div>

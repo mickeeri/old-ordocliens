@@ -4,8 +4,15 @@ class LawsuitsController < ApplicationController
   respond_to :json, :html, :docx
 
   def index
-    @lawsuits = Client.find(params[:client_id]).lawsuits
-    respond_with @lawsuits
+    respond_to do |format|
+      format.html do
+        render component: "LawsuitsIndex"
+      end
+      format.json do
+        @lawsuits = Client.find(params[:client_id]).lawsuits
+        respond_with @lawsuits
+      end
+    end
   end
 
   def show
