@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509185434) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20160510134845) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "last_name"
@@ -31,18 +28,10 @@ ActiveRecord::Schema.define(version: 20160509185434) do
     t.string   "phone_number"
   end
 
-  add_index "clients", ["first_name"], name: "index_clients_on_first_name", using: :btree
-  add_index "clients", ["last_name"], name: "index_clients_on_last_name", using: :btree
-  add_index "clients", ["ssn"], name: "index_clients_on_ssn", using: :btree
-  add_index "clients", ["user_id"], name: "index_clients_on_user_id", using: :btree
-
-  create_table "clients_lawsuits", id: false, force: :cascade do |t|
-    t.integer "client_id",  null: false
-    t.integer "lawsuit_id", null: false
-  end
-
-  add_index "clients_lawsuits", ["client_id", "lawsuit_id"], name: "index_clients_lawsuits_on_client_id_and_lawsuit_id", using: :btree
-  add_index "clients_lawsuits", ["lawsuit_id", "client_id"], name: "index_clients_lawsuits_on_lawsuit_id_and_client_id", using: :btree
+  add_index "clients", ["first_name"], name: "index_clients_on_first_name"
+  add_index "clients", ["last_name"], name: "index_clients_on_last_name"
+  add_index "clients", ["ssn"], name: "index_clients_on_ssn"
+  add_index "clients", ["user_id"], name: "index_clients_on_user_id"
 
   create_table "counterparts", force: :cascade do |t|
     t.string   "name"
@@ -54,15 +43,17 @@ ActiveRecord::Schema.define(version: 20160509185434) do
     t.integer  "lawsuit_id"
   end
 
-  add_index "counterparts", ["lawsuit_id"], name: "index_counterparts_on_lawsuit_id", using: :btree
+  add_index "counterparts", ["lawsuit_id"], name: "index_counterparts_on_lawsuit_id"
 
-  create_table "counterparts_lawsuits", id: false, force: :cascade do |t|
-    t.integer "lawsuit_id",     null: false
-    t.integer "counterpart_id", null: false
+  create_table "disputes", force: :cascade do |t|
+    t.integer  "lawsuit_id"
+    t.integer  "counterpart_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
-  add_index "counterparts_lawsuits", ["counterpart_id", "lawsuit_id"], name: "index_counterparts_lawsuits_on_counterpart_id_and_lawsuit_id", using: :btree
-  add_index "counterparts_lawsuits", ["lawsuit_id", "counterpart_id"], name: "index_counterparts_lawsuits_on_lawsuit_id_and_counterpart_id", using: :btree
+  add_index "disputes", ["counterpart_id"], name: "index_disputes_on_counterpart_id"
+  add_index "disputes", ["lawsuit_id"], name: "index_disputes_on_lawsuit_id"
 
   create_table "expenses", force: :cascade do |t|
     t.text     "entry"
@@ -73,7 +64,7 @@ ActiveRecord::Schema.define(version: 20160509185434) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "expenses", ["lawsuit_id"], name: "index_expenses_on_lawsuit_id", using: :btree
+  add_index "expenses", ["lawsuit_id"], name: "index_expenses_on_lawsuit_id"
 
   create_table "firms", force: :cascade do |t|
     t.string   "name"
@@ -89,6 +80,16 @@ ActiveRecord::Schema.define(version: 20160509185434) do
     t.string   "court"
     t.string   "case_number"
   end
+
+  create_table "participations", force: :cascade do |t|
+    t.integer  "client_id"
+    t.integer  "lawsuit_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "participations", ["client_id"], name: "index_participations_on_client_id"
+  add_index "participations", ["lawsuit_id"], name: "index_participations_on_lawsuit_id"
 
   create_table "price_categories", force: :cascade do |t|
     t.string   "name"
@@ -107,8 +108,8 @@ ActiveRecord::Schema.define(version: 20160509185434) do
     t.integer  "price_category_id"
   end
 
-  add_index "tasks", ["lawsuit_id"], name: "index_tasks_on_lawsuit_id", using: :btree
-  add_index "tasks", ["price_category_id"], name: "index_tasks_on_price_category_id", using: :btree
+  add_index "tasks", ["lawsuit_id"], name: "index_tasks_on_lawsuit_id"
+  add_index "tasks", ["price_category_id"], name: "index_tasks_on_price_category_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "full_name"
@@ -128,9 +129,9 @@ ActiveRecord::Schema.define(version: 20160509185434) do
     t.string   "last_sign_in_ip"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["firm_id"], name: "index_users_on_firm_id", using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["user_name"], name: "index_users_on_user_name", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["firm_id"], name: "index_users_on_firm_id"
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["user_name"], name: "index_users_on_user_name"
 
 end

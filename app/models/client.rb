@@ -2,7 +2,8 @@ class Client < ActiveRecord::Base
   include PgSearch
   # Relations
   belongs_to :user, required: true
-  has_and_belongs_to_many :lawsuits, uniq: true
+  has_many :participations
+  has_many :lawsuits, through: :participations
 
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }

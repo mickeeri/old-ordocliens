@@ -1,4 +1,4 @@
-class CreateLawsuits < ActiveRecord::Migration
+class CreateLegalCases < ActiveRecord::Migration
   def change
     create_table :legal_cases do |t|
       t.references :client, index: true, foreign_key: true
