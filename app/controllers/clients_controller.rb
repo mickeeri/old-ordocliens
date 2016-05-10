@@ -15,6 +15,7 @@ class ClientsController < ApplicationController
         if params[:page].present?
           render json: @clients, meta: pagination_dict(@clients)
         else
+          # For dropdown.
           respond_with Client.all.sorted
         end
       end

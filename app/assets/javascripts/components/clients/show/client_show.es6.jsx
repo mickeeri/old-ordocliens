@@ -85,8 +85,6 @@ class ClientShow extends React.Component {
   }
 }
 
-
-
 ClientShow.propTypes = {
   initialClient: React.PropTypes.object.isRequired,
   // counterparts: React.PropTypes.array.isRequired,

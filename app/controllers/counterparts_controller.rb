@@ -1,15 +1,22 @@
 class CounterpartsController < ApplicationController
   before_action :authenticate_user!
+  before_action :search_counterparts, only: [:index]
   respond_to :json, :html
 
   def index
-    @counterparts = Counterpart.all.sorted
     respond_to do |format|
       format.html do
-        render component: "CounterpartsIndex"
+        render component: "CounterpartsIndex", props:
+          { initialCounterparts: prepare_array(@counterparts),
+            meta: pagination_dict(@counterparts)}
       end
       format.json do
-        render json: @counterparts
+        if params[:page].present?
+          render json: @counterparts, meta: pagination_dict(@counterparts)
+        else
+          # For dropdown.
+          respond_with Counterpart.all.sorted
+        end
       end
     end
   end
@@ -59,6 +66,15 @@ class CounterpartsController < ApplicationController
       :representative,
       :info,
       :lawsuit_id)
+  end
+
+  def search_counterparts
+    @counterparts =
+      if params[:search].present?
+        Counterpart.search(params[:search])
+      else
+        Counterpart.all
+      end.sorted.page(params[:page]).per_page(20)
   end
 
   def add_counterpart_to_lawsuit

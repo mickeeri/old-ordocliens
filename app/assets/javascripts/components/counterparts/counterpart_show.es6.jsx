@@ -13,6 +13,5 @@ class CounterpartShow extends React.Component {
 }
 
 CounterpartShow.propTypes = {
-  lawsuitId: React.PropTypes.number.isRequired,
   counterpart: React.PropTypes.object.isRequired,
 };
