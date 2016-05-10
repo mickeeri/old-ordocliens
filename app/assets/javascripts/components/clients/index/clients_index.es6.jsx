@@ -69,6 +69,7 @@ class ClientsIndex extends React.Component {
                 onChange={this.handleOnSearch}
                 ref="search"
               />
+            </form>
             {this.state.meta.totalPages === 1 ? '' :
               <Paginator
                 totalPages={this.state.meta.totalPages}
@@ -77,8 +78,7 @@ class ClientsIndex extends React.Component {
                 prevPage={this.state.meta.previousPage}
                 onPaginate={this.handleOnPaginate}
               />
-             }
-            </form>
+            }
           </div>
         </div>
         <div className="row">

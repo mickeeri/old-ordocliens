@@ -6,17 +6,22 @@ class CounterpartsIndex extends React.Component {
       meta: props.meta,
       fetchData: {
         search: '',
-        page: 1
-      }
+        page: 1,
+      },
     };
     // Binding functions.
     this.fetchCounterparts = this.fetchCounterparts.bind(this);
     this.handleOnSearch = this.handleOnSearch.bind(this);
-    // this.handleOnPaginate = this.handleOnPaginate.bind(this);
+    this.handleOnPaginate = this.handleOnPaginate.bind(this);
   }
 
   handleOnSearch() {
     this.state.fetchData.search = this.refs.search.value;
+    this.fetchCounterparts();
+  }
+
+  handleOnPaginate(pageNumber) {
+    this.state.fetchData.page = pageNumber;
     this.fetchCounterparts();
   }
 
@@ -48,12 +53,21 @@ class CounterpartsIndex extends React.Component {
             <form>
               <input
                 className="form-control"
-                placeholder="Sök på namp, personnummer eller motpart"
+                placeholder="Sök på namn, personnummer eller klient"
                 autoFocus="true"
                 onChange={this.handleOnSearch}
                 ref="search"
               />
             </form>
+            {this.state.meta.totalPages === 1 ? '' :
+              <Paginator
+                totalPages={this.state.meta.totalPages}
+                currentPage={this.state.meta.currentPage}
+                nextPage={this.state.meta.nextPage}
+                prevPage={this.state.meta.previousPage}
+                onPaginate={this.handleOnPaginate}
+              />
+            }
           </div>
         </div>
         <div className="row">
@@ -83,5 +97,5 @@ class CounterpartsIndex extends React.Component {
 
 CounterpartsIndex.propTypes = {
   initialCounterparts: React.PropTypes.array.isRequired,
-  lawsuits: React.PropTypes.array,
+  meta: React.PropTypes.object.isRequired,
 };
