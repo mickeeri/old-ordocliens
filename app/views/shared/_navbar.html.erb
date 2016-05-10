@@ -3,27 +3,21 @@
     <%=
       link_to "Klienter",
       clients_path,
-      class: current_page?(clients_path) || current_page?(authenticated_root_path) ?
-        'nav-link active' :
-        'nav-link'
+      class: active_class?('clients')
     %>
   </li>
   <li class="nav-item nav-li">
     <%=
       link_to "Ärenden",
       lawsuits_path,
-      class: current_page?(lawsuits_path) ?
-        'nav-link active' :
-        'nav-link'
+      class: active_class?('lawsuits')
     %>
   </li>
   <li class="nav-item nav-li">
     <%=
       link_to "Motparter",
       counterparts_path,
-      class: current_page?(counterparts_path) ?
-        'nav-link active' :
-        'nav-link'
+      class: active_class?('counterparts')
     %>
   </li>
   <li class="nav-item dropdown pull-xs-right">
