@@ -67,7 +67,7 @@ class ClientShow extends React.Component {
                 <div className="card card-block">
                   <h3 className="card-title">Motparter</h3>
                   <ul className="show-page-list">
-                    {this.props.counterparts.map(counterpart =>
+                    {this.props.initialClient.counterparts.map(counterpart =>
                       <li key={counterpart.id}>
                         <a href="#">
                           {counterpart.name} ({counterpart.personalNumber})
@@ -85,7 +85,9 @@ class ClientShow extends React.Component {
   }
 }
 
+
+
 ClientShow.propTypes = {
   initialClient: React.PropTypes.object.isRequired,
-  counterparts: React.PropTypes.array.isRequired,
+  // counterparts: React.PropTypes.array.isRequired,
 };

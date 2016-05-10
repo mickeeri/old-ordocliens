@@ -3,7 +3,9 @@ class Client < ActiveRecord::Base
   # Relations
   belongs_to :user, required: true
   has_many :participations
-  has_many :lawsuits, through: :participations
+  has_many :lawsuits, -> { distinct }, through: :participations
+  has_many :disputes
+  has_many :counterparts, -> { distinct }, through: :disputes
 
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }

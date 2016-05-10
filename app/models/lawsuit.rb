@@ -1,8 +1,8 @@
 class Lawsuit < ActiveRecord::Base
   has_many :participations
-  has_many :clients, through: :participations
-  has_many :disputes
-  has_many :counterparts, through: :disputes
+  has_many :clients, -> { distinct }, through: :participations
+  has_many :involvements
+  has_many :counterparts, -> { distinct }, through: :involvements
   has_many :tasks, dependent: :destroy
   has_many :expenses, dependent: :destroy
 

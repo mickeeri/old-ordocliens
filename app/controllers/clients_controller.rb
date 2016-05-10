@@ -100,13 +100,14 @@ class ClientsController < ApplicationController
 
   def add_client_to_lawsuit
     lawsuit = Lawsuit.find(client_params[:lawsuit_id])
-    @client.lawsuits << lawsuit unless
-      @client.lawsuits.include?(lawsuit)
+    @client.lawsuits << lawsuit
+    # Add the client to all counterparts involved in lawsuit.
+    lawsuit.counterparts.each do |counterpart|
+      @client.counterparts << counterpart
+    end
   end
 
   def show_props
-    { initial_client: prepare(@client, ClientShowSerializer, root: false),
-      counterparts:
-        prepare_array(Counterpart.where(lawsuits: @client.lawsuits)) }
+    { initial_client: prepare(@client, ClientShowSerializer, root: false) }
   end
 end

@@ -63,7 +63,10 @@ class CounterpartsController < ApplicationController
 
   def add_counterpart_to_lawsuit
     lawsuit = Lawsuit.find(counterpart_params[:lawsuit_id])
-    @counterpart.lawsuits << lawsuit unless
-      @counterpart.lawsuits.include?(lawsuit)
+    @counterpart.lawsuits << lawsuit
+    # Add the counterpart to all clients involved in lawsuit.
+    lawsuit.clients.each do |client|
+      @counterpart.clients << client
+    end
   end
 end

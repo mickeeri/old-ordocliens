@@ -12,4 +12,5 @@ class ClientShowSerializer < ActiveModel::Serializer
 
   # has_many :counterparts
   has_many :lawsuits
+  has_many :counterparts
 end
