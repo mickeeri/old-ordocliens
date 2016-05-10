@@ -6,9 +6,24 @@ class LawsuitShow extends React.Component {
       editMode: false,
       links: props.links,
       page: 'info',
+      message: 'Ärende uppdaterat!',
     };
 
     this.togglePage = this.togglePage.bind(this);
+    this.setMessage = this.setMessage.bind(this);
+  }
+
+  componentDidMount() {
+    PubSub.subscribe('lawsuitUpdated', this.setMessage);
+  }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe('lawsuitUpdated');
+  }
+
+  setMessage() { // Show success message.
+    $('#updatedLawsuitMessage').fadeIn();
+    $('#updatedLawsuitMessage').fadeOut(2000);
   }
 
   togglePage(e) {
@@ -16,32 +31,17 @@ class LawsuitShow extends React.Component {
     this.setState({ page: e.target.name });
   }
 
-  // componentDidMount() {
-  //   PubSub.subscribe('lawsuitTouched', this.refreshLawsuit);
-  // }
-  //
-  // componentWillUnmount() {
-  //   PubSub.unsubscribe('lawsuitTouched');
-  // }
-  //
-  // refreshLawsuit() { // Refresh legal case from server.
-  //   const url = Routes.lawsuit_path(this.props.initialLawsuit.id);
-  //   makeGetRequest(url)
-  //     .success(response => {
-  //       this.setState({ lawsuit: response.lawsuit });
-  //     })
-  //     .error(xhr => {
-  //       console.error(url, xhr.status, xhr.statusText);
-  //     });
-  // }
-
   render() {
     return (
       <div>
         <BreadCrumb active={this.state.lawsuit.name} links={this.state.links} />
         <div className="row">
           <div className="col-md-4">
-            <h2>Ärende nr {this.props.initialLawsuit.id}</h2>
+            <h2 className="lawsuit-header">Ärende nr {this.props.initialLawsuit.id}</h2>
+            <p
+              id="updatedLawsuitMessage"
+              className="text-success"
+            >{this.state.message}</p>
           </div>
           <div className="col-md-8 content-right lawsuit-menu">
             <a
