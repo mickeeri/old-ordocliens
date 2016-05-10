@@ -18,7 +18,7 @@ function makePutRequest(url, payload, subToPublish) {
 function makePostRequest(url, payload, action) {
   $.post(url, payload, res => {
     if (action === 'redirect') {
-      window.location = Routes.client_path(res.link);
+      window.location = res.link;
     } else {
       PubSub.publish(action);
     }
