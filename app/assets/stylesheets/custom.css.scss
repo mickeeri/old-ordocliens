@@ -217,6 +217,20 @@ h1 {
     text-align: left;
  }
 
+.lawsuit-header {
+  margin-bottom: 30px;
+}
+
+#updatedLawsuitMessage {
+  display:none;
+  position: absolute;
+  top: 35px;
+}
+
+#updatedClientMessage {
+  display: none;
+}
+
 // MISC
 .center-content {
   text-align: center;
