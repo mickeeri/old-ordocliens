@@ -23,21 +23,22 @@ class CounterpartsController < ApplicationController
   end
 
   def create
-    @counterpart = Counterpart.build(counterpart_params)
+    @counterpart = Counterpart.new(counterpart_params)
     if @counterpart.save
-      if client_params[:lawsuit_id]
+      if counterpart_params[:lawsuit_id]
         add_counterpart_to_lawsuit
       else
         flash[:success] = "Klient sparad!"
       end
     end
-    respond_with(@counterpart)
+    respond_with @counterpart
   end
 
   def update
     @counterpart = Counterpart.find(params[:id])
     if counterpart_params[:lawsuit_id]
       add_counterpart_to_lawsuit
+      @counterpart.save
     else
       @counterpart.update_attributes(counterpart_params)
     end

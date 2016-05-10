@@ -107,6 +107,6 @@ class ClientsController < ApplicationController
   def show_props
     { initial_client: prepare(@client, ClientShowSerializer, root: false),
       counterparts:
-        prepare_array(Counterpart.where(lawsuit: @client.lawsuits)) }
+        prepare_array(Counterpart.where(lawsuits: @client.lawsuits)) }
   end
 end

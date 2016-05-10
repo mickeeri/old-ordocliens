@@ -28,7 +28,7 @@ class CounterpartsDropdown extends React.Component {
     PubSub.publish('dismissEdit');
   }
 
-  fetchCounterparts() {
+  fetchCounterparts() { // Get counterparts to be displayed in dropdown.
     const url = Routes.counterparts_path();
     makeGetRequest(url)
       .success(response => {
