@@ -18,7 +18,7 @@ class LawsuitForm extends React.Component {
     e.preventDefault();
     if (this.state.id) { // If it has id it is update.
       makePutRequest(Routes.lawsuit_path(this.state.id, this.props.clientId),
-        { lawsuit: this.state }, 'lawsuitTouched');
+        { lawsuit: this.state }, 'lawsuitUpdated');
     } else { // Otherwise post.
       makePostRequest(
         `${Routes.lawsuits_path()}?client_id=${this.props.clientId}`,
@@ -54,7 +54,6 @@ class LawsuitForm extends React.Component {
             type="text"
             value={this.state.name}
             onChange={this.handleInputChange}
-            autoFocus="true"
             required
           />
         </div>
@@ -99,7 +98,7 @@ class LawsuitForm extends React.Component {
             >Avbryt
             </button>}
           <button className="btn btn-success" type="submit">
-            {isEdit ? 'Uppdatera' : 'Spara mål'}
+            {isEdit ? 'Uppdatera' : 'Spara ärende'}
           </button>
         </div>
       </form>
