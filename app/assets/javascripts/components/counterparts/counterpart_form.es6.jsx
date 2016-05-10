@@ -51,9 +51,9 @@ class CounterpartForm extends React.Component {
           required
         />
         <FormGroup
-          name="personal_number"
+          name="personalNumber"
           type="tel"
-          value={this.state.personal_number}
+          value={this.state.personalNumber}
           changeEvent={this.handleInputChange}
           label="Personnummer"
           required
