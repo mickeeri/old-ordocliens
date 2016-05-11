@@ -2,11 +2,21 @@
 @import "font-awesome";
 
 // LAYOUT
+body {
+  background: #F9F9F9;
+}
+
+// .container {
+//   background: white;
+// }
+
 main {
   margin-top: 40px;
   margin-bottom: 100px;
   min-height: 1000px;
 }
+
+
 
 @media (min-width: 1200px) {
   .container {
@@ -18,10 +28,15 @@ main {
   height: 100px;
 }
 
+.container-fluid {
+  padding: 0;
+}
 
 // NAVBAR
 .nav {
-  margin-top: 30px;
+  padding: 30px 30px 0 30px;
+  background: #FFFFFF;
+  box-shadow: 0 1px 4px rgba(0,0,0,.15);
 }
 
 .nav-li {
