@@ -65,7 +65,7 @@ namespace :deploy do
       within release_path do
         with rails_env: fetch(:rails_env) do
           execute :rake, "db:reset"
-          # execute :rake, "db:seed"
+          #execute :rake, "db:seed"
         end
       end
     end

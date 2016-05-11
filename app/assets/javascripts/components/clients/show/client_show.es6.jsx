@@ -40,7 +40,6 @@ class ClientShow extends React.Component {
               <div className="col-md-12">
                 <div className="card card-block">
                   <h3 className="card-title">Uppgifter</h3>
-                  <hr />
                   <ClientForm client={this.state.client} header="" />
                 </div>
               </div>

@@ -1,0 +1,2 @@
+module PriceCategoriesHelper
+end

@@ -24,7 +24,8 @@ Rails.application.routes.draw do
   resources :counterparts
 
   resources :lawsuits do # show, index
-    resources :tasks
+    resources :tasks, except: :show
+    resources :price_categories, only: :index
   end
   # #root "sessions#new"
   # # get    "login"   => "sessions#new"
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   get "lawsuits/:id/clients" => "clients#lawsuit_client_list"
+  #get "lawsuits/:id/tasks/price_categories" => "tasks#price_categories"
   get "lawsuits/:id/counterparts" => "counterparts#lawsuit_counterpart_list"
   # post "lawsuits/:id/clients" => "clients#lawsuit_client_list"
 

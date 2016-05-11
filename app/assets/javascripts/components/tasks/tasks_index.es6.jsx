@@ -36,10 +36,8 @@ class TasksIndex extends React.Component {
       <EditFormModal
         header="Lägg till tidkort"
         form={
-          <EditTaskForm
+          <TaskForm
             lawsuitId={this.props.lawsuitId}
-            clientId={this.props.clientId}
-            priceCategories={this.props.priceCategories}
           />
         }
       />,

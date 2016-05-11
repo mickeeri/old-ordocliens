@@ -9,8 +9,7 @@ class TaskRow extends React.Component {
         target="deleteTask"
         subToPublish="tasksTouched"
         url={
-          Routes.client_legal_case_task_path(
-            this.props.clientId,
+          Routes.lawsuit_task_path(
             this.props.lawsuitId,
             this.props.task.id
           )
@@ -29,10 +28,8 @@ class TaskRow extends React.Component {
       <EditFormModal
         header="Redigera tidkort"
         form={
-          <EditTaskForm
+          <TaskForm
             lawsuitId={this.props.lawsuitId}
-            clientId={this.props.clientId}
-            priceCategories={this.props.priceCategories}
             initialTask={this.props.task}
           />
         }
