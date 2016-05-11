@@ -192,6 +192,24 @@ h1 {
   }
 }
 
+// CARDS
+.counterpart-client-card {
+  .card-title {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+      // border-bottom: 1px solid #f2dede;
+      line-height: 30px;
+    }
+  }
+}
+
 // MESSAGES
 .alert-error {
     background-color: #f2dede;
@@ -231,10 +249,14 @@ h1 {
   top: 35px;
 }
 
-#updatedClientMessage {
+#updatedClientMessage, #updatedCounterpartMessage {
   display: none;
   position: absolute;
-  top: 90px;
+  // top: 90px;
+  top: 75px;
+  font-weight: 600;
+  border: 1px dotted;
+  padding: 5px 15px;
 }
 
 // MISC

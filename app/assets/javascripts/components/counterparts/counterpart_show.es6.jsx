@@ -1,17 +1,60 @@
 class CounterpartShow extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      counterpart: props.initialCounterpart,
+    };
+    this.setMessage = this.setMessage.bind(this);
+  }
+
+  componentDidMount() {
+    PubSub.subscribe('counterpartUpdated', this.setMessage);
+  }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe('counterpartUpdated');
+  }
+
+  setMessage() {
+    $('#updatedCounterpartMessage').fadeIn();
+    $('#updatedCounterpartMessage').fadeOut(2000);
   }
 
   render() {
     return (
       <div>
-        <p>Under uppbyggnad.</p>
+        <p
+          id="updatedCounterpartMessage"
+          className="text-success"
+        >Motpart uppdaterad!</p>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="card card-block">
+              <h3 className="card-title">Uppgifter</h3>
+              <hr />
+              <CounterpartForm
+                id={this.props.initialCounterpart.id}
+                name={this.props.initialCounterpart.name}
+                personalNumber={this.props.initialCounterpart.personalNumber}
+                representative={this.props.initialCounterpart.representative}
+                info={this.props.initialCounterpart.info
+                }
+              />
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="card card-block">
+              <h3 className="card-title">Ärenden</h3>
+              <hr />
+              <CounterpartLawsuitList lawsuits={this.props.initialCounterpart.lawsuits} />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 CounterpartShow.propTypes = {
-  counterpart: React.PropTypes.object.isRequired,
+  initialCounterpart: React.PropTypes.object.isRequired,
 };

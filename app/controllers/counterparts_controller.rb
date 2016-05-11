@@ -1,6 +1,7 @@
 class CounterpartsController < ApplicationController
   before_action :authenticate_user!
   before_action :search_counterparts, only: [:index]
+  before_action :fetch_counterpart, only: [:show, :update, :destroy]
   respond_to :json, :html
 
   def index
@@ -24,7 +25,10 @@ class CounterpartsController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-        render component: "CounterpartShow"
+        render component: "CounterpartShow", props: show_props
+      end
+      format.json do
+        respond_with @counterpart
       end
     end
   end
@@ -35,14 +39,13 @@ class CounterpartsController < ApplicationController
       if counterpart_params[:lawsuit_id]
         add_counterpart_to_lawsuit
       else
-        flash[:success] = "Klient sparad!"
+        flash[:success] = "Motpart sparad!"
       end
     end
     respond_with @counterpart
   end
 
   def update
-    @counterpart = Counterpart.find(params[:id])
     if counterpart_params[:lawsuit_id]
       add_counterpart_to_lawsuit
       @counterpart.save
@@ -65,7 +68,8 @@ class CounterpartsController < ApplicationController
       :personal_number,
       :representative,
       :info,
-      :lawsuit_id)
+      :lawsuit_id
+    )
   end
 
   def search_counterparts
@@ -84,5 +88,17 @@ class CounterpartsController < ApplicationController
     lawsuit.clients.each do |client|
       @counterpart.clients << client
     end
+  end
+
+  def fetch_counterpart
+    @counterpart = Counterpart.find(params[:id])
+  end
+
+  def show_props
+    { initial_counterpart: prepare(
+      @counterpart,
+      CounterpartShowSerializer,
+      root: false
+    ) }
   end
 end

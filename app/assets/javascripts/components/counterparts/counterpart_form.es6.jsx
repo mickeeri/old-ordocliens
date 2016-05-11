@@ -2,12 +2,11 @@ class CounterpartForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.initialCounterpart ? props.initialCounterpart.id : '',
-      name: props.initialCounterpart ? props.initialCounterpart.name : '',
-      personalNumber: props.initialCounterpart ? props.initialCounterpart.personalNumber : '',
-      representative: props.initialCounterpart ? props.initialCounterpart.representative : '',
-      info: props.initialCounterpart ? props.initialCounterpart.info : '',
-      lawsuitId: props.lawsuitId,
+      id: props.id,
+      name: props.name,
+      personalNumber: props.personalNumber,
+      representative: props.representative,
+      info: props.info,
     };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -19,7 +18,7 @@ class CounterpartForm extends React.Component {
     e.preventDefault();
     if (this.state.id) { // If it has id it is update.
       makePutRequest(Routes.counterpart_path(this.state.id),
-        { counterpart: this.state }, 'counterpartsTouched');
+        { counterpart: this.state }, 'counterpartUpdated');
     } else { // Otherwise post.
       const action = this.props.lawsuitId ? 'counterpartListUpdated' : 'redirect';
       makePostRequest(Routes.counterparts_path(),
@@ -39,6 +38,7 @@ class CounterpartForm extends React.Component {
   }
 
   render() {
+    const isEdit = this.state !== '' && this.state.id !== '';
     return (
       <form className="form form-inline" onSubmit={this.handleOnSubmit}>
         <FormGroup
@@ -81,13 +81,14 @@ class CounterpartForm extends React.Component {
         </div>
         <hr />
         <div className="content-right">
-          <button
-            className="btn btn-secondary"
-            onClick={this.handleCancelButtonClick}
-          >Avbryt
-          </button>
-          <button className="btn btn-success-outline" type="submit">
-            Spara
+          {isEdit ? '' :
+            <button
+              className="btn btn-secondary"
+              onClick={this.handleCancelButtonClick}
+            >Avbryt
+            </button>}
+          <button className="btn btn-primary" type="submit">
+            {isEdit ? 'Uppdatera' : 'Spara motpart'}
           </button>
         </div>
       </form>
@@ -96,6 +97,10 @@ class CounterpartForm extends React.Component {
 }
 
 CounterpartForm.propTypes = {
-  initialCounterpart: React.PropTypes.object,
+  id: React.PropTypes.number.isRequired,
+  name: React.PropTypes.string.isRequired,
+  info: React.PropTypes.string.isRequired,
+  personalNumber: React.PropTypes.string.isRequired,
+  representative: React.PropTypes.string.isRequired,
   lawsuitId: React.PropTypes.number,
 };
