@@ -14,6 +14,10 @@ main {
   }
 }
 
+.index-header {
+  height: 100px;
+}
+
 
 // NAVBAR
 .nav {
@@ -229,6 +233,8 @@ h1 {
 
 #updatedClientMessage {
   display: none;
+  position: absolute;
+  top: 90px;
 }
 
 // MISC

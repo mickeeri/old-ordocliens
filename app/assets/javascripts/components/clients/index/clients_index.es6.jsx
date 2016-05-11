@@ -50,13 +50,9 @@ class ClientsIndex extends React.Component {
   }
 
   render() {
-    // Table rows with clients.
-    let clientRows = this.state.clients.map(client =>
-      <ClientRow key={client.id} client={client} />);
-
     return (
       <div>
-        <div className="row">
+        <div className="row index-header">
           <div className="col-md-4">
             <h1>Klientregister</h1>
           </div>
