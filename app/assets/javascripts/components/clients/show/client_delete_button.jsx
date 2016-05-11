@@ -13,7 +13,6 @@ class ClientDeleteButton extends React.Component {
           <div className="row">
             <div className="col-md-8">
               <h3>Radera klient</h3>
-              Radera klient och alla klientens mål.
             </div>
             <div className="col-md-4">
               <a

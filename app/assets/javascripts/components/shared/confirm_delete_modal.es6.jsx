@@ -1,4 +1,8 @@
 class ConfirmDeleteModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleOnConfirmDeleteClick = this.handleOnConfirmDeleteClick.bind(this);
+  }
   handleOnConfirmDeleteClick() {
     makeDeleteRequest(this.props.url)
       .success(response => {
@@ -8,23 +12,25 @@ class ConfirmDeleteModal extends React.Component {
         } else {
           // Redirect and hide modal.
           PubSub.publish(this.props.subToPublish);
-          $('#' + this.props.target).modal('hide');
+          $(`#${this.props.target}`).modal('hide');
         }
       })
-      .error(xhr=> {
-        console.error(url, xhr.status, xhr.statusText);
+      .error(xhr => {
+        console.error(this.props.url, xhr.status, xhr.statusText);
       });
   }
 
   render() {
     return (
       <div className="modal fade" id={this.props.target}
-        tabIndex={-1} role="dialog" aria-labelledby="myModalLabel">
+        tabIndex={-1} role="dialog" aria-labelledby="myModalLabel"
+    >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <button type="button" className="close"
-                data-dismiss="modal" aria-label="Close">
+                data-dismiss="modal" aria-label="Close"
+    >
                 <span aria-hidden="true">×</span></button>
               <h4 className="modal-title" id="myModalLabel">Bekräfta borttagning</h4>
             </div>
@@ -32,10 +38,16 @@ class ConfirmDeleteModal extends React.Component {
               Är du säker?
             </div>
             <div className="modal-footer action">
-              <button type="button" className="btn btn-secondary"
-                data-dismiss="modal">Avbryt</button>
-              <button type="button" className="btn btn-danger"
-                onClick={this.handleOnConfirmDeleteClick.bind(this)}>Radera</button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-dismiss="modal"
+              >Avbryt</button>
+              <button
+                type="button"
+                className="btn btn-danger-outline"
+                onClick={this.handleOnConfirmDeleteClick}
+              >Radera</button>
             </div>
           </div>
         </div>

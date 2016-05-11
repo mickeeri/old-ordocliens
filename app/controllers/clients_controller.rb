@@ -83,7 +83,8 @@ class ClientsController < ApplicationController
       :post_code,
       :city,
       :note,
-      :lawsuit_id)
+      :lawsuit_id
+    )
   end
 
   def search_clients
