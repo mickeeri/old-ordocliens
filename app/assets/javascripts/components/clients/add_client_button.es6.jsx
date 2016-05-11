@@ -23,7 +23,7 @@ class AddClientButton extends React.Component {
     return (
       <a
         onClick={this.handleOnClick}
-        className="btn btn-success btn-sm"
+        className="btn btn-success-outline btn-sm"
       >{this.props.addNewClient ? 'Lägg till ny klient' :
         'Lägg till befintlig klient'}
       </a>

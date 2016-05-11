@@ -23,13 +23,15 @@ class AddCounterpartButton extends React.Component {
     return (
       <a
         onClick={this.handleOnClick}
-        className="btn btn-success btn-sm"
+        className="btn btn-success-outline btn-sm"
       >{this.props.addNewCounterpart ? 'Lägg till ny motpart' :
         'Lägg till befintlig motpart'}
       </a>
     );
   }
 }
+
 AddCounterpartButton.propTypes = {
   lawsuitId: React.PropTypes.number.isRequired,
+  addNewCounterpart: React.PropTypes.bool.isRequired,
 };

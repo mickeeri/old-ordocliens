@@ -24,7 +24,8 @@ class ClientsDropdown extends React.Component {
       { client: { lawsuit_id: this.props.lawsuitId } }, 'clientListUpdated');
   }
 
-  dismissBtnClicked() {
+  dismissBtnClicked(e) {
+    e.preventDefault();
     PubSub.publish('dismissEdit');
   }
 
@@ -62,10 +63,10 @@ class ClientsDropdown extends React.Component {
             </select>
           </div>
           <div className="content-right">
-            <button className="btn btn-secondary btn-sm" onClick={this.dismissBtnClicked}>
+            <button className="btn btn-secondary" onClick={this.dismissBtnClicked}>
               Avbryt
             </button>
-            <button className="btn btn-success btn-sm" type="submit">Spara</button>
+            <button className="btn btn-success" type="submit">Spara</button>
           </div>
         </form>
       </div>

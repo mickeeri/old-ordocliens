@@ -97,7 +97,7 @@ class LawsuitForm extends React.Component {
               onClick={this.handleCancelButtonClick}
             >Avbryt
             </button>}
-          <button className="btn btn-success" type="submit">
+          <button className="btn btn-primary" type="submit">
             {isEdit ? 'Uppdatera' : 'Spara ärende'}
           </button>
         </div>
