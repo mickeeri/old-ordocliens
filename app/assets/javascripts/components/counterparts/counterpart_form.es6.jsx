@@ -2,11 +2,12 @@ class CounterpartForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.id,
-      name: props.name,
-      personalNumber: props.personalNumber,
-      representative: props.representative,
-      info: props.info,
+      id: props.initialCounterpart ? props.initialCounterpart.id : '',
+      name: props.initialCounterpart ? props.initialCounterpart.name : '',
+      personalNumber: props.initialCounterpart ? props.initialCounterpart.personalNumber : '',
+      representative: props.initialCounterpart ? props.initialCounterpart.representative : '',
+      info: props.initialCounterpart ? props.initialCounterpart.info : '',
+      lawsuitId: props.lawsuitId,
     };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -72,7 +73,7 @@ class CounterpartForm extends React.Component {
           <textarea
             className="form-control"
             type="text-area"
-            value={this.state ? this.state.info : ''}
+            value={this.state.info}
             name="info"
             rows="4"
             onChange={this.handleInputChange}
@@ -97,10 +98,12 @@ class CounterpartForm extends React.Component {
 }
 
 CounterpartForm.propTypes = {
-  id: React.PropTypes.number.isRequired,
-  name: React.PropTypes.string.isRequired,
-  info: React.PropTypes.string.isRequired,
-  personalNumber: React.PropTypes.string.isRequired,
-  representative: React.PropTypes.string.isRequired,
+  initialCounterpart: React.PropTypes.shape({
+    id: React.PropTypes.number.isRequired,
+    name: React.PropTypes.string.isRequired,
+    info: React.PropTypes.string.isRequired,
+    personalNumber: React.PropTypes.string.isRequired,
+    representative: React.PropTypes.string.isRequired,
+  }),
   lawsuitId: React.PropTypes.number,
 };

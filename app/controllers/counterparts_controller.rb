@@ -34,7 +34,7 @@ class CounterpartsController < ApplicationController
   end
 
   def create
-    @counterpart = Counterpart.new(counterpart_params)
+    @counterpart = Counterpart.new(counterpart_params.except(:lawsuit_id))
     if @counterpart.save
       if counterpart_params[:lawsuit_id]
         add_counterpart_to_lawsuit

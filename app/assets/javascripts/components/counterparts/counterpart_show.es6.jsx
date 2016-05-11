@@ -32,14 +32,7 @@ class CounterpartShow extends React.Component {
             <div className="card card-block">
               <h3 className="card-title">Uppgifter</h3>
               <hr />
-              <CounterpartForm
-                id={this.props.initialCounterpart.id}
-                name={this.props.initialCounterpart.name}
-                personalNumber={this.props.initialCounterpart.personalNumber}
-                representative={this.props.initialCounterpart.representative}
-                info={this.props.initialCounterpart.info
-                }
-              />
+              <CounterpartForm initialCounterpart={this.props.initialCounterpart} />
             </div>
           </div>
           <div className="col-md-6">

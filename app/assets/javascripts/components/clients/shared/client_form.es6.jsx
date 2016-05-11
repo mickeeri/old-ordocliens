@@ -25,8 +25,6 @@ class ClientForm extends React.Component {
   handleOnSubmit(e) {
     e.preventDefault();
 
-    //this.handleOnBlur(e);
-
     if (this.state.hasError) {
       return false;
     }
@@ -46,7 +44,7 @@ class ClientForm extends React.Component {
         .fail(xhr => {
           console.error(xhr.responseText, xhr.status, xhr.statusText);
         });
-      }dfgdg
+      }
     }
   }
 
@@ -67,6 +65,8 @@ class ClientForm extends React.Component {
   }
 
   handleOnBlur(e) {
+    this.setState({ hasError: false });
+
     if (e.target.name === 'firstName' || e.target.name === 'lastName') {
       if (!validateStringLength(
         e.target.value,

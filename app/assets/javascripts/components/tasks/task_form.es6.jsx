@@ -154,9 +154,3 @@ TaskForm.propTypes = {
     priceCategoryId: React.PropTypes.number,
   }),
 };
-
-// id: props.initialTask ? props.initialTask.id : '',
-// date: props.initialTask ? props.initialTask.date : new Date().toISOString().substring(0, 10),
-// entry: props.initialTask ? props.initialTask.entry : '',
-// worked_hours: props.initialTask ? props.initialTask.worked_hours : '',
-// price_category_id: props.initialTask ? props.initialTask.price_category_id : '',
