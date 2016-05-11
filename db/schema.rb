@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510192521) do
+ActiveRecord::Schema.define(version: 20160511094612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,10 +43,7 @@ ActiveRecord::Schema.define(version: 20160510192521) do
     t.string   "representative"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "lawsuit_id"
   end
-
-  add_index "counterparts", ["lawsuit_id"], name: "index_counterparts_on_lawsuit_id", using: :btree
 
   create_table "disputes", force: :cascade do |t|
     t.integer  "client_id"
@@ -148,7 +145,6 @@ ActiveRecord::Schema.define(version: 20160510192521) do
   add_index "users", ["user_name"], name: "index_users_on_user_name", using: :btree
 
   add_foreign_key "clients", "users"
-  add_foreign_key "counterparts", "lawsuits"
   add_foreign_key "disputes", "clients"
   add_foreign_key "disputes", "counterparts"
   add_foreign_key "expenses", "lawsuits"
