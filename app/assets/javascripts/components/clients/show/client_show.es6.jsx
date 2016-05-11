@@ -30,19 +30,17 @@ class ClientShow extends React.Component {
   render() {
     return (
       <div>
-        <BreadCrumb
-          active={`${this.state.client.firstName} ${this.state.client.lastName}`}
-          links={this.state.links}
-        />
+        <p
+          id="updatedClientMessage"
+          className="text-success"
+        >Klient uppdaterad!</p>
         <div className="row">
           <div className="col-md-6">
             <div className="row">
               <div className="col-md-12">
-                <p
-                  id="updatedClientMessage"
-                  className="text-success"
-                >Klient uppdaterad</p>
                 <div className="card card-block">
+                  <h3 className="card-title">Uppgifter</h3>
+                  <hr />
                   <ClientForm client={this.state.client} header="" />
                 </div>
               </div>
@@ -66,6 +64,7 @@ class ClientShow extends React.Component {
               <div className="col-md-12">
                 <div className="card card-block">
                   <h3 className="card-title">Motparter</h3>
+                  <hr />
                   <ul className="show-page-list">
                     {this.props.initialClient.counterparts.map(counterpart =>
                       <li key={counterpart.id}>

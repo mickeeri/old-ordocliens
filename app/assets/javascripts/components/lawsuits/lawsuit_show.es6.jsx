@@ -34,7 +34,6 @@ class LawsuitShow extends React.Component {
   render() {
     return (
       <div>
-        <BreadCrumb active={this.state.lawsuit.name} links={this.state.links} />
         <div className="row">
           <div className="col-md-4">
             <h2 className="lawsuit-header">Ärende nr {this.props.initialLawsuit.id}</h2>
