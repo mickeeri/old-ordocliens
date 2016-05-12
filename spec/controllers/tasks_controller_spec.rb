@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe TasksController, type: :controller do
-  let(:legal_case) do
-    create(:legal_case)
+  let(:lawsuit) do
+    create(:lawsuit)
   end
 
   let(:user) do
@@ -28,8 +28,7 @@ RSpec.describe TasksController, type: :controller do
       it "should fail" do
         get :index,
             format: :json,
-            legal_case_id: legal_case.id,
-            client_id: client.id
+            lawsuit_id: lawsuit.id
         expect(response).to_not be_success
         expect(response).to have_http_status(401)
       end
@@ -40,8 +39,7 @@ RSpec.describe TasksController, type: :controller do
         sign_in user
         get :index,
             format: :json,
-            legal_case_id: legal_case.id,
-            client_id: client.id
+            lawsuit_id: lawsuit.id
         expect(response).to have_http_status(200)
       end
     end
@@ -52,8 +50,7 @@ RSpec.describe TasksController, type: :controller do
       it "should not delete the task" do
         delete :destroy,
                format: :json,
-               legal_case_id: legal_case.id,
-               client_id: client.id,
+               lawsuit_id: lawsuit.id,
                id: task.id
         expect(response).to have_http_status(401)
         expect(Task.where(id: task.id)).to exist
@@ -65,7 +62,7 @@ RSpec.describe TasksController, type: :controller do
         sign_in user
         delete :destroy,
                format: :json,
-               legal_case_id: legal_case.id,
+               lawsuit_id: lawsuit.id,
                client_id: client.id,
                id: task.id
         expect(Task.where(id: task.id)).to be_empty
@@ -83,7 +80,7 @@ RSpec.describe TasksController, type: :controller do
     context "when not signed in" do
       it "should not edit task" do
         put :update,
-            legal_case_id: legal_case.id,
+            lawsuit_id: lawsuit.id,
             client_id: client.id,
             id: task.id,
             task: new_attributes,
@@ -99,7 +96,7 @@ RSpec.describe TasksController, type: :controller do
       it "should update task" do
         sign_in user
         put :update,
-            legal_case_id: legal_case.id,
+            lawsuit_id: lawsuit.id,
             client_id: client.id,
             id: task.id,
             task: new_attributes,
@@ -114,20 +111,20 @@ RSpec.describe TasksController, type: :controller do
       let(:new_attributes_with_id) do
         { id: 89,
           entry: "Edited entry",
-          legal_case_id: 500 }
+          lawsuit_id: 500 }
       end
 
       it "should not be able to edit id attribute" do
         sign_in user
         put :update,
-            legal_case_id: legal_case.id,
+            lawsuit_id: lawsuit.id,
             client_id: client.id,
             id: task.id,
             task: new_attributes_with_id,
             format: :json
-        legal_case.reload
+        lawsuit.reload
         expect(task.id).to_not eq(89)
-        expect(task.legal_case_id).to_not eq(500)
+        expect(task.lawsuit_id).to_not eq(500)
       end
     end
   end

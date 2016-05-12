@@ -54,11 +54,11 @@ RSpec.describe LawsuitsController, type: :controller do
 
   describe "PUT #update" do
     let(:new_attributes) do
-      { name: "Edited name", active: false }
+      { name: "Edited name", closed: true }
     end
 
     context "when not signed in" do
-      it "should not edit the legal case" do
+      it "should not edit the lawsuit" do
         put :update,
             id: lawsuit.id,
             client_id: client.id,
@@ -67,12 +67,12 @@ RSpec.describe LawsuitsController, type: :controller do
         expect(response).to have_http_status(401)
         lawsuit.reload
         expect(lawsuit.name).to_not eq("Edited name")
-        expect(lawsuit.closed).to_not eq(false)
+        expect(lawsuit.closed).to_not eq(true)
       end
     end
 
     context "when signed in" do
-      it "should update legal case" do
+      it "should update lawsuit" do
         sign_in user
         put :update,
             id: lawsuit.id,
@@ -82,7 +82,7 @@ RSpec.describe LawsuitsController, type: :controller do
         expect(response).to have_http_status(204)
         lawsuit.reload
         expect(lawsuit.name).to eq("Edited name")
-        expect(lawsuit.closed).to eq(false)
+        expect(lawsuit.closed).to eq(true)
       end
 
       let(:new_attributes_with_id) do

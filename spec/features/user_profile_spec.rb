@@ -7,14 +7,14 @@ RSpec.feature "User visits user profile page", type: :feature do
 
   scenario "and should see edit user form with email filled in" do
     sign_in_with(user.email, user.password)
-    click_link "Min profil"
+    click_link "Ändra mina uppgifter"
     expect(page).to have_content("Ändra mina uppgifter")
     expect(page).to have_selector("input[value='#{user.email}']")
   end
 
   scenario "and changes password with valid info" do
     sign_in_with(user.email, user.password)
-    click_link "Min profil"
+    click_link "Ändra mina uppgifter"
     change_password_with("newpassword", "newpassword", user.password)
     expect(page).to have_content("Your account has been updated successfully.")
     # Logout and login with new password.
@@ -25,7 +25,7 @@ RSpec.feature "User visits user profile page", type: :feature do
 
   scenario "and changes password with non matching password confirmation" do
     sign_in_with(user.email, user.password)
-    click_link "Min profil"
+    click_link "Ändra mina uppgifter"
     change_password_with("newpassword", "anotherpassword", user.password)
     expect(page).to have_content("Password confirmation doesn't match")
     # Logout and login with new password.
@@ -36,7 +36,7 @@ RSpec.feature "User visits user profile page", type: :feature do
 
   scenario "and changes password with invalid current password should fail" do
     sign_in_with(user.email, user.password)
-    click_link "Min profil"
+    click_link "Ändra mina uppgifter"
     change_password_with("newpassword", "newpassword", "invalidpassword")
     expect(page).to have_content("Current password is invalid")
     # Logout and login with new password.

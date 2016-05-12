@@ -10,7 +10,8 @@ class Client < ActiveRecord::Base
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }
   validates :last_name, presence: true, length: { maximum: 60 }
-  validates :ssn, presence: true, length: { maximum: 11 }
+  VALID_SSN_REGEX = /\A[0-9]{6}-[0-9]{4}\z/
+  validates :ssn, presence: true, format: { with: VALID_SSN_REGEX }
 
   # Scopes
   scope :sorted, -> { order(last_name: :asc) }
