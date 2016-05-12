@@ -10,8 +10,9 @@ html
     title Juristappen
   body
     .container-fluid
-      -if user_signed_in?  
-        = render "shared/navbar"    
+      .container
+        -if user_signed_in?  
+          = render "shared/navbar"    
     .container      
       main        
         = render "shared/flash_messages"

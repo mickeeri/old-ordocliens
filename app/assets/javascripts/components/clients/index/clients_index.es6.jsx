@@ -78,7 +78,7 @@ class ClientsIndex extends React.Component {
           </div>
         </div>
         <div className="row">
-          <table className="table table-bordered table-striped col-md-12">
+          <table className="table table-bordered col-md-12">
             <thead>
               <tr>
                 <th>Klientnummer</th>
