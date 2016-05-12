@@ -303,6 +303,7 @@ DEPENDENCIES
   capistrano-ssh-doctor
   capistrano3-puma
   capybara (~> 2.6, >= 2.6.2)
+  caracal
   caracal-rails
   coffee-rails (~> 4.1.0)
   database_cleaner

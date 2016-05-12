@@ -1,7 +1,7 @@
 <html>
   <body>
     <h1>Rapport</h1>
-    <p>Ärende: <%= @legal_case.name %></p>
+    <p>Ärende: <%= @lawsuit.name %></p>
     <em>Specifikation avseende arbete:</em>
     <% @price_categories.each do |pc| %>
       <h2 class="strong"><%= pc.name %></h2>
@@ -10,21 +10,21 @@
           <tr>
             <th>Datum</th>
             <th>Notering</th>
-            <th class="right">Arbetad tid</th>
+            <th>Arbetad tid</th>
           </tr>
         </thead>
         <tbody>
-          <% pc.tasks.where(legal_case_id: @legal_case.id).each do |task| %>
+          <% pc.tasks.where(lawsuit_id: @lawsuit.id).each do |task| %>
             <tr>
               <td><%= task.date %></td>
               <td><%= task.entry %></td>
-              <td class="right"><%= task.worked_hours %></td>
+              <td><%= task.worked_hours %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-      <p class="left">-----------------------------------</p>
-      <p class="right"><%= pc.tasks.where(legal_case_id: @legal_case.id).sum(:worked_hours) %></p>
+      <p class="right">-----------------------------------</p>
+      <p class="right"><%= pc.tasks.where(lawsuit_id: @lawsuit.id).sum(:worked_hours) %></p>
     <% end %>
   </body>
 </html>

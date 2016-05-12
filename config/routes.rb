@@ -43,7 +43,8 @@ Rails.application.routes.draw do
   get "lawsuits/:id/counterparts" => "counterparts#lawsuit_counterpart_list"
   # post "lawsuits/:id/clients" => "clients#lawsuit_client_list"
 
-  get "report/:id" => "lawsuits#report"
+  #get "report/:id" => "lawsuits#report"
+  get "report/:id" => "reports#show"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

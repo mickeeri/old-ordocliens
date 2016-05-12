@@ -1,6 +1,9 @@
 class ReportsController < ApplicationController
   respond_to :json, :html, :docx
   def show
-    @legal_case = Lawsuit.find(params[:id])
+    headers["Content-Disposition"] = "attachment; filename=\"Rapport.docx\""
+    @lawsuit = Lawsuit.find(params[:id])
+    @tasks = @lawsuit.tasks.sorted_by_date
+    @price_categories = PriceCategory.all.sorted
   end
 end
