@@ -67,7 +67,7 @@ class ClientShow extends React.Component {
                   <ul className="show-page-list">
                     {this.props.initialClient.counterparts.map(counterpart =>
                       <li key={counterpart.id}>
-                        <a href="#">
+                        <a href={Routes.counterpart_path(counterpart.id)}>
                           {counterpart.name} ({counterpart.personalNumber})
                         </a>
                       </li>
