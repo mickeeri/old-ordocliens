@@ -6,7 +6,7 @@ class TaskForm extends React.Component {
       date: props.initialTask ? props.initialTask.date : new Date().toISOString().substring(0, 10),
       entry: props.initialTask ? props.initialTask.entry : '',
       workedHours: props.initialTask ? props.initialTask.workedHours : '',
-      priceCategoryId: props.initialTask ? props.initialTask.priceCategoryId : '',
+      priceCategoryId: props.initialTask ? props.initialTask.priceCategoryId : 3,
       priceCategories: [],
     };
 
@@ -42,22 +42,9 @@ class TaskForm extends React.Component {
   }
 
   handleInputChange(e) {
-    // const nextState = {};
-    // nextState[e.target.name] = e.target.value;
-    // console.log(nextState);
-    // this.setState(nextState);
-
-    if (e.target.name === 'date') {
-      this.setState({date: e.target.value})
-    }
-    if (e.target.name === 'entry') {
-      if (this.state.entry.length < 10) {
-        this.setState({entry: e.target.value})
-      } else {
-        $('#entry').addClass('has-danger');
-        $('#entryHelpBlock').text("Får inte vara länge än 10 tecken.")
-      }
-    }
+    const nextState = {};
+    nextState[e.target.name] = e.target.value;
+    this.setState(nextState);
   }
 
   dismissBtnClicked(e) {
@@ -73,7 +60,7 @@ class TaskForm extends React.Component {
       })
       .error(xhr => {
         console.error(url, xhr.status, xhr.statusText);
-      })
+      });
   }
 
   render() {

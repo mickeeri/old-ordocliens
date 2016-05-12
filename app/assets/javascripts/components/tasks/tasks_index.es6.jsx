@@ -15,13 +15,11 @@ class TasksIndex extends React.Component {
   }
 
   refreshTasks() {
-    const url = Routes.client_legal_case_tasks_path(this.props.clientId, this.props.lawsuitId);
+    const url = Routes.lawsuit_tasks_path(this.props.lawsuitId);
     makeGetRequest(url)
       .success(response => {
         this.setState({ tasks: response.tasks });
         PubSub.publish('dismissEdit');
-
-        // $('#editFormModal').find('form').trigger('reset'); // Clear input fields in modal.
       })
       .error(xhr => {
         console.error(url, xhr.status, xhr.statusText);
@@ -35,11 +33,7 @@ class TasksIndex extends React.Component {
     ReactDOM.render(
       <EditFormModal
         header="Lägg till tidkort"
-        form={
-          <TaskForm
-            lawsuitId={this.props.lawsuitId}
-          />
-        }
+        form={<TaskForm lawsuitId={this.props.lawsuitId} />}
       />,
       document.getElementById('editModalContainer')
     );
@@ -60,7 +54,6 @@ class TasksIndex extends React.Component {
     return (
       <div>
         <div id="editModalContainer"></div>
-        <hr />
         <h3>Arbeten</h3>
         <div className="content-right">
           <a
@@ -72,21 +65,23 @@ class TasksIndex extends React.Component {
             onClick={this.addTaskClicked}
           >Lägg till arbete</button>
         </div>
-        <table className="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>Datum</th>
-              <th>Notering</th>
-              <th className="text-nowrap">Arbetad tid</th>
-              <th className="text-nowrap">Priskategori</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {taskRows}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Notering</th>
+                <th className="text-nowrap">Arbetad tid</th>
+                <th className="text-nowrap">Priskategori</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {taskRows}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
