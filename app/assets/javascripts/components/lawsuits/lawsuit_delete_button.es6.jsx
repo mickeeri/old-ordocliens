@@ -12,9 +12,6 @@ class DeleteLawsuitButton extends React.Component {
         />
         <div className="row">
           <div className="col-md-12">
-            <h3>Radera ärende</h3>
-          </div>
-          <div className="col-md-12">
             <a
               href="#"
               className="btn btn-danger-outline width-fill"

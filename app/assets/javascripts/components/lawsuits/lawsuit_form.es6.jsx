@@ -6,7 +6,7 @@ class LawsuitForm extends React.Component {
       name: props.initialLawsuit ? props.initialLawsuit.name : '',
       court: props.initialLawsuit ? props.initialLawsuit.court : '',
       caseNumber: props.initialLawsuit ? props.initialLawsuit.caseNumber : '',
-      closed: props.initialLawsuit ? props.initialLawsuit.closed : '',
+      closed: props.initialLawsuit ? props.initialLawsuit.closed : false,
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
@@ -34,7 +34,10 @@ class LawsuitForm extends React.Component {
   }
 
   handleCheckBoxChange(e) {
-    this.setState({ closed: e.target.checked });
+    e.preventDefault();
+    this.setState({ closed: !this.state.closed });
+    makePutRequest(Routes.lawsuit_path(this.state.id, this.props.clientId),
+      { lawsuit: { closed: this.state.closed } }, 'lawsuitUpdated');
   }
 
   handleCancelButtonClick(e) {
@@ -75,19 +78,6 @@ class LawsuitForm extends React.Component {
             value={this.state.caseNumber}
             onChange={this.handleInputChange}
           />
-        </div>
-        <div className="checkbox">
-          {isEdit ?
-            <label className="c-input c-checkbox">
-              <input
-                type="checkbox"
-                id="closed"
-                checked={this.state.closed}
-                onChange={this.handleCheckBoxChange}
-              />
-              <span className="c-indicator"></span>
-                Avslutat
-            </label> : ''}
         </div>
         <hr />
         <div className="content-right">
