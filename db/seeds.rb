@@ -3,16 +3,16 @@ firm = Firm.create!(name: "My firm")
 
 # Users
 firm.users.create(
-  full_name: "Mikael Eriksson",
-  user_name: "micke",
+  last_name: "Eriksson",
+  first_name: "Mikael",
   email: "micke@mail.com",
   password: "password",
   password_confirmation: "password"
 )
 
 firm.users.create(
-  full_name: "Anders Cederberg",
-  user_name: "ac",
+  last_name: "Cederberg",
+  first_name: "Anders",
   email: "anders.cederberg@mail.com",
   password: "password",
   password_confirmation: "password"
