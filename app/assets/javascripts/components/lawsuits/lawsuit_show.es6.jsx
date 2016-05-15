@@ -2,28 +2,43 @@ class LawsuitShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lawsuit: props.initialLawsuit,
-      editMode: false,
+      closed: props.lawsuit.closed,
       links: props.links,
       page: 'info',
-      message: 'Ärende uppdaterat!',
+      message: '',
     };
 
     this.togglePage = this.togglePage.bind(this);
     this.setMessage = this.setMessage.bind(this);
+    this.toggleClosed = this.toggleClosed.bind(this);
+    this.displayUpdateMessage = this.displayUpdateMessage.bind(this);
   }
 
   componentDidMount() {
-    PubSub.subscribe('lawsuitUpdated', this.setMessage);
+    PubSub.subscribe('lawsuitUpdated', this.displayUpdateMessage);
+    PubSub.subscribe('lawsuitClosedOpened', this.toggleClosed);
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe('lawsuitUpdated');
+    PubSub.unsubscribe('lawsuitClosedOpened');
   }
 
   setMessage() { // Show success message.
     $('#updatedLawsuitMessage').fadeIn();
     $('#updatedLawsuitMessage').fadeOut(2000);
+  }
+
+  displayUpdateMessage() {
+    this.setState({ message: 'Ärende uppdaterat!' });
+    this.setMessage();
+  }
+
+  toggleClosed() {
+    console.log(!this.state.closed);
+    const updateMessage = this.state.closed ? 'Ärende öppnat!' : 'Ärende arkiverat!';
+    this.setState({ message: updateMessage, closed: !this.state.closed });
+    this.setMessage();
   }
 
   togglePage(e) {
@@ -35,14 +50,15 @@ class LawsuitShow extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-4">
-            <h2 className="lawsuit-header">Ärende nr {this.props.initialLawsuit.id}</h2>
+          <div className="col-md-6">
+            <h2 className="lawsuit-header">Ärende {this.props.lawsuit.slug}
+              <span className="text-danger">{this.state.closed ? ' (Arkiverat)' : ''}</span></h2>
             <p
               id="updatedLawsuitMessage"
               className="text-success"
             >{this.state.message}</p>
           </div>
-          <div className="col-md-8 content-right lawsuit-menu">
+          <div className="col-md-6 content-right lawsuit-menu">
             <a
               className={this.state.page === 'info' ? 'active' : ''}
               href="#" name="info"
@@ -58,10 +74,10 @@ class LawsuitShow extends React.Component {
           </div>
         </div>
         {this.state.page === 'info' ?
-          <LawsuitInfo initialLawsuit={this.props.initialLawsuit} /> :
+          <LawsuitInfo initialLawsuit={this.props.lawsuit} closed={this.state.closed} /> :
           <TasksIndex
             initialTasks={this.props.tasks}
-            lawsuitId={this.props.initialLawsuit.id}
+            lawsuitId={this.props.lawsuit.id}
             priceCategories={this.props.priceCategories}
           />}
       </div>
@@ -71,7 +87,7 @@ class LawsuitShow extends React.Component {
 
 LawsuitShow.propTypes = {
   clientId: React.PropTypes.number,
-  initialLawsuit: React.PropTypes.object.isRequired,
+  lawsuit: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,
   priceCategories: React.PropTypes.array.isRequired,
   links: React.PropTypes.array.isRequired,

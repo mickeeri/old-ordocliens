@@ -10,10 +10,10 @@ class CloseLawsuitButton extends React.Component {
 
   handleOnClick(e) {
     e.preventDefault();
-    this.setState({ closed: this.state.closed });
-    console.log(this.state.closed);
+    const request = !this.state.closed;
+    this.setState({ closed: request });
     makePutRequest(Routes.lawsuit_path(this.props.lawsuitId),
-      { lawsuit: { closed: this.state.closed } }, 'lawsuitClosedOpened');
+      { lawsuit: { closed: request } }, 'lawsuitClosedOpened');
   }
 
   render() {

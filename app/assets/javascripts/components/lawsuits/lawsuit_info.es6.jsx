@@ -7,7 +7,6 @@ class LawsuitInfo extends React.Component {
   }
 
   render() {
-
     return (
       <div>
         <div className="row">
@@ -19,6 +18,10 @@ class LawsuitInfo extends React.Component {
             </div>
           </div>
           <div className="col-md-3">
+            <CloseLawsuitButton
+              lawsuitId={this.props.initialLawsuit.id}
+              closed={this.props.closed}
+            />
             <DeleteLawsuitButton
               lawsuitId={this.props.initialLawsuit.id}
             />
@@ -45,4 +48,5 @@ class LawsuitInfo extends React.Component {
 
 LawsuitInfo.propTypes = {
   initialLawsuit: React.PropTypes.object.isRequired,
+  closed: React.PropTypes.bool.isRequired
 };
