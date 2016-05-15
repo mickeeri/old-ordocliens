@@ -15,6 +15,33 @@ RSpec.describe LawsuitsController, type: :controller do
 
   it { should use_before_action(:authenticate_user!) }
 
+  describe "POST create" do
+    let(:lawsuit_attributes) do
+      { name: "Bodelning",
+        court: "Östersunds tingsrätt",
+        case_number: "T 123SA" }
+    end
+
+    it "should create new lawsuit with slug" do
+      user.first_name = "Anders"
+      user.last_name = "Cederberg"
+      user.save
+      sign_in user
+      post :create,
+        client_id:
+        client.id, lawsuit:
+        lawsuit_attributes,
+        format: :json
+      expect(response).to have_http_status(201)
+      lawsuit = Lawsuit.find(assigns(:lawsuit).id)
+      lawsuit.reload
+      expect(lawsuit.slug).to eq(
+        lawsuit.created_at.strftime("ac%y-#{lawsuit.id}"))
+      byebug
+      expect(lawsuit.closed).to eq(false)
+    end
+  end
+
   describe "GET show" do
     context "when not signed in" do
       it "should fail" do

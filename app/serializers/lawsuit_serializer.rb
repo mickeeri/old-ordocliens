@@ -1,5 +1,5 @@
 class LawsuitSerializer < ActiveModel::Serializer
-  attributes :id, :name, :closed, :court, :case_number, :created_at, :link
+  attributes :id, :name, :closed, :court, :case_number, :created_at, :link, :slug
   has_many :counterparts
   has_many :clients
 

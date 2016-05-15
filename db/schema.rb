@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511094612) do
+ActiveRecord::Schema.define(version: 20160514095642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,7 +89,10 @@ ActiveRecord::Schema.define(version: 20160511094612) do
     t.datetime "updated_at",                  null: false
     t.string   "court"
     t.string   "case_number"
+    t.string   "slug"
   end
+
+  add_index "lawsuits", ["slug"], name: "index_lawsuits_on_slug", using: :btree
 
   create_table "participations", force: :cascade do |t|
     t.integer  "client_id"
@@ -122,8 +125,7 @@ ActiveRecord::Schema.define(version: 20160511094612) do
   add_index "tasks", ["price_category_id"], name: "index_tasks_on_price_category_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "full_name"
-    t.string   "user_name"
+    t.string   "last_name"
     t.integer  "firm_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
@@ -137,12 +139,12 @@ ActiveRecord::Schema.define(version: 20160511094612) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "first_name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["firm_id"], name: "index_users_on_firm_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["user_name"], name: "index_users_on_user_name", using: :btree
 
   add_foreign_key "clients", "users"
   add_foreign_key "disputes", "clients"
