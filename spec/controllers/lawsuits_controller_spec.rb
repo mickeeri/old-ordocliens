@@ -37,7 +37,6 @@ RSpec.describe LawsuitsController, type: :controller do
       lawsuit.reload
       expect(lawsuit.slug).to eq(
         lawsuit.created_at.strftime("ac%y-#{lawsuit.id}"))
-      byebug
       expect(lawsuit.closed).to eq(false)
     end
   end
