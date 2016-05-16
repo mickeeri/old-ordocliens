@@ -48,5 +48,5 @@ class LawsuitInfo extends React.Component {
 
 LawsuitInfo.propTypes = {
   initialLawsuit: React.PropTypes.object.isRequired,
-  closed: React.PropTypes.bool.isRequired
+  closed: React.PropTypes.bool.isRequired,
 };

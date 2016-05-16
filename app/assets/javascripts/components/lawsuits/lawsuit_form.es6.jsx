@@ -49,9 +49,11 @@ class LawsuitForm extends React.Component {
     const isEdit = this.state.id !== '';
     return (
       <form className="form form-inline" onSubmit={this.handleOnSubmit}>
-        <div>
-          <strong>Skapat: </strong>{new Date(this.props.initialLawsuit.createdAt).yyyymmdd()}
-        </div>
+        {isEdit ?
+          <div>
+            <strong>Skapat: </strong>{new Date(this.props.initialLawsuit.createdAt).yyyymmdd()}
+          </div> :
+          ''}
         <div className="form-group">
           <label htmlFor="name">Uppdrag</label>
           <input
