@@ -1,5 +1,6 @@
 class LawsuitsController < ApplicationController
   before_action :authenticate_user!
+  before_action :search_lawsuits, only: [:index]
   before_action :fetch_lawsuit, only: [:show,
                                        :update,
                                        :destroy,
@@ -10,7 +11,9 @@ class LawsuitsController < ApplicationController
   def index
     respond_to do |format|
       format.html do
-        render component: "LawsuitsIndex"
+        render component: "LawsuitsIndex", props:
+          { initialLawsuits: prepare_array(@lawsuits),
+            meta: pagination_dict(@lawsuits) }
       end
       format.json do
         @lawsuits = Client.find(params[:client_id]).lawsuits
@@ -51,21 +54,19 @@ class LawsuitsController < ApplicationController
     respond_with @lawsuit
   end
 
-  # def report
-  #   @price_categories = PriceCategory.all
-  #   respond_to do |format|
-  #     format.docx do
-  #       render docx: "report",
-  #              filename: "Kostnadsuträkning.docx",
-  #              word_template: "custom.docx"
-  #     end
-  #   end
-  # end
-
   private
 
   def lawsuit_params
     params.require(:lawsuit).permit(:name, :closed, :court, :case_number)
+  end
+
+  def search_lawsuits
+    @lawsuits =
+      if params[:search].present?
+        Lawsuit.search(params[:search])
+      else
+        Lawsuit.all
+      end.sorted.page(params[:page]).per_page(20)
   end
 
   def fetch_lawsuit
@@ -77,18 +78,18 @@ class LawsuitsController < ApplicationController
   end
 
   def props
-    { lawsuit: prepare(@lawsuit, LawsuitSerializer, root: false),
+    { lawsuit: prepare(@lawsuit, LawsuitShowSerializer, root: false),
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),
-      price_categories: prepare_array(PriceCategory.all),
-      links: links }
+      price_categories: prepare_array(PriceCategory.all) }
   end
 
   # Buildning slug with initials, year and id.
   # Should be in model, but cannot access current_user there.
   def add_slug
-    initials = current_user.first_name[0,1].downcase <<
-      current_user.last_name[0,1].downcase
-    slug = @lawsuit.created_at.strftime("#{initials}%y-#{@lawsuit.id.to_s}")
+    first_name_initial = current_user.first_name[0, 1].downcase
+    last_name_initial = current_user.last_name[0, 1].downcase
+    initials = first_name_initial << last_name_initial
+    slug = @lawsuit.created_at.strftime("#{initials}%y-#{@lawsuit.id}")
     @lawsuit.update(slug: slug)
   end
 end

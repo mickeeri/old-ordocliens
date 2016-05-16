@@ -9,7 +9,7 @@ class CounterpartsController < ApplicationController
       format.html do
         render component: "CounterpartsIndex", props:
           { initialCounterparts: prepare_array(@counterparts),
-            meta: pagination_dict(@counterparts)}
+            meta: pagination_dict(@counterparts) }
       end
       format.json do
         if params[:page].present?

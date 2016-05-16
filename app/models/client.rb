@@ -19,4 +19,8 @@ class Client < ActiveRecord::Base
                   against: [:first_name, :last_name, :ssn],
                   using: { tsearch: { prefix: true, normalization: 2 }
     }
+
+  def full_name
+    "#{last_name}, #{first_name}"
+  end
 end
