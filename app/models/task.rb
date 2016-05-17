@@ -4,5 +4,5 @@ class Task < ActiveRecord::Base
   validates :entry, presence: true, length: { maximum: 1000 }
   validates :worked_hours, presence: true
 
-  scope :sorted_by_date, -> { order(date: :asc) } # TODO: make into datetime
+  scope :sorted_by_date, -> { order(date: :desc) }
 end
