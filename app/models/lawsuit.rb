@@ -17,6 +17,7 @@ class Lawsuit < ActiveRecord::Base
   # scope :sorted_by_date, -> { order(created_at: :desc, lawsuit_type_id: :desc) }
   scope :sorted_by_date, -> { order(lawsuit_type_id: :asc) }
   scope :without_closed, -> { where(closed: false) }
+  scope :users_lawsuits, -> (user) { joins(:clients).merge(Client.where(user: user)) }
   pg_search_scope :search,
                   against: [:name, :court, :case_number, :slug],
                   associated_against: { lawsuit_type: [:name],

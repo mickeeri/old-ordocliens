@@ -71,6 +71,7 @@ class LawsuitsController < ApplicationController
   def search_lawsuits
     # http://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
     @lawsuits = Lawsuit.where(nil)
+    @lawsuits = @lawsuits.users_lawsuits(current_user)
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
     @lawsuits = @lawsuits.page(params[:page]).per_page(20)
