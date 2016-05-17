@@ -79,7 +79,7 @@ class ClientsIndex extends React.Component {
         </div>
         <div className="row">
           <table className="table table-bordered col-md-12">
-            <thead>
+            <thead className="thead-inverse">
               <tr>
                 <th>Namn</th>
                 <th>Personnummer</th>

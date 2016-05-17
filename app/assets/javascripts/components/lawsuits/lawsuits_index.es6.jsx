@@ -89,8 +89,8 @@ class LawsuitsIndex extends React.Component {
                 onChange={this.handleOnCheckboxChange} /> Visa ej aktiva ärenden
             </label>
           </div>
-          <table className="table table-bordered table-hover">
-            <thead>
+          <table className="table table-hover table-bordered">
+            <thead className="thead-inverse">
               <tr>
                 <th className="first">#</th>
                 <th className="long">Uppdrag</th>

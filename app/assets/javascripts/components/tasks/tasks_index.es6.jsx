@@ -32,7 +32,7 @@ class TasksIndex extends React.Component {
     // Render modal...
     ReactDOM.render(
       <EditFormModal
-        header="Lägg till tidkort"
+        header="Lägg till arbete"
         form={<TaskForm lawsuitId={this.props.lawsuitId} />}
       />,
       document.getElementById('editModalContainer')
@@ -67,7 +67,7 @@ class TasksIndex extends React.Component {
         </div>
         <div className="table-responsive">
           <table className="table table-bordered">
-            <thead>
+            <thead className="thead-inverse">
               <tr>
                 <th>Datum</th>
                 <th>Notering</th>

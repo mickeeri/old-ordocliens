@@ -3,7 +3,7 @@ class LawsuitShow extends React.Component {
     super(props);
     this.state = {
       closed: props.lawsuit.closed,
-      page: 'info',
+      page: 'time',
       message: '',
     };
 
@@ -58,17 +58,17 @@ class LawsuitShow extends React.Component {
           </div>
           <div className="col-md-6 content-right lawsuit-menu">
             <a
-              className={this.state.page === 'info' ? 'active' : ''}
-              href="#" name="info"
-              onClick={this.togglePage}
-            >Info</a>
-            <span className="divider">|</span>
-            <a
               className={this.state.page === 'time' ? 'active' : ''}
               href="#"
               name="time"
               onClick={this.togglePage}
             >Tidrapportering</a>
+            <span className="divider">|</span>
+            <a
+              className={this.state.page === 'info' ? 'active' : ''}
+              href="#" name="info"
+              onClick={this.togglePage}
+            >Info</a>
           </div>
         </div>
         {this.state.page === 'info' ?
