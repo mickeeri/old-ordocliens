@@ -33,7 +33,10 @@ class LawsuitsList extends React.Component {
           <hr />
           <ul className="show-page-list">
           {this.state.lawsuits.map(lawsuit =>
-            <li key={lawsuit.id}><a href={Routes.lawsuit_path(lawsuit.id)}>{lawsuit.name}</a></li>
+            <li key={lawsuit.id}>
+              <a href={Routes.lawsuit_path(lawsuit.id)}>{lawsuit.lawsuitType.name}</a>
+              <span> ({lawsuit.slug})</span>
+            </li>
           )}
           </ul>
           <AddLawsuitButton clientId={this.props.clientId} />
@@ -44,6 +47,9 @@ class LawsuitsList extends React.Component {
 }
 
 LawsuitsList.propTypes = {
-  lawsuits: React.PropTypes.array.isRequired,
+  lawsuits: React.PropTypes.arrayOf(React.PropTypes.shape({
+    id: React.PropTypes.number.isRequired,
+    lawsuitType: React.PropTypes.object.isRequired,
+  })),
   clientId: React.PropTypes.number.isRequired,
 };

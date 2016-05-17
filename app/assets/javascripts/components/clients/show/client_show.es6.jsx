@@ -84,6 +84,18 @@ class ClientShow extends React.Component {
 }
 
 ClientShow.propTypes = {
-  initialClient: React.PropTypes.object.isRequired,
+  initialClient: React.PropTypes.shape({
+    id: React.PropTypes.number.isRequired,
+    firstName: React.PropTypes.string.isRequired,
+    lastName: React.PropTypes.string.isRequired,
+    ssn: React.PropTypes.string.isRequired,
+    email: React.PropTypes.string,
+    phoneNumber: React.PropTypes.string,
+    postCode: React.PropTypes.string,
+    street: React.PropTypes.string,
+    note: React.PropTypes.string,
+    lawsuits: React.PropTypes.array,
+    counterparts: React.PropTypes.array,
+  }),
   // counterparts: React.PropTypes.array.isRequired,
 };

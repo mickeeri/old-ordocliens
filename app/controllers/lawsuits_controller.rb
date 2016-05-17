@@ -69,28 +69,12 @@ class LawsuitsController < ApplicationController
   end
 
   def search_lawsuits
-    @lawsuits = []
-    @lawsuits = if params[:search]
-      if params[:all] == "true"
-        Lawsuit.search(params[:search]).sorted
-      else
-        Lawsuit.search(params[:search]).active
-      end
-    else
-      if params[:all] == "true"
-        Lawsuit.all.sorted
-      else
-        Lawsuit.all.active.sorted
-      end
-    end.page(params[:page]).per_page(20)
-
-    # @lawsuits =
-    #   if params[:search].present?
-    #     Lawsuit.joins(:lawsuit_type).merge(LawsuitType.order(name: :asc)).search(params[:search])
-    #   else
-    #     # Lawsuit.includes(:lawsuit_types).order("lawsuit_types.name").all
-    #     Lawsuit.joins(:lawsuit_type).merge(LawsuitType.order(name: :asc)).all
-    #   end.active.page(params[:page]).per_page(20)
+    # http://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
+    @lawsuits = Lawsuit.where(nil)
+    @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
+    @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
+    @lawsuits = @lawsuits.page(params[:page]).per_page(20)
+    @lawsuits = @lawsuits.sorted_by_date
   end
 
   def fetch_lawsuit

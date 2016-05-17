@@ -1,5 +1,5 @@
 function ClientRow({ client }) {
-  const fullName = `${client.firstName} ${client.lastName}`;
+  const fullName = `${client.lastName}, ${client.firstName}`;
   return (
     <tr>
       <td><a href={Routes.client_path(client.id)}>{fullName}</a></td>

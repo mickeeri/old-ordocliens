@@ -64,7 +64,7 @@ class LawsuitsIndex extends React.Component {
             <form>
               <input
                 className="form-control"
-                placeholder="Sök på uppdrag, domstol, målnummer eller ärendenummer"
+                placeholder="Sök på ärendenummer, uppdrag, klient, målnummer"
                 autoFocus="true"
                 onChange={this.handleOnSearch}
                 ref="search"
@@ -92,6 +92,7 @@ class LawsuitsIndex extends React.Component {
                 <th className="first">#</th>
                 <th className="long">Uppdrag</th>
                 <th className="long">Huvudklient</th>
+                <th className="long">Upplagt</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -101,6 +102,7 @@ class LawsuitsIndex extends React.Component {
                   <td><a href={Routes.lawsuit_path(lawsuit.id)}>{lawsuit.slug}</a></td>
                   <td>{lawsuit.lawsuitType.name}</td>
                   <td>{lawsuit.primaryClient}</td>
+                  <td>{lawsuit.createdAt = new Date().yyyymmdd()}</td>
                   <td
                     className={lawsuit.closed ? 'text-danger' : 'text-success'}
                   >{lawsuit.closed ? 'Arkiverat' : 'Aktivt'}</td>

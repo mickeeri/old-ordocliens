@@ -108,7 +108,7 @@ User.all.each do |user|
         random_pc_id = PriceCategory.offset(rand(PriceCategory.count)).first.id
         lawsuit.tasks.create!(
           entry: Faker::Lorem.sentence(rand(3..20)),
-          date: Faker::Time.between(2.days.ago, Time.zone.today, :day),
+          date: Faker::Time.between(2.years.ago, Time.zone.today, :day),
           worked_hours: Faker::Number.between(1, 8),
           price_category_id: random_pc_id
         )
