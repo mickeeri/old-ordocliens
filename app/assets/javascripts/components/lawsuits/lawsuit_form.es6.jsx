@@ -20,6 +20,10 @@ class LawsuitForm extends React.Component {
     this.fetchLawsuitTypes();
   }
 
+  setLawsuitType(e) {
+    this.setState({ lawsuitTypeId: e.target.value });
+  }
+
   handleOnSubmit(e) {
     e.preventDefault();
     if (this.state.id) { // If it has id it is update.
@@ -31,11 +35,6 @@ class LawsuitForm extends React.Component {
         { lawsuit: this.state },
         'lawsuitsTouched');
     }
-  }
-
-  setLawsuitType(e) {
-    console.log(e.target.value);
-    this.setState({ lawsuitTypeId: e.target.value });
   }
 
   handleInputChange(e) {
