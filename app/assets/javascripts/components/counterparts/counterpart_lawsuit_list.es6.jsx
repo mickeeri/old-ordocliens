@@ -32,9 +32,10 @@ class CounterpartLawsuitList extends React.Component {
             <div>
               <div>
                 <a className="card-title" href={Routes.lawsuit_path(lawsuit.id)}>
-                  {lawsuit.name}
+                  {lawsuit.slug}
                 </a>
-                <span> ({lawsuit.createdAt = new Date().yyyymmdd()})</span>
+                <span> ({lawsuit.createdAt = new Date().yyyymmdd()})</span><br />
+                <span>{lawsuit.lawsuitType.name}</span>
               </div>
               <div>
 
@@ -42,7 +43,9 @@ class CounterpartLawsuitList extends React.Component {
                 <ul>
                   {lawsuit.clients.map(client =>
                     <li key={lawsuit.id + client.id}>
-                      <a href={Routes.client_path(client.id)}>{client.lastName} {client.firstName}</a>
+                      <a href={Routes.client_path(client.id)}>
+                        {client.lastName} {client.firstName}
+                      </a>
                     </li>
                   )}
                 </ul>

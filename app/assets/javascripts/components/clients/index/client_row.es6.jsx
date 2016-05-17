@@ -2,7 +2,6 @@ function ClientRow({ client }) {
   const fullName = `${client.firstName} ${client.lastName}`;
   return (
     <tr>
-      <td>{client.id}</td>
       <td><a href={Routes.client_path(client.id)}>{fullName}</a></td>
       <td>{client.ssn}</td>
     </tr>);

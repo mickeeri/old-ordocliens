@@ -7,12 +7,14 @@ class LawsuitsIndex extends React.Component {
       fetchData: {
         search: '',
         page: 1,
+        fetchAll: false,
       },
     };
     // Binding functions.
     this.fetchLawsuits = this.fetchLawsuits.bind(this);
     this.handleOnSearch = this.handleOnSearch.bind(this);
     this.handleOnPaginate = this.handleOnPaginate.bind(this);
+    this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this);
   }
 
   handleOnSearch() {
@@ -20,8 +22,17 @@ class LawsuitsIndex extends React.Component {
     this.fetchLawsuits();
   }
 
+  handleTableRowClick(row, e) {
+    window.location = Routes.lawsuit_path(row);
+  }
+
   handleOnPaginate(pageNumber) {
     this.state.fetchData.page = pageNumber;
+    this.fetchLawsuits();
+  }
+
+  handleOnCheckboxChange(e) {
+    this.state.fetchData.fetchAll = e.target.checked;
     this.fetchLawsuits();
   }
 
@@ -30,8 +41,8 @@ class LawsuitsIndex extends React.Component {
 
     // Building uri:s with query string parameters.
     const url = data.search
-      ? `${Routes.lawsuits_path()}?search=${data.search}&page=1`
-      : `${Routes.lawsuits_path()}?page=${data.page}`;
+      ? `${Routes.lawsuits_path()}?search=${data.search}&page=1&all=${data.fetchAll}`
+      : `${Routes.lawsuits_path()}?page=${data.page}&all=${data.fetchAll}`;
 
     makeGetRequest(url)
       .success(response => {
@@ -46,7 +57,7 @@ class LawsuitsIndex extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-4 index-header">
             <h1>Ärenden</h1>
           </div>
           <div className="col-md-8">
@@ -71,20 +82,28 @@ class LawsuitsIndex extends React.Component {
           </div>
         </div>
         <div className="row">
-          <table className="table table-bordered">
+          <div className="checkbox">
+            <label><input type="checkbox" onChange={this.handleOnCheckboxChange}/> Visa ej aktiva ärenden
+            </label>
+          </div>
+          <table className="table table-bordered table-hover">
             <thead>
               <tr>
-                <th className="col-sm-2">Ärendenummer</th>
-                <th className="col-sm-5">Uppdrag</th>
-                <th className="col-sm-5">Huvudklient</th>
+                <th className="first">#</th>
+                <th className="long">Uppdrag</th>
+                <th className="long">Huvudklient</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {this.state.lawsuits.map(lawsuit =>
-                <tr key={lawsuit.id}>
+                <tr key={lawsuit.id} onClick={this.handleTableRowClick.bind(this, lawsuit.id)}>
                   <td><a href={Routes.lawsuit_path(lawsuit.id)}>{lawsuit.slug}</a></td>
-                  <td>{lawsuit.name}</td>
+                  <td>{lawsuit.lawsuitType.name}</td>
                   <td>{lawsuit.primaryClient}</td>
+                  <td
+                    className={lawsuit.closed ? 'text-danger' : 'text-success'}
+                  >{lawsuit.closed ? 'Arkiverat' : 'Aktivt'}</td>
                 </tr>
               )}
             </tbody>

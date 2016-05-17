@@ -46,14 +46,14 @@ class CounterpartsIndex extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-4 index-header">
             <h1>Motparter</h1>
           </div>
           <div className="col-md-8">
             <form>
               <input
                 className="form-control"
-                placeholder="Sök på namn, personnummer eller klient"
+                placeholder="Sök på namn eller personnummer"
                 autoFocus="true"
                 onChange={this.handleOnSearch}
                 ref="search"
@@ -74,7 +74,6 @@ class CounterpartsIndex extends React.Component {
           <table className="table table-bordered col-md-12">
             <thead>
               <tr>
-                <th>Motpartnummer</th>
                 <th>Namn</th>
                 <th>Personnummer</th>
               </tr>
@@ -82,7 +81,6 @@ class CounterpartsIndex extends React.Component {
             <tbody>
               {this.state.counterparts.map(counterpart =>
                 <tr key={counterpart.id}>
-                  <td>{counterpart.id}</td>
                   <td><a href={Routes.counterpart_path(counterpart.id)}>{counterpart.name}</a></td>
                   <td>{counterpart.personalNumber}</td>
                 </tr>

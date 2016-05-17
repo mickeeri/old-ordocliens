@@ -3,7 +3,7 @@ class LawsuitForm extends React.Component {
     super(props);
     this.state = {
       id: props.initialLawsuit ? props.initialLawsuit.id : '',
-      name: props.initialLawsuit ? props.initialLawsuit.name : '',
+      lawsuitTypeId: props.initialLawsuit ? props.initialLawsuit.lawsuitType.id : '',
       court: props.initialLawsuit ? props.initialLawsuit.court : '',
       caseNumber: props.initialLawsuit ? props.initialLawsuit.caseNumber : '',
       closed: props.initialLawsuit ? props.initialLawsuit.closed : false,
@@ -12,6 +12,12 @@ class LawsuitForm extends React.Component {
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+    this.fetchLawsuitTypes = this.fetchLawsuitTypes.bind(this);
+    this.setLawsuitType = this.setLawsuitType.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchLawsuitTypes();
   }
 
   handleOnSubmit(e) {
@@ -25,6 +31,11 @@ class LawsuitForm extends React.Component {
         { lawsuit: this.state },
         'lawsuitsTouched');
     }
+  }
+
+  setLawsuitType(e) {
+    console.log(e.target.value);
+    this.setState({ lawsuitTypeId: e.target.value });
   }
 
   handleInputChange(e) {
@@ -45,6 +56,17 @@ class LawsuitForm extends React.Component {
     PubSub.publish('dismissEdit');
   }
 
+  fetchLawsuitTypes() {
+    const url = Routes.lawsuit_types_path();
+    makeGetRequest(url)
+      .success(response => {
+        this.setState({ lawsuitTypes: response.lawsuitTypes });
+      })
+      .error(xhr => {
+        console.error(url, xhr.status, xhr.statusText);
+      });
+  }
+
   render() {
     const isEdit = this.state.id !== '';
     return (
@@ -55,14 +77,9 @@ class LawsuitForm extends React.Component {
           </div> :
           ''}
         <div className="form-group">
-          <label htmlFor="name">Uppdrag</label>
-          <input
-            className="form-control form-control-sm"
-            name="name"
-            type="text"
-            value={this.state.name}
-            onChange={this.handleInputChange}
-            required
+          <LawsuitTypesDropdown
+            selectedId={this.state.lawsuitTypeId}
+            changeEvent={this.setLawsuitType}
           />
         </div>
         <div className="form-group">

@@ -3,4 +3,6 @@ class LawsuitSerializer < ActiveModel::Serializer
   def primary_client
     Lawsuit.find(self.id).clients.first.full_name
   end
+  has_many :clients
+  has_one :lawsuit_type
 end

@@ -3,7 +3,6 @@ class LawsuitShow extends React.Component {
     super(props);
     this.state = {
       closed: props.lawsuit.closed,
-      links: props.links,
       page: 'info',
       message: '',
     };
@@ -35,7 +34,6 @@ class LawsuitShow extends React.Component {
   }
 
   toggleClosed() {
-    console.log(!this.state.closed);
     const updateMessage = this.state.closed ? 'Ärende öppnat!' : 'Ärende arkiverat!';
     this.setState({ message: updateMessage, closed: !this.state.closed });
     this.setMessage();
@@ -90,5 +88,4 @@ LawsuitShow.propTypes = {
   lawsuit: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,
   priceCategories: React.PropTypes.array.isRequired,
-  links: React.PropTypes.array.isRequired,
 };

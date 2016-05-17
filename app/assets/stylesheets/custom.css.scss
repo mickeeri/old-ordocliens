@@ -109,7 +109,25 @@ main {
 table {
   margin-top: 20px;
   background: #FFFFFF;
+  // table-layout: fixed;
 }
+
+.table-hover {
+  tr {
+    cursor: pointer;
+  }
+
+}
+//
+// th.first {
+//   width: 20%;
+// }
+//
+// th.long {
+//   width: 40%;
+// }
+
+
 
 // TYPOGRAPHY
 h1 {
