@@ -14,7 +14,8 @@ class Lawsuit < ActiveRecord::Base
   # Scopes
   # scope :sorted, -> { joins(:lawsuit_type).merge(LawsuitType.order(name: :asc)) }
   scope :sorted, -> { includes(:lawsuit_type).order("lawsuit_types.name asc") }
-  scope :sorted_by_date, -> { order(created_at: :desc) }
+  # scope :sorted_by_date, -> { order(created_at: :desc, lawsuit_type_id: :desc) }
+  scope :sorted_by_date, -> { order(lawsuit_type_id: :desc) }
   scope :without_closed, -> { where(closed: false) }
   pg_search_scope :search,
                   against: [:name, :court, :case_number, :slug],
