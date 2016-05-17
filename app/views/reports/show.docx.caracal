@@ -5,11 +5,9 @@
 
 docx.font name: 'Courier New'
 
-docx.style id: 'Normal', name: 'Normal', font: 'Palatino Linotype', size: 22
+docx.style id: 'Normal', name: 'Normal', font: 'Palatino Linotype', size: 22, line: 200
 
-docx.h1 @lawsuit.name
-docx.hr
-
+docx.h1 @lawsuit.lawsuit_type.name
 
 @price_categories.each do |category|
   # Creates new array and inserts first row.
@@ -29,8 +27,9 @@ docx.hr
   docx.table table_data, border_size: 4 do
     border_color   'eceeef'
     cell_style rows[0], background: 'ECECEC', bold: true
-    cell_style cols[1], width: 6000
-    cell_style rows[-1],   bold: true,   background: ''
+    cell_style cols[1], width: 6500
+    cell_style cols[2], align: :right
+    cell_style rows[-1],   bold: true,   background: 'ECECEC'
   end
 
   table_data = []

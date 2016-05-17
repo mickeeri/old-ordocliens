@@ -18,6 +18,7 @@ AllCops:
     - Rakefile
     - spec/*_helper.rb
     - vendor/bundle/**/*
+    - app/views/reports/*
 
 Rails:
   Enabled: true
