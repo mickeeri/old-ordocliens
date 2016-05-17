@@ -1,0 +1,2 @@
+module LawsuitTypesHelper
+end

@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :tasks, except: :show
     resources :price_categories, only: :index
   end
+
+  resources :lawsuit_types, only: :index
   # #root "sessions#new"
   # # get    "login"   => "sessions#new"
   # post "/" => "sessions#create"

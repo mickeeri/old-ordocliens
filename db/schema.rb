@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160514095642) do
+ActiveRecord::Schema.define(version: 20160517102504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,16 +82,24 @@ ActiveRecord::Schema.define(version: 20160514095642) do
   add_index "involvements", ["counterpart_id"], name: "index_involvements_on_counterpart_id", using: :btree
   add_index "involvements", ["lawsuit_id"], name: "index_involvements_on_lawsuit_id", using: :btree
 
+  create_table "lawsuit_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "lawsuits", force: :cascade do |t|
     t.string   "name"
-    t.boolean  "closed",      default: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.boolean  "closed",          default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "court"
     t.string   "case_number"
     t.string   "slug"
+    t.integer  "lawsuit_type_id"
   end
 
+  add_index "lawsuits", ["lawsuit_type_id"], name: "index_lawsuits_on_lawsuit_type_id", using: :btree
   add_index "lawsuits", ["slug"], name: "index_lawsuits_on_slug", using: :btree
 
   create_table "participations", force: :cascade do |t|
@@ -152,6 +160,7 @@ ActiveRecord::Schema.define(version: 20160514095642) do
   add_foreign_key "expenses", "lawsuits"
   add_foreign_key "involvements", "counterparts"
   add_foreign_key "involvements", "lawsuits"
+  add_foreign_key "lawsuits", "lawsuit_types"
   add_foreign_key "participations", "clients"
   add_foreign_key "participations", "lawsuits"
   add_foreign_key "tasks", "lawsuits"
