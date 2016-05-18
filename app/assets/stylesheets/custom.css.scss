@@ -3,22 +3,18 @@ $table-bg-accent: #EBEBEB;
 @import "bootstrap";
 @import "font-awesome";
 
-// LAYOUT
+//-----------------------------------------------------
+// Layout
+//-----------------------------------------------------
 body {
   background: #F9F9F9;
 }
-
-// .container {
-//   background: white;
-// }
 
 main {
   margin-top: 40px;
   margin-bottom: 100px;
   min-height: 1000px;
 }
-
-
 
 @media (min-width: 1200px) {
   .container {
@@ -35,15 +31,12 @@ main {
   box-shadow: 0 1px 4px rgba(0,0,0,.15);
 }
 
-// NAVBAR
+//-----------------------------------------------------
+// Navbar
+//-----------------------------------------------------
 .nav {
   padding: 20px 0;
-
   height: 80px;
-
-  .nav-item {
-    //margin: 25px 20px 0 20px;
-  }
 }
 
 .nav-li {
@@ -72,11 +65,6 @@ main {
     color: #FFFFFF;
   }
 }
-
-// .dropdown-menu {
-//   left: auto;
-//   right: 1px;
-// }
 
 .lawsuit-menu {
   a {
@@ -107,17 +95,21 @@ main {
   }
 }
 
-// TABLE
+//-----------------------------------------------------
+// Tables
+//-----------------------------------------------------
 table {
   background: #FFFFFF;
-  // table-layout: fixed;
 }
 
 .table-hover {
   tr {
     cursor: pointer;
   }
+}
 
+.table-responsive {
+  margin-bottom: 40px;
 }
 
 .task-menu {
@@ -132,23 +124,17 @@ table {
     width: 60%;
   }
 }
-//
-// th.first {
-//   width: 20%;
-// }
-//
-// th.long {
-//   width: 40%;
-// }
 
-
-
-// TYPOGRAPHY
+//-----------------------------------------------------
+// Typography
+//-----------------------------------------------------
 h1 {
   line-height: 0.9;
 }
 
-// PAGINATOR
+//-----------------------------------------------------
+// Paginator
+//-----------------------------------------------------
 .paginator {
   margin-top: 15px;
   text-align: center;
@@ -162,12 +148,28 @@ h1 {
   input { width: 50px; }
 }
 
-// CARD
-.card-block button {
-  margin: 0 10px;
+//-----------------------------------------------------
+// Cards
+//-----------------------------------------------------
+.card-block button { margin: 0 10px; }
+
+.counterpart-client-card {
+  .card-title {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+
+    li { line-height: 30px; }
+  }
 }
 
-// FORMS
+//-----------------------------------------------------
+// Forms
+//-----------------------------------------------------
 .form-inline {
   .form-group {
     min-height: 40px;
@@ -184,10 +186,6 @@ h1 {
 
     input[name="postCode"] {
       width: 120px;
-    }
-
-    textarea {
-      //width: 450px;
     }
 
     label {
@@ -228,7 +226,9 @@ h1 {
   }
 }
 
-// ICONS
+//-----------------------------------------------------
+// Icons
+//-----------------------------------------------------
 .fa-pencil-square-o, .fa-times {
   font-size: 22px !important;
   cursor: pointer;
@@ -237,7 +237,9 @@ h1 {
   }
 }
 
-// LISTS
+//-----------------------------------------------------
+// Lists
+//-----------------------------------------------------
 .show-page-list {
   list-style-type: none;
   padding-left: 0;
@@ -250,25 +252,9 @@ h1 {
   }
 }
 
-// CARDS
-.counterpart-client-card {
-  .card-title {
-    font-weight: 600;
-    font-size: 18px;
-  }
-
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-
-    li {
-      // border-bottom: 1px solid #f2dede;
-      line-height: 30px;
-    }
-  }
-}
-
-// MESSAGES
+//-----------------------------------------------------
+// Messages
+//-----------------------------------------------------
 .alert-error {
     background-color: #f2dede;
     border-color: #eed3d7;
@@ -324,7 +310,9 @@ h1 {
   padding: 5px 15px;
 }
 
-// MISC
+//-----------------------------------------------------
+// Utils
+//-----------------------------------------------------
 .center-content {
   text-align: center;
 }
