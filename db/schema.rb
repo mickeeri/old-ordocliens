@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160517102504) do
+ActiveRecord::Schema.define(version: 20160518091801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,10 +97,12 @@ ActiveRecord::Schema.define(version: 20160517102504) do
     t.string   "case_number"
     t.string   "slug"
     t.integer  "lawsuit_type_id"
+    t.integer  "user_id"
   end
 
   add_index "lawsuits", ["lawsuit_type_id"], name: "index_lawsuits_on_lawsuit_type_id", using: :btree
   add_index "lawsuits", ["slug"], name: "index_lawsuits_on_slug", using: :btree
+  add_index "lawsuits", ["user_id"], name: "index_lawsuits_on_user_id", using: :btree
 
   create_table "participations", force: :cascade do |t|
     t.integer  "client_id"
@@ -161,6 +163,7 @@ ActiveRecord::Schema.define(version: 20160517102504) do
   add_foreign_key "involvements", "counterparts"
   add_foreign_key "involvements", "lawsuits"
   add_foreign_key "lawsuits", "lawsuit_types"
+  add_foreign_key "lawsuits", "users"
   add_foreign_key "participations", "clients"
   add_foreign_key "participations", "lawsuits"
   add_foreign_key "tasks", "lawsuits"

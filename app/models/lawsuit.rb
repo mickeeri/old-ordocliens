@@ -1,5 +1,6 @@
 class Lawsuit < ActiveRecord::Base
   include PgSearch
+  belongs_to :user, required: true
   has_many :participations, dependent: :destroy
   has_many :clients, -> { distinct }, through: :participations
   has_many :involvements, dependent: :destroy
@@ -17,11 +18,13 @@ class Lawsuit < ActiveRecord::Base
   # scope :sorted_by_date, -> { order(created_at: :desc, lawsuit_type_id: :desc) }
   scope :sorted_by_date, -> { order(lawsuit_type_id: :asc) }
   scope :without_closed, -> { where(closed: false) }
-  scope :users_lawsuits, -> (user) { joins(:clients).merge(Client.where(user: user)) }
+  # scope :users_lawsuits, -> (user) { joins(:clients).merge(Client.where(user_id: user.id)).references(:participations) }
+  # scope :users_lawsuits, -> (user) { includes(:clients).where('user_id = ?', user.id).references(:participations) }
+  scope :users_lawsuits, -> (user) { where(user_id: user) }
   pg_search_scope :search,
-                  against: [:name, :court, :case_number, :slug],
+                  against: [:court, :case_number, :slug],
                   associated_against: { lawsuit_type: [:name],
                                         clients: [:last_name, :first_name, :ssn] },
-                  using: { tsearch: { prefix: true, normalization: 2 }
+                  using: { tsearch: { prefix: true, normalization: 2, negation: true }
     }
 end

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :firm, required: true
   has_many :clients, dependent: :destroy
+  has_many :lawsuits, dependent: :destroy
   # before_save { self.email = email.downcase }
 
   # VALIDATION
