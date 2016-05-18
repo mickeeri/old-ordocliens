@@ -7,4 +7,5 @@ class LawsuitSerializer < ActiveModel::Serializer
   end
   has_many :clients
   has_one :lawsuit_type
+  has_one :user
 end

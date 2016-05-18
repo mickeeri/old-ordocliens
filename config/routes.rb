@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   end
 
   resources :lawsuit_types, only: :index
+  resources :users, only: :index
   # #root "sessions#new"
   # # get    "login"   => "sessions#new"
   # post "/" => "sessions#create"

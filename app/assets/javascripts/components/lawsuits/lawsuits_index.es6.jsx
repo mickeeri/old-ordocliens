@@ -8,6 +8,7 @@ class LawsuitsIndex extends React.Component {
         search: '',
         page: 1,
         fetchAll: false,
+        user: props.currentUserId,
       },
     };
     // Binding functions.
@@ -15,6 +16,15 @@ class LawsuitsIndex extends React.Component {
     this.handleOnSearch = this.handleOnSearch.bind(this);
     this.handleOnPaginate = this.handleOnPaginate.bind(this);
     this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this);
+    // this.handleUsersDropDownChange = this.handleUsersDropDownChange.bind(this);
+    this.setSelectedUser = this.setSelectedUser.bind(this);
+  }
+
+  // Select user in dropdown to only show that users lawsuits.
+  setSelectedUser(e) {
+    this.state.fetchData.user = parseInt(e.target.value, 10);
+    this.state.fetchData.page = 1;
+    this.fetchLawsuits();
   }
 
   handleOnSearch() {
@@ -36,13 +46,20 @@ class LawsuitsIndex extends React.Component {
     this.fetchLawsuits();
   }
 
+  // handleUsersDropDownChange(e) {
+  //   e.preventDefault();
+  //   this.setState({ closed: !this.state.closed });
+  //   makePutRequest(Routes.lawsuit_path(this.state.id, this.props.clientId),
+  //     { lawsuit: { closed: this.state.closed } }, 'lawsuitUpdated');
+  // }
+
   fetchLawsuits() {
     const data = this.state.fetchData;
 
     // Building uri:s with query string parameters.
     const url = data.search
-      ? `${Routes.lawsuits_path()}?search=${data.search}&page=1&all=${data.fetchAll}`
-      : `${Routes.lawsuits_path()}?page=${data.page}&all=${data.fetchAll}`;
+      ? `${Routes.lawsuits_path()}?search=${data.search}&page=1&all=${data.fetchAll}&user=${data.user}`
+      : `${Routes.lawsuits_path()}?page=${data.page}&all=${data.fetchAll}&user=${data.user}`;
 
     makeGetRequest(url)
       .success(response => {
@@ -82,14 +99,22 @@ class LawsuitsIndex extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="checkbox">
+          <div className="checkbox col-md-3">
             <label>
               <input
                 type="checkbox"
                 onChange={this.handleOnCheckboxChange}
-              /> Visa ej aktiva ärenden
+              /> Visa arkiverade ärenden
             </label>
           </div>
+          <div className="col-md-6">
+            <UsersDropdown
+              changeEvent={this.setSelectedUser}
+              selectedUser={this.state.fetchData.user}
+            />
+          </div>
+        </div>
+        <div className="row">
           <table className="table table-hover table-bordered">
             <thead className="thead-inverse">
               <tr>
@@ -123,4 +148,5 @@ class LawsuitsIndex extends React.Component {
 LawsuitsIndex.propTypes = {
   initialLawsuits: React.PropTypes.array.isRequired,
   meta: React.PropTypes.object.isRequired,
+  currentUserId: React.PropTypes.number.isRequired,
 };

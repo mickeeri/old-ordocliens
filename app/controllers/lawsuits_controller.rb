@@ -1,6 +1,6 @@
 class LawsuitsController < ApplicationController
   before_action :authenticate_user!
-  before_action :search_lawsuits, only: [:index]
+  before_action :filter_lawsuits, only: [:index]
   before_action :fetch_lawsuit, only: [:show,
                                        :update,
                                        :destroy,
@@ -13,7 +13,8 @@ class LawsuitsController < ApplicationController
       format.html do
         render component: "LawsuitsIndex", props:
           { initialLawsuits: prepare_array(@lawsuits),
-            meta: pagination_dict(@lawsuits) }
+            meta: pagination_dict(@lawsuits),
+            current_user_id: current_user.id }
       end
       format.json do
         if params[:page].present?
@@ -43,7 +44,9 @@ class LawsuitsController < ApplicationController
 
   def create
     client = Client.find(params[:client_id])
-    @lawsuit = client.lawsuits.create!(lawsuit_params)
+    @lawsuit = client.lawsuits.build(lawsuit_params)
+    current_user.lawsuits << @lawsuit
+    @lawsuit.save
     add_slug
     respond_with(@lawsuit)
   end
@@ -68,13 +71,14 @@ class LawsuitsController < ApplicationController
                                     :case_number)
   end
 
-  def search_lawsuits
+  # Filter lawsuits based on different paramaters.
+  def filter_lawsuits
     # http://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
     @lawsuits = Lawsuit.where(nil)
-    @lawsuits = @lawsuits.users_lawsuits(current_user)
+    @lawsuits = @lawsuits.users_lawsuits(params[:user].present? ? params[:user] : current_user.id)
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
-    @lawsuits = @lawsuits.page(params[:page]).per_page(20)
+    @lawsuits = @lawsuits.page(params[:page]).per_page(15)
     @lawsuits = @lawsuits.sorted_by_date
   end
 

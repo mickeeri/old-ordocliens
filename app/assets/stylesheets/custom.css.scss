@@ -119,6 +119,19 @@ table {
   }
 
 }
+
+.task-menu {
+  margin-bottom: 20px;
+}
+
+.user-select {
+  label {
+    margin-right: 5px;
+  }
+  .form-control {
+    width: 60%;
+  }
+}
 //
 // th.first {
 //   width: 20%;
@@ -291,8 +304,14 @@ h1 {
 #updatedLawsuitMessage {
   display:none;
   position: absolute;
-  top: 35px;
+  top: 196px;
+  // left: 760px;
+  // width: 500px;
+  // height: 45px;
   font-weight: 600;
+  // border: 2px solid #5CBD8E;
+  // padding: 5px 5px 5px 10px;
+  // margin-bottom: 10px;
 }
 
 #updatedClientMessage, #updatedCounterpartMessage {
