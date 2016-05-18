@@ -50,7 +50,11 @@ class LawsuitShow extends React.Component {
         <div className="row">
           <div className="col-md-6">
             <h2 className="lawsuit-header">Ärende {this.props.lawsuit.slug}
-              <span className="text-danger">{this.state.closed ? ' (Arkiverat)' : ''}</span></h2>
+              <span className="text-danger">
+                {this.state.closed ? ' (Arkiverat)' : ''}
+              </span>
+            </h2>
+            <h5>{this.props.lawsuit.primaryClient}</h5>
             <p
               id="updatedLawsuitMessage"
               className="text-success"
@@ -71,6 +75,7 @@ class LawsuitShow extends React.Component {
             >Info</a>
           </div>
         </div>
+        <hr />
         {this.state.page === 'info' ?
           <LawsuitInfo initialLawsuit={this.props.lawsuit} closed={this.state.closed} /> :
           <TasksIndex
