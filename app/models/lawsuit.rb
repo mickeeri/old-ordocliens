@@ -15,8 +15,10 @@ class Lawsuit < ActiveRecord::Base
   # Scopes
   # scope :sorted, -> { joins(:lawsuit_type).merge(LawsuitType.order(name: :asc)) }
   scope :sorted, -> { includes(:lawsuit_type).order("lawsuit_types.name asc") }
-  # scope :sorted_by_date, -> { order(created_at: :desc, lawsuit_type_id: :desc) }
-  scope :sorted_by_date, -> { order(lawsuit_type_id: :asc) }
+  scope :sorted_by_date, -> { order(created_at: :desc, lawsuit_type_id: :desc) }
+  scope :sorted_by_primary_client, -> { order(primary_client: :asc) }
+  # scope :sorted_by_date, -> { order(lawsuit_type_id: :asc) }
+  #scope :sorted_by_date, -> { order(self.primary_client: :asc) }
   scope :without_closed, -> { where(closed: false) }
   # scope :users_lawsuits, -> (user) { joins(:clients).merge(Client.where(user_id: user.id)).references(:participations) }
   # scope :users_lawsuits, -> (user) { includes(:clients).where('user_id = ?', user.id).references(:participations) }

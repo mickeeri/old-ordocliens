@@ -1,11 +1,11 @@
 # Firms
-firm = Firm.create!(name: "My firm")
+firm = Firm.create!(name: "Familjejuristerna Alverlind & Cederberg")
 
 # Users
 firm.users.create(
-  last_name: "Eriksson",
-  first_name: "Mikael",
-  email: "micke@mail.com",
+  last_name: "Alverlind",
+  first_name: "Daniel",
+  email: "daniel@exempel.com",
   password: "password",
   password_confirmation: "password"
 )
@@ -13,7 +13,7 @@ firm.users.create(
 firm.users.create(
   last_name: "Cederberg",
   first_name: "Anders",
-  email: "anders.cederberg@mail.com",
+  email: "anders@exempel.com",
   password: "password",
   password_confirmation: "password"
 )
@@ -76,7 +76,8 @@ User.all.each do |user|
       lawsuit = client.lawsuits.create!(
         lawsuit_type_id: LawsuitType.offset(rand(LawsuitType.count)).first.id,
         closed: Faker::Boolean.boolean,
-        user_id: user.id
+        user_id: user.id,
+        primary_client: client.full_name
       )
 
 

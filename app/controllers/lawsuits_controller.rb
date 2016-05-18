@@ -45,6 +45,7 @@ class LawsuitsController < ApplicationController
   def create
     client = Client.find(params[:client_id])
     @lawsuit = client.lawsuits.build(lawsuit_params)
+    @lawsuit.primary_client = client.full_name
     current_user.lawsuits << @lawsuit
     @lawsuit.save
     add_slug
@@ -79,20 +80,23 @@ class LawsuitsController < ApplicationController
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
     @lawsuits = @lawsuits.page(params[:page]).per_page(15)
-    @lawsuits = @lawsuits.sorted_by_date
+    @lawsuits = @lawsuits.sorted_by_primary_client
   end
 
   def fetch_lawsuit
     @lawsuit = Lawsuit.find(params[:id])
   end
 
+  # TODO: remove?
   def links
     [{ id: rand(100), name: "Ärenden", path: lawsuits_path }]
   end
 
+  # TODO: remove price categories.
   def props
     { lawsuit: prepare(@lawsuit, LawsuitShowSerializer, root: false),
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),
+      expenses: prepare_array(@lawsuit.expenses.sorted),
       price_categories: prepare_array(PriceCategory.all) }
   end
 
