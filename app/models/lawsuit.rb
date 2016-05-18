@@ -10,23 +10,29 @@ class Lawsuit < ActiveRecord::Base
   belongs_to :lawsuit_type
   validates :lawsuit_type, presence: :true
 
-  # validates :name, presence: true, length: { maximum: 100 }
-  # validates :closed, presence: true
+  # The first client that was added to the lawsuit.
+  def primary_client
+    prim_client = clients.order(created_at: :asc).first.full_name unless clients.empty?
+    prim_client += " m.fl." if clients.count > 1
+    prim_client
+  end
+
   # Scopes
-  # scope :sorted, -> { joins(:lawsuit_type).merge(LawsuitType.order(name: :asc)) }
   scope :sorted, -> { includes(:lawsuit_type).order("lawsuit_types.name asc") }
+  scope :sorted_by_client, -> { includes(:clients).order("clients.last_name asc") }
   scope :sorted_by_date, -> { order(created_at: :desc, lawsuit_type_id: :desc) }
-  scope :sorted_by_primary_client, -> { order(primary_client: :asc) }
-  # scope :sorted_by_date, -> { order(lawsuit_type_id: :asc) }
-  #scope :sorted_by_date, -> { order(self.primary_client: :asc) }
   scope :without_closed, -> { where(closed: false) }
-  # scope :users_lawsuits, -> (user) { joins(:clients).merge(Client.where(user_id: user.id)).references(:participations) }
-  # scope :users_lawsuits, -> (user) { includes(:clients).where('user_id = ?', user.id).references(:participations) }
   scope :users_lawsuits, -> (user) { where(user_id: user) }
   pg_search_scope :search,
-                  against: [:court, :case_number, :slug],
+                  against: [:court,
+                            :case_number,
+                            :slug],
                   associated_against: { lawsuit_type: [:name],
-                                        clients: [:last_name, :first_name, :ssn] },
-                  using: { tsearch: { prefix: true, normalization: 2, negation: true }
+                                        clients: [:last_name,
+                                                  :first_name,
+                                                  :ssn] },
+                  using: { tsearch: { prefix: true,
+                                      normalization: 2,
+                                      negation: true }
     }
 end

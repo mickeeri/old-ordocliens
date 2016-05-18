@@ -43,13 +43,11 @@ class LawsuitsController < ApplicationController
   end
 
   def create
+    @lawsuit = current_user.lawsuits.build(lawsuit_params)
     client = Client.find(params[:client_id])
-    @lawsuit = client.lawsuits.build(lawsuit_params)
-    @lawsuit.primary_client = client.full_name
-    current_user.lawsuits << @lawsuit
-    @lawsuit.save
-    add_slug
-    respond_with(@lawsuit)
+    @lawsuit.clients << client
+    add_slug if @lawsuit.save
+    respond_with @lawsuit
   end
 
   def update
@@ -59,7 +57,7 @@ class LawsuitsController < ApplicationController
 
   def destroy
     @lawsuit.destroy
-    flash.keep[:notice] = "Ärende #{@lawsuit.name} är raderat."
+    flash.keep[:notice] = "Ärende raderat."
     respond_with @lawsuit
   end
 
@@ -79,8 +77,8 @@ class LawsuitsController < ApplicationController
     @lawsuits = @lawsuits.users_lawsuits(params[:user].present? ? params[:user] : current_user.id)
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
+    @lawsuits = @lawsuits.sorted_by_client unless params[:search].present?
     @lawsuits = @lawsuits.page(params[:page]).per_page(15)
-    @lawsuits = @lawsuits.sorted_by_primary_client
   end
 
   def fetch_lawsuit
