@@ -6,16 +6,16 @@ class LawsuitTypesDropdown extends React.Component {
       selectedLawsuitType: '',
     };
     this.fetchLawsuitTypes = this.fetchLawsuitTypes.bind(this);
-    this.handleSelectChange = this.handleSelectChange.bind(this);
+    // his.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   componentDidMount() {
     this.fetchLawsuitTypes();
   }
 
-  handleSelectChange(e) {
-    this.setState({ selectedLawsuitType: e.target.value });
-  }
+  // handleSelectChange(e) {
+  //   this.setState({ selectedLawsuitType: e.target.value });
+  // }
 
   // handleOnSubmit(e) {
   //   e.preventDefault();
@@ -42,7 +42,7 @@ class LawsuitTypesDropdown extends React.Component {
   render() {
     return (
       <select
-        className="form-control"
+        className="form-control form-control-sm"
         onChange={this.props.changeEvent}
         name="lawsuitTypes"
         value={this.props.selectedId}
@@ -61,4 +61,6 @@ class LawsuitTypesDropdown extends React.Component {
 }
 
 LawsuitTypesDropdown.propTypes = {
+  changeEvent: React.PropTypes.func.isRequired,
+  selectedId: React.PropTypes.number.isRequired,
 };

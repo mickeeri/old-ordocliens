@@ -47,18 +47,14 @@ class LawsuitShow extends React.Component {
   render() {
     return (
       <div>
-        <div className="row">
+        <div className="row lawsuit-header">
           <div className="col-md-6">
-            <h2 className="lawsuit-header">Ärende {this.props.lawsuit.slug}
+            <h2>Ärende {this.props.lawsuit.slug}
               <span className="text-danger">
                 {this.state.closed ? ' (Arkiverat)' : ''}
               </span>
             </h2>
             <h5>{this.props.lawsuit.primaryClient}</h5>
-            <p
-              id="updatedLawsuitMessage"
-              className="text-success"
-            >{this.state.message}</p>
           </div>
           <div className="col-md-6 content-right lawsuit-menu">
             <a
@@ -75,7 +71,7 @@ class LawsuitShow extends React.Component {
             >Info</a>
           </div>
         </div>
-        <hr />
+        <p id="updatedLawsuitMessage" className="text-success">{this.state.message}</p>
         {this.state.page === 'info' ?
           <LawsuitInfo initialLawsuit={this.props.lawsuit} closed={this.state.closed} /> :
           <TasksIndex

@@ -55,7 +55,7 @@ class TasksIndex extends React.Component {
       <div>
         <div id="editModalContainer"></div>
         <h3>Arbeten</h3>
-        <div className="content-right">
+        <div className="content-right task-menu">
           <a
             href={`/report/${this.props.lawsuitId}.docx`}
             className="btn btn-primary"
