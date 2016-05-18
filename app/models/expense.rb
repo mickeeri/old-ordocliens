@@ -1,3 +1,8 @@
 class Expense < ActiveRecord::Base
-  belongs_to :legal_case
+  belongs_to :lawsuit
+  validates :lawsuit, presence: true
+  validates :entry, presence: true
+  validates :price, presence: true
+
+  scope :sorted, -> { order(created_at: :desc) }
 end

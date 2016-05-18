@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :lawsuits do # show, index
     resources :tasks, except: :show
     resources :price_categories, only: :index
+    resources :expenses, except: :show
   end
 
   resources :lawsuit_types, only: :index

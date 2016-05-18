@@ -76,6 +76,7 @@ class LawsuitShow extends React.Component {
           <LawsuitInfo initialLawsuit={this.props.lawsuit} closed={this.state.closed} /> :
           <TasksIndex
             initialTasks={this.props.tasks}
+            initialExpenses={this.props.expenses}
             lawsuitId={this.props.lawsuit.id}
             priceCategories={this.props.priceCategories}
           />}
@@ -88,5 +89,6 @@ LawsuitShow.propTypes = {
   clientId: React.PropTypes.number,
   lawsuit: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,
+  expenses: React.PropTypes.array,
   priceCategories: React.PropTypes.array.isRequired,
 };

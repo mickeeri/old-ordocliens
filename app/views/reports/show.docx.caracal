@@ -9,6 +9,10 @@ docx.style id: 'Normal', name: 'Normal', font: 'Palatino Linotype', size: 22, li
 
 docx.h1 @lawsuit.lawsuit_type.name
 
+
+#-----------------------------------------------------
+# Works table
+#-----------------------------------------------------
 @price_categories.each do |category|
   # Creates new array and inserts first row.
   table_data = [['Datum','Notering', 'Arbetad tid']]
@@ -35,18 +39,28 @@ docx.h1 @lawsuit.lawsuit_type.name
   table_data = []
 end
 
+#-----------------------------------------------------
+# Expenses table
+#-----------------------------------------------------
+# Header
+docx.h2 "Utlägg"
+# First row
+expenses_table_data = [['Notering','Kostnad']]
 
+# Iterates through expenses and push rows.
+@expenses.each do |expense|
+  row = [expense.entry, ("%.2f" % expense.price + " kr")]
+  expenses_table_data.push(row)
+end
 
-# row1 = ['Key', 'Value']
-# row2 = ['Key 1', 'Value 1']
-# row3 = ['Key 2', 'Value 2']
-# row4 = ['Key 3', 'Value 3']
-#
-# docx.h2 'Simple Tables'
-# docx.table [row1.dup, row2.dup, row3.dup, row4.dup], border_size: 4 do
-#   cell_style rows[0],    bold: true,   background: '3366cc', color: 'ffffff'
-#   cell_style rows[-1],   bold: true,   background: 'dddddd'
-#   cell_style cells[5],   italic: true, color: 'cc0000'
-#   cell_style cols[0],    width: 6000
-#   cell_style cells,      size: 18, margins: { top: 100, bottom: 0, left: 100, right: 100 }
-# end
+# Last row displays sum of category.
+last_row = ['Summa', ("%.2f" % @expenses.sum(:price) + " kr")]
+expenses_table_data.push(last_row)
+
+docx.table expenses_table_data, border_size: 4 do
+  border_color   'eceeef'
+  cell_style rows[0], background: 'ECECEC', bold: true
+  cell_style cols[0], width: 6500
+  cell_style cols[1], align: :right
+  cell_style rows[-1],   bold: true,   background: 'ECECEC'
+end

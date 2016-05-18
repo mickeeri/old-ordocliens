@@ -4,6 +4,10 @@ class TasksIndex extends React.Component {
     this.state = { tasks: this.props.initialTasks };
     this.refreshTasks = this.refreshTasks.bind(this);
     this.addTaskClicked = this.addTaskClicked.bind(this);
+    this.scrollToTop = this.scrollToTop.bind(this);
+    this.scrollToExpenses = this.scrollToExpenses.bind(this);
+    this.handleAddButtonClicked = this.handleAddButtonClicked.bind(this);
+    this.renderForm = this.renderForm.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +30,23 @@ class TasksIndex extends React.Component {
       });
   }
 
+  scrollToTop() {
+    $('html, body').animate({ scrollTop: 0 }, 'slow');
+    return false;
+  }
+
+  scrollToExpenses() {
+    $('html, body').animate({
+      scrollTop: $('#expenses').offset().top,
+    }, 'slow');
+    return false;
+  }
+
+  handleAddButtonClicked(e) {
+    e.preventDefault();
+    this.renderForm(e.target.name);
+  }
+
   addTaskClicked(e) {
     e.preventDefault();
 
@@ -34,6 +55,28 @@ class TasksIndex extends React.Component {
       <EditFormModal
         header="Lägg till arbete"
         form={<TaskForm lawsuitId={this.props.lawsuitId} />}
+      />,
+      document.getElementById('editModalContainer')
+    );
+    $('#editFormModal').modal(); // ...and display it.
+  }
+
+  renderForm(target) {
+    let form;
+    let header;
+    if (target === 'addExpense') {
+      form = <ExpenseForm lawsuitId={this.props.lawsuitId} />;
+      header = 'Lägg till utlägg';
+    } else if (target === 'addWork') {
+      form = <TaskForm lawsuitId={this.props.lawsuitId} />;
+      header = 'Lägg till arbete';
+    }
+
+    // Render modal with specified form.
+    ReactDOM.render(
+      <EditFormModal
+        header={header}
+        form={form}
       />,
       document.getElementById('editModalContainer')
     );
@@ -54,16 +97,23 @@ class TasksIndex extends React.Component {
     return (
       <div>
         <div id="editModalContainer"></div>
-        <h3>Arbeten</h3>
-        <div className="content-right task-menu">
-          <a
-            href={`/report/${this.props.lawsuitId}.docx`}
-            className="btn btn-primary"
-          >Rapport .docx</a>
-          <button
-            className="btn btn-success"
-            onClick={this.addTaskClicked}
-          >Lägg till arbete</button>
+        <div className="row">
+          <h3 className="col-md-4">Arbeten</h3>
+          <div className="col-md-8 content-right task-menu">
+            <button
+              className="btn btn-primary-outline"
+              onClick={this.scrollToExpenses}
+            >Gå till utlägg</button>
+            <a
+              href={`/report/${this.props.lawsuitId}.docx`}
+              className="btn btn-primary"
+            >Rapport .docx</a>
+            <button
+              className="btn btn-success"
+              onClick={this.addTaskClicked}
+              name="addWork"
+            >Lägg till arbete</button>
+          </div>
         </div>
         <div className="table-responsive">
           <table className="table table-bordered">
@@ -82,6 +132,24 @@ class TasksIndex extends React.Component {
             </tbody>
           </table>
         </div>
+        <div className="row">
+          <h3 id="expenses" className="col-md-4">Utlägg</h3>
+          <div className="col-md-8 content-right task-menu">
+            <button
+              className="btn btn-primary-outline"
+              onClick={this.scrollToTop}
+            >Tillbaka till toppen</button>
+            <button
+              className="btn btn-success"
+              onClick={this.handleAddButtonClicked}
+              name="addExpense"
+            >Lägg till utlägg</button>
+          </div>
+        </div>
+        <ExpensesIndex
+          initialExpenses={this.props.initialExpenses}
+          lawsuitId={this.props.lawsuitId}
+        />
       </div>
     );
   }
@@ -89,6 +157,7 @@ class TasksIndex extends React.Component {
 
 TasksIndex.propTypes = {
   initialTasks: React.PropTypes.array.isRequired,
+  initialExpenses: React.PropTypes.array.isRequired,
   lawsuitId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number,
   priceCategories: React.PropTypes.array.isRequired,

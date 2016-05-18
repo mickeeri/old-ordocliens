@@ -115,6 +115,14 @@ User.all.each do |user|
           price_category_id: random_pc_id
         )
       end
+      # Expenses
+      number_of_expenses = rand(5..10)
+      number_of_expenses.times do
+        lawsuit.expenses.create!(
+          entry: Faker::Lorem.sentence(rand(3..15)),
+          price: Faker::Number.between(500, 3000)
+        )
+      end
     end
   end
 end
