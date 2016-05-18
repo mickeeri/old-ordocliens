@@ -4,6 +4,7 @@ function ClientRow({ client }) {
     <tr>
       <td><a href={Routes.client_path(client.id)}>{fullName}</a></td>
       <td>{client.ssn}</td>
+      <td>{client.user.first_name} {client.user.last_name}</td>
     </tr>);
 }
 
