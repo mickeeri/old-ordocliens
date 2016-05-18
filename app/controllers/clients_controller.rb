@@ -88,12 +88,10 @@ class ClientsController < ApplicationController
   end
 
   def search_clients
-    @clients =
-      if params[:search].present?
-        Client.search(params[:search])
-      else
-        Client.all
-      end.sorted.page(params[:page]).per_page(20)
+    @clients = Client.where(nil)
+    @clients = @clients.users_clients(current_user) unless params[:all] == "true"
+    @clients = @clients.search(params[:search]) if params[:search].present?
+    @clients = @clients.sorted.page(params[:page]).per_page(20)
   end
 
   def fetch_client

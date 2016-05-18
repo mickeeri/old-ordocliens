@@ -14,6 +14,7 @@ class Client < ActiveRecord::Base
   validates :ssn, presence: true, format: { with: VALID_SSN_REGEX }
 
   # Scopes
+  scope :users_clients, -> (current_user) { where(user: current_user) }
   scope :sorted, -> { order(last_name: :asc) }
   pg_search_scope :search,
                   against: [:first_name, :last_name, :ssn],

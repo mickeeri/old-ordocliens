@@ -9,6 +9,7 @@ class ClientsIndex extends React.Component {
       fetchData: {
         search: '',
         page: 1,
+        fetchAll: false,
       },
     };
 
@@ -16,6 +17,7 @@ class ClientsIndex extends React.Component {
     this.fetchClients = this.fetchClients.bind(this);
     this.handleOnSearch = this.handleOnSearch.bind(this);
     this.handleOnPaginate = this.handleOnPaginate.bind(this);
+    this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this);
   }
 
   fetchClients() {
@@ -23,8 +25,8 @@ class ClientsIndex extends React.Component {
 
     // Building uri:s with query string parameters.
     const url = data.search
-      ? `${Routes.clients_path()}?search=${data.search}&page=1`
-      : `${Routes.clients_path()}?page=${data.page}`;
+      ? `${Routes.clients_path()}?search=${data.search}&page=1&all=${data.fetchAll}`
+      : `${Routes.clients_path()}?page=${data.page}&all=${data.fetchAll}`;
 
     makeGetRequest(url)
       .success(response => {
@@ -42,6 +44,11 @@ class ClientsIndex extends React.Component {
 
   handleOnPaginate(pageNumber) {
     this.state.fetchData.page = pageNumber;
+    this.fetchClients();
+  }
+
+  handleOnCheckboxChange(e) {
+    this.state.fetchData.fetchAll = e.target.checked;
     this.fetchClients();
   }
 
@@ -78,11 +85,20 @@ class ClientsIndex extends React.Component {
           </div>
         </div>
         <div className="row">
+          <div className="checkbox">
+            <label>
+              <input
+                type="checkbox"
+                onChange={this.handleOnCheckboxChange}
+              /> Visa alla klienter
+            </label>
+          </div>
           <table className="table table-bordered col-md-12">
             <thead className="thead-inverse">
               <tr>
                 <th>Namn</th>
                 <th>Personnummer</th>
+                <th>Handläggare</th>
               </tr>
             </thead>
             <tbody>
