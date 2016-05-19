@@ -78,7 +78,6 @@ class LawsuitShow extends React.Component {
             initialTasks={this.props.tasks}
             initialExpenses={this.props.expenses}
             lawsuitId={this.props.lawsuit.id}
-            priceCategories={this.props.priceCategories}
           />}
       </div>
     );
@@ -90,5 +89,4 @@ LawsuitShow.propTypes = {
   lawsuit: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,
   expenses: React.PropTypes.array,
-  priceCategories: React.PropTypes.array.isRequired,
 };

@@ -8,6 +8,7 @@ class TasksIndex extends React.Component {
     this.scrollToExpenses = this.scrollToExpenses.bind(this);
     this.handleAddButtonClicked = this.handleAddButtonClicked.bind(this);
     this.renderForm = this.renderForm.bind(this);
+    // TODO; move task table the own component.
   }
 
   componentDidMount() {
@@ -90,12 +91,12 @@ class TasksIndex extends React.Component {
         task={task}
         lawsuitId={this.props.lawsuitId}
         clientId={this.props.clientId}
-        priceCategories={this.props.priceCategories}
       />
     );
 
     return (
       <div>
+        <div className="alert" id="tasks-index-alert"></div>
         <div id="editModalContainer"></div>
         <div className="row">
           <h3 className="col-md-4">Arbeten</h3>
@@ -108,6 +109,10 @@ class TasksIndex extends React.Component {
               href={`/report/${this.props.lawsuitId}.docx`}
               className="btn btn-primary"
             >Rapport .docx</a>
+            <a
+              href={`/lawsuit_cover/${this.props.lawsuitId}.docx`}
+              className="btn btn-primary"
+            >Aktomslag docx</a>
             <button
               className="btn btn-success"
               onClick={this.addTaskClicked}
@@ -160,5 +165,4 @@ TasksIndex.propTypes = {
   initialExpenses: React.PropTypes.array.isRequired,
   lawsuitId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number,
-  priceCategories: React.PropTypes.array.isRequired,
 };

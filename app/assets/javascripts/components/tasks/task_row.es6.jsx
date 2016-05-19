@@ -72,5 +72,4 @@ TaskRow.propTypes = {
   task: React.PropTypes.object.isRequired,
   lawsuitId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number,
-  priceCategories: React.PropTypes.array.isRequired,
 };
