@@ -4,26 +4,6 @@ class CounterpartLawsuitList extends React.Component {
     this.state = { lawsuits: props.lawsuits };
   }
 
-  // componentDidMount() {
-  //   PubSub.subscribe('counterpartListUpdated', this.refreshCounterParts.bind(this));
-  // }
-  //
-  // componentWillUnmount() {
-  //   PubSub.unsubscribe('counterpartListUpdated');
-  // }
-  //
-  // refreshCounterParts() {
-  //   const url = `/lawsuits/${this.props.lawsuitId}/counterparts`;
-  //   makeGetRequest(url)
-  //     .success(res => {
-  //       this.setState({ counterparts: res.counterparts });
-  //       PubSub.publish('dismissEdit');
-  //     })
-  //     .error(xhr => {
-  //       console.error(url, xhr.status, xhr.statusText);
-  //     });
-  // }
-
   render() {
     return (
       <div className="row counterpart-client-card">
@@ -61,5 +41,13 @@ class CounterpartLawsuitList extends React.Component {
 }
 
 CounterpartLawsuitList.propTypes = {
-  lawsuits: React.PropTypes.array.isRequired,
+  lawsuits: React.PropTypes.arrayOf(React.PropTypes.shape({
+    id: React.PropTypes.number.isRequired,
+    closed: React.PropTypes.bool.isRequired,
+    court: React.PropTypes.string,
+    lawsuitType: React.PropTypes.object.isRequired,
+    primaryClient: React.PropTypes.string.isRequired,
+    slug: React.PropTypes.string.isRequired,
+    clients: React.PropTypes.array.isRequired,
+  })),
 };
