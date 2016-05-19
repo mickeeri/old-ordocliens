@@ -49,6 +49,7 @@ Rails.application.routes.draw do
 
   #get "report/:id" => "lawsuits#report"
   get "report/:id" => "reports#show"
+  get "lawsuit_cover/:id" => "reports#cover"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
