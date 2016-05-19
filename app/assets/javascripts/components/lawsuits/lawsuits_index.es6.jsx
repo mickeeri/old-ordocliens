@@ -46,13 +46,6 @@ class LawsuitsIndex extends React.Component {
     this.fetchLawsuits();
   }
 
-  // handleUsersDropDownChange(e) {
-  //   e.preventDefault();
-  //   this.setState({ closed: !this.state.closed });
-  //   makePutRequest(Routes.lawsuit_path(this.state.id, this.props.clientId),
-  //     { lawsuit: { closed: this.state.closed } }, 'lawsuitUpdated');
-  // }
-
   fetchLawsuits() {
     const data = this.state.fetchData;
 
@@ -118,19 +111,19 @@ class LawsuitsIndex extends React.Component {
           <table className="table table-hover table-bordered">
             <thead className="thead-inverse">
               <tr>
-                <th className="first">#</th>
-                <th className="long">Uppdrag</th>
-                <th className="long">Huvudklient</th>
-                <th className="long">Upplagt</th>
+                <th>Huvudklient</th>
+                <th>Uppdrag</th>
+                <th>Ärendenummer</th>
+                <th>Upplagt</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {this.state.lawsuits.map(lawsuit =>
                 <tr key={lawsuit.id} onClick={this.handleTableRowClick.bind(this, lawsuit.id)}>
-                  <td><a href={Routes.lawsuit_path(lawsuit.id)}>{lawsuit.slug}</a></td>
-                  <td>{lawsuit.lawsuitType.name}</td>
                   <td>{lawsuit.primaryClient}</td>
+                  <td>{lawsuit.lawsuitType.name}</td>
+                  <td>{lawsuit.slug}</td>
                   <td>{lawsuit.createdAt = new Date().yyyymmdd()}</td>
                   <td
                     className={lawsuit.closed ? 'text-danger' : 'text-success'}
