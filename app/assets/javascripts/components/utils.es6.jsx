@@ -1,17 +1,10 @@
 
-function makePutRequest(url, payload, subToPublish) {
-  $.ajax({
+function makePutRequest(url, payload) {
+  return $.ajax({
     url,
     dataType: 'json',
     type: 'PUT',
     data: payload,
-    success: () => {
-      PubSub.publish(subToPublish);
-    },
-
-    error: (xhr) => {
-      console.error(xhr.responseText, xhr.status, xhr.statusText);
-    },
   });
 }
 
@@ -41,4 +34,16 @@ function makeDeleteRequest(url) {
     url,
     method: 'DELETE',
   });
+}
+
+// Showing success or error messages in modal forms. 
+function showAlertInModal(message, alertId, alertClass, icon) {
+  $(alertId).fadeIn();
+  $(alertId).addClass(alertClass);
+  $(`${alertId}-icon`).addClass(icon);
+  $(`${alertId}-span`).text(message);
+  if (alertClass === 'alert-success') {
+    $('.modal-header').hide();
+    $('.modal-body').addClass('no-padding');
+  }
 }

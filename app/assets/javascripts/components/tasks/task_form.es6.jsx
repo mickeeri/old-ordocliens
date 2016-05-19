@@ -8,11 +8,13 @@ class TaskForm extends React.Component {
       workedHours: props.initialTask ? props.initialTask.workedHours : '',
       priceCategoryId: props.initialTask ? props.initialTask.priceCategoryId : 3,
       priceCategories: [],
+      showForm: true,
     };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.fetchPriceCategories = this.fetchPriceCategories.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentDidMount() {
@@ -23,21 +25,55 @@ class TaskForm extends React.Component {
     e.preventDefault();
     if (this.state.id) { // If it has id it is update.
       makePutRequest(
-        Routes.lawsuit_task_path(
-          this.props.lawsuitId,
-          this.state.id
-        ),
-        { task: this.state },
-        'tasksTouched'
-      );
+        Routes.lawsuit_task_path(this.props.lawsuitId, this.state.id),
+        { task: this.state })
+        .done(() => {
+          this.setState({ showForm: false });
+          // Calling method to show alert in utils.es6.jsx.
+          showAlertInModal(
+            'Arbete uppdaterat!',
+            '#task-form-alert',
+            'alert-success',
+            'fa-check');
+          // Then waiting before hiding message and updating tasks.
+          setTimeout(() => {
+            PubSub.publish('tasksTouched');
+          }, 1000);
+        })
+        .fail(xhr => {
+          showAlertInModal(
+            `Ett fel uppstod. Status: ${xhr.status} ${xhr.statusText}`,
+            '#task-form-alert',
+            'alert-danger',
+            'fa-exclamation-circle');
+        });
     } else { // Otherwise post.
-      makePostRequest(
-        Routes.lawsuit_tasks_path(
-          this.props.lawsuitId
-        ),
-        { task: this.state },
-        'tasksTouched'
-      );
+      const url = Routes.lawsuit_tasks_path(this.props.lawsuitId);
+      const payload = { task: this.state };
+      $.post(url, payload, () => {
+        this.setState({ showForm: false });
+        showAlertInModal(
+          'Arbete sparat!',
+          '#task-form-alert',
+          'alert-success',
+          'fa-check');
+        setTimeout(() => {
+          PubSub.publish('tasksTouched');
+        }, 1000);
+      })
+      .fail(xhr => {
+        showAlertInModal(
+          `Ett fel uppstod. Status: ${xhr.status} ${xhr.statusText}`,
+          '#task-form-alert',
+          'alert-danger',
+          'fa-exclamation-circle');
+      });
+    }
+  }
+
+  handleKeyPress(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      this.handleOnSubmit(e);
     }
   }
 
@@ -69,64 +105,76 @@ class TaskForm extends React.Component {
         {priceCategory.name}</option>
     );
     return (
-      <form className="form-inline task-form" onSubmit={this.handleOnSubmit}>
-        <div className="form-group">
-          <label htmlFor="date">Datum</label>
-          <input
-            type="date"
-            name="date"
-            className="form-control form-control-sm"
-            value={this.state.date}
-            onChange={this.handleInputChange}
-            required
-          />
+      <div>
+        <div className="alert" id="task-form-alert">
+          <i className="fa" id="task-form-alert-icon" aria-hidden="true"></i>
+          <span id="task-form-alert-span"></span>
         </div>
-        <div id="entry" className="form-group form-group-textarea">
-          <label htmlFor="entry">Notering</label>
-          <textarea
-            className="form-control"
-            type="text-area"
-            value={this.state.entry}
-            name="entry"
-            rows="5"
-            onChange={this.handleInputChange}
-            required
-          >
-          </textarea>
-          <small id="entryHelpBlock" className="text-muted"></small>
-        </div>
-        <div className="form-group">
-          <label htmlFor="workedHours">Arbetad tid</label>
-          <input
-            type="number"
-            name="workedHours"
-            className="form-control form-control-sm"
-            value={this.state.workedHours}
-            onChange={this.handleInputChange}
-            min="0"
-            step="0.05"
-            required
-          />
-          <span id="entryHelpBlock" className="help-block"></span>
-        </div>
-        <div className="form-group">
-          <label htmlFor="priceCategoryId">Priskategori</label>
-          <select
-            className="form-control"
-            onChange={this.handleInputChange}
-            name="priceCategoryId"
-            value={this.state.priceCategoryId}
-            required
-          >
-            {priceCategoriesOptions}
-          </select>
-        </div>
-        <hr />
-        <div className="content-right">
-          <button className="btn btn-secondary" onClick={this.dismissBtnClicked}>Avbryt</button>
-          <button className="btn btn-success" type="submit">Spara</button>
-        </div>
-      </form>
+      {this.state.showForm ?
+        <form
+          className="form-inline task-form"
+          onSubmit={this.handleOnSubmit}
+          onKeyPress={this.handleKeyPress}
+        >
+          <div className="form-group">
+            <label htmlFor="date">Datum</label>
+            <input
+              type="date"
+              name="date"
+              className="form-control form-control-sm"
+              value={this.state.date}
+              onChange={this.handleInputChange}
+              required
+            />
+          </div>
+          <div id="entry" className="form-group form-group-textarea">
+            <label htmlFor="entry">Notering</label>
+            <textarea
+              className="form-control"
+              type="text-area"
+              value={this.state.entry}
+              name="entry"
+              rows="4"
+              onChange={this.handleInputChange}
+              required
+            >
+            </textarea>
+            <small id="entryHelpBlock" className="text-muted"></small>
+          </div>
+          <div className="form-group">
+            <label htmlFor="workedHours">Arbetad tid</label>
+            <input
+              type="number"
+              name="workedHours"
+              className="form-control form-control-sm"
+              value={this.state.workedHours}
+              onChange={this.handleInputChange}
+              min="0"
+              step="0.05"
+              required
+            />
+            <span id="entryHelpBlock" className="help-block"></span>
+          </div>
+          <div className="form-group">
+            <label htmlFor="priceCategoryId">Priskategori</label>
+            <select
+              className="form-control"
+              onChange={this.handleInputChange}
+              name="priceCategoryId"
+              value={this.state.priceCategoryId}
+              required
+            >
+              {priceCategoriesOptions}
+            </select>
+          </div>
+          <hr />
+          <div className="content-right">
+            <button className="btn btn-secondary" onClick={this.dismissBtnClicked}>Avbryt</button>
+            <button className="btn btn-success" type="submit">Spara</button>
+          </div>
+        </form>
+        : ''}
+      </div>
     );
   }
 }
@@ -137,7 +185,7 @@ TaskForm.propTypes = {
     id: React.PropTypes.number,
     date: React.PropTypes.string,
     entry: React.PropTypes.string,
-    workedHours: React.PropTypes.number,
+    workedHours: React.PropTypes.string,
     priceCategoryId: React.PropTypes.number,
   }),
 };
