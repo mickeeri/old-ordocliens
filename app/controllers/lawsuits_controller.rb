@@ -78,24 +78,17 @@ class LawsuitsController < ApplicationController
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
     @lawsuits = @lawsuits.sorted_by_client unless params[:search].present?
-    @lawsuits = @lawsuits.page(params[:page]).per_page(15)
+    @lawsuits = @lawsuits.page(params[:page]).per_page(50)
   end
 
   def fetch_lawsuit
     @lawsuit = Lawsuit.find(params[:id])
   end
 
-  # TODO: remove?
-  def links
-    [{ id: rand(100), name: "Ärenden", path: lawsuits_path }]
-  end
-
-  # TODO: remove price categories.
   def props
     { lawsuit: prepare(@lawsuit, LawsuitShowSerializer, root: false),
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),
-      expenses: prepare_array(@lawsuit.expenses.sorted),
-      price_categories: prepare_array(PriceCategory.all) }
+      expenses: prepare_array(@lawsuit.expenses.sorted) }
   end
 
   # Buildning slug with initials, year and id.
