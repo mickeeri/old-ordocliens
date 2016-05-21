@@ -2,22 +2,22 @@
   <li class="nav-item nav-li">
     <%=
       link_to "Ärenden",
-      lawsuits_path,
-      class: active_class?(['lawsuits', ''])
+      authenticated_root_path,
+      class: active_class?(authenticated_root_path)
     %>
   </li>
   <li class="nav-item nav-li">
     <%=
       link_to "Klienter",
       clients_path,
-      class: active_class?(['clients'])
+      class: active_class?(clients_path)
     %>
   </li>
   <li class="nav-item nav-li">
     <%=
       link_to "Motparter",
       counterparts_path,
-      class: active_class?(['counterparts'])
+      class: active_class?(counterparts_path)
     %>
   </li>
   <li class="nav-item dropdown pull-xs-right">
@@ -30,7 +30,7 @@
       <%= link_to "Logga ut", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
     </div>
   </li>
-  <% if current_page?(clients_path) || current_page?(authenticated_root_path) %>
+  <% if current_page?(clients_path) %>
     <li class="nav-item pull-xs-right">
       <%= link_to "Lägg till klient", new_client_path, class: "nav-link btn btn-success" %>
     </li>

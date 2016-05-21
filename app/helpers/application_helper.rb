@@ -1,9 +1,5 @@
 module ApplicationHelper
-  def active_class?(paths)
-    active = false
-    paths.each do |path|
-      active = request.url.include?(path) ? "nav-link active" : "nav-link"
-    end
-    active
+  def active_class?(path)
+    request.path == path ? "nav-link active" : "nav-link"
   end
 end
