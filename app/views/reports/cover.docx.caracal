@@ -25,11 +25,23 @@ docx.img 'http://familjejuristerna.com/images/fj%20transp.png' do
   right   50        # sets the right margin. units specified in pixels.
 end
 
+docx.hr do
+  color   'FFFFFF'   # sets the color of the line. defaults to auto.
+  size    8          # sets the thickness of the line. units in 1/8 points. defaults to 4.
+  spacing 50          # sets the spacing around the line. units in 1/8 points. defaults to 1.
+end
 
-docx.p "Handläggare: #{@lawsuit.user.first_name} #{@lawsuit.user.last_name}", top: 30000
+
+docx.p "Handläggare: #{@lawsuit.user.first_name} #{@lawsuit.user.last_name}", top: 3000
 docx.p "Startdatum: #{@lawsuit.created_at.strftime('%F')}"
 docx.p "Ärendetyp: #{@lawsuit.lawsuit_type.name}"
 docx.p "Jävskontroll utförd:"
+
+docx.hr do
+  color   'FFFFFF'   # sets the color of the line. defaults to auto.
+  size    8          # sets the thickness of the line. units in 1/8 points. defaults to 4.
+  spacing 50          # sets the spacing around the line. units in 1/8 points. defaults to 1.
+end
 
 docx.p "Klient", bold: true
 @lawsuit.clients.each do |client|

@@ -112,7 +112,7 @@ class TasksIndex extends React.Component {
             <a
               href={`/lawsuit_cover/${this.props.lawsuitId}.docx`}
               className="btn btn-primary"
-            >Aktomslag docx</a>
+            >Aktomslag .docx</a>
             <button
               className="btn btn-success"
               onClick={this.addTaskClicked}
