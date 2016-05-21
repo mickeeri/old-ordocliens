@@ -5,22 +5,26 @@ class LawsuitShow extends React.Component {
       closed: props.lawsuit.closed,
       page: 'time',
       message: '',
+      tasks: this.props.tasks,
     };
 
     this.togglePage = this.togglePage.bind(this);
     this.setMessage = this.setMessage.bind(this);
     this.toggleClosed = this.toggleClosed.bind(this);
     this.displayUpdateMessage = this.displayUpdateMessage.bind(this);
+    this.refreshTasks = this.refreshTasks.bind(this);
   }
 
   componentDidMount() {
     PubSub.subscribe('lawsuitUpdated', this.displayUpdateMessage);
     PubSub.subscribe('lawsuitClosedOpened', this.toggleClosed);
+    PubSub.subscribe('tasksTouched', this.refreshTasks);
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe('lawsuitUpdated');
     PubSub.unsubscribe('lawsuitClosedOpened');
+    PubSub.unsubscribe('tasksTouched');
   }
 
   setMessage() { // Show success message.
@@ -42,6 +46,18 @@ class LawsuitShow extends React.Component {
   togglePage(e) {
     e.preventDefault();
     this.setState({ page: e.target.name });
+  }
+
+  refreshTasks() {
+    const url = Routes.lawsuit_tasks_path(this.props.lawsuit.id);
+    makeGetRequest(url)
+      .success(response => {
+        this.setState({ tasks: response.tasks });
+        PubSub.publish('dismissEdit');
+      })
+      .error(xhr => {
+        console.error(url, xhr.status, xhr.statusText);
+      });
   }
 
   render() {
@@ -75,7 +91,7 @@ class LawsuitShow extends React.Component {
         {this.state.page === 'info' ?
           <LawsuitInfo initialLawsuit={this.props.lawsuit} closed={this.state.closed} /> :
           <TasksIndex
-            initialTasks={this.props.tasks}
+            tasks={this.state.tasks}
             initialExpenses={this.props.expenses}
             lawsuitId={this.props.lawsuit.id}
           />}

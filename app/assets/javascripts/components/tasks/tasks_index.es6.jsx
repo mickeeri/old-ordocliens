@@ -1,8 +1,8 @@
 class TasksIndex extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: this.props.initialTasks };
-    this.refreshTasks = this.refreshTasks.bind(this);
+    this.state = { tasks: this.props.tasks };
+    // this.refreshTasks = this.refreshTasks.bind(this);
     this.addTaskClicked = this.addTaskClicked.bind(this);
     this.scrollToTop = this.scrollToTop.bind(this);
     this.scrollToExpenses = this.scrollToExpenses.bind(this);
@@ -11,25 +11,25 @@ class TasksIndex extends React.Component {
     // TODO; move task table the own component.
   }
 
-  componentDidMount() {
-    PubSub.subscribe('tasksTouched', this.refreshTasks);
-  }
-
-  componentWillUnmount() {
-    PubSub.unsubscribe('tasksTouched');
-  }
-
-  refreshTasks() {
-    const url = Routes.lawsuit_tasks_path(this.props.lawsuitId);
-    makeGetRequest(url)
-      .success(response => {
-        this.setState({ tasks: response.tasks });
-        PubSub.publish('dismissEdit');
-      })
-      .error(xhr => {
-        console.error(url, xhr.status, xhr.statusText);
-      });
-  }
+  // componentDidMount() {
+  //   PubSub.subscribe('tasksTouched', this.refreshTasks);
+  // }
+  //
+  // componentWillUnmount() {
+  //   PubSub.unsubscribe('tasksTouched');
+  // }
+  //
+  // refreshTasks() {
+  //   const url = Routes.lawsuit_tasks_path(this.props.lawsuitId);
+  //   makeGetRequest(url)
+  //     .success(response => {
+  //       this.setState({ tasks: response.tasks });
+  //       PubSub.publish('dismissEdit');
+  //     })
+  //     .error(xhr => {
+  //       console.error(url, xhr.status, xhr.statusText);
+  //     });
+  // }
 
   scrollToTop() {
     $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -85,7 +85,7 @@ class TasksIndex extends React.Component {
   }
 
   render() {
-    const taskRows = this.state.tasks.map(task =>
+    const taskRows = this.props.tasks.map(task =>
       <TaskRow
         key={task.id}
         task={task}
@@ -161,7 +161,7 @@ class TasksIndex extends React.Component {
 }
 
 TasksIndex.propTypes = {
-  initialTasks: React.PropTypes.array.isRequired,
+  tasks: React.PropTypes.array.isRequired,
   initialExpenses: React.PropTypes.array.isRequired,
   lawsuitId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number,
