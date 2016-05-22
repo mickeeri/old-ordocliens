@@ -26,9 +26,23 @@ class LawsuitForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
+    const alert = $('#lawsuit-form-message');
     if (this.state.id) { // If it has id it is update.
-      makePutRequest(Routes.lawsuit_path(this.state.id, this.props.clientId),
-        { lawsuit: this.state }, 'lawsuitUpdated');
+      makePutRequest(
+        Routes.lawsuit_path(this.state.id, this.props.clientId),
+        { lawsuit: this.state })
+        .done(() => {
+          alert.text('Ärende uppdaterat');
+          alert.removeClass('text-danger');
+          alert.addClass('text-success');
+          alert.slideDown();
+          alert.delay(1000).slideUp(300);
+        })
+        .fail(xhr => {
+          alert.text(`Fel uppstod. Statuskod: ${xhr.status}`);
+          alert.addClass('text-danger');
+          alert.slideDown(300);
+        });
     } else { // Otherwise post.
       makePostRequest(
         `${Routes.lawsuits_path()}?client_id=${this.props.clientId}`,
@@ -44,10 +58,8 @@ class LawsuitForm extends React.Component {
   }
 
   handleCheckBoxChange(e) {
-    e.preventDefault();
     this.setState({ closed: !this.state.closed });
-    makePutRequest(Routes.lawsuit_path(this.state.id, this.props.clientId),
-      { lawsuit: { closed: this.state.closed } }, 'lawsuitUpdated');
+    this.handleOnSubmit(e);
   }
 
   handleCancelButtonClick(e) {
@@ -70,6 +82,9 @@ class LawsuitForm extends React.Component {
     const isEdit = this.state.id !== '';
     return (
       <form className="form form-inline" onSubmit={this.handleOnSubmit}>
+        <p className="hidden message" id="lawsuit-form-message">
+          {this.state.message}
+        </p>
         {isEdit ?
           <div>
             <strong>Skapat: </strong>{new Date(this.props.initialLawsuit.createdAt).yyyymmdd()}
