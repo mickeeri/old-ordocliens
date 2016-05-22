@@ -12,13 +12,13 @@ RSpec.feature "User signs in", type: :feature do
 
   scenario "with invalid password" do
     sign_in_with(user.email, "invalid_password")
-    expect(page).to have_content("Invalid email or password.")
+    expect(page).to have_content("Ogiltig e-post och/eller lösenord")
     expect(page).to have_content("Logga in")
   end
 
   scenario "with invalid username" do
     sign_in_with("invalid_username", user.password)
-    expect(page).to have_content("Invalid email or password.")
+    expect(page).to have_content("Ogiltig e-post och/eller lösenord")
     expect(page).to have_content("Logga in")
   end
 
@@ -40,8 +40,8 @@ RSpec.feature "User signs in", type: :feature do
 
   def sign_in_with(email, password)
     visit "/"
-    fill_in "Email", with: email
-    fill_in "Password", with: password
+    fill_in "E-post", with: email
+    fill_in "Lösenord", with: password
     click_button "Logga in"
   end
 end

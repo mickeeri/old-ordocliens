@@ -131,7 +131,7 @@ sv:
       greater_than: måste vara större än %{count}
       greater_than_or_equal_to: måste vara större än eller lika med %{count}
       inclusion: finns inte i listan
-      invalid: har fel format
+      invalid: är ogiltigt
       less_than: måste vara mindre än %{count}
       less_than_or_equal_to: måste vara mindre än eller lika med %{count}
       not_a_number: ska vara ett nummer

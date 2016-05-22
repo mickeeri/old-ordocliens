@@ -13,11 +13,19 @@ RSpec.describe LawsuitsController, type: :controller do
     create(:client)
   end
 
+  let(:lawsuit_type) do
+    create(:lawsuit_type)
+  end
+
+  let(:another_lawsuit_type) do
+    create(:another_lawsuit_type)
+  end
+
   it { should use_before_action(:authenticate_user!) }
 
   describe "POST create" do
     let(:lawsuit_attributes) do
-      { name: "Bodelning",
+      { lawsuit_type_id: lawsuit_type.id,
         court: "Östersunds tingsrätt",
         case_number: "T 123SA" }
     end
@@ -80,7 +88,7 @@ RSpec.describe LawsuitsController, type: :controller do
 
   describe "PUT #update" do
     let(:new_attributes) do
-      { name: "Edited name", closed: true }
+      { lawsuit_type_id: another_lawsuit_type.id, closed: true }
     end
 
     context "when not signed in" do
@@ -92,7 +100,7 @@ RSpec.describe LawsuitsController, type: :controller do
             format: :json
         expect(response).to have_http_status(401)
         lawsuit.reload
-        expect(lawsuit.name).to_not eq("Edited name")
+        expect(lawsuit.lawsuit_type.name).to_not eq(another_lawsuit_type.name)
         expect(lawsuit.closed).to_not eq(true)
       end
     end
@@ -107,7 +115,7 @@ RSpec.describe LawsuitsController, type: :controller do
             format: :json
         expect(response).to have_http_status(204)
         lawsuit.reload
-        expect(lawsuit.name).to eq("Edited name")
+        expect(lawsuit.lawsuit_type.name).to eq(another_lawsuit_type.name)
         expect(lawsuit.closed).to eq(true)
       end
 
