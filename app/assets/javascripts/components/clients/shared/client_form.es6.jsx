@@ -13,84 +13,92 @@ class ClientForm extends React.Component {
       city: props.client ? props.client.city : '',
       note: props.client ? props.client.note : '',
       lawsuitId: props.lawsuitId,
-      hasError: false,
+      message: '',
     };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleOnBlur = this.handleOnBlur.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   handleOnSubmit(e) {
     e.preventDefault();
-
-    if (this.state.hasError) {
-      return false;
+    // Validate all input fields before submitting. Only on POST.
+    if (!this.state.id) {
+      Array.from(e.target.getElementsByClassName('form-control')).forEach((input) => {
+        this.validate(input);
+      });
     }
 
-    if (this.state && this.state.id) { // If it has id it is an update.
-      makePutRequest(Routes.client_path(this.state.id),
-        { client: this.state }, 'clientUpdated');
-    } else {
-      if (this.state) { // Otherwise create new client.
-        // const action = this.props.lawsuitId ? 'clientListUpdated' : 'redirect';
-        // makePostRequest(Routes.clients_path(), { client: this.state }, action);
+    const alert = $('#client-form-message');
+
+    // If it has id it is an update.
+    if (this.state.id) {
+      makePutRequest(
+        Routes.client_path(this.state.id),
+        { client: this.state })
+        .done(() => {
+          alert.text('Klient uppdaterad');
+          alert.removeClass('text-danger');
+          alert.addClass('text-success');
+          alert.slideDown();
+          alert.delay(1000).slideUp(300);
+        })
+        .fail(xhr => {
+          // TODO: DRY.
+          if (xhr.status === 422) {
+            alert.text('Formuläret innehåller fel. Rätta till dem och försök igen.');
+          } else {
+            alert.text(`Fel uppstod. Statuskod: ${xhr.status}`);
+          }
+          alert.removeClass('text-success');
+          alert.addClass('text-danger');
+          alert.slideDown(300);
+        });
+    } else { // Otherwise create new client.
+      if (this.state) {
         $.post(Routes.clients_path(), { client: this.state }, res => {
           this.props.lawsuitId ?
             PubSub.publish('clientListUpdated') :
             window.location = res.client.link;
         })
         .fail(xhr => {
-          console.error(xhr.responseText, xhr.status, xhr.statusText);
+          if (xhr.status === 422) {
+            alert.text('Formuläret innehåller fel. Rätta till dem och försök igen.');
+          } else {
+            alert.text(`Fel uppstod. Statuskod: ${xhr.status}`);
+          }
+          alert.removeClass('text-success');
+          alert.addClass('text-danger');
+          alert.slideDown(300);
         });
       }
     }
   }
 
   handleInputChange(e) {
-    // if (e.target.name === 'ssn') {
-    //   if (!validatePersonalNumber(
-    //     e.target.value,
-    //     e.target.name,
-    //     false
-    //   )) {
-    //     return false;
-    //   }
-    // }
-
+    this.setState( {formTouched: true} );
     const nextState = {};
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);
   }
 
-  handleOnBlur(e) {
-    this.setState({ hasError: false });
+  validate(e) {
+    const input = e.target ? e.target : e;
 
-    if (e.target.name === 'firstName' || e.target.name === 'lastName') {
-      if (!validateStringLength(
-        e.target.value,
-        10,
-        e.target.name,
-        'Förnamn')) {
-        this.setState({ hasError: true });
-      }
+    if (input.name === 'firstName') {
+      validateStringLength(input.value, 40, 1, input.name, 'Förnamn');
+
     }
-
-    if (e.target.name === 'ssn') {
-      if (!validatePersonalNumber(
-        e.target.value,
-        e.target.name,
-        true
-      )) {
-        this.setState({ hasError: true });
-      }
+    if (input.name === 'lastName') {
+      validateStringLength(input.value, 60, 1, input.name, 'Efternamn');
     }
-
-    if (e.target.name === 'email') {
-      if (!validateEmail(e.target.value, e.target.name)) {
-        this.setState({ hasError: true });
-      }
+    if (input.name === 'ssn') {
+      validatePersonalNumber(input.value, input.name, true);
+    }
+    if (input.name === 'email') {
+      validateEmail(input.value, input.name, false);
     }
   }
 
@@ -110,6 +118,9 @@ class ClientForm extends React.Component {
         <h3>{this.props.header}</h3>
         <hr />
         <form onSubmit={this.handleOnSubmit} noValidate>
+          <p className="hidden message" id="client-form-message">
+            {this.state.message}
+          </p>
           <div id="firstNameGroup" className="form-group row">
             <label className="col-sm-4 form-control-label" htmlFor="firstName">Förnamn</label>
             <div className="col-sm-8">
@@ -121,8 +132,7 @@ class ClientForm extends React.Component {
                 className="form-control form-control-sm col-sm-10"
                 value={this.state.firstName}
                 onChange={this.handleInputChange}
-                onBlur={this.handleOnBlur}
-                onBluir
+                onBlur={this.validate}
                 autoFocus={!isEdit}
               />
               <small id="firstNameHelper" className="text-muted"></small>
@@ -139,7 +149,7 @@ class ClientForm extends React.Component {
                 className="form-control form-control-sm"
                 value={this.state.lastName}
                 onChange={this.handleInputChange}
-                onBlur={this.handleOnBlur}
+                onBlur={this.validate}
                 required="true"
               />
               <small id="lastNameHelper" className="text-muted"></small>
@@ -156,7 +166,7 @@ class ClientForm extends React.Component {
                 className="form-control form-control-sm"
                 value={this.state.ssn}
                 onChange={this.handleInputChange}
-                onBlur={this.handleOnBlur}
+                onBlur={this.validate}
               />
               <small id="ssnHelper" className="text-muted"></small>
             </div>
@@ -173,7 +183,7 @@ class ClientForm extends React.Component {
                 className="form-control form-control-sm"
                 value={this.state.email}
                 onChange={this.handleInputChange}
-                onBlur={this.handleOnBlur}
+                onBlur={this.validate}
               />
               <small id="emailHelper" className="text-muted"></small>
             </div>
@@ -258,6 +268,7 @@ class ClientForm extends React.Component {
             <button
               className="btn btn-success"
               type="submit"
+              disabled={false}
             >{isEdit ? 'Uppdatera' : 'Spara klient'}
             </button>
           </div>
