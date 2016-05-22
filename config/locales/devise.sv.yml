@@ -15,13 +15,14 @@ sv:
       unauthenticated: 'Du måste logga in eller skapa ett konto innan du kan fortsätta.'
       unconfirmed: 'Du måste bekräfta ditt konto innan du kan fortsätta.'
       locked: 'Ditt konto är låst.'
-      invalid: 'Ogiltig epost eller lösenord.'
+      invalid: 'Ogiltig e-post och/eller lösenord'
       invalid_token: 'Ogiltig token för autentisering.'
+      not_found_in_database: "Ogiltig e-post och/eller lösenord."
       timeout: 'Din session är inte längre giltig, vänligen logga in igen för att fortsätta.'
       inactive: 'Ditt konto har inte aktiverats ännu.'
     sessions:
-      signed_in: 'Inloggning lyckades.'
-      signed_out: 'Utloggad.'
+      signed_in: 'Inloggad!'
+      signed_out: 'Utloggad!'
     passwords:
       send_instructions: 'Du kommer få epost med instruktioner om hur du kan återställa ditt lösenord inom några minuter.'
       updated: 'Ditt lösenord har uppdaterats. Du är nu inloggad.'
