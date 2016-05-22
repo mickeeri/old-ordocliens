@@ -23,8 +23,8 @@ class ClientShow extends React.Component {
   }
 
   setMessage() {
-    $('#updatedClientMessage').fadeIn();
-    $('#updatedClientMessage').fadeOut(2000);
+    $('#updatedClientMessage').slideDown();
+    $('#updatedClientMessage').slideUp(2000);
   }
 
   render() {
