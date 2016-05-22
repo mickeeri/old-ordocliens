@@ -44,9 +44,12 @@ class ClientForm extends React.Component {
           alert.addClass('text-success');
           alert.slideDown();
           alert.delay(1000).slideUp(300);
+          // Remove green or red text when updated successfully.
+          $('.form-group').removeClass('has-success');
+          $('.form-group').removeClass('has-error');
         })
         .fail(xhr => {
-          // TODO: DRY.
+          // TODO: DRY. Use util methods.
           if (xhr.status === 422) {
             alert.text('Formuläret innehåller fel. Rätta till dem och försök igen.');
           } else {
@@ -58,6 +61,7 @@ class ClientForm extends React.Component {
         });
     } else { // Otherwise create new client.
       if (this.state) {
+        // TODO: Use makePostRequest instead.
         $.post(Routes.clients_path(), { client: this.state }, res => {
           this.props.lawsuitId ?
             PubSub.publish('clientListUpdated') :
@@ -78,7 +82,7 @@ class ClientForm extends React.Component {
   }
 
   handleInputChange(e) {
-    this.setState( {formTouched: true} );
+    this.setState({ formTouched: true });
     const nextState = {};
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);
@@ -89,7 +93,6 @@ class ClientForm extends React.Component {
 
     if (input.name === 'firstName') {
       validateStringLength(input.value, 40, 1, input.name, 'Förnamn');
-
     }
     if (input.name === 'lastName') {
       validateStringLength(input.value, 60, 1, input.name, 'Efternamn');
@@ -116,7 +119,6 @@ class ClientForm extends React.Component {
     return (
       <div>
         <h3>{this.props.header}</h3>
-        <hr />
         <form onSubmit={this.handleOnSubmit} noValidate>
           <p className="hidden message" id="client-form-message">
             {this.state.message}

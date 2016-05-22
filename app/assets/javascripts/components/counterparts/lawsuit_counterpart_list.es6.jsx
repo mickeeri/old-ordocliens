@@ -27,6 +27,8 @@ class LawsuitCounterpartList extends React.Component {
   render() {
     return (
       <div className="card card-block">
+        <p className="hidden message" id="counterpart-list-message">
+        </p>
         <h3 className="card-title">
           {this.props.counterparts.length > 1 ? 'Motparter' : 'Motpart'}
         </h3>

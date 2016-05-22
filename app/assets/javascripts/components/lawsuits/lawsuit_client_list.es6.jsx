@@ -20,13 +20,18 @@ class LawsuitClientList extends React.Component {
         PubSub.publish('dismissEdit');
       })
       .error(xhr => {
-        console.error(url, xhr.status, xhr.statusText);
+        const alert = $('#lawsuit-client-list-message');
+        alert.text('Problem när klienter skulle uppdateras.');
+        alert.addClass('text-danger');
+        alert.slideDown(300);
       });
   }
 
   render() {
     return (
       <div className="card card-block">
+        <p className="hidden message" id="lawsuit-client-list-message">
+        </p>
         <h3 className="card-title">{this.props.clients.length > 1 ? 'Klienter' : 'Klient'}</h3>
         <ul className="show-page-list">
           {this.state.clients.map(client =>

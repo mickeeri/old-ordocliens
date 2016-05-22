@@ -303,7 +303,7 @@ h1 {
  }
 
 .message {
-  font-weight: 600;
+  // font-weight: 600;
 }
 
 .message.text-danger {
@@ -338,7 +338,7 @@ h1 {
 }
 
 #task-form-alert {
-  display: none;
+  // display: none;
 
   // position: absolute;
   // top: 25%;
@@ -349,10 +349,21 @@ h1 {
   // z-index: 1000;
 }
 
-#task-form-alert.alert-success {
+
+#task-form-alert.alert-success, #counterpart-modal-alert.alert-success {
   margin: 0;
   padding: 20px;
 }
+
+.modal-alert {
+  display: none;
+}
+
+.modal-alert.alert-success {
+  margin: 0;
+  padding: 20px;
+}
+
 
 #updatedLawsuitMessage {
   display:none;

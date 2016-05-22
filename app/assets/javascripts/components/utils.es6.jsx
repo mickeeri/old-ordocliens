@@ -9,16 +9,7 @@ function makePutRequest(url, payload) {
 }
 
 function makePostRequest(url, payload, action) {
-  $.post(url, payload, res => {
-    if (action === 'redirect') {
-      window.location = res.link;
-    } else {
-      PubSub.publish(action);
-    }
-  })
-  .fail(xhr => {
-    console.error(xhr.responseText, xhr.status, xhr.statusText);
-  });
+  return $.post(url, payload);
 }
 
 function makeGetRequest(url) {
@@ -36,7 +27,7 @@ function makeDeleteRequest(url) {
   });
 }
 
-// Showing success or error messages in modal forms. 
+// Showing success or error messages in modal forms.
 function showAlertInModal(message, alertId, alertClass, icon) {
   $(alertId).fadeIn();
   $(alertId).addClass(alertClass);
@@ -46,4 +37,22 @@ function showAlertInModal(message, alertId, alertClass, icon) {
     $('.modal-header').hide();
     $('.modal-body').addClass('no-padding');
   }
+}
+
+function showErrorText(message, id) {
+  const alert = $(id);
+  alert.text(message);
+  alert.removeClass('text-success');
+  alert.addClass('text-danger');
+  alert.slideDown(300);
+}
+
+function showSuccessText(message, alertId) {
+  // TODO: Could move this to utils.
+  const alert = $(alertId);
+  alert.text(message);
+  alert.removeClass('text-danger');
+  alert.addClass('text-success');
+  alert.slideDown();
+  alert.delay(1000).slideUp(300);
 }

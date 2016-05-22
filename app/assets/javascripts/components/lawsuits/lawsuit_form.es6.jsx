@@ -7,6 +7,7 @@ class LawsuitForm extends React.Component {
       court: props.initialLawsuit ? props.initialLawsuit.court : '',
       caseNumber: props.initialLawsuit ? props.initialLawsuit.caseNumber : '',
       closed: props.initialLawsuit ? props.initialLawsuit.closed : false,
+      showForm: true,
     };
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
@@ -46,8 +47,28 @@ class LawsuitForm extends React.Component {
     } else { // Otherwise post.
       makePostRequest(
         `${Routes.lawsuits_path()}?client_id=${this.props.clientId}`,
-        { lawsuit: this.state },
-        'lawsuitsTouched');
+        { lawsuit: this.state })
+        .done(() => {
+          // Replace form with success message.
+          this.setState({ showForm: false });
+          showAlertInModal(
+            'Ärende sparat',
+            '#lawsuit-modal-alert',
+            'alert-success',
+            'fa-check');
+          setTimeout(() => {
+            PubSub.publish('lawsuitsTouched');
+          }, 1000);
+        })
+        .fail(xhr => {
+          if (xhr.status === 422) {
+            alert.text('Formuläret innehåller fel. Rätta till dem och försök igen.');
+          } else {
+            alert.text(`Fel uppstod. Statuskod: ${xhr.status}`);
+          }
+          alert.addClass('text-danger');
+          alert.slideDown(300);
+        });
     }
   }
 
@@ -81,53 +102,61 @@ class LawsuitForm extends React.Component {
   render() {
     const isEdit = this.state.id !== '';
     return (
-      <form className="form form-inline" onSubmit={this.handleOnSubmit}>
-        <p className="hidden message" id="lawsuit-form-message">
-          {this.state.message}
-        </p>
-        {isEdit ?
-          <div>
-            <strong>Skapat: </strong>{new Date(this.props.initialLawsuit.createdAt).yyyymmdd()}
-          </div> :
-          ''}
-        <div className="form-group">
-          <LawsuitTypesDropdown
-            selectedId={this.state.lawsuitTypeId}
-            changeEvent={this.setLawsuitType}
-          />
+      <div>
+        <div className="alert modal-alert" id="lawsuit-modal-alert">
+          <i className="fa" id="lawsuit-modal-alert-icon" aria-hidden="true"></i>
+          <span id="lawsuit-modal-alert-span"></span>
         </div>
-        <div className="form-group">
-          <label htmlFor="court">Domstol</label>
-          <input
-            className="form-control form-control-sm"
-            name="court"
-            type="text"
-            value={this.state.court}
-            onChange={this.handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="caseNumber">Målnummer</label>
-          <input
-            name="caseNumber"
-            className="form-control form-control-sm"
-            value={this.state.caseNumber}
-            onChange={this.handleInputChange}
-          />
-        </div>
-        <hr />
-        <div className="content-right">
-          {isEdit ? '' :
-            <button
-              className="btn btn-secondary"
-              onClick={this.handleCancelButtonClick}
-            >Avbryt
-            </button>}
-          <button className="btn btn-primary" type="submit">
-            {isEdit ? 'Uppdatera' : 'Spara ärende'}
-          </button>
-        </div>
-      </form>
+        {this.state.showForm ?
+          <form className="form form-inline" onSubmit={this.handleOnSubmit}>
+            <p className="hidden message" id="lawsuit-form-message">
+              {this.state.message}
+            </p>
+            {isEdit ?
+              <div>
+                <strong>Skapat: </strong>{new Date(this.props.initialLawsuit.createdAt).yyyymmdd()}
+              </div> :
+              ''}
+            <div className="form-group">
+              <LawsuitTypesDropdown
+                selectedId={this.state.lawsuitTypeId}
+                changeEvent={this.setLawsuitType}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="court">Domstol</label>
+              <input
+                className="form-control form-control-sm"
+                name="court"
+                type="text"
+                value={this.state.court}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="caseNumber">Målnummer</label>
+              <input
+                name="caseNumber"
+                className="form-control form-control-sm"
+                value={this.state.caseNumber}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <hr />
+            <div className="content-right">
+              {isEdit ? '' :
+                <button
+                  className="btn btn-secondary"
+                  onClick={this.handleCancelButtonClick}
+                >Avbryt
+                </button>}
+              <button className="btn btn-primary" type="submit">
+                {isEdit ? 'Uppdatera' : 'Spara ärende'}
+              </button>
+            </div>
+          </form>
+        : ''}
+      </div>
     );
   }
 }
