@@ -2,7 +2,6 @@ class TasksIndex extends React.Component {
   constructor(props) {
     super(props);
     this.state = { tasks: this.props.tasks };
-    // this.refreshTasks = this.refreshTasks.bind(this);
     this.addTaskClicked = this.addTaskClicked.bind(this);
     this.scrollToTop = this.scrollToTop.bind(this);
     this.scrollToExpenses = this.scrollToExpenses.bind(this);
@@ -10,26 +9,6 @@ class TasksIndex extends React.Component {
     this.renderForm = this.renderForm.bind(this);
     // TODO; move task table the own component.
   }
-
-  // componentDidMount() {
-  //   PubSub.subscribe('tasksTouched', this.refreshTasks);
-  // }
-  //
-  // componentWillUnmount() {
-  //   PubSub.unsubscribe('tasksTouched');
-  // }
-  //
-  // refreshTasks() {
-  //   const url = Routes.lawsuit_tasks_path(this.props.lawsuitId);
-  //   makeGetRequest(url)
-  //     .success(response => {
-  //       this.setState({ tasks: response.tasks });
-  //       PubSub.publish('dismissEdit');
-  //     })
-  //     .error(xhr => {
-  //       console.error(url, xhr.status, xhr.statusText);
-  //     });
-  // }
 
   scrollToTop() {
     $('html, body').animate({ scrollTop: 0 }, 'slow');
