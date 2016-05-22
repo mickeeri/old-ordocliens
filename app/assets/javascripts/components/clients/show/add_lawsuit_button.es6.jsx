@@ -9,7 +9,7 @@ class AddLawsuitButton extends React.Component {
     ReactDOM.render(
       <EditFormModal
         form={<LawsuitForm clientId={this.props.clientId} />}
-        header="Lägg till mål"
+        header="Lägg till ärende"
       />,
     document.getElementById('editModalContainer')
     );

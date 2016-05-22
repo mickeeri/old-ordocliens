@@ -26,7 +26,7 @@ class TaskRow extends React.Component {
     // Render modal...
     ReactDOM.render(
       <EditFormModal
-        header="Redigera tidkort"
+        header="Redigera arbete"
         form={
           <TaskForm
             lawsuitId={this.props.lawsuitId}
