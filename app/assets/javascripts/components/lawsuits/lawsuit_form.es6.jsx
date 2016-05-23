@@ -2,18 +2,19 @@ class LawsuitForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.initialLawsuit ? props.initialLawsuit.id : '',
-      lawsuitTypeId: props.initialLawsuit ? props.initialLawsuit.lawsuitType.id : '',
-      court: props.initialLawsuit ? props.initialLawsuit.court : '',
       caseNumber: props.initialLawsuit ? props.initialLawsuit.caseNumber : '',
       closed: props.initialLawsuit ? props.initialLawsuit.closed : false,
+      court: props.initialLawsuit ? props.initialLawsuit.court : '',
+      id: props.initialLawsuit ? props.initialLawsuit.id : '',
+      lawsuitTypeId: props.initialLawsuit ? props.initialLawsuit.lawsuitType.id : '',
       showForm: true,
     };
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
-    this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
     this.fetchLawsuitTypes = this.fetchLawsuitTypes.bind(this);
+    this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
+    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.setLawsuitType = this.setLawsuitType.bind(this);
   }
 
@@ -23,6 +24,13 @@ class LawsuitForm extends React.Component {
 
   setLawsuitType(e) {
     this.setState({ lawsuitTypeId: e.target.value });
+  }
+
+  // Submit when pressing Enter.
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.handleOnSubmit(e);
+    }
   }
 
   handleOnSubmit(e) {
@@ -108,7 +116,11 @@ class LawsuitForm extends React.Component {
           <span id="lawsuit-modal-alert-span"></span>
         </div>
         {this.state.showForm ?
-          <form className="form form-inline" onSubmit={this.handleOnSubmit}>
+          <form
+            className="form form-inline"
+            onKeyPress={this.handleKeyPress}
+            onSubmit={this.handleOnSubmit}
+          >
             <p className="hidden message" id="lawsuit-form-message">
               {this.state.message}
             </p>
@@ -119,7 +131,7 @@ class LawsuitForm extends React.Component {
               ''}
             <div className="form-group">
               <LawsuitTypesDropdown
-                selectedId={this.state.lawsuitTypeId}
+                selectedId={parseInt(this.state.lawsuitTypeId, 10)}
                 changeEvent={this.setLawsuitType}
               />
             </div>
@@ -150,7 +162,7 @@ class LawsuitForm extends React.Component {
                   onClick={this.handleCancelButtonClick}
                 >Avbryt
                 </button>}
-              <button className="btn btn-primary" type="submit">
+              <button className="btn btn-success" type="submit">
                 {isEdit ? 'Uppdatera' : 'Spara ärende'}
               </button>
             </div>
