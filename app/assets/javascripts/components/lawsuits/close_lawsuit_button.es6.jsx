@@ -13,7 +13,14 @@ class CloseLawsuitButton extends React.Component {
     const request = !this.state.closed;
     this.setState({ closed: request });
     makePutRequest(Routes.lawsuit_path(this.props.lawsuitId),
-      { lawsuit: { closed: request } }, 'lawsuitClosedOpened');
+      { lawsuit: { closed: request } })
+      .done(() => {
+        PubSub.publish('lawsuitClosedOpened');
+      })
+      .fail(xhr => {
+        console.log(xhr);
+        showErrorText(`Fel uppstod. Statuskod: ${xhr.status}`, '#lawsuit-form-message');
+      });
   }
 
   render() {
