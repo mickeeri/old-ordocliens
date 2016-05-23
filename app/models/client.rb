@@ -12,7 +12,10 @@ class Client < ActiveRecord::Base
   validates :last_name, presence: true, length: { maximum: 60 }
   VALID_SSN_REGEX = /\A[0-9]{6}-[0-9]{4}\z/
   validates :ssn, presence: true, format: { with: VALID_SSN_REGEX }
-
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  validates :email, length: { maximum: 255 },
+                    format: { with: VALID_EMAIL_REGEX },
+                    allow_blank: true
   # Scopes
   scope :users_clients, -> (current_user) { where(user: current_user) }
   scope :sorted, -> { order(last_name: :asc) }
