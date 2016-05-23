@@ -89,8 +89,7 @@ class CounterpartForm extends React.Component {
         </div>
         {this.state.showForm ?
           <form className="form form-inline" onSubmit={this.handleOnSubmit}>
-            <p className="hidden message" id="counterpart-form-message">
-            </p>
+            <p className="hidden message" id="counterpart-form-message"></p>
             <FormGroup
               name="name"
               type="text"

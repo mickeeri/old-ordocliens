@@ -8,7 +8,7 @@ class DeleteLawsuitButton extends React.Component {
           url={Routes.lawsuit_path(this.props.lawsuitId)}
           redirectTo={this.props.clientId ?
             Routes.client_path(this.props.clientId) :
-            Routes.clients_path()}
+            Routes.lawsuits_path()}
         />
         <div className="row">
           <div className="col-md-12">

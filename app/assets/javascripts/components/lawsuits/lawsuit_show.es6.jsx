@@ -3,31 +3,34 @@ class LawsuitShow extends React.Component {
     super(props);
     this.state = {
       closed: props.lawsuit.closed,
-      page: 'time',
+      expenses: this.props.expenses,
       message: '',
-      tasks: this.props.tasks,
-    };
-
-    this.togglePage = this.togglePage.bind(this);
+      page: 'time',
+      tasks: this.props.tasks };
+    this.displayUpdateMessage = this.displayUpdateMessage.bind(this);
+    this.refreshExpenses = this.refreshExpenses.bind(this);
+    this.refreshTasks = this.refreshTasks.bind(this);
     this.setMessage = this.setMessage.bind(this);
     this.toggleClosed = this.toggleClosed.bind(this);
-    this.displayUpdateMessage = this.displayUpdateMessage.bind(this);
-    this.refreshTasks = this.refreshTasks.bind(this);
+    this.togglePage = this.togglePage.bind(this);
   }
 
   componentDidMount() {
-    PubSub.subscribe('lawsuitUpdated', this.displayUpdateMessage);
+    PubSub.subscribe('expensesTouched', this.refreshExpenses);
     PubSub.subscribe('lawsuitClosedOpened', this.toggleClosed);
+    PubSub.subscribe('lawsuitUpdated', this.displayUpdateMessage);
     PubSub.subscribe('tasksTouched', this.refreshTasks);
   }
 
   componentWillUnmount() {
-    PubSub.unsubscribe('lawsuitUpdated');
+    PubSub.unsubscribe('expensesTouched');
     PubSub.unsubscribe('lawsuitClosedOpened');
+    PubSub.unsubscribe('lawsuitUpdated');
     PubSub.unsubscribe('tasksTouched');
   }
 
-  setMessage() { // Show success message.
+  // Show success message on update.
+  setMessage() {
     $('#updatedLawsuitMessage').fadeIn();
     $('#updatedLawsuitMessage').fadeOut(2000);
   }
@@ -56,6 +59,19 @@ class LawsuitShow extends React.Component {
         PubSub.publish('dismissEdit');
       })
       .error(xhr => {
+        console.error(url, xhr.status, xhr.statusText);
+      });
+  }
+
+  refreshExpenses() {
+    const url = Routes.lawsuit_expenses_path(this.props.lawsuit.id);
+    makeGetRequest(url)
+      .success(response => {
+        this.setState({ expenses: response.expenses });
+        PubSub.publish('dismissEdit');
+      })
+      .error(xhr => {
+        // TODO: Message in dom.
         console.error(url, xhr.status, xhr.statusText);
       });
   }
@@ -92,7 +108,7 @@ class LawsuitShow extends React.Component {
           <LawsuitInfo initialLawsuit={this.props.lawsuit} closed={this.state.closed} /> :
           <TasksIndex
             tasks={this.state.tasks}
-            initialExpenses={this.props.expenses}
+            expenses={this.state.expenses}
             lawsuitId={this.props.lawsuit.id}
           />}
       </div>

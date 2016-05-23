@@ -8,7 +8,7 @@ function makePutRequest(url, payload) {
   });
 }
 
-function makePostRequest(url, payload, action) {
+function makePostRequest(url, payload) {
   return $.post(url, payload);
 }
 
@@ -48,7 +48,6 @@ function showErrorText(message, id) {
 }
 
 function showSuccessText(message, alertId) {
-  // TODO: Could move this to utils.
   const alert = $(alertId);
   alert.text(message);
   alert.removeClass('text-danger');

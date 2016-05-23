@@ -6,27 +6,11 @@ class LawsuitTypesDropdown extends React.Component {
       selectedLawsuitType: '',
     };
     this.fetchLawsuitTypes = this.fetchLawsuitTypes.bind(this);
-    // his.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   componentDidMount() {
     this.fetchLawsuitTypes();
   }
-
-  // handleSelectChange(e) {
-  //   this.setState({ selectedLawsuitType: e.target.value });
-  // }
-
-  // handleOnSubmit(e) {
-  //   e.preventDefault();
-  //   makePutRequest(Routes.client_path(this.state.selectedLawsuitType),
-  //     { client: { lawsuit_id: this.props.lawsuitId } }, 'clientListUpdated');
-  // }
-
-  // dismissBtnClicked(e) {
-  //   e.preventDefault();
-  //   PubSub.publish('dismissEdit');
-  // }
 
   fetchLawsuitTypes() {
     const url = Routes.lawsuit_types_path();
