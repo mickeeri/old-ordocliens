@@ -1,18 +1,9 @@
 class ExpensesIndex extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { expenses: props.initialExpenses };
-    this.refreshExpenses = this.refreshExpenses.bind(this);
-    this.handleEditClick = this.handleEditClick.bind(this);
+    this.state = { expenses: props.expenses };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
-  }
-
-  componentDidMount() {
-    PubSub.subscribe('expensesTouched', this.refreshExpenses);
-  }
-
-  componentWillUnmount() {
-    PubSub.unsubscribe('expensesTouched');
+    this.handleEditClick = this.handleEditClick.bind(this);
   }
 
   handleEditClick(expense) {
@@ -33,7 +24,6 @@ class ExpensesIndex extends React.Component {
   }
 
   handleDeleteClick(expenseId) {
-    console.log(expenseId);
     ReactDOM.render(
       <ConfirmDeleteModal
         target="deleteExpense"
@@ -43,18 +33,6 @@ class ExpensesIndex extends React.Component {
       document.getElementById('editModalContainer')
     );
     $('#deleteExpense').modal();
-  }
-
-  refreshExpenses() {
-    const url = Routes.lawsuit_expenses_path(this.props.lawsuitId);
-    makeGetRequest(url)
-      .success(response => {
-        this.setState({ expenses: response.expenses });
-        PubSub.publish('dismissEdit');
-      })
-      .error(xhr => {
-        console.error(url, xhr.status, xhr.statusText);
-      });
   }
 
   render() {
@@ -70,7 +48,7 @@ class ExpensesIndex extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.expenses.map(expense =>
+            {this.props.expenses.map(expense =>
               <tr key={expense.id}>
                 <td>{expense.entry}</td>
                 <td className="text-nowrap">{parseFloat(expense.price).toFixed(2)} kr</td>
@@ -101,6 +79,6 @@ class ExpensesIndex extends React.Component {
 }
 
 ExpensesIndex.propTypes = {
-  initialExpenses: React.PropTypes.array.isRequired,
+  expenses: React.PropTypes.array.isRequired,
   lawsuitId: React.PropTypes.number.isRequired,
 };

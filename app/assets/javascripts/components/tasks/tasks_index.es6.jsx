@@ -1,12 +1,14 @@
 class TasksIndex extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: this.props.tasks };
+    this.state = {
+      tasks: this.props.tasks,
+      expenses: this.props.expenses };
     this.addTaskClicked = this.addTaskClicked.bind(this);
-    this.scrollToTop = this.scrollToTop.bind(this);
-    this.scrollToExpenses = this.scrollToExpenses.bind(this);
     this.handleAddButtonClicked = this.handleAddButtonClicked.bind(this);
     this.renderForm = this.renderForm.bind(this);
+    this.scrollToExpenses = this.scrollToExpenses.bind(this);
+    this.scrollToTop = this.scrollToTop.bind(this);
     // TODO; move task table the own component.
   }
 
@@ -131,7 +133,7 @@ class TasksIndex extends React.Component {
           </div>
         </div>
         <ExpensesIndex
-          initialExpenses={this.props.initialExpenses}
+          expenses={this.props.expenses}
           lawsuitId={this.props.lawsuitId}
         />
       </div>
@@ -140,8 +142,8 @@ class TasksIndex extends React.Component {
 }
 
 TasksIndex.propTypes = {
-  tasks: React.PropTypes.array.isRequired,
-  initialExpenses: React.PropTypes.array.isRequired,
-  lawsuitId: React.PropTypes.number.isRequired,
   clientId: React.PropTypes.number,
+  expenses: React.PropTypes.array.isRequired,
+  lawsuitId: React.PropTypes.number.isRequired,
+  tasks: React.PropTypes.array.isRequired,
 };

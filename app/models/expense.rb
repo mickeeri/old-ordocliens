@@ -4,5 +4,5 @@ class Expense < ActiveRecord::Base
   validates :entry, presence: true
   validates :price, presence: true
 
-  scope :sorted, -> { order(created_at: :desc) }
+  scope :sorted, -> { order(created_at: :asc) }
 end
