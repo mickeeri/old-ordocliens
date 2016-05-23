@@ -101,6 +101,7 @@ class ClientForm extends React.Component {
       validatePersonalNumber(input.value, input.name, true);
     }
     if (input.name === 'email') {
+      validateStringLength(input.value, 255, '', input.name, 'E-post');
       validateEmail(input.value, input.name, false);
     }
   }
