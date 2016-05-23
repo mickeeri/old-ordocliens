@@ -54,7 +54,7 @@ class ClientShow extends React.Component {
             <div className="row">
               <div className="col-md-12">
                 <LawsuitsList
-                  lawsuits={this.props.initialClient.lawsuits}
+                  lawsuits={this.props.lawsuits}
                   clientId={this.props.initialClient.id}
                 />
               </div>
@@ -97,5 +97,6 @@ ClientShow.propTypes = {
     lawsuits: React.PropTypes.array,
     counterparts: React.PropTypes.array,
   }),
+  lawsuits: React.PropTypes.array.isRequired,
   // counterparts: React.PropTypes.array.isRequired,
 };

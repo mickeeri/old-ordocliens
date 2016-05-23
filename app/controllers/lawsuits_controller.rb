@@ -18,11 +18,11 @@ class LawsuitsController < ApplicationController
       end
       format.json do
         if params[:page].present?
-          render json: @lawsuits, meta: pagination_dict(@lawsuits)
+          render json: @lawsuits.sorted, meta: pagination_dict(@lawsuits)
         else
           # For lawsuit list on client page.
           @lawsuits = Client.find(params[:client_id]).lawsuits
-          respond_with @lawsuits
+          respond_with @lawsuits.sorted
         end
       end
     end

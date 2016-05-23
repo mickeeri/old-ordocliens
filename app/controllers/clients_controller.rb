@@ -108,6 +108,7 @@ class ClientsController < ApplicationController
   end
 
   def show_props
-    { initial_client: prepare(@client, ClientShowSerializer, root: false) }
+    { initial_client: prepare(@client, ClientShowSerializer, root: false),
+      lawsuits: prepare_array(@client.lawsuits.sorted) }
   end
 end
