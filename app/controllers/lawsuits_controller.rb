@@ -44,9 +44,14 @@ class LawsuitsController < ApplicationController
 
   def create
     @lawsuit = current_user.lawsuits.build(lawsuit_params)
-    client = Client.find(params[:client_id])
-    @lawsuit.clients << client
     add_slug if @lawsuit.save
+    client = Client.find(params[:client_id])
+    # @lawsuit.clients << client
+    paricipation = Participation.new(
+      lawsuit_id: @lawsuit.id,
+      client_id: client.id,
+      is_primary: true)
+    paricipation.save
     respond_with @lawsuit
   end
 

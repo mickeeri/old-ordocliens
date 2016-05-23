@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523121515) do
+ActiveRecord::Schema.define(version: 20160523190809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20160523121515) do
     t.integer  "lawsuit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "is_primary"
   end
 
   add_index "participations", ["client_id"], name: "index_participations_on_client_id", using: :btree
