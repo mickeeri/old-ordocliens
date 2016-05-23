@@ -106,7 +106,7 @@ class TaskForm extends React.Component {
     );
     return (
       <div>
-        <div className="alert" id="task-form-alert">
+        <div className="alert modal-alert" id="task-form-alert">
           <i className="fa" id="task-form-alert-icon" aria-hidden="true"></i>
           <span id="task-form-alert-span"></span>
         </div>

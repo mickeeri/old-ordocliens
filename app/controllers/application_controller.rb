@@ -20,10 +20,12 @@ class ApplicationController < ActionController::Base
   end
 
   # To serialize data to React components if not json.
-  def prepare_array(array)
-    ActiveModel::ArraySerializer.new(array, each_serializer: serializer(array))
+  def prepare_array(array, pref_serializer = nil)
+    this_serializer = serializer(array, pref_serializer)
+    ActiveModel::ArraySerializer.new(array, each_serializer: this_serializer)
   end
 
+  # TODO: Check if correct serializer is used.
   def prepare(resource, pref_serializer = nil, options = {})
     if pref_serializer
       pref_serializer.new(resource, options)
@@ -32,11 +34,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def serializer(resource)
-    if resource.respond_to? :name
-      "#{resource.name}Serializer".safe_constantize
+  def serializer(resource, pref_serializer)
+    if pref_serializer
+      "#{resource.name}#{pref_serializer}".safe_constantize
     else
-      "#{resource.class}Serializer".safe_constantize
+      "#{resource.name}Serializer".safe_constantize
     end
   end
 

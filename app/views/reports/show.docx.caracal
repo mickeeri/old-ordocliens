@@ -13,31 +13,45 @@ docx.h1 @lawsuit.lawsuit_type.name
 #-----------------------------------------------------
 # Works table
 #-----------------------------------------------------
-@price_categories.each do |category|
+docx.h2 "Arbete"
+table_data = [['Datum','Notering','Priskategori','Tid']]
+
+@tasks.each do |task|
   # Creates new array and inserts first row.
-  table_data = [['Datum','Notering', 'Arbetad tid']]
-  tasks = category.tasks.where(lawsuit_id: @lawsuit.id).sorted_by_date
+
   # Category header and task rows.
-  docx.h2 category.name
-  tasks.each do |task|
-    row = [task.date, task.entry, task.worked_hours]
-    table_data.push(row)
-  end
+  # docx.h2 category.name
+  # tasks.each do |task|
+  #
+  # end
+
+  row = [task.date, task.entry, task.price_category.name, task.worked_hours]
+  table_data.push(row)
 
   # Last row displays sum of category.
-  last_row = ['Summa','', category.tasks.where(lawsuit_id: @lawsuit.id).sum(:worked_hours)]
-  table_data.push(last_row)
 
-  docx.table table_data, border_size: 4 do
-    border_color   'eceeef'
-    cell_style rows[0], background: 'ECECEC', bold: true
-    cell_style cols[1], width: 6500
-    cell_style cols[2], align: :right
-    cell_style rows[-1],   bold: true,   background: 'ECECEC'
-  end
 
-  table_data = []
 end
+
+@price_categories.each do |category|
+  sum_row = ['', "Summa #{category.name}", '', category.tasks.where(lawsuit_id: @lawsuit.id).sum(:worked_hours)]
+  table_data.push(sum_row)
+end
+
+# last_row = ['Summa','', '', category.tasks.where(lawsuit_id: @lawsuit.id).sum(:worked_hours)]
+# table_data.push(last_row)
+
+docx.table table_data, border_size: 4 do
+  border_color   'eceeef'
+  cell_style rows[0], background: 'ECECEC', bold: true
+  cell_style cols[1], width: 5700
+  cell_style cols[3], align: :right, width: 800
+  cell_style rows[-3],   bold: true, background: 'ECECEC'
+  cell_style rows[-2],   bold: true, background: 'ECECEC'
+  cell_style rows[-1],   bold: true, background: 'ECECEC'
+end
+
+table_data = []
 
 #-----------------------------------------------------
 # Expenses table
@@ -60,7 +74,7 @@ expenses_table_data.push(last_row)
 docx.table expenses_table_data, border_size: 4 do
   border_color   'eceeef'
   cell_style rows[0], background: 'ECECEC', bold: true
-  cell_style cols[0], width: 6500
+  cell_style cols[0], width: 7000
   cell_style cols[1], align: :right
   cell_style rows[-1],   bold: true,   background: 'ECECEC'
 end

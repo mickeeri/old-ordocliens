@@ -2,18 +2,17 @@ class ClientForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.client ? props.client.id : '',
-      firstName: props.client ? props.client.firstName : '',
-      lastName: props.client ? props.client.lastName : '',
-      ssn: props.client ? props.client.ssn : '',
-      email: props.client ? props.client.email : '',
-      phoneNumber: props.client ? props.client.phoneNumber : '',
-      street: props.client ? props.client.street : '',
-      postCode: props.client ? props.client.postCode : '',
       city: props.client ? props.client.city : '',
-      note: props.client ? props.client.note : '',
+      email: props.client ? props.client.email : '',
+      firstName: props.client ? props.client.firstName : '',
+      id: props.client ? props.client.id : '',
+      lastName: props.client ? props.client.lastName : '',
       lawsuitId: props.lawsuitId,
-      message: '',
+      note: props.client ? props.client.note : '',
+      phoneNumber: props.client ? props.client.phoneNumber : '',
+      postCode: props.client ? props.client.postCode : '',
+      ssn: props.client ? props.client.ssn : '',
+      street: props.client ? props.client.street : '',
     };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -121,9 +120,7 @@ class ClientForm extends React.Component {
       <div>
         <h3>{this.props.header}</h3>
         <form onSubmit={this.handleOnSubmit} noValidate>
-          <p className="hidden message" id="client-form-message">
-            {this.state.message}
-          </p>
+          <p className="hidden message" id="client-form-message"></p>
           <div id="firstNameGroup" className="form-group row">
             <label className="col-sm-4 form-control-label" htmlFor="firstName">Förnamn</label>
             <div className="col-sm-8">
@@ -132,7 +129,7 @@ class ClientForm extends React.Component {
                 type="text"
                 name="firstName"
                 id="firstName"
-                className="form-control form-control-sm col-sm-10"
+                className="form-control form-control-sm"
                 value={this.state.firstName}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}

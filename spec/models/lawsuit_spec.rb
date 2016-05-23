@@ -11,6 +11,7 @@ RSpec.describe Lawsuit, type: :model do
     lawsuit = client.lawsuits.create(lawsuit_type_id: lawsuit_type.id)
     expect(lawsuit.closed).to eq(false)
   end
-  # it { should have_db_index(:slug) }
-  # it { should have_db_index(:case_number) }
+  it { should have_db_index(:court) }
+  it { should have_db_index(:case_number) }
+  it { should have_db_index(:slug) }
 end
