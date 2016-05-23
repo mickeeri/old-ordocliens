@@ -36,7 +36,7 @@ class LawsuitCounterpartList extends React.Component {
           {this.state.counterparts.map(counterpart =>
             <li key={counterpart.id}>
               <a href={Routes.counterpart_path(counterpart.id)}>
-                {counterpart.name} ({counterpart.personalNumber})
+                {counterpart.firstName} {counterpart.lastName} ({counterpart.personalNumber})
               </a>
             </li>
           )}

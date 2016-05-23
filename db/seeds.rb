@@ -90,7 +90,8 @@ User.all.each do |user|
       number_of_counterparts = rand(1..2)
       number_of_counterparts.times do
         lawsuit.counterparts.create(
-          name: Faker::Name.name,
+          first_name: Faker::Name.first_name,
+          last_name: Faker::Name.last_name,
           personal_number:
             "#{Faker::Number.number(6)}-#{Faker::Number.number(4)}",
           info: Faker::Lorem.sentence(sentece_lenght),

@@ -64,7 +64,8 @@ class CounterpartsController < ApplicationController
 
   def counterpart_params
     params.require(:counterpart).permit(
-      :name,
+      :first_name,
+      :last_name,
       :personal_number,
       :representative,
       :info,
@@ -99,6 +100,6 @@ class CounterpartsController < ApplicationController
       @counterpart,
       CounterpartShowSerializer,
       root: false
-    ) }
+    ), lawsuits: prepare_array(@counterpart.lawsuits, "ShowSerializer") }
   end
 end

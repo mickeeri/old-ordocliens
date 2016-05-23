@@ -1,6 +1,7 @@
 class CounterpartShowSerializer < ActiveModel::Serializer
   attributes :id,
-             :name,
+             :first_name,
+             :last_name,
              :personal_number,
              :info,
              :representative,

@@ -39,7 +39,7 @@ class CounterpartShow extends React.Component {
             <div className="card card-block">
               <h3 className="card-title">Ärenden</h3>
               <hr />
-              <CounterpartLawsuitList lawsuits={this.props.initialCounterpart.lawsuits} />
+              <CounterpartLawsuitList lawsuits={this.props.lawsuits} />
             </div>
           </div>
         </div>
@@ -50,4 +50,5 @@ class CounterpartShow extends React.Component {
 
 CounterpartShow.propTypes = {
   initialCounterpart: React.PropTypes.object.isRequired,
+  lawsuits: React.PropTypes.array.isRequired,
 };

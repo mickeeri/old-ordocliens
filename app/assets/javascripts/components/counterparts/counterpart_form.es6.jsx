@@ -3,7 +3,8 @@ class CounterpartForm extends React.Component {
     super(props);
     this.state = {
       id: props.initialCounterpart ? props.initialCounterpart.id : '',
-      name: props.initialCounterpart ? props.initialCounterpart.name : '',
+      firstName: props.initialCounterpart ? props.initialCounterpart.firstName : '',
+      lastName: props.initialCounterpart ? props.initialCounterpart.lastName : '',
       personalNumber: props.initialCounterpart ? props.initialCounterpart.personalNumber : '',
       representative: props.initialCounterpart ? props.initialCounterpart.representative : '',
       info: props.initialCounterpart ? props.initialCounterpart.info : '',
@@ -88,45 +89,95 @@ class CounterpartForm extends React.Component {
           <span id="counterpart-modal-alert-span"></span>
         </div>
         {this.state.showForm ?
-          <form className="form form-inline" onSubmit={this.handleOnSubmit}>
+          <form onSubmit={this.handleOnSubmit}>
             <p className="hidden message" id="counterpart-form-message"></p>
-            <FormGroup
-              name="name"
-              type="text"
-              value={this.state.name}
-              changeEvent={this.handleInputChange}
-              autoFocus="true"
-              label="Namn"
-              required
-            />
-            <FormGroup
-              name="personalNumber"
-              type="tel"
-              value={this.state.personalNumber}
-              changeEvent={this.handleInputChange}
-              label="Personnummer"
-              required
-              maxLength={11}
-              minLength={11}
-            />
-            <FormGroup
-              name="representative"
-              type="text"
-              value={this.state.representative}
-              changeEvent={this.handleInputChange}
-              label="Motpartsombud"
-            />
-            <div className="form-group form-group-textarea">
-              <label htmlFor="info">Kontaktinfo</label>
-              <textarea
-                className="form-control"
-                type="text-area"
-                value={this.state.info}
-                name="info"
-                rows="4"
-                onChange={this.handleInputChange}
-              >
-              </textarea>
+            <div id="firstNameGroup" className="form-group row">
+              <label className="col-sm-4 form-control-label" htmlFor="firstName">Förnamn</label>
+              <div className="col-sm-8">
+                <input
+                  placeholder="Förnamn"
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  className="form-control form-control-sm"
+                  value={this.state.firstName}
+                  onChange={this.handleInputChange}
+                  onBlur={this.validate}
+                  autoFocus={!isEdit}
+                />
+                <small id="firstNameHelper" className="text-muted"></small>
+              </div>
+            </div>
+            <div id="lastNameGroup" className="form-group row">
+              <label htmlFor="lastName" className="col-sm-4 form-control-label">Efternamn</label>
+              <div className="col-sm-8">
+                <input
+                  type="text"
+                  placeholder="Efternamn"
+                  name="lastName"
+                  id="lastName"
+                  className="form-control form-control-sm"
+                  value={this.state.lastName}
+                  onChange={this.handleInputChange}
+                  onBlur={this.validate}
+                  required="true"
+                />
+                <small id="lastNameHelper" className="text-muted"></small>
+              </div>
+            </div>
+            <div id="personalNumberGroup" className="form-group row">
+              <label
+                htmlFor="personalNumber"
+                className="col-sm-8 form-control-label"
+              >Personnummer</label>
+              <div className="col-sm-4">
+                <input
+                  placeholder="ÅÅMMDD-XXXX"
+                  type="tel"
+                  name="personalNumber"
+                  id="personalNumber"
+                  className="form-control form-control-sm"
+                  value={this.state.personalNumber}
+                  onChange={this.handleInputChange}
+                  onBlur={this.validate}
+                />
+                <small id="personalNumberHelper" className="text-muted"></small>
+              </div>
+            </div>
+            <div id="representativeGroup" className="form-group row">
+              <label
+                className="col-sm-4 form-control-label"
+                htmlFor="representative"
+              >Motpartsombud</label>
+              <div className="col-sm-8">
+                <input
+                  placeholder="Motpartsombud"
+                  type="text"
+                  name="representative"
+                  id="representative"
+                  className="form-control form-control-sm"
+                  value={this.state.representative}
+                  onChange={this.handleInputChange}
+                  onBlur={this.validate}
+                  autoFocus={!isEdit}
+                />
+                <small id="representativeHelper" className="text-muted"></small>
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="info" className="form-control-label">Kontaktinfo</label>
+              <div className="col-sm-12">
+                <textarea
+                  placeholder="Kontaktinfo/Anteckning"
+                  className="form-control"
+                  type="text-area"
+                  value={this.state ? this.state.info : ''}
+                  name="info"
+                  rows="4"
+                  onChange={this.handleInputChange}
+                >
+                </textarea>
+              </div>
             </div>
             <hr />
             <div className="content-right">
@@ -136,7 +187,7 @@ class CounterpartForm extends React.Component {
                   onClick={this.handleCancelButtonClick}
                 >Avbryt
                 </button>}
-              <button className="btn btn-primary" type="submit">
+              <button className="btn btn-success" type="submit">
                 {isEdit ? 'Uppdatera' : 'Spara motpart'}
               </button>
             </div>
@@ -150,7 +201,8 @@ class CounterpartForm extends React.Component {
 CounterpartForm.propTypes = {
   initialCounterpart: React.PropTypes.shape({
     id: React.PropTypes.number.isRequired,
-    name: React.PropTypes.string.isRequired,
+    firstName: React.PropTypes.string.isRequired,
+    lastName: React.PropTypes.string.isRequired,
     info: React.PropTypes.string.isRequired,
     personalNumber: React.PropTypes.string.isRequired,
     representative: React.PropTypes.string.isRequired,

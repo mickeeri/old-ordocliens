@@ -7,12 +7,10 @@ class CounterpartsIndex extends React.Component {
       fetchData: {
         search: '',
         page: 1,
-      },
-    };
-    // Binding functions.
+      } };
     this.fetchCounterparts = this.fetchCounterparts.bind(this);
-    this.handleOnSearch = this.handleOnSearch.bind(this);
     this.handleOnPaginate = this.handleOnPaginate.bind(this);
+    this.handleOnSearch = this.handleOnSearch.bind(this);
   }
 
   handleOnSearch() {
@@ -38,6 +36,7 @@ class CounterpartsIndex extends React.Component {
         this.setState({ counterparts: response.counterparts, meta: response.meta });
       })
       .error(xhr => {
+        // TODO: Remove console.
         console.error(url, xhr.status, xhr.statusText);
       });
   }
@@ -81,7 +80,7 @@ class CounterpartsIndex extends React.Component {
             <tbody>
               {this.state.counterparts.map(counterpart =>
                 <tr key={counterpart.id}>
-                  <td><a href={Routes.counterpart_path(counterpart.id)}>{counterpart.name}</a></td>
+                  <td><a href={Routes.counterpart_path(counterpart.id)}>{counterpart.fullName}</a></td>
                   <td>{counterpart.personalNumber}</td>
                 </tr>
               )}
