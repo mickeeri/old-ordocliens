@@ -42,11 +42,11 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara', '~> 2.6', '>= 2.6.2'
   gem 'database_cleaner'
-  gem 'sqlite3'
+  # gem 'sqlite3'
 end
 
 group :development do
-  gem 'web-console', '~> 2.0' 
+  gem 'web-console', '~> 2.0'
   gem 'better_errors'
   gem 'spring'
   gem 'capistrano',         require: false

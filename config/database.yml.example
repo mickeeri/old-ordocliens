@@ -1,0 +1,18 @@
+development:
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  username: micke
+  password:
+  database: lawfirm_development
+  collation: sv_SE.UTF-8
+  ctype: sv_SE.UTF-8
+  template: template0
+
+test:
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  username: micke
+  password:
+  database: lawfirm_test
