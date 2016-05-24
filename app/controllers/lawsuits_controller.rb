@@ -66,6 +66,10 @@ class LawsuitsController < ApplicationController
     respond_with @lawsuit
   end
 
+  def lawsuit_cover
+    @lawsuit = Lawsuit.find(params[:id])
+  end
+
   private
 
   def lawsuit_params

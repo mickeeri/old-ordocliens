@@ -43,8 +43,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   get "lawsuits/:id/clients" => "clients#lawsuit_client_list"
-  #get "lawsuits/:id/tasks/price_categories" => "tasks#price_categories"
+  # get "lawsuits/:id/tasks/price_categories" => "tasks#price_categories"
   get "lawsuits/:id/counterparts" => "counterparts#lawsuit_counterpart_list"
+
+  get "lawsuits/:id/lawsuit_cover" => "lawsuits#lawsuit_cover"
   # post "lawsuits/:id/clients" => "clients#lawsuit_client_list"
 
   #get "report/:id" => "lawsuits#report"

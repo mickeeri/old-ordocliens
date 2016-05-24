@@ -24,6 +24,8 @@ gem 'caracal'
 gem 'caracal-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
+gem 'prawn-rails', '0.1.1', git: 'https://github.com/cortiz/prawn-rails.git'
+gem 'prawn-table', '0.2.1'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-es6-promise'
