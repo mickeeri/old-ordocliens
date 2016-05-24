@@ -1,15 +1,15 @@
 class ClientShowSerializer < ActiveModel::Serializer
   attributes :id,
+             :city,
+             :email,
              :first_name,
              :last_name,
-             :ssn,
-             :street,
-             :post_code,
-             :city,
+             :mobile,
              :note,
-             :email,
-             :phone_number
-
+             :phone_number,
+             :post_code,
+             :ssn,
+             :street
 
   has_many :counterparts
 end
