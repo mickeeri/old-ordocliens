@@ -53,7 +53,7 @@ end
 
 User.all.each do |user|
   # Clients
-  number_of_clients = rand(100..150)
+  number_of_clients = rand(100..120)
   sentece_lenght = rand(6..25)
   number_of_clients.times do
     client = user.clients.create(
@@ -73,11 +73,17 @@ User.all.each do |user|
     # Legal Cases
     number_of_lawsuits = 1
     number_of_lawsuits.times do
-      lawsuit = client.lawsuits.create!(
+      lawsuit = user.lawsuits.create!(
         lawsuit_type_id: LawsuitType.offset(rand(LawsuitType.count)).first.id,
-        closed: Faker::Boolean.boolean,
-        user_id: user.id
+        closed: Faker::Boolean.boolean
       )
+
+      # Add participation
+      participation = Participation.new(
+        lawsuit_id: lawsuit.id,
+        client_id: client.id,
+        is_primary: true)
+      participation.save
 
       # Add slug
       first_name_initial = user.first_name[0, 1].downcase
@@ -105,7 +111,7 @@ User.all.each do |user|
       end
 
       # Tasks
-      number_of_tasks = rand(5..40)
+      number_of_tasks = rand(5..20)
       number_of_tasks.times do
         random_pc_id = PriceCategory.offset(rand(PriceCategory.count)).first.id
         lawsuit.tasks.create!(

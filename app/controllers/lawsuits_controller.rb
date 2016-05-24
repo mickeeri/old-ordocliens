@@ -47,11 +47,11 @@ class LawsuitsController < ApplicationController
     add_slug if @lawsuit.save
     client = Client.find(params[:client_id])
     # @lawsuit.clients << client
-    paricipation = Participation.new(
+    participation = Participation.new(
       lawsuit_id: @lawsuit.id,
       client_id: client.id,
       is_primary: true)
-    paricipation.save
+    participation.save
     respond_with @lawsuit
   end
 
@@ -83,7 +83,7 @@ class LawsuitsController < ApplicationController
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
     @lawsuits = @lawsuits.sorted_by_client unless params[:search].present?
-    @lawsuits = @lawsuits.page(params[:page]).per_page(50)
+    @lawsuits = @lawsuits.page(params[:page]).per_page(100)
   end
 
   def fetch_lawsuit
