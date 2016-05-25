@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525072952) do
+ActiveRecord::Schema.define(version: 20160525191409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,14 +91,15 @@ ActiveRecord::Schema.define(version: 20160525072952) do
   end
 
   create_table "lawsuits", force: :cascade do |t|
-    t.boolean  "closed",          default: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.boolean  "closed",            default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "court"
     t.string   "case_number"
     t.string   "slug"
     t.integer  "lawsuit_type_id"
     t.integer  "user_id"
+    t.integer  "primary_client_id"
   end
 
   add_index "lawsuits", ["lawsuit_type_id"], name: "index_lawsuits_on_lawsuit_type_id", using: :btree
@@ -164,6 +165,7 @@ ActiveRecord::Schema.define(version: 20160525072952) do
   add_foreign_key "expenses", "lawsuits"
   add_foreign_key "involvements", "counterparts"
   add_foreign_key "involvements", "lawsuits"
+  add_foreign_key "lawsuits", "clients", column: "primary_client_id"
   add_foreign_key "lawsuits", "lawsuit_types"
   add_foreign_key "lawsuits", "users"
   add_foreign_key "participations", "clients"

@@ -5,7 +5,7 @@ function LawsuitIndexRow({ lawsuit }) {
   const date = new Date(lawsuit.createdAt).yyyymmdd();
   return (
     <tr onClick={() => handleOnRowClick(lawsuit.id)} >
-      <td>{lawsuit.primaryClient}</td>
+      <td>{lawsuit.primaryClient.lastName}, {lawsuit.primaryClient.firstName}</td>
       <td>{lawsuit.lawsuitType.name}</td>
       <td>{lawsuit.slug}</td>
       <td>{date}</td>
@@ -22,6 +22,6 @@ LawsuitIndexRow.propTypes = {
     slug: React.PropTypes.string.isRequired,
     createdAt: React.PropTypes.string.isRequired,
     closed: React.PropTypes.bool.isRequired,
-    primaryClient: React.PropTypes.string.isRequired,
+    primaryClient: React.PropTypes.object.isRequired,
   }),
 };

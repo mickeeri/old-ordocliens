@@ -34,14 +34,16 @@ class LawsuitShow extends React.Component {
   }
 
 
-  removePrimaryClientHeader() {
-    this.setState({ primaryClient: '' });
-  }
+
 
   // Show success message on update.
   setMessage() {
     $('#updatedLawsuitMessage').fadeIn();
     $('#updatedLawsuitMessage').fadeOut(2000);
+  }
+
+  removePrimaryClientHeader() {
+    this.setState({ primaryClient: '' });
   }
 
   displayUpdateMessage() {
@@ -95,7 +97,11 @@ class LawsuitShow extends React.Component {
                 {this.state.closed ? ' (Arkiverat)' : ''}
               </span>
             </h2>
-            <h5>{this.state.primaryClient}</h5>
+            <h5>
+              <a href={this.props.primaryClient.link}>
+                {this.props.primaryClient.firstName} {this.props.primaryClient.lastName}
+              </a>
+            </h5>
           </div>
           <div className="col-md-6 content-right lawsuit-menu">
             <a
@@ -128,6 +134,7 @@ class LawsuitShow extends React.Component {
 LawsuitShow.propTypes = {
   clientId: React.PropTypes.number,
   lawsuit: React.PropTypes.object.isRequired,
+  primaryClient: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,
   expenses: React.PropTypes.array,
 };

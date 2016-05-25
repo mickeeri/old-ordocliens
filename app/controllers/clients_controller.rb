@@ -99,7 +99,7 @@ class ClientsController < ApplicationController
     @clients = Client.where(nil)
     @clients = @clients.users_clients(current_user) unless params[:all] == "true"
     @clients = @clients.search(params[:search]) if params[:search].present?
-    @clients = @clients.page(params[:page]).per_page(50)
+    @clients = @clients.sorted.page(params[:page]).per_page(50)
   end
 
   def fetch_client
@@ -108,17 +108,18 @@ class ClientsController < ApplicationController
 
   def add_client_to_lawsuit
     lawsuit = Lawsuit.find(client_params[:lawsuit_id])
-    if lawsuit.primary_participation.nil?
-      # Make client primary client if lawsuit does not have that.
-      Participation.create!(
-        lawsuit_id: lawsuit.id,
-        client_id: @client.id,
-        is_primary: true
-      )
-    else
-      # Else just add lawsuit to client.
-      @client.lawsuits << lawsuit
-    end
+    # if lawsuit.primary_participation.nil?
+    #   # Make client primary client if lawsuit does not have that.
+    #   # Participation.create!(
+    #   #   lawsuit_id: lawsuit.id,
+    #   #   client_id: @client.id,
+    #   #   is_primary: true
+    #   # )
+    # else
+    #   # Else just add lawsuit to client.
+    #
+    # end
+    @client.lawsuits << lawsuit
     # Add the client to all counterparts involved in lawsuit.
     lawsuit.counterparts.each do |counterpart|
       @client.counterparts << counterpart

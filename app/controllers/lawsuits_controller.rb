@@ -46,11 +46,14 @@ class LawsuitsController < ApplicationController
     @lawsuit = current_user.lawsuits.build(lawsuit_params)
     add_slug if @lawsuit.save
     client = Client.find(params[:client_id])
-    # @lawsuit.clients << client
-    Participation.create!(
-      lawsuit_id: @lawsuit.id,
-      client_id: client.id,
-      is_primary: true)
+    # Assigning primary client.
+    @lawsuit.primary_client_id = client.id
+    @lawsuit.save
+    @lawsuit.clients << client
+    # Participation.create!(
+    #   lawsuit_id: @lawsuit.id,
+    #   client_id: client.id,
+    #   is_primary: true)
     respond_with @lawsuit
   end
 
@@ -85,7 +88,7 @@ class LawsuitsController < ApplicationController
     @lawsuits = @lawsuits.users_lawsuits(params[:user].present? ? params[:user] : current_user.id)
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
-    @lawsuits = @lawsuits.sorted_by_client unless params[:search].present?
+    @lawsuits = @lawsuits.sorted_by_primary_client unless params[:search].present?
     @lawsuits = @lawsuits.page(params[:page]).per_page(100)
   end
 
@@ -96,7 +99,8 @@ class LawsuitsController < ApplicationController
   def props
     { lawsuit: prepare(@lawsuit, LawsuitShowSerializer, root: false),
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),
-      expenses: prepare_array(@lawsuit.expenses.sorted) }
+      expenses: prepare_array(@lawsuit.expenses.sorted),
+      primary_client: prepare(@lawsuit.primary_client, ClientSerializer, root: false) }
   end
 
   # Buildning slug with initials, year and id.
