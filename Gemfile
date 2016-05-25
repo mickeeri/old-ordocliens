@@ -1,31 +1,33 @@
 
 source 'https://rubygems.org'
 
-gem 'bootstrap', '~> 4.0.0.alpha3'
-gem 'sass-rails', '~> 5.0'
-gem "font-awesome-rails"
 gem 'rails', '4.2.6'
-gem 'jquery-rails'
-gem 'turbolinks', '~> 5.0.0.beta'
-gem 'jquery-turbolinks'
-gem 'jbuilder', '~> 2.0' # TODO: Using this?
-gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'faker', '~> 1.6', '>= 1.6.3'
-gem 'will_paginate', '~> 3.1'
-gem 'responders', '~> 2.1', '>= 2.1.2'
-gem "slim"
 gem 'react-rails', '~> 1.6.2'
-gem 'devise'
-gem 'pg'
-gem 'pg_search'
+
 gem 'active_model_serializers'
-gem "js-routes"
-gem 'caracal'
+gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'caracal-rails'
-gem 'uglifier', '>= 1.3.0'
+gem 'caracal'
 gem 'coffee-rails', '~> 4.1.0'
+gem 'devise'
+gem 'faker', '~> 1.6', '>= 1.6.3'
+gem 'jbuilder', '~> 2.0' # TODO: Using this?
+gem 'jquery-rails'
+gem 'jquery-turbolinks'
+gem 'lodash-rails'
+gem 'pg_search'
+gem 'pg'
 gem 'prawn-rails', '0.1.1', git: 'https://github.com/cortiz/prawn-rails.git'
 gem 'prawn-table', '0.2.1'
+gem 'responders', '~> 2.1', '>= 2.1.2'
+gem 'sass-rails', '~> 5.0'
+gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'turbolinks', '~> 5.0.0.beta'
+gem 'uglifier', '>= 1.3.0'
+gem 'will_paginate', '~> 3.1'
+gem "font-awesome-rails"
+gem "js-routes"
+gem "slim"
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-es6-promise'
