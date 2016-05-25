@@ -36,10 +36,19 @@ class CounterpartShow extends React.Component {
             </div>
           </div>
           <div className="col-md-6">
-            <div className="card card-block">
-              <h3 className="card-title">Ärenden</h3>
-              <hr />
-              <CounterpartLawsuitList lawsuits={this.props.lawsuits} />
+            <div className="row">
+              <div className="card card-block">
+                <h3 className="card-title">Ärenden</h3>
+                <hr />
+                <CounterpartLawsuitList lawsuits={this.props.lawsuits} />
+              </div>
+            </div>
+            <div className="row">
+              <div className="card card-block">
+                <DeleteCounterpartButton
+                  counterpartId={this.props.initialCounterpart.id}
+                />
+              </div>
             </div>
           </div>
         </div>

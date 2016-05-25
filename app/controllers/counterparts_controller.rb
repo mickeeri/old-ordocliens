@@ -55,6 +55,12 @@ class CounterpartsController < ApplicationController
     respond_with @counterpart
   end
 
+  def destroy
+    @counterpart.destroy
+    flash.keep[:notice] = "Motpart raderad"
+    respond_with @counterpart
+  end
+
   def lawsuit_counterpart_list
     lawsuit = Lawsuit.find(params[:id])
     respond_with lawsuit.counterparts
