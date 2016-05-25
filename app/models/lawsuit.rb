@@ -11,24 +11,19 @@ class Lawsuit < ActiveRecord::Base
   has_one :primary_participation, -> { where(is_primary: true) }, class_name: "Participation"
   validates :lawsuit_type, presence: :true
 
-  # The first client that was added to the lawsuit.
-  # def primary_client
-  #   prim_client = clients.order(created_at: :asc).first.full_name unless clients.empty?
-  #   prim_client += " m.fl." if clients.count > 1
-  #   prim_client
-  # end
-
-  # Lawsuit.joins(:participations).merge(Participation.where(is_primary: true))
-
   def primary_client
-    pc = primary_participation.client.full_name
+    pc = primary_participation ?
+      primary_participation.client.full_name : ""
     pc += " m.fl." if clients.count > 1
     pc
   end
 
   # Scopes
   scope :sorted, -> { includes(:lawsuit_type).order("lawsuit_types.name asc") }
-  scope :sorted_by_client, -> { includes(:clients).order("clients.last_name asc") }
+  # https://github.com/bbatsov/rubocop/issues/1520
+  scope :sorted_by_client, ->() do
+    includes(:clients).order("clients.last_name asc").order("clients.first_name asc")
+  end
   scope :sorted_by_primary_client, -> { order("primary_client.last_name asc") }
   scope :sorted_by_date, -> { order(created_at: :desc, lawsuit_type_id: :desc) }
   scope :without_closed, -> { where(closed: false) }

@@ -2,14 +2,16 @@ class Client < ActiveRecord::Base
   include PgSearch
   # Relations
   belongs_to :user, required: true
-  has_many :participations
+  has_many :participations, dependent: :destroy
   has_many :lawsuits, -> { distinct }, through: :participations
-  has_many :disputes
+  has_many :disputes, dependent: :destroy
   has_many :counterparts, -> { distinct }, through: :disputes
 
   # Validation
   validates :first_name, presence: true, length: { maximum: 40 }
   validates :last_name, presence: true, length: { maximum: 60 }
+  validates :phone_number, allow_blank: true, length: { maximum: 20 }
+  validates :mobile, allow_blank: true, length: { maximum: 20 }
   VALID_SSN_REGEX = /\A[0-9]{6}-[0-9]{4}\z/
   validates :ssn, presence: true, format: { with: VALID_SSN_REGEX }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -18,7 +20,7 @@ class Client < ActiveRecord::Base
                     allow_blank: true
   # Scopes
   scope :users_clients, -> (current_user) { where(user: current_user) }
-  scope :sorted, -> { order(last_name: :asc) }
+  scope :sorted, -> { order(last_name: :asc, first_name: :asc) }
   pg_search_scope :search,
                   against: [:first_name, :last_name, :ssn],
                   using: { tsearch: { prefix: true, normalization: 2 }
