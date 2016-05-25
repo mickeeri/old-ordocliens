@@ -91,7 +91,7 @@ class TasksIndex extends React.Component {
               className="btn btn-primary"
             >Rapport .docx</a>
             <a
-              href={`/lawsuits/${this.props.lawsuitId}/lawsuit_cover.pdf`}
+              href={`/lawsuits/${this.props.lawsuitId}/Aktomslag.pdf`}
               className="btn btn-primary"
             >Aktomslag .pdf</a>
             <button

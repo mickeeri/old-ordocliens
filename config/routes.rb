@@ -46,11 +46,11 @@ Rails.application.routes.draw do
   # get "lawsuits/:id/tasks/price_categories" => "tasks#price_categories"
   get "lawsuits/:id/counterparts" => "counterparts#lawsuit_counterpart_list"
 
-  get "lawsuits/:id/lawsuit_cover" => "lawsuits#lawsuit_cover"
+  get "lawsuits/:id/Aktomslag" => "lawsuits#lawsuit_cover"
   # post "lawsuits/:id/clients" => "clients#lawsuit_client_list"
 
   #get "report/:id" => "lawsuits#report"
-  get "report/:id" => "reports#show"
+  get "report/:id/Aktomslag" => "reports#show"
   get "lawsuit_cover/:id" => "reports#cover"
 
   # Example of regular route:
