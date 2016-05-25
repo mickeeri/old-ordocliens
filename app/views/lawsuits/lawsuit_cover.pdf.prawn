@@ -1,6 +1,6 @@
 prawn_document(:page_layout => :landscape) do |pdf|
   pdf.font "app/assets/fonts/pala.ttf"
-  pdf.font_size 10.5
+
   # A3		 842x1190
 
   require "open-uri"
@@ -10,6 +10,13 @@ prawn_document(:page_layout => :landscape) do |pdf|
       pdf.image open("http://familjejuristerna.com/images/fj%20transp.png"), height: 48, width: 208
     end
   end
+
+  pdf.bounding_box([1000, 750], :width => 300, :height => 100) do
+    pdf.font_size 16
+    pdf.text @lawsuit.slug
+  end
+
+  pdf.font_size 10.5
 
   pdf.bounding_box([600, 650], :width => 300, :height => 100) do
     pdf.text "Handläggare: #{@lawsuit.user.first_name} #{@lawsuit.user.last_name}", leading: 5
