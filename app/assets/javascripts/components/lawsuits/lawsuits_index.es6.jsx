@@ -11,12 +11,10 @@ class LawsuitsIndex extends React.Component {
         user: props.currentUserId,
       },
     };
-    // Binding functions.
     this.fetchLawsuits = this.fetchLawsuits.bind(this);
     this.handleOnSearch = this.handleOnSearch.bind(this);
     this.handleOnPaginate = this.handleOnPaginate.bind(this);
     this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this);
-    // this.handleUsersDropDownChange = this.handleUsersDropDownChange.bind(this);
     this.setSelectedUser = this.setSelectedUser.bind(this);
   }
 
@@ -48,18 +46,16 @@ class LawsuitsIndex extends React.Component {
 
   fetchLawsuits() {
     const data = this.state.fetchData;
-
-    // Building uri:s with query string parameters.
-    const url = data.search
-      ? `${Routes.lawsuits_path()}?search=${data.search}&page=1&all=${data.fetchAll}&user=${data.user}`
-      : `${Routes.lawsuits_path()}?page=${data.page}&all=${data.fetchAll}&user=${data.user}`;
+    let url = `${Routes.lawsuits_path()}?page=1&all=${data.fetchAll}&user=${data.user}`;
+    if (data.search) { url += `&?search=${data.search}`; }
 
     makeGetRequest(url)
       .success(response => {
         this.setState({ lawsuits: response.lawsuits, meta: response.meta });
       })
       .error(xhr => {
-        console.error(url, xhr.status, xhr.statusText);
+        showErrorText(`Kunde inte hämta ärenden från servern. Status: ${xhr.status}.`,
+        '#lawsuit-index-message');
       });
   }
 
@@ -107,6 +103,7 @@ class LawsuitsIndex extends React.Component {
             />
           </div>
         </div>
+        <div className="row message" id="lawsuit-index-message"></div>
         <div className="row">
           <table className="table table-hover table-bordered">
             <thead className="thead-inverse">
