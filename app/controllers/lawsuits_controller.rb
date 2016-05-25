@@ -47,11 +47,10 @@ class LawsuitsController < ApplicationController
     add_slug if @lawsuit.save
     client = Client.find(params[:client_id])
     # @lawsuit.clients << client
-    participation = Participation.new(
+    Participation.create!(
       lawsuit_id: @lawsuit.id,
       client_id: client.id,
       is_primary: true)
-    participation.save
     respond_with @lawsuit
   end
 
