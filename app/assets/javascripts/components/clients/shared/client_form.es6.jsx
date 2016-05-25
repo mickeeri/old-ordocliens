@@ -10,6 +10,7 @@ class ClientForm extends React.Component {
       lawsuitId: props.lawsuitId,
       note: props.client ? props.client.note : '',
       phoneNumber: props.client ? props.client.phoneNumber : '',
+      mobile: props.client ? props.client.mobile : '',
       postCode: props.client ? props.client.postCode : '',
       ssn: props.client ? props.client.ssn : '',
       street: props.client ? props.client.street : '',
@@ -189,10 +190,23 @@ class ClientForm extends React.Component {
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="phoneNumber" className="col-sm-6 form-control-label">Mobil</label>
+            <label htmlFor="mobile" className="col-sm-6 form-control-label">Mobil</label>
             <div className="col-sm-6">
               <input
                 placeholder="Mobil"
+                type="tel"
+                name="mobile"
+                className="form-control form-control-sm"
+                value={this.state.mobile}
+                onChange={this.handleInputChange}
+              />
+            </div>
+          </div>
+          <div className="form-group row">
+            <label htmlFor="phoneNumber" className="col-sm-6 form-control-label">Telefon</label>
+            <div className="col-sm-6">
+              <input
+                placeholder="Telefon"
                 type="tel"
                 name="phoneNumber"
                 className="form-control form-control-sm"
