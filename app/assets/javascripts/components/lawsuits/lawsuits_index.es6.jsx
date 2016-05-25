@@ -46,8 +46,9 @@ class LawsuitsIndex extends React.Component {
 
   fetchLawsuits() {
     const data = this.state.fetchData;
-    let url = `${Routes.lawsuits_path()}?page=1&all=${data.fetchAll}&user=${data.user}`;
-    if (data.search) { url += `&?search=${data.search}`; }
+    // Building url with paramaters based on input.
+    let url = `${Routes.lawsuits_path()}?page=${data.page}&all=${data.fetchAll}&user=${data.user}`;
+    if (data.search) { url += `&search=${data.search}`; }
 
     makeGetRequest(url)
       .success(response => {
@@ -63,28 +64,19 @@ class LawsuitsIndex extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-4 index-header">
+          <div className="col-md-6 index-header">
             <h1>Ärenden</h1>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-6">
             <form>
               <input
                 className="form-control"
-                placeholder="Sök på ärendenummer, uppdrag, klient, målnummer"
+                placeholder="Sök på ärendenummer, uppdrag, klient eller målnummer"
                 autoFocus="true"
                 onChange={this.handleOnSearch}
                 ref="search"
               />
             </form>
-            {this.state.meta.totalPages === 1 ? '' :
-              <Paginator
-                totalPages={this.state.meta.totalPages}
-                currentPage={this.state.meta.currentPage}
-                nextPage={this.state.meta.nextPage}
-                prevPage={this.state.meta.previousPage}
-                onPaginate={this.handleOnPaginate}
-              />
-            }
           </div>
         </div>
         <div className="row">
@@ -96,11 +88,22 @@ class LawsuitsIndex extends React.Component {
               /> Visa arkiverade ärenden
             </label>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-5">
             <UsersDropdown
               changeEvent={this.setSelectedUser}
               selectedUser={this.state.fetchData.user}
             />
+          </div>
+          <div className="col-md-4">
+            {this.state.meta.totalPages === 1 ? '' :
+              <Paginator
+                totalPages={this.state.meta.totalPages}
+                currentPage={this.state.meta.currentPage}
+                nextPage={this.state.meta.nextPage}
+                prevPage={this.state.meta.previousPage}
+                onPaginate={this.handleOnPaginate}
+              />
+            }
           </div>
         </div>
         <div className="row message" id="lawsuit-index-message"></div>

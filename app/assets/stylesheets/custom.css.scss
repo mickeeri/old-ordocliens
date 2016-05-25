@@ -24,7 +24,7 @@ main {
 }
 
 .index-header {
-  height: 100px;
+  height: 80px;
 }
 
 .container-fluid {
@@ -137,7 +137,6 @@ h1 {
 // Paginator
 //-----------------------------------------------------
 .paginator {
-  margin-top: 15px;
   text-align: center;
 
   .btn, input, p, div {
@@ -244,6 +243,12 @@ h1 {
 
 .fa {
   margin-right: 5px;
+}
+
+.fa-times {
+  &:hover {
+    color: #d9534f;
+  }
 }
 
 .delete-row-icon {
@@ -395,6 +400,15 @@ h1 {
   font-weight: 600;
   // border: 1px dotted;
   padding: 5px 15px;
+}
+
+.paginator-row {
+  margin-bottom: 15px;
+
+  .checkbox {
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
 }
 
 //-----------------------------------------------------

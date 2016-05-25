@@ -58,6 +58,10 @@ class CounterpartsIndex extends React.Component {
                 ref="search"
               />
             </form>
+          </div>
+        </div>
+        <div className="row paginator-row">
+          <div className="col-md-12">
             {this.state.meta.totalPages === 1 ? '' :
               <Paginator
                 totalPages={this.state.meta.totalPages}

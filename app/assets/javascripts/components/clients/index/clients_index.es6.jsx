@@ -73,19 +73,10 @@ class ClientsIndex extends React.Component {
                 ref="search"
               />
             </form>
-            {this.state.meta.totalPages === 1 ? '' :
-              <Paginator
-                totalPages={this.state.meta.totalPages}
-                currentPage={this.state.meta.currentPage}
-                nextPage={this.state.meta.nextPage}
-                prevPage={this.state.meta.previousPage}
-                onPaginate={this.handleOnPaginate}
-              />
-            }
           </div>
         </div>
-        <div className="row">
-          <div className="checkbox">
+        <div className="row paginator-row">
+          <div className="checkbox col-md-6">
             <label>
               <input
                 type="checkbox"
@@ -93,6 +84,18 @@ class ClientsIndex extends React.Component {
               /> Visa alla klienter
             </label>
           </div>
+          <div className="col-md-6">
+            {this.state.meta.totalPages === 1 ? '' :
+              <Paginator
+                totalPages={this.state.meta.totalPages}
+                currentPage={this.state.meta.currentPage}
+                nextPage={this.state.meta.nextPage}
+                prevPage={this.state.meta.previousPage}
+                onPaginate={this.handleOnPaginate}
+              />}
+          </div>
+        </div>
+        <div className="row">
           <table className="table table-bordered col-md-12">
             <thead className="thead-inverse">
               <tr>
