@@ -2,6 +2,7 @@ class LawsuitClientList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { clients: props.clients };
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
 
   componentDidMount() {
@@ -10,6 +11,21 @@ class LawsuitClientList extends React.Component {
 
   componentWillUnmount() {
     PubSub.unsubscribe('clientListUpdated');
+  }
+
+  handleDeleteClick(clientId) {
+    const url = `${Routes.client_path(clientId)}?lawsuit_id=${this.props.lawsuitId}`;
+    makeDeleteRequest(url)
+      .success(() => {
+        showSuccessText('Klient raderad från ärende', '#lawsuit-client-list-message');
+        setTimeout(() => {
+          this.refreshClients();
+        }, 1000);
+      })
+      .fail(xhr => {
+        showErrorText('Något gick fel när klient skulle raderas från ärende',
+          '#lawsuit-client-list-message');
+      });
   }
 
   refreshClients() {
@@ -39,6 +55,12 @@ class LawsuitClientList extends React.Component {
               <a href={Routes.client_path(client.id)}>
                 {client.firstName} {client.lastName} ({client.ssn})
               </a>
+              <i
+                className="fa fa-times delete-row-icon"
+                onClick={() => this.handleDeleteClick(client.id)}
+                aria-hidden="true"
+              >
+              </i>
             </li>
           )}
         </ul>

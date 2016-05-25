@@ -59,9 +59,17 @@ class ClientsController < ApplicationController
   end
 
   def destroy
-    @client.destroy
-    flash.keep[:notice] =
-      "#{@client.first_name} #{@client.last_name} är raderad."
+    if params[:lawsuit_id].present?
+      # Delete relation between client and lawsuit.
+      Participation.find_by_client_id_and_lawsuit_id(
+        params[:id],
+        params[:lawsuit_id]).delete
+    # Destroy client.
+    else
+      @client.destroy
+      flash.keep[:notice] =
+        "#{@client.first_name} #{@client.last_name} är raderad."
+    end
     respond_with @client
   end
 
@@ -91,7 +99,7 @@ class ClientsController < ApplicationController
     @clients = Client.where(nil)
     @clients = @clients.users_clients(current_user) unless params[:all] == "true"
     @clients = @clients.search(params[:search]) if params[:search].present?
-    @clients = @clients.sorted.page(params[:page]).per_page(20)
+    @clients = @clients.page(params[:page]).per_page(500)
   end
 
   def fetch_client
