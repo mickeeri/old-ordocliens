@@ -18,9 +18,7 @@ class LawsuitClientList extends React.Component {
     makeDeleteRequest(url)
       .success(() => {
         showSuccessText('Klient raderad från ärende', '#lawsuit-client-list-message');
-        setTimeout(() => {
-          this.refreshClients();
-        }, 1000);
+        this.refreshClients();
       })
       .fail(xhr => {
         showErrorText('Något gick fel när klient skulle raderas från ärende',
@@ -33,7 +31,12 @@ class LawsuitClientList extends React.Component {
     makeGetRequest(url)
       .success(res => {
         this.setState({ clients: res.clients });
-        PubSub.publish('dismissEdit');
+        if (res.clients.length === 0) {
+          // Remove primary client from header if lawsuit don't have any clients.
+          PubSub.publish('noPrimaryClient');
+        } else {
+          PubSub.publish('dismissEdit');
+        }
       })
       .error(xhr => {
         const alert = $('#lawsuit-client-list-message');
@@ -55,6 +58,7 @@ class LawsuitClientList extends React.Component {
               <a href={Routes.client_path(client.id)}>
                 {client.firstName} {client.lastName} ({client.ssn})
               </a>
+              {client.isPrimary ? 'Huvudklient' : ''}
               <i
                 className="fa fa-times delete-row-icon"
                 onClick={() => this.handleDeleteClick(client.id)}

@@ -64,8 +64,8 @@ class ClientsController < ApplicationController
       Participation.find_by_client_id_and_lawsuit_id(
         params[:id],
         params[:lawsuit_id]).delete
-    # Destroy client.
     else
+      # Destroy client.
       @client.destroy
       flash.keep[:notice] =
         "#{@client.first_name} #{@client.last_name} är raderad."
@@ -108,7 +108,17 @@ class ClientsController < ApplicationController
 
   def add_client_to_lawsuit
     lawsuit = Lawsuit.find(client_params[:lawsuit_id])
-    @client.lawsuits << lawsuit
+    if lawsuit.primary_participation.nil?
+      # Make client primary client if lawsuit does not have that.
+      Participation.create!(
+        lawsuit_id: lawsuit.id,
+        client_id: @client.id,
+        is_primary: true
+      )
+    else
+      # Else just add lawsuit to client.
+      @client.lawsuits << lawsuit
+    end
     # Add the client to all counterparts involved in lawsuit.
     lawsuit.counterparts.each do |counterpart|
       @client.counterparts << counterpart

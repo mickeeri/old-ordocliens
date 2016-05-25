@@ -4,12 +4,14 @@ class LawsuitShow extends React.Component {
     this.state = {
       closed: props.lawsuit.closed,
       expenses: this.props.expenses,
+      primaryClient: props.lawsuit.primaryClient,
       message: '',
       page: 'time',
       tasks: this.props.tasks };
     this.displayUpdateMessage = this.displayUpdateMessage.bind(this);
     this.refreshExpenses = this.refreshExpenses.bind(this);
     this.refreshTasks = this.refreshTasks.bind(this);
+    this.removePrimaryClientHeader = this.removePrimaryClientHeader.bind(this);
     this.setMessage = this.setMessage.bind(this);
     this.toggleClosed = this.toggleClosed.bind(this);
     this.togglePage = this.togglePage.bind(this);
@@ -19,6 +21,7 @@ class LawsuitShow extends React.Component {
     PubSub.subscribe('expensesTouched', this.refreshExpenses);
     PubSub.subscribe('lawsuitClosedOpened', this.toggleClosed);
     PubSub.subscribe('lawsuitUpdated', this.displayUpdateMessage);
+    PubSub.subscribe('noPrimaryClient', this.removePrimaryClientHeader);
     PubSub.subscribe('tasksTouched', this.refreshTasks);
   }
 
@@ -26,7 +29,13 @@ class LawsuitShow extends React.Component {
     PubSub.unsubscribe('expensesTouched');
     PubSub.unsubscribe('lawsuitClosedOpened');
     PubSub.unsubscribe('lawsuitUpdated');
+    PubSub.unsubscribe('noPrimaryClient');
     PubSub.unsubscribe('tasksTouched');
+  }
+
+
+  removePrimaryClientHeader() {
+    this.setState({ primaryClient: '' });
   }
 
   // Show success message on update.
@@ -86,7 +95,7 @@ class LawsuitShow extends React.Component {
                 {this.state.closed ? ' (Arkiverat)' : ''}
               </span>
             </h2>
-            <h5>{this.props.lawsuit.primaryClient}</h5>
+            <h5>{this.state.primaryClient}</h5>
           </div>
           <div className="col-md-6 content-right lawsuit-menu">
             <a
