@@ -45,10 +45,10 @@ class CounterpartsIndex extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-4 index-header">
+          <div className="col-md-6 index-header">
             <h1>Motparter</h1>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-6">
             <form>
               <input
                 className="form-control"

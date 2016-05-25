@@ -60,10 +60,10 @@ class ClientsIndex extends React.Component {
     return (
       <div>
         <div className="row index-header">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <h1>Klientregister</h1>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-6">
             <form>
               <input
                 className="form-control"
