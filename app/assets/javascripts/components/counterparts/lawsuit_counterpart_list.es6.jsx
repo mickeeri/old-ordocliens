@@ -2,6 +2,7 @@ class LawsuitCounterpartList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { counterparts: props.counterparts };
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
 
   componentDidMount() {
@@ -10,6 +11,19 @@ class LawsuitCounterpartList extends React.Component {
 
   componentWillUnmount() {
     PubSub.unsubscribe('counterpartListUpdated');
+  }
+
+  handleDeleteClick(counterpartId) {
+    const url = `${Routes.counterpart_path(counterpartId)}?lawsuit_id=${this.props.lawsuitId}`;
+    makeDeleteRequest(url)
+      .success(() => {
+        showSuccessText('Motpart raderad från ärende', '#counterpart-list-message');
+        this.refreshCounterParts();
+      })
+      .fail(xhr => {
+        showErrorText('Något gick fel när motpart skulle raderas från ärende',
+          '#counterpart-list-message');
+      });
   }
 
   refreshCounterParts() {
@@ -38,6 +52,11 @@ class LawsuitCounterpartList extends React.Component {
               <a href={Routes.counterpart_path(counterpart.id)}>
                 {counterpart.firstName} {counterpart.lastName} ({counterpart.personalNumber})
               </a>
+              <i
+                className="fa fa-times delete-row-icon"
+                onClick={() => this.handleDeleteClick(counterpart.id)}
+                aria-hidden="true"
+              />
             </li>
           )}
         </ul>

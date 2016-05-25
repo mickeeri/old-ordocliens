@@ -56,8 +56,15 @@ class CounterpartsController < ApplicationController
   end
 
   def destroy
-    @counterpart.destroy
-    flash.keep[:notice] = "Motpart raderad"
+    if params[:lawsuit_id].present?
+      # Delete relation between counterpart and lawsuit.
+      Involvement.find_by_counterpart_id_and_lawsuit_id(
+        params[:id],
+        params[:lawsuit_id]).delete
+    else
+      @counterpart.destroy
+      flash.keep[:notice] = "Motpart raderad"
+    end
     respond_with @counterpart
   end
 

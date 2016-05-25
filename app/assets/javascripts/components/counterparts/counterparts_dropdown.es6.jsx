@@ -83,7 +83,9 @@ class CounterpartsDropdown extends React.Component {
                   <option
                     key={counterpart.id}
                     value={counterpart.id}
-                  >{counterpart.name} ({counterpart.personalNumber})</option>
+                  >
+                    {counterpart.lastName}, {counterpart.firstName} ({counterpart.personalNumber})
+                  </option>
                 )}
               </select>
             </div>
