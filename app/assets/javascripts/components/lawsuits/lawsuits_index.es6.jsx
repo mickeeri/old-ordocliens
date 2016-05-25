@@ -117,15 +117,7 @@ class LawsuitsIndex extends React.Component {
             </thead>
             <tbody>
               {this.state.lawsuits.map(lawsuit =>
-                <tr key={lawsuit.id} onClick={this.handleTableRowClick.bind(this, lawsuit.id)}>
-                  <td>{lawsuit.primaryClient}</td>
-                  <td>{lawsuit.lawsuitType.name}</td>
-                  <td>{lawsuit.slug}</td>
-                  <td>{lawsuit.createdAt = new Date().yyyymmdd()}</td>
-                  <td
-                    className={lawsuit.closed ? 'text-danger' : 'text-success'}
-                  >{lawsuit.closed ? 'Arkiverat' : 'Aktivt'}</td>
-                </tr>
+                <LawsuitIndexRow key={lawsuit.id} lawsuit={lawsuit} />
               )}
             </tbody>
           </table>
