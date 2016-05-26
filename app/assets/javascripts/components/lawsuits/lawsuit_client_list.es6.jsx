@@ -31,12 +31,7 @@ class LawsuitClientList extends React.Component {
     makeGetRequest(url)
       .success(res => {
         this.setState({ clients: res.clients });
-        if (res.clients.length === 0) {
-          // Remove primary client from header if lawsuit don't have any clients.
-          PubSub.publish('noPrimaryClient');
-        } else {
-          PubSub.publish('dismissEdit');
-        }
+        PubSub.publish('dismissEdit');
       })
       .error(xhr => {
         const alert = $('#lawsuit-client-list-message');
@@ -58,13 +53,14 @@ class LawsuitClientList extends React.Component {
               <a href={Routes.client_path(client.id)}>
                 {client.firstName} {client.lastName} ({client.ssn})
               </a>
-              {client.isPrimary ? 'Huvudklient' : ''}
-              <i
-                className="fa fa-times delete-row-icon"
-                onClick={() => this.handleDeleteClick(client.id)}
-                aria-hidden="true"
-              >
-              </i>
+              <span className="text-muted">{client.id === this.props.primaryClientId ? ' huvudklient' : ''}</span>
+              {client.id !== this.props.primaryClientId ?
+                <i
+                  className="fa fa-times delete-row-icon"
+                  onClick={() => this.handleDeleteClick(client.id)}
+                  aria-hidden="true"
+                />
+              : ''}
             </li>
           )}
         </ul>
