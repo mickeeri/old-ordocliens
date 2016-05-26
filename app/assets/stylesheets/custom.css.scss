@@ -44,7 +44,8 @@ main {
   .nav-link {
     display: block;
     font-weight: 600;
-    padding: 0.375rem 0;
+    padding: .45rem .75rem .4rem;
+    //padding: 0.375rem 0;
     color: #666;
     &:hover {
       color: #0275d8;
@@ -59,7 +60,9 @@ main {
   }
 
   .active {
-    color: #0275d8;
+    // color: #0275d8;
+    background: #f9f9f9;
+    border-radius: .25rem;
   }
 
   .btn-success {
@@ -74,6 +77,8 @@ main {
     height: 40px;
     display: inline-block;
     text-decoration: none;
+    padding: .45rem .75rem .4rem;
+    margin-left: 10px;
     &:hover {
       color: #0275d8;
       &:after {
@@ -87,7 +92,12 @@ main {
   }
 
   .active {
-    color: #0275d8;
+    // color: #0275d8;
+    // box-shadow: 0 2px 10px rgba(0,0,0,.16);
+    // border: 1px solid rgba(0,0,0,.12);
+    background: darken(#F9F9F9, 5%);
+
+    border-radius: .25rem;
   }
 
   .divider {
