@@ -22,13 +22,13 @@ prawn_document(:page_layout => :landscape) do |pdf|
     pdf.text "Handläggare: #{@lawsuit.user.first_name} #{@lawsuit.user.last_name}", leading: 5
     pdf.text "Startdatum: #{@lawsuit.created_at.strftime('%F')}", leading: 5
     pdf.text "Ärendetyp: #{@lawsuit.lawsuit_type.name}", leading: 5
-    pdf.text "Målnummer: #{@lawsuit.case_number}", leading: 5 if @lawsuit.case_number
-    pdf.text "Domstol: #{@lawsuit.court}", leading: 5 if @lawsuit.court
+    pdf.text "Målnummer: #{@lawsuit.case_number}", leading: 5 unless @lawsuit.case_number.nil?
+    pdf.text "Domstol: #{@lawsuit.court}", leading: 5 unless @lawsuit.court.nil?
   end
 
 
   pdf.bounding_box([600, 500], :width => 300, :height => 200) do
-    client = @lawsuit.primary_participation.client
+    client = @lawsuit.primary_client
     pdf.font "app/assets/fonts/palab.ttf"
     pdf.text "Klient", leading: 2
     pdf.font "app/assets/fonts/pala.ttf"
@@ -42,17 +42,19 @@ prawn_document(:page_layout => :landscape) do |pdf|
     pdf.text client.email, leading: 2
   end
 
-  pdf.bounding_box([900, 500], :width => 300, :height => 200) do
-    counterpart = @lawsuit.counterparts.first
-    pdf.font "app/assets/fonts/palab.ttf"
-    pdf.text "Motpart", leading: 2
-    pdf.font "app/assets/fonts/pala.ttf"
-    pdf.text "#{counterpart.first_name} #{counterpart.last_name}", leading: 2
-    pdf.text counterpart.personal_number, leading: 2
-    pdf.font "app/assets/fonts/palab.ttf", leading: 2
-    pdf.move_down 20
-    pdf.text "Ombud", leading: 2
-    pdf.font "app/assets/fonts/pala.ttf", leading: 2
-    pdf.text counterpart.representative, leading: 2
+  if @lawsuit.counterparts.exists?
+    pdf.bounding_box([900, 500], :width => 300, :height => 200) do
+      counterpart = @lawsuit.counterparts.first
+      pdf.font "app/assets/fonts/palab.ttf"
+      pdf.text "Motpart", leading: 2
+      pdf.font "app/assets/fonts/pala.ttf"
+      pdf.text "#{counterpart.first_name} #{counterpart.last_name}", leading: 2
+      pdf.text counterpart.personal_number, leading: 2
+      pdf.font "app/assets/fonts/palab.ttf", leading: 2
+      pdf.move_down 20
+      pdf.text "Ombud", leading: 2
+      pdf.font "app/assets/fonts/pala.ttf", leading: 2
+      pdf.text counterpart.representative, leading: 2
+    end
   end
 end
