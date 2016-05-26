@@ -9,7 +9,7 @@ class Counterpart < ActiveRecord::Base
   validates :last_name, presence: true, length: { maximum: 60 }
   VALID_SSN_REGEX = /\A[0-9]{6}-[0-9]{4}\z/
   validates :personal_number, presence: true, format: { with: VALID_SSN_REGEX }
-  validates :representative, presence: true, length: { maximum: 60 }
+  validates :representative, allow_blank: true, length: { maximum: 60 }
   validates :info, allow_blank: true, length: { maximum: 1000 }
   # Scopes
   scope :sorted, -> { order(last_name: :asc, first_name: :asc) }
