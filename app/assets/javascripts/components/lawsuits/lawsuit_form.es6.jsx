@@ -11,7 +11,6 @@ class LawsuitForm extends React.Component {
     };
     this.fetchLawsuitTypes = this.fetchLawsuitTypes.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
-    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -23,6 +22,7 @@ class LawsuitForm extends React.Component {
   }
 
   setLawsuitType(e) {
+    validateCheckBox(e.target.value, 'lawsuitTypes');
     this.setState({ lawsuitTypeId: e.target.value });
   }
 
@@ -46,6 +46,9 @@ class LawsuitForm extends React.Component {
           alert.addClass('text-success');
           alert.slideDown();
           alert.delay(1000).slideUp(300);
+          // Remove green or red text when updated successfully.
+          $('.form-group').removeClass('has-success');
+          $('.form-group').removeClass('has-error');
         })
         .fail(xhr => {
           alert.text(`Fel uppstod. Statuskod: ${xhr.status}`);
@@ -81,19 +84,32 @@ class LawsuitForm extends React.Component {
   }
 
   handleInputChange(e) {
-    const nextState = {};
-    nextState[e.target.name] = e.target.value;
-    this.setState(nextState);
-  }
-
-  handleCheckBoxChange(e) {
-    this.setState({ closed: !this.state.closed });
-    this.handleOnSubmit(e);
+    if (this.validate(e)) {
+      const nextState = {};
+      nextState[e.target.name] = e.target.value;
+      this.setState(nextState);
+    }
   }
 
   handleCancelButtonClick(e) {
     e.preventDefault();
     PubSub.publish('dismissEdit');
+  }
+
+  validate(e) {
+    const input = e.target ? e.target : e;
+
+    if (input.id === 'court') {
+      return validateStringLength(input.value, 100, '', input.id, 'Domstol');
+    }
+    if (input.id === 'caseNumber') {
+      return validateStringLength(input.value, 20, '', input.id, 'Målnummer');
+    }
+    if (input.id === 'lawsuitTypes') {
+      console.log(input.value);
+    }
+
+    return false;
   }
 
   fetchLawsuitTypes() {
@@ -109,6 +125,8 @@ class LawsuitForm extends React.Component {
 
   render() {
     const isEdit = this.state.id !== '';
+    const createdDate = this.props.initialLawsuit ?
+      new Date(this.props.initialLawsuit.createdAt).yyyymmdd() : '';
     return (
       <div>
         <div className="alert modal-alert" id="lawsuit-modal-alert">
@@ -116,43 +134,50 @@ class LawsuitForm extends React.Component {
           <span id="lawsuit-modal-alert-span"></span>
         </div>
         {this.state.showForm ?
-          <form
-            className="form form-inline"
-            onKeyPress={this.handleKeyPress}
-            onSubmit={this.handleOnSubmit}
-          >
-            <p className="hidden message" id="lawsuit-form-message">
-              {this.state.message}
-            </p>
+          <form onKeyPress={this.handleKeyPress} onSubmit={this.handleOnSubmit}>
+            <p className="hidden message" id="lawsuit-form-message"></p>
             {isEdit ?
-              <div>
-                <strong>Skapat: </strong>{new Date(this.props.initialLawsuit.createdAt).yyyymmdd()}
-              </div> :
-              ''}
-            <div className="form-group">
-              <LawsuitTypesDropdown
-                selectedId={parseInt(this.state.lawsuitTypeId, 10)}
-                changeEvent={this.setLawsuitType}
-              />
+              <div className="form-group row">
+                <div className="col-md-9"><strong>Skapat:</strong></div>
+                <div className="col-md-3 content-right">{createdDate}</div>
+              </div>
+              : ''}
+            <div id="lawsuitTypesGroup" className="form-group row">
+              <div className="col-sm-6 col-sm-offset-6">
+                <LawsuitTypesDropdown
+                  selectedId={parseInt(this.state.lawsuitTypeId, 10)}
+                  changeEvent={this.setLawsuitType}
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="court">Domstol</label>
-              <input
-                className="form-control form-control-sm"
-                name="court"
-                type="text"
-                value={this.state.court}
-                onChange={this.handleInputChange}
-              />
+            <div id="courtGroup" className="form-group row">
+              <label className="col-sm-6 form-control-label" htmlFor="court">Domstol</label>
+              <div className="col-sm-6">
+                <input
+                  placeholder="Domstol"
+                  className="form-control form-control-sm"
+                  name="court"
+                  id="court"
+                  type="text"
+                  value={this.state.court}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <small id="courtHelper" className="text-muted"></small>
             </div>
-            <div className="form-group">
-              <label htmlFor="caseNumber">Målnummer</label>
-              <input
-                name="caseNumber"
-                className="form-control form-control-sm"
-                value={this.state.caseNumber}
-                onChange={this.handleInputChange}
-              />
+            <div id="caseNumberGroup" className="form-group row">
+              <label className="col-sm-8 form-control-label" htmlFor="caseNumber">Målnummer</label>
+              <div className="col-sm-4">
+                <input
+                  className="form-control form-control-sm"
+                  id="caseNumber"
+                  name="caseNumber"
+                  onChange={this.handleInputChange}
+                  placeholder="Målnummer"
+                  value={this.state.caseNumber}
+                />
+              </div>
+              <small id="caseNumberHelper" className="text-muted"></small>
             </div>
             <hr />
             <div className="content-right">
