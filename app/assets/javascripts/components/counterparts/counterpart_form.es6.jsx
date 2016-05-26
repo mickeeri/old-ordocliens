@@ -15,6 +15,13 @@ class CounterpartForm extends React.Component {
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  handleKeyPress(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      this.handleOnSubmit(e);
+    }
   }
 
   handleOnSubmit(e) {
@@ -89,7 +96,7 @@ class CounterpartForm extends React.Component {
           <span id="counterpart-modal-alert-span"></span>
         </div>
         {this.state.showForm ?
-          <form onSubmit={this.handleOnSubmit}>
+          <form onSubmit={this.handleOnSubmit} onKeyPress={this.handleKeyPress}>
             <p className="hidden message" id="counterpart-form-message"></p>
             <div id="firstNameGroup" className="form-group row">
               <label className="col-sm-4 form-control-label" htmlFor="firstName">Förnamn</label>
