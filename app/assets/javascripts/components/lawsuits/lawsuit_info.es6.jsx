@@ -32,6 +32,7 @@ class LawsuitInfo extends React.Component {
             <LawsuitClientList
               clients={this.props.initialLawsuit.clients}
               lawsuitId={this.props.initialLawsuit.id}
+              primaryClientId={this.props.primaryClientId}
             />
           </div>
           <div className="col-md-6">
@@ -47,6 +48,7 @@ class LawsuitInfo extends React.Component {
 }
 
 LawsuitInfo.propTypes = {
-  initialLawsuit: React.PropTypes.object.isRequired,
   closed: React.PropTypes.bool.isRequired,
+  initialLawsuit: React.PropTypes.object.isRequired,
+  primaryClientId: React.PropTypes.number.isRequired,
 };

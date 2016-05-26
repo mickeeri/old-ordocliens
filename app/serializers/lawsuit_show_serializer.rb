@@ -5,8 +5,7 @@ class LawsuitShowSerializer < ActiveModel::Serializer
              :case_number,
              :created_at,
              :link,
-             :slug,
-             :primary_client
+             :slug
   has_many :counterparts
   has_many :clients
   has_one :lawsuit_type

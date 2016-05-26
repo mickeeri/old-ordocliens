@@ -33,9 +33,6 @@ class LawsuitShow extends React.Component {
     PubSub.unsubscribe('tasksTouched');
   }
 
-
-
-
   // Show success message on update.
   setMessage() {
     $('#updatedLawsuitMessage').fadeIn();
@@ -110,7 +107,6 @@ class LawsuitShow extends React.Component {
               name="time"
               onClick={this.togglePage}
             >Tidrapportering</a>
-            <span className="divider">|</span>
             <a
               className={this.state.page === 'info' ? 'active' : ''}
               href="#" name="info"
@@ -120,7 +116,11 @@ class LawsuitShow extends React.Component {
         </div>
         <p id="updatedLawsuitMessage" className="text-success">{this.state.message}</p>
         {this.state.page === 'info' ?
-          <LawsuitInfo initialLawsuit={this.props.lawsuit} closed={this.state.closed} /> :
+          <LawsuitInfo
+            initialLawsuit={this.props.lawsuit}
+            closed={this.state.closed}
+            primaryClientId={this.props.primaryClient.id}
+          /> :
           <TasksIndex
             tasks={this.state.tasks}
             expenses={this.state.expenses}
