@@ -76,15 +76,10 @@ User.all.each do |user|
     number_of_lawsuits.times do
       lawsuit = user.lawsuits.create!(
         lawsuit_type_id: LawsuitType.offset(rand(LawsuitType.count)).first.id,
-        closed: Faker::Boolean.boolean
+        closed: Faker::Boolean.boolean,
+        primary_client_id: client.id
       )
-
-      # Add participation
-      participation = Participation.new(
-        lawsuit_id: lawsuit.id,
-        client_id: client.id,
-        is_primary: true)
-      participation.save
+      lawsuit.clients << client
 
       # Add slug
       first_name_initial = user.first_name[0, 1].downcase
