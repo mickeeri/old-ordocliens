@@ -43,6 +43,7 @@ class LawsuitsController < ApplicationController
   end
 
   def create
+    # TODO: Clean up and comments.
     @lawsuit = current_user.lawsuits.build(lawsuit_params)
     add_slug if @lawsuit.save
     client = Client.find(params[:client_id])
@@ -88,6 +89,9 @@ class LawsuitsController < ApplicationController
     @lawsuits = @lawsuits.users_lawsuits(params[:user].present? ? params[:user] : current_user.id)
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
+    # TODO: Search and sort without crashing.
+    # https://github.com/Casecommons/pg_search/issues/109
+    # https://github.com/Casecommons/pg_search/issues/206
     @lawsuits = @lawsuits.sorted_by_primary_client unless params[:search].present?
     @lawsuits = @lawsuits.page(params[:page]).per_page(100)
   end
@@ -96,6 +100,7 @@ class LawsuitsController < ApplicationController
     @lawsuit = Lawsuit.find(params[:id])
   end
 
+  # Props for show view.
   def props
     { lawsuit: prepare(@lawsuit, LawsuitShowSerializer, root: false),
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),

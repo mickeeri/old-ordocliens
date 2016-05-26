@@ -21,6 +21,7 @@ sv:
         password: "Lösenord"
         password_confirmation: "Lösenordsbekräftelse"
         current_password: "Nuvarande lösenord"
+        rememeber_me: "Kom ihåg mig"
   date:
     abbr_day_names:
     - sön

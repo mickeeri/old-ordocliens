@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   # post "lawsuits/:id/clients" => "clients#lawsuit_client_list"
 
   #get "report/:id" => "lawsuits#report"
-  get "report/:id/Aktomslag" => "reports#show"
+  get "report/:id" => "reports#show"
   get "lawsuit_cover/:id" => "reports#cover"
 
   # Example of regular route:

@@ -29,6 +29,7 @@ class LawsuitTypesDropdown extends React.Component {
         className="form-control form-control-sm"
         onChange={this.props.changeEvent}
         name="lawsuitTypes"
+        id="lawsuitTypes"
         value={this.props.selectedId}
         required
       >
