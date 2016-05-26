@@ -2,6 +2,13 @@ function validateStringLength(string, maxLength, minLength, inputName, label) {
   const helper = `#${inputName}Helper`;
   const formGroup = `#${inputName}Group`;
 
+  if (minLength === '' && string === '') {
+    $(formGroup).removeClass('has-danger');
+    $(formGroup).removeClass('has-success');
+    $(helper).text('');
+    return true;
+  }
+
   if (string.length > maxLength) {
     $(helper).text(`${label} får inte överskrida ${maxLength} tecken.`);
     $(formGroup).addClass('has-danger');
@@ -9,7 +16,7 @@ function validateStringLength(string, maxLength, minLength, inputName, label) {
   } else if (string.length < minLength) {
     const message = minLength === 1 ?
       `${label} får inte vara tomt.` :
-      `${label} måste bestå av mer än ${minLength} tecken.`;
+      `${label} ska bestå av minst ${minLength} tecken.`;
     $(helper).text(message);
     $(formGroup).addClass('has-danger');
     $(formGroup).removeClass('has-success');
@@ -23,21 +30,28 @@ function validateStringLength(string, maxLength, minLength, inputName, label) {
   return false;
 }
 
-function validateRequired(string, inputName, label) {
-  const helper = `#${inputName}Helper`;
-  const formGroup = `#${inputName}Group`;
-  if (string.length === 0) {
-    $(helper).text(`${label} får inte vara tomt.`);
-    $(formGroup).addClass('has-danger');
-    $(formGroup).removeClass('has-success');
-  } else {
-    $(formGroup).removeClass('has-danger');
-    $(formGroup).addClass('has-success');
-    $(helper).text('');
-    return true;
-  }
+// function validateRequired(string, inputName, label) {
+//   const helper = `#${inputName}Helper`;
+//   const formGroup = `#${inputName}Group`;
+//   if (string.length === 0) {
+//     $(helper).text(`${label} får inte vara tomt.`);
+//     $(formGroup).addClass('has-danger');
+//     $(formGroup).removeClass('has-success');
+//   } else {
+//     $(formGroup).removeClass('has-danger');
+//     $(formGroup).addClass('has-success');
+//     $(helper).text('');
+//     return true;
+//   }
+//
+//   return false;
+// }
 
-  return false;
+function validateCheckBox(value, inputName) {
+  if (!isNaN(value)) {
+    const formGroup = `#${inputName}Group`;
+    $(formGroup).addClass('has-success');
+  }
 }
 
 function validateEmail(string, inputName, required) {
@@ -54,6 +68,32 @@ function validateEmail(string, inputName, required) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (!string.match(re)) {
     $(helper).text('E-post har fel format.');
+    $(formGroup).addClass('has-danger');
+    $(formGroup).removeClass('has-success');
+  } else {
+    $(formGroup).removeClass('has-danger');
+    $(formGroup).addClass('has-success');
+    $(helper).text('');
+    return true;
+  }
+
+  return false;
+}
+
+function validatePostCode(string, inputName, required) {
+  const helper = `#${inputName}Helper`;
+  const formGroup = `#${inputName}Group`;
+
+  if (!required && string === '') {
+    $(formGroup).removeClass('has-danger');
+    $(formGroup).removeClass('has-success');
+    $(helper).text('');
+    return true;
+  }
+
+  const regex = /^([0-9]{5})$/;
+  if (!string.match(regex)) {
+    $(helper).text('Postnummer har fel format.');
     $(formGroup).addClass('has-danger');
     $(formGroup).removeClass('has-success');
   } else {
