@@ -8,18 +8,25 @@ class ClientForm extends React.Component {
       id: props.client ? props.client.id : '',
       lastName: props.client ? props.client.lastName : '',
       lawsuitId: props.lawsuitId,
+      mobile: props.client ? props.client.mobile : '',
       note: props.client ? props.client.note : '',
       phoneNumber: props.client ? props.client.phoneNumber : '',
-      mobile: props.client ? props.client.mobile : '',
       postCode: props.client ? props.client.postCode : '',
       ssn: props.client ? props.client.ssn : '',
       street: props.client ? props.client.street : '',
     };
 
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.validate = this.validate.bind(this);
+  }
+
+  handleKeyPress(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      this.handleOnSubmit(e);
+    }
   }
 
   handleOnSubmit(e) {
@@ -104,6 +111,25 @@ class ClientForm extends React.Component {
       validateStringLength(input.value, 255, '', input.name, 'E-post');
       validateEmail(input.value, input.name, false);
     }
+    if (input.name === 'mobile') {
+      validateStringLength(input.value, 15, '', input.name, 'Mobil');
+    }
+    if (input.name === 'phoneNumber') {
+      validateStringLength(input.value, 15, '', input.name, 'Telefon');
+    }
+    if (input.name === 'street') {
+      validateStringLength(input.value, 255, '', input.name, 'Gatuadress');
+    }
+    if (input.name === 'postCode') {
+      validateStringLength(input.value, 6, '', input.name, 'Postnummer');
+      validatePostCode(input.value, input.name, false);
+    }
+    if (input.name === 'city') {
+      validateStringLength(input.value, 100, '', input.name, 'Ort');
+    }
+    if (input.name === 'note') {
+      validateStringLength(input.value, 1000, '', input.name, 'Ort');
+    }
   }
 
   handleCancelButtonClick(e) {
@@ -120,7 +146,7 @@ class ClientForm extends React.Component {
     return (
       <div>
         <h3>{this.props.header}</h3>
-        <form onSubmit={this.handleOnSubmit} noValidate>
+        <form onSubmit={this.handleOnSubmit} onKeyPress={this.handleKeyPress} noValidate>
           <p className="hidden message" id="client-form-message"></p>
           <div id="firstNameGroup" className="form-group row">
             <label className="col-sm-4 form-control-label" htmlFor="firstName">Förnamn</label>
@@ -151,7 +177,6 @@ class ClientForm extends React.Component {
                 value={this.state.lastName}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
-                required="true"
               />
               <small id="lastNameHelper" className="text-muted"></small>
             </div>
@@ -189,87 +214,105 @@ class ClientForm extends React.Component {
               <small id="emailHelper" className="text-muted"></small>
             </div>
           </div>
-          <div className="form-group row">
+          <div id="mobileGroup" className="form-group row">
             <label htmlFor="mobile" className="col-sm-6 form-control-label">Mobil</label>
             <div className="col-sm-6">
               <input
                 placeholder="Mobil"
                 type="tel"
                 name="mobile"
+                id="mobile"
                 className="form-control form-control-sm"
                 value={this.state.mobile}
                 onChange={this.handleInputChange}
+                onBlur={this.validate}
               />
             </div>
+            <small id="mobileHelper" className="text-muted"></small>
           </div>
-          <div className="form-group row">
+          <div id="phoneNumberGroup" className="form-group row">
             <label htmlFor="phoneNumber" className="col-sm-6 form-control-label">Telefon</label>
             <div className="col-sm-6">
               <input
                 placeholder="Telefon"
                 type="tel"
                 name="phoneNumber"
+                id="phoneNumber"
                 className="form-control form-control-sm"
                 value={this.state.phoneNumber}
                 onChange={this.handleInputChange}
+                onBlur={this.validate}
               />
             </div>
+            <small id="phoneNumberHelper" className="text-muted"></small>
           </div>
           <hr />
-          <div className="form-group row">
+          <div id="streetGroup" className="form-group row">
             <label htmlFor="street" className="col-sm-4 form-control-label">Gatuadress</label>
             <div className="col-sm-8">
               <input
                 placeholder="Gatuadress"
                 type="text"
                 name="street"
+                id="street"
                 className="form-control form-control-sm"
                 value={this.state.street}
                 onChange={this.handleInputChange}
+                onBlur={this.validate}
               />
             </div>
+            <small id="streetHelper" className="text-muted"></small>
           </div>
-          <div className="form-group row">
+          <div id="postCodeGroup" className="form-group row">
             <label htmlFor="postCode" className="col-sm-8 form-control-label">Postnummer</label>
             <div className="col-sm-4">
               <input
                 placeholder="Postnummer"
                 type="number"
                 name="postCode"
+                id="postCode"
                 className="form-control form-control-sm"
                 value={this.state.postCode}
                 onChange={this.handleInputChange}
+                onBlur={this.validate}
               />
             </div>
+            <small id="postCodeHelper" className="text-muted"></small>
           </div>
-          <div className="form-group row">
+          <div id="cityGroup" className="form-group row">
             <label htmlFor="city" className="col-sm-4 form-control-label">Ort</label>
             <div className="col-sm-8">
               <input
                 placeholder="Ort"
                 type="text"
                 name="city"
+                id="city"
                 className="form-control form-control-sm"
                 value={this.state.city}
                 onChange={this.handleInputChange}
+                onBlur={this.validate}
               />
             </div>
+            <small id="cityCodeHelper" className="text-muted"></small>
           </div>
           <hr />
-          <div className="form-group row">
+          <div id="noteGroup" className="form-group row">
             <label htmlFor="note" className="form-control-label">Anteckningar</label>
             <div className="col-sm-12">
               <textarea
                 placeholder="Anteckningar"
                 className="form-control"
                 type="text-area"
-                value={this.state ? this.state.note : ''}
                 name="note"
+                id="note"
                 rows="4"
+                value={this.state.note}
                 onChange={this.handleInputChange}
+                onBlur={this.validate}
               >
               </textarea>
             </div>
+            <small id="noteHelper" className="text-muted"></small>
           </div>
           <hr />
           <div className="content-right">
