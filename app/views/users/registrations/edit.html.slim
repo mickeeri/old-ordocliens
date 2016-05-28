@@ -1,43 +1,41 @@
 .row
   .col-md-6.col-md-offset-3
-    .panel.panel-default
-      .panel-heading
-        h3.panel-title Ändra mina uppgifter
-      .panel-body
-        = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-          =devise_error_messages!
-          .form-group
-            = f.label :email
-            = f.email_field :email, autofocus: true, class: "form-control"
-          
-          - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-            div = "Currently waiting confirmation for: #{resource.unconfirmed_email}"
-          
-          .form-group
-            = f.label :password
-            = f.password_field :password, autocomplete: "off", class: "form-control"
-            
-          .form-group
-            = f.label :password_confirmation
-            = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
-            
-          .form-group
-            = f.label :current_password 
-            = f.password_field :current_password, autocomplete: "off", class: "form-control"
+    .card.card-block
+      h3.card-title
+        = "Ändra kontouppgifter"
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+        =devise_error_messages!
+        .form-group
+          = f.label :email
+          = f.email_field :email, class: "form-control"
 
-          .actions
-            = f.submit "Uppdatera", class: "btn btn-primary pull-right"
-        / form_for   
-      / .panel-body      
-    / .panel   
-  / .col  
-/ .row  
+        - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+          div = "Currently waiting confirmation for: #{resource.unconfirmed_email}"
+
+        .form-group
+          = f.label :password
+          = f.password_field :password, autocomplete: "off", class: "form-control"
+
+        .form-group
+          = f.label :password_confirmation
+          = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+
+        .form-group
+          = f.label :current_password
+          = f.password_field :current_password, autocomplete: "off", class: "form-control"
+
+        .actions.content-right
+          = f.submit "Uppdatera", class: "btn btn-primary"
+
 .row
   .col-md-6.col-md-offset-3
-    .panel.panel-danger
-      .panel-heading
-        h3.panel-title Avsluta konto
-      .panel-body.align-panel       
-        = button_to "Säg upp mitt konto", registration_path(resource_name), data: { confirm: "Är du säker?" }, method: :delete, class: "btn btn-danger"
-        p Varning. Ditt konto kommer att tas bort och aldrig kunna användas igen.          
-= link_to "Tillbaka", :back  
+    .card.card-block
+        h3.card-title Avsluta konto
+        p Varning. Ditt konto kommer att tas bort och aldrig kunna användas igen.
+        .content-right
+          = button_to "Säg upp mitt konto", registration_path(resource_name), data: { confirm: "Är du säker?" }, method: :delete, class: "btn btn-danger"
+
+.row
+  .col-md-6.col-md-offset-3
+    .card.card-block
+      = link_to "<< Tillbaka", :back

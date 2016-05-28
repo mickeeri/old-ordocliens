@@ -421,6 +421,26 @@ h1 {
   }
 }
 
+// Devise error message.
+#error_explanation {
+  background-color: #f2dede;
+  border: 1px solid #eed3d7;
+  color: #b94a48;
+  text-align: left;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 0.25rem;
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  h2 {
+    font-size: 1.1em;
+  }
+}
+
 //-----------------------------------------------------
 // Utils
 //-----------------------------------------------------
