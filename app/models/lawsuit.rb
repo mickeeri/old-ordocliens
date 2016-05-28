@@ -17,6 +17,7 @@ class Lawsuit < ActiveRecord::Base
   validates :case_number, allow_blank: true, length: { maximum: 20 }
 
   # Scopes
+  scope :sorted, -> { includes(:lawsuit_type).order("lawsuit_types.name asc") }
   # https://github.com/bbatsov/rubocop/issues/1520
   scope :sorted_by_clients, -> { includes(:clients)
     .order("clients.last_name asc")
