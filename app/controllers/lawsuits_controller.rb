@@ -86,9 +86,12 @@ class LawsuitsController < ApplicationController
   def filter_lawsuits
     # http://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
     @lawsuits = Lawsuit.where(nil)
-    unless params[:user].to_i == 0
-      @lawsuits = @lawsuits.users_lawsuits(params[:user].present? ? params[:user] : current_user.id)
-    end
+    @lawsuits = @lawsuits.users_lawsuits(
+      if params[:user].present?
+        params[:user]
+      else
+        current_user.id
+      end) unless params[:user] == "0"
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
     # TODO: Search and sort without crashing.
