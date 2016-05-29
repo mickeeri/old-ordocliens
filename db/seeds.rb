@@ -1,5 +1,14 @@
 # Firms
 firm = Firm.create!(name: "Familjejuristerna Alverlind & Cederberg")
+test_firm = Firm.create!(name: "Testfirma")
+
+test_firm.users.create!(
+  last_name: "Eriksson",
+  first_name: "Mikael",
+  email: "micke_eri@hotmail.com",
+  password: "password",
+  password_confirmation: "password"
+)
 
 # Users
 firm.users.create(
