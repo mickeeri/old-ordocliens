@@ -23,28 +23,29 @@ PriceCategory.create(name: "Tidsspillan (låg)", price: 700.00)
 PriceCategory.create(name: "Tidsspillan (hög)", price: 1250.00)
 PriceCategory.create(name: "Arbete", price: 1302.00)
 
-lawsuit_types = ["Boutredningsman",
-                 "Bodelningsförrättare",
-                 "God man",
-                 "Särskild företrädare barn",
-                 "Målsägandebiträde",
-                 "Rättegångsbiträde",
-                 "LVU/LPT/LVM",
-                 "Offentlig försvarare",
-                 "Migrationsrätt",
-                 "Medling",
-                 "Övriga förordnanden",
-                 "Partsombud",
+lawsuit_types = ["Aktieägaravtal",
                  "Arvsrätt",
-                 "Bouppteckning",
                  "Bodelning",
+                 "Bodelningsförrättare",
+                 "Bouppteckning",
+                 "Boutredningsman",
                  "Dödsboförvaltning",
                  "Familjerättsliga avtal",
                  "Fastighetsrätt",
-                 "Vårdnadstvist",
+                 "Felregisterad",
+                 "God man",
+                 "LVU/LPT/LVM",
+                 "Målsägandebiträde",
+                 "Medling",
+                 "Migrationsrätt",
+                 "Offentlig försvarare",
+                 "Övriga förordnanden",
+                 "Övrigt",
+                 "Partsombud",
+                 "Rättegångsbiträde",
+                 "Särskild företrädare barn",
                  "Underhåll",
-                 "Aktieägaravtal",
-                 "Övrigt"
+                 "Vårdnadstvist"
                  ]
 
 lawsuit_types.each do |type|

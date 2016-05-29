@@ -62,6 +62,8 @@ RSpec.describe LawsuitsController, type: :controller do
     context "when signed in" do
       it "should succeed" do
         sign_in user
+        lawsuit.primary_client_id = client.id
+        lawsuit.save
         get :show, id: lawsuit.id, client_id: client.id
         expect(response).to have_http_status(200)
       end
