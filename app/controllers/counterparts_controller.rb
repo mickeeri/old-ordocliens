@@ -16,7 +16,7 @@ class CounterpartsController < ApplicationController
           render json: @counterparts, meta: pagination_dict(@counterparts)
         else
           # For dropdown.
-          respond_with Counterpart.all.sorted
+          respond_with @counterparts
         end
       end
     end
@@ -62,6 +62,7 @@ class CounterpartsController < ApplicationController
         params[:id],
         params[:lawsuit_id]).delete
     else
+      # Delete counterpart altogether.
       @counterpart.destroy
       flash.keep[:notice] = "Motpart raderad"
     end
@@ -87,11 +88,13 @@ class CounterpartsController < ApplicationController
   end
 
   def search_counterparts
+    # Select all the counterparts that is involved with the users in the firm.
+    @counterparts = Counterpart.in_firm(User.in_same_firm(current_user))
     @counterparts =
       if params[:search].present?
-        Counterpart.search(params[:search])
+        @counterparts = @counterparts.search(params[:search])
       else
-        Counterpart.all
+        @counterparts
       end.sorted.page(params[:page]).per_page(20)
   end
 

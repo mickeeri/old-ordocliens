@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   # VALIDATION
   validates :first_name, presence: true, length: { maximum: 60 }
   validates :last_name, presence: true, length: { maximum: 60 }
+  scope :in_same_firm, -> (user) { where(firm_id: user.firm_id) }
+  scope :with_lawsuits, -> { includes(:lawsuits) }
 
   # VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   # validates :email, presence: true,

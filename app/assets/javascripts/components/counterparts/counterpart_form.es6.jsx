@@ -55,7 +55,7 @@ class CounterpartForm extends React.Component {
           // Replace form with success message.
           this.setState({ showForm: false });
           showAlertInModal(
-            `Motpart ${this.state.name} tillagd!`,
+            `Motpart ${this.state.firstName} ${this.state.lastName} tillagd!`,
             '#counterpart-modal-alert',
             'alert-success',
             'fa-check');

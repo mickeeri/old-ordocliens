@@ -13,6 +13,7 @@ class Counterpart < ActiveRecord::Base
   validates :info, allow_blank: true, length: { maximum: 1000 }
   # Scopes
   scope :sorted, -> { order(last_name: :asc, first_name: :asc) }
+  scope :in_firm, -> (users) { joins(:lawsuits).merge(Lawsuit.where(user_id: users)) }
   pg_search_scope :search,
                   against: [:last_name, :first_name, :personal_number],
                   using: { tsearch: { prefix: true, normalization: 2 }

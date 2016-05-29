@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   respond_to :json, :html
 
   def index
-    firm = current_user.firm
-    render json: firm.users.order(first_name: :asc)
+    render json: User.in_same_firm(current_user).order(first_name: :asc)
   end
 
   def show

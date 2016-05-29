@@ -85,7 +85,7 @@ class LawsuitsController < ApplicationController
   # Filter lawsuits based on different paramaters.
   def filter_lawsuits
     # http://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
-    @lawsuits = Lawsuit.where(nil)
+    @lawsuits = Lawsuit.where(user_id: User.in_same_firm(current_user))
     @lawsuits = @lawsuits.users_lawsuits(
       if params[:user].present?
         params[:user]

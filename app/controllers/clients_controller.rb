@@ -96,7 +96,7 @@ class ClientsController < ApplicationController
   end
 
   def search_clients
-    @clients = Client.where(nil)
+    @clients = Client.where(user_id: User.in_same_firm(current_user))
     @clients = @clients.users_clients(current_user) unless params[:all] == "true"
     @clients = @clients.search(params[:search]) if params[:search].present?
     @clients = @clients.sorted.page(params[:page]).per_page(50)
