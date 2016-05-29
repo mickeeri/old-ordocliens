@@ -138,8 +138,8 @@ class LawsuitForm extends React.Component {
             <p className="hidden message" id="lawsuit-form-message"></p>
             {isEdit ?
               <div className="form-group row">
-                <div className="col-md-9"><strong>Skapat:</strong></div>
-                <div className="col-md-3 content-right">{createdDate}</div>
+                <div className="col-md-9 col-xs-6"><strong>Skapat:</strong></div>
+                <div className="col-md-3 col-xs-6 content-right">{createdDate}</div>
               </div>
               : ''}
             <div id="lawsuitTypesGroup" className="form-group row">

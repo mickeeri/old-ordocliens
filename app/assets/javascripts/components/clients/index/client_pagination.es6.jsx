@@ -60,7 +60,7 @@ class Paginator extends React.Component {
         >
           <span aria-hidden="true">« Föregående</span>
         </button>
-        <div>
+        <div className="hidden-sm-down">
           <p>Sida: </p>
           <input
             className="form-control form-control-sm page-number"

@@ -3,12 +3,16 @@ $table-bg-accent: #EBEBEB;
 @import "bootstrap";
 @import "font-awesome";
 
+ $screen-sm-min: 576px;
+
 //-----------------------------------------------------
 // Layout
 //-----------------------------------------------------
 body {
   background: #F9F9F9;
 }
+
+
 
 main {
   margin-top: 40px;
@@ -24,13 +28,18 @@ main {
 }
 
 .index-header {
-  height: 80px;
+  // height: 80px;
+  // @media (max-width: $screen-sm-min) {
+  //   height: 0;
+  // }
 }
 
 .container-fluid {
   background: #FFFFFF;
   box-shadow: 0 1px 4px rgba(0,0,0,.15);
 }
+
+
 
 //-----------------------------------------------------
 // Navbar
@@ -425,10 +434,10 @@ h1 {
 .paginator-row {
   margin-bottom: 15px;
 
-  .checkbox {
-    margin-top: 10px;
-    margin-bottom: 0;
-  }
+  // .checkbox {
+  //   margin-top: 10px;
+  //   margin-bottom: 0;
+  // }
 }
 
 // Devise error message.
@@ -475,4 +484,62 @@ h1 {
 
 .hidden {
   display: none;
+}
+
+
+@media (max-width: $screen-sm-min) {
+  .row {
+    div {
+      margin-bottom: 10px;
+    }
+  }
+
+  .user-select {
+    .form-control {
+      width: 100%;
+    }
+  }
+
+  .checkbox {
+    margin-bottom: 10px;
+  }
+
+  .task-menu, .buttons {
+    .btn {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+  }
+
+  .lawsuit-menu {
+    margin-top: 20px;
+    text-align: center;
+    a {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+
+  .paginator {
+    button {
+      margin-left: 15px;
+    }
+  }
+
+  .nav-inline {
+    li {
+      display: block !important;
+      margin-left: 0 !important;
+      border-bottom: 1px solid #F9F9F9;
+    }
+  }
+
+  .nav-item.dropdown {
+    margin-bottom: 20px;
+  }
+
+  // .nav-item.nav-li {
+  //   width: 100%;
+  //   margin-left: 0;
+  // }
 }

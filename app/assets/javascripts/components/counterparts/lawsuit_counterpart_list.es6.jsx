@@ -61,7 +61,7 @@ class LawsuitCounterpartList extends React.Component {
           )}
         </ul>
         <div id="editModalContainer"></div>
-        <div className="content-right">
+        <div className="content-right buttons">
           <AddCounterpartButton
             addNewCounterpart={false}
             lawsuitId={this.props.lawsuitId}

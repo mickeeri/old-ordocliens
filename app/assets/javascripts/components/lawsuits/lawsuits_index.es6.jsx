@@ -80,7 +80,7 @@ class LawsuitsIndex extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="checkbox col-md-3">
+          <div className="checkbox col-lg-3">
             <label>
               <input
                 type="checkbox"
@@ -88,13 +88,13 @@ class LawsuitsIndex extends React.Component {
               /> Visa arkiverade ärenden
             </label>
           </div>
-          <div className="col-md-5">
+          <div className="col-lg-5">
             <UsersDropdown
               changeEvent={this.setSelectedUser}
               selectedUser={this.state.fetchData.user}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-lg-4">
             {this.state.meta.totalPages === 1 ? '' :
               <Paginator
                 totalPages={this.state.meta.totalPages}
