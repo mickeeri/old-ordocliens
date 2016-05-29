@@ -79,7 +79,7 @@ class LawsuitsIndex extends React.Component {
             </form>
           </div>
         </div>
-        <div className="row">
+        <div className="row paginator-row">
           <div className="checkbox col-lg-3">
             <label>
               <input
