@@ -46,7 +46,6 @@ CounterpartLawsuitList.propTypes = {
     closed: React.PropTypes.bool.isRequired,
     court: React.PropTypes.string,
     lawsuitType: React.PropTypes.object.isRequired,
-    primaryClient: React.PropTypes.string.isRequired,
     slug: React.PropTypes.string.isRequired,
     clients: React.PropTypes.array.isRequired,
   })),
