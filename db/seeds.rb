@@ -61,7 +61,7 @@ lawsuit_types.each do |type|
   LawsuitType.create(name: type)
 end
 
-test_firm.users.each do |user|
+User.all.each do |user|
   # Clients
   number_of_clients = rand(100..120)
   sentece_lenght = rand(6..25)
