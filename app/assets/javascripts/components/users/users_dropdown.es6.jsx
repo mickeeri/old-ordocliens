@@ -34,6 +34,7 @@ class UsersDropdown extends React.Component {
           value={this.props.selectedUser}
           required
         >
+          <option value="0">Visa alla</option>
           {this.state.users.map(user =>
             <option
               key={user.id}
