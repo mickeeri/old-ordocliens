@@ -51,7 +51,8 @@ class ExpensesIndex extends React.Component {
             {this.props.expenses.map(expense =>
               <tr key={expense.id}>
                 <td>{expense.entry}</td>
-                <td className="text-nowrap">{parseFloat(expense.price).toFixed(2)} kr</td>
+                <td className="text-nowrap">{parseFloat(expense.price)
+                    .toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' })} </td>
                 <td className="center-content">
                   <i
                     className="fa fa-pencil-square-o"

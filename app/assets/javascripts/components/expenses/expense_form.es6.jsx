@@ -4,7 +4,7 @@ class ExpenseForm extends React.Component {
     this.state = {
       entry: props.initialExpense ? props.initialExpense.entry : '',
       id: props.initialExpense ? props.initialExpense.id : '',
-      price: props.initialExpense ? props.initialExpense.price : '',
+      price: props.initialExpense ? parseFloat(props.initialExpense.price).toFixed(2) : '',
       showForm: true };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);

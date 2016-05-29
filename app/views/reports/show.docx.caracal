@@ -63,12 +63,12 @@ expenses_table_data = [['Notering','Kostnad']]
 
 # Iterates through expenses and push rows.
 @expenses.each do |expense|
-  row = [expense.entry, ("%.2f" % expense.price + " kr")]
+  row = [expense.entry, number_to_currency(expense.price, delimiter: " ")]
   expenses_table_data.push(row)
 end
 
 # Last row displays sum of category.
-last_row = ['Summa', ("%.2f" % @expenses.sum(:price) + " kr")]
+last_row = ['Summa', number_to_currency(@expenses.sum(:price), delimiter: " ")]
 expenses_table_data.push(last_row)
 
 docx.table expenses_table_data, border_size: 4 do
