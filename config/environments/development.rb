@@ -46,4 +46,8 @@ Rails.application.configure do
   config.web_console.whitelisted_ips = '10.0.2.2'
 
   config.react.variant = :development
+
+  # Limit size of log file. 
+  config.logger = ActiveSupport::Logger.new(
+                     config.paths['log'].first, 1, 50 * 1024 * 1024)
 end
