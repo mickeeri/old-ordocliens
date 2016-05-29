@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525191409) do
+ActiveRecord::Schema.define(version: 20160529083600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,10 @@ ActiveRecord::Schema.define(version: 20160525191409) do
     t.string   "last_name"
     t.string   "first_name"
   end
+
+  add_index "counterparts", ["first_name"], name: "index_counterparts_on_first_name", using: :btree
+  add_index "counterparts", ["last_name"], name: "index_counterparts_on_last_name", using: :btree
+  add_index "counterparts", ["personal_number"], name: "index_counterparts_on_personal_number", using: :btree
 
   create_table "disputes", force: :cascade do |t|
     t.integer  "client_id"
@@ -102,6 +106,8 @@ ActiveRecord::Schema.define(version: 20160525191409) do
     t.integer  "primary_client_id"
   end
 
+  add_index "lawsuits", ["case_number"], name: "index_lawsuits_on_case_number", using: :btree
+  add_index "lawsuits", ["court"], name: "index_lawsuits_on_court", using: :btree
   add_index "lawsuits", ["lawsuit_type_id"], name: "index_lawsuits_on_lawsuit_type_id", using: :btree
   add_index "lawsuits", ["slug"], name: "index_lawsuits_on_slug", using: :btree
   add_index "lawsuits", ["user_id"], name: "index_lawsuits_on_user_id", using: :btree

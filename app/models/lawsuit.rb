@@ -22,11 +22,13 @@ class Lawsuit < ActiveRecord::Base
   scope :sorted_by_clients, -> { includes(:clients)
     .order("clients.last_name asc")
     .order("clients.first_name asc")
-    .references(:clients)}
+    .references(:clients)
+  }
 
   scope :sorted_by_primary_client, -> { includes(:primary_client)
     .order("clients.last_name")
-    .order("clients.first_name") }
+    .order("clients.first_name")
+  }
   scope :sorted_by_date, -> { order(created_at: :desc, lawsuit_type_id: :desc) }
   scope :without_closed, -> { where(closed: false) }
   scope :users_lawsuits, -> (user) { where(user_id: user) }
@@ -37,7 +39,10 @@ class Lawsuit < ActiveRecord::Base
                   associated_against: { lawsuit_type: [:name],
                                         clients: [:last_name,
                                                   :first_name,
-                                                  :ssn] },
+                                                  :ssn],
+                                        counterparts: [:last_name,
+                                                       :first_name,
+                                                       :personal_number] },
                   using: { tsearch: { prefix: true,
                                       normalization: 2,
                                       negation: true }
