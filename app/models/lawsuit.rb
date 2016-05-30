@@ -3,7 +3,7 @@ class Lawsuit < ActiveRecord::Base
   belongs_to :user, required: true
   has_many :participations, dependent: :destroy
   has_many :clients, -> { distinct }, through: :participations
-  belongs_to :primary_client, class_name: "Client"
+  belongs_to :primary_client, class_name: "Client", required: true
   belongs_to :client
   has_many :involvements, dependent: :destroy
   has_many :counterparts, -> { distinct }, through: :involvements
@@ -29,9 +29,10 @@ class Lawsuit < ActiveRecord::Base
     .order("clients.last_name")
     .order("clients.first_name")
   }
-  scope :sorted_by_date, -> { order(created_at: :desc, lawsuit_type_id: :desc) }
+  scope :sorted_by_date, -> { order(created_at: :desc) }
   scope :without_closed, -> { where(closed: false) }
   scope :users_lawsuits, -> (user) { where(user_id: user) }
+  scope :within_firm, -> (current_user) { where(user_id: User.in_same_firm(current_user)) }
   pg_search_scope :search,
                   against: [:court,
                             :case_number,

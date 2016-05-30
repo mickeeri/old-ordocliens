@@ -1,27 +1,28 @@
 class ExpensesController < ApplicationController
   before_action :authenticate_user!
+  before_action :fetch_expense, only: [:destroy, :update]
   respond_to :json
 
   def index
-    @expenses = Lawsuit.find(params[:lawsuit_id]).expenses.sorted
+    @expenses = Lawsuit
+                .within_firm(current_user)
+                .find(params[:lawsuit_id])
+                .expenses.sorted
     respond_with @expenses
   end
 
   def create
-    lawsuit = Lawsuit.find(params[:lawsuit_id])
-    @expense = lawsuit.expenses.build(expense_params)
-    @expense.save
+    lawsuit = Lawsuit.within_firm(current_user).find(params[:lawsuit_id])
+    @expense = lawsuit.expenses.create!(expense_params)
     respond_with(lawsuit, @expense)
   end
 
   def destroy
-    @expense = Expense.find(params[:id])
     @expense.destroy
     respond_with @expense
   end
 
   def update
-    @expense = Expense.find(params[:id])
     @expense.update_attributes(expense_params)
     respond_with @expense
   end
@@ -30,5 +31,9 @@ class ExpensesController < ApplicationController
 
   def expense_params
     params.require(:expense).permit(:entry, :price)
+  end
+
+  def fetch_expense
+    @expense = Expense.within_firm(current_user).find(params[:id])
   end
 end

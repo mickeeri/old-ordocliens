@@ -5,7 +5,8 @@ class LawsuitsController < ApplicationController
                                        :update,
                                        :destroy,
                                        :report,
-                                       :client_list]
+                                       :client_list,
+                                       :lawsuit_cover]
   respond_to :json, :html, :docx
 
   def index
@@ -21,7 +22,9 @@ class LawsuitsController < ApplicationController
           render json: @lawsuits, meta: pagination_dict(@lawsuits)
         else
           # For lawsuit list on client page.
-          @lawsuits = Client.find(params[:client_id]).lawsuits
+          @lawsuits = Client
+                      .within_firm(current_user)
+                      .find(params[:client_id]).lawsuits
           respond_with @lawsuits.sorted
         end
       end
@@ -43,18 +46,14 @@ class LawsuitsController < ApplicationController
   end
 
   def create
-    # TODO: Clean up and comments.
     @lawsuit = current_user.lawsuits.build(lawsuit_params)
     add_slug if @lawsuit.save
-    client = Client.find(params[:client_id])
+    client = Client.within_firm(current_user).find(params[:client_id])
     # Assigning primary client.
     @lawsuit.primary_client_id = client.id
     @lawsuit.save
+    # Then adding client to has_many through relation.
     @lawsuit.clients << client
-    # Participation.create!(
-    #   lawsuit_id: @lawsuit.id,
-    #   client_id: client.id,
-    #   is_primary: true)
     respond_with @lawsuit
   end
 
@@ -70,7 +69,7 @@ class LawsuitsController < ApplicationController
   end
 
   def lawsuit_cover
-    @lawsuit = Lawsuit.find(params[:id])
+    # Empty
   end
 
   private
@@ -85,7 +84,8 @@ class LawsuitsController < ApplicationController
   # Filter lawsuits based on different paramaters.
   def filter_lawsuits
     # http://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
-    @lawsuits = Lawsuit.where(user_id: User.in_same_firm(current_user))
+    @lawsuits = Lawsuit.within_firm(current_user)
+    # Find specific users lawsuits. If user_id = "0" select all within firm.
     @lawsuits = @lawsuits.users_lawsuits(
       if params[:user].present?
         params[:user]
@@ -102,7 +102,7 @@ class LawsuitsController < ApplicationController
   end
 
   def fetch_lawsuit
-    @lawsuit = Lawsuit.find(params[:id])
+    @lawsuit = Lawsuit.within_firm(current_user).find(params[:id])
   end
 
   # Props for show view.

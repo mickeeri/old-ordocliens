@@ -3,25 +3,27 @@ class TasksController < ApplicationController
   respond_to :json
 
   def index
-    @tasks = Lawsuit.find(params[:lawsuit_id]).tasks.sorted_by_date
+    @tasks = Lawsuit
+             .within_firm(current_user)
+             .find(params[:lawsuit_id]).tasks.sorted_by_date
     respond_with @tasks
   end
 
   def create
-    lawsuit = Lawsuit.find(params[:lawsuit_id])
+    lawsuit = Lawsuit.within_firm(current_user).find(params[:lawsuit_id])
     @task = lawsuit.tasks.build(task_params)
     @task.save
     respond_with(lawsuit, @task)
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = Task.within_firm(current_user).find(params[:id])
     @task.destroy
     respond_with @task
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = Task.within_firm(current_user).find(params[:id])
     @task.update_attributes(task_params)
     respond_with @task
   end

@@ -26,6 +26,7 @@ class Client < ActiveRecord::Base
                     allow_blank: true
   # Scopes
   scope :users_clients, -> (current_user) { where(user: current_user) }
+  scope :within_firm, -> (current_user) { where(user_id: User.in_same_firm(current_user)) }
   scope :sorted, -> { order(last_name: :asc, first_name: :asc) }
   pg_search_scope :search,
                   against: [:first_name, :last_name, :ssn],

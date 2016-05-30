@@ -16,7 +16,7 @@ class ClientsController < ApplicationController
           render json: @clients, meta: pagination_dict(@clients)
         else
           # For dropdown.
-          respond_with Client.all.sorted
+          respond_with @clients
         end
       end
     end
@@ -38,18 +38,18 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @client = current_user.clients.build(client_params.except(:lawsuit_id))
-    if @client.save
-      if client_params[:lawsuit_id]
-        add_client_to_lawsuit
-      else
-        flash[:success] = "Klient sparad!"
-      end
+    @client = current_user.clients.create!(client_params.except(:lawsuit_id))
+    # Add client to lawsuit if lawsuit_id is provided.
+    if client_params[:lawsuit_id]
+      add_client_to_lawsuit
+    else
+      flash[:success] = "Klient sparad!"
     end
     respond_with @client
   end
 
   def update
+    # Add client to lawsuit if lawsuit_id is provided.
     if client_params[:lawsuit_id]
       add_client_to_lawsuit
     else
@@ -74,6 +74,7 @@ class ClientsController < ApplicationController
   end
 
   def lawsuit_client_list
+    # TODO: check if authorized.
     lawsuit = Lawsuit.find(params[:id])
     respond_with lawsuit.clients
   end
@@ -103,22 +104,12 @@ class ClientsController < ApplicationController
   end
 
   def fetch_client
-    @client = Client.find(params[:id])
+    # Only look for clients that belongs to users in firm.
+    @client = Client.within_firm(current_user).find(params[:id])
   end
 
   def add_client_to_lawsuit
     lawsuit = Lawsuit.find(client_params[:lawsuit_id])
-    # if lawsuit.primary_participation.nil?
-    #   # Make client primary client if lawsuit does not have that.
-    #   # Participation.create!(
-    #   #   lawsuit_id: lawsuit.id,
-    #   #   client_id: @client.id,
-    #   #   is_primary: true
-    #   # )
-    # else
-    #   # Else just add lawsuit to client.
-    #
-    # end
     @client.lawsuits << lawsuit
     # Add the client to all counterparts involved in lawsuit.
     lawsuit.counterparts.each do |counterpart|

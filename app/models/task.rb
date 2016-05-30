@@ -5,4 +5,7 @@ class Task < ActiveRecord::Base
   validates :worked_hours, presence: true
 
   scope :sorted_by_date, -> { order(date: :asc, created_at: :asc) }
+  scope :within_firm, -> (current_user) {
+    joins(:lawsuits)
+      .merge(Lawsuit.where(user_id: User.in_same_firm(current_user))) }
 end
