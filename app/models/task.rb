@@ -6,6 +6,6 @@ class Task < ActiveRecord::Base
 
   scope :sorted_by_date, -> { order(date: :asc, created_at: :asc) }
   scope :within_firm, -> (current_user) {
-    joins(:lawsuits)
+    joins(:lawsuit)
       .merge(Lawsuit.where(user_id: User.in_same_firm(current_user))) }
 end
