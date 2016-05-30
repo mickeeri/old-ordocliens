@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "User visits user profile page", type: :feature do
-  let(:user) do
-    create(:user)
-  end
+  let(:firm) { create(:firm) }
+  let(:user) { create(:user, firm: firm) }
 
   scenario "and should see edit user form with email filled in" do
     sign_in_with(user.email, user.password)

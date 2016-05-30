@@ -1,25 +1,12 @@
 require "rails_helper"
 
 RSpec.describe TasksController, type: :controller do
-  let(:lawsuit) do
-    create(:lawsuit)
-  end
-
-  let(:user) do
-    create(:user)
-  end
-
-  let(:client) do
-    create(:client)
-  end
-
-  let(:task) do
-    create(:task)
-  end
-
-  let(:antoher_price_category) do
-    create(:antoher_price_category)
-  end
+  let(:firm) { create(:firm) }
+  let(:user) { create(:user, firm: firm) }
+  let(:client) { create(:client, user: user) }
+  let(:lawsuit) { create(:lawsuit, user: user, primary_client: client) }
+  let(:task) { create(:task, lawsuit: lawsuit) }
+  let(:antoher_price_category) { create(:antoher_price_category) }
 
   it { should use_before_action(:authenticate_user!) }
 

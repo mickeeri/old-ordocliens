@@ -7,6 +7,6 @@ FactoryGirl.define do
     post_code Faker::Address.postcode
     city Faker::Address.city
     note Faker::Lorem.sentence(100)
-    user
+    user nil
   end
 end

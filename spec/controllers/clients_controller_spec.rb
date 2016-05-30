@@ -1,12 +1,21 @@
 require "rails_helper"
 
 RSpec.describe ClientsController, type: :controller do
-  let(:client) do
-    create(:client)
+  # TODO: Create client.
+  # TODO: Try to update, destroy, show other firms clients.
+
+  let(:firm) do
+    create(:firm)
   end
 
+  # User that belongs to firm above.
   let(:user) do
-    create(:user)
+    create(:user, firm: firm)
+  end
+
+  # Client that belongs to user.
+  let(:client) do
+    create(:client, user: user)
   end
 
   let(:new_attributes) do
@@ -34,6 +43,7 @@ RSpec.describe ClientsController, type: :controller do
       end
     end
   end
+
 
   describe "GET show" do
     context "when not signed in" do

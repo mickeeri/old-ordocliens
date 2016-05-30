@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Client, type: :model do
-  let(:client) do
-    create(:client)
-  end
+  let(:firm) { create(:firm) }
+  let(:user) { create(:user, firm: firm) }
+  let(:client) { create(:client, user: user) }
 
   it { should validate_presence_of :first_name }
   it { should validate_presence_of :last_name }

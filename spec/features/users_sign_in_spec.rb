@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "User signs in", type: :feature do
-  let(:user) do
-    create(:user)
-  end
+  let(:firm) { create(:firm) }
+  let(:user) { create(:user, firm: firm) }
 
   scenario "with valid username and password" do
     sign_in_with(user.email, user.password)

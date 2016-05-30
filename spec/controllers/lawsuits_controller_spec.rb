@@ -1,25 +1,13 @@
 require "rails_helper"
 
 RSpec.describe LawsuitsController, type: :controller do
-  let(:lawsuit) do
-    create(:lawsuit)
-  end
-
-  let(:user) do
-    create(:user)
-  end
-
-  let(:client) do
-    create(:client)
-  end
-
-  let(:lawsuit_type) do
-    create(:lawsuit_type)
-  end
-
-  let(:another_lawsuit_type) do
-    create(:another_lawsuit_type)
-  end
+  let(:firm) { create(:firm) }
+  let(:user) { create(:user, firm: firm) }
+  let(:client) { create(:client, user: user) }
+  let(:lawsuit) { create(:lawsuit, user: user, primary_client: client) }
+  let(:task) { create(:task, lawsuit: lawsuit) }
+  let(:lawsuit_type) { create(:lawsuit_type) }
+  let(:another_lawsuit_type) { create(:another_lawsuit_type) }
 
   it { should use_before_action(:authenticate_user!) }
 
@@ -62,8 +50,6 @@ RSpec.describe LawsuitsController, type: :controller do
     context "when signed in" do
       it "should succeed" do
         sign_in user
-        lawsuit.primary_client_id = client.id
-        lawsuit.save
         get :show, id: lawsuit.id, client_id: client.id
         expect(response).to have_http_status(200)
       end

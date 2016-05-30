@@ -5,6 +5,6 @@ FactoryGirl.define do
     personal_number "899090-8989"
     info "Blablabla"
     representative Faker::Name.name
-    client
+    firm
   end
 end

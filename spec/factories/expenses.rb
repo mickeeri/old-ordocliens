@@ -3,6 +3,6 @@ FactoryGirl.define do
     entry "MyText"
     price "9.99"
     date "2016-05-02"
-    legal_case nil
+    legal_case
   end
 end
