@@ -47,11 +47,11 @@ class LawsuitsController < ApplicationController
 
   def create
     @lawsuit = current_user.lawsuits.build(lawsuit_params)
-    add_slug if @lawsuit.save
     client = Client.within_firm(current_user).find(params[:client_id])
     # Assigning primary client.
     @lawsuit.primary_client_id = client.id
-    @lawsuit.save
+    # Saving
+    add_slug if @lawsuit.save
     # Then adding client to has_many through relation.
     @lawsuit.clients << client
     respond_with @lawsuit
