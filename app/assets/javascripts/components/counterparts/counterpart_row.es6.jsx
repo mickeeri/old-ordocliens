@@ -28,7 +28,7 @@ class CounterPartRow extends React.Component {
           onClick={this.handleOnClick}
           href="#"
         >{counterpart.name}
-        </a><span> ({counterpart.personal_number})</span>
+        </a><span> ({counterpart.personalNumber})</span>
       </div>
     );
   }

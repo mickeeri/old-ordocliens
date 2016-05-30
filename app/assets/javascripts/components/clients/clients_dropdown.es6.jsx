@@ -82,7 +82,7 @@ class ClientsDropdown extends React.Component {
                   <option
                     key={client.id}
                     value={client.id}
-                  >{client.lastName}, {client.firstName} ({client.ssn})</option>
+                  >{client.lastName}, {client.firstName} ({client.personalNumber})</option>
                 )}
               </select>
             </div>

@@ -69,7 +69,7 @@ User.all.each do |user|
     client = user.clients.create(
       last_name: Faker::Name.last_name,
       first_name: Faker::Name.first_name,
-      ssn: "#{Faker::Number.number(6)}-#{Faker::Number.number(4)}",
+      personal_number: "#{Faker::Number.number(6)}-#{Faker::Number.number(4)}",
       email: Faker::Internet.email,
       phone_number: Faker::PhoneNumber.phone_number,
       mobile: "07#{Faker::Number.number(1)}-#{Faker::Number.number(7)}",

@@ -48,7 +48,10 @@ class LawsuitsIndex extends React.Component {
     const data = this.state.fetchData;
     // Building url with paramaters based on input.
     let url = `${Routes.lawsuits_path()}?page=${data.page}&all=${data.fetchAll}&user=${data.user}`;
-    if (data.search) { url += `&search=${data.search}`; }
+    if (data.search) {
+      this.state.fetchData.page = 1;
+      url += `&search=${data.search}`;
+    }
 
     makeGetRequest(url)
       .success(response => {

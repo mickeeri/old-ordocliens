@@ -12,7 +12,7 @@ class ClientForm extends React.Component {
       note: props.client ? props.client.note : '',
       phoneNumber: props.client ? props.client.phoneNumber : '',
       postCode: props.client ? props.client.postCode : '',
-      ssn: props.client ? props.client.ssn : '',
+      personalNumber: props.client ? props.client.personalNumber : '',
       street: props.client ? props.client.street : '',
     };
 
@@ -104,7 +104,7 @@ class ClientForm extends React.Component {
     if (input.name === 'lastName') {
       validateStringLength(input.value, 60, 1, input.name, 'Efternamn');
     }
-    if (input.name === 'ssn') {
+    if (input.name === 'personalNumber') {
       validatePersonalNumber(input.value, input.name, true);
     }
     if (input.name === 'email') {
@@ -181,20 +181,20 @@ class ClientForm extends React.Component {
               <small id="lastNameHelper" className="text-muted"></small>
             </div>
           </div>
-          <div id="ssnGroup" className="form-group row">
-            <label htmlFor="ssn" className="col-sm-8 form-control-label">Personnummer</label>
+          <div id="personalNumberGroup" className="form-group row">
+            <label htmlFor="personalNumber" className="col-sm-8 form-control-label">Personnummer</label>
             <div className="col-sm-4">
               <input
                 placeholder="ÅÅMMDD-XXXX"
                 type="tel"
-                name="ssn"
-                id="ssn"
+                name="personalNumber"
+                id="personalNumber"
                 className="form-control form-control-sm"
-                value={this.state.ssn}
+                value={this.state.personalNumber}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
-              <small id="ssnHelper" className="text-muted"></small>
+              <small id="personalNumberHelper" className="text-muted"></small>
             </div>
           </div>
           <hr />

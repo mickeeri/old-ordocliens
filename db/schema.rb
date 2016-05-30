@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530093828) do
+ActiveRecord::Schema.define(version: 20160530121051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,14 +19,14 @@ ActiveRecord::Schema.define(version: 20160530093828) do
   create_table "clients", force: :cascade do |t|
     t.string   "last_name"
     t.string   "first_name"
-    t.string   "ssn"
+    t.string   "personal_number"
     t.string   "street"
     t.string   "post_code"
     t.string   "city"
     t.text     "note"
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "email"
     t.string   "phone_number"
     t.string   "mobile"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20160530093828) do
 
   add_index "clients", ["first_name"], name: "index_clients_on_first_name", using: :btree
   add_index "clients", ["last_name"], name: "index_clients_on_last_name", using: :btree
-  add_index "clients", ["ssn"], name: "index_clients_on_ssn", using: :btree
+  add_index "clients", ["personal_number"], name: "index_clients_on_personal_number", using: :btree
   add_index "clients", ["user_id"], name: "index_clients_on_user_id", using: :btree
 
   create_table "counterparts", force: :cascade do |t|

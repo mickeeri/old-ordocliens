@@ -40,7 +40,7 @@ class Lawsuit < ActiveRecord::Base
                   associated_against: { lawsuit_type: [:name],
                                         clients: [:last_name,
                                                   :first_name,
-                                                  :ssn],
+                                                  :personal_number],
                                         counterparts: [:last_name,
                                                        :first_name,
                                                        :personal_number] },

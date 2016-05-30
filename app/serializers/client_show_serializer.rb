@@ -8,7 +8,7 @@ class ClientShowSerializer < ActiveModel::Serializer
              :note,
              :phone_number,
              :post_code,
-             :ssn,
+             :personal_number,
              :street
 
   has_many :counterparts

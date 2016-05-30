@@ -51,7 +51,7 @@ class LawsuitClientList extends React.Component {
           {this.state.clients.map(client =>
             <li key={client.id}>
               <a href={Routes.client_path(client.id)}>
-                {client.firstName} {client.lastName} ({client.ssn})
+                {client.firstName} {client.lastName} ({client.personalNumber})
               </a>
               <span className="text-muted">{client.id === this.props.primaryClientId ? ' huvudklient' : ''}</span>
               {client.id !== this.props.primaryClientId ?

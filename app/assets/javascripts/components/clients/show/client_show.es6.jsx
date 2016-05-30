@@ -88,7 +88,7 @@ ClientShow.propTypes = {
     id: React.PropTypes.number.isRequired,
     firstName: React.PropTypes.string.isRequired,
     lastName: React.PropTypes.string.isRequired,
-    ssn: React.PropTypes.string.isRequired,
+    personalNumber: React.PropTypes.string.isRequired,
     email: React.PropTypes.string,
     phoneNumber: React.PropTypes.string,
     postCode: React.PropTypes.string,

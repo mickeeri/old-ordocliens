@@ -3,7 +3,7 @@ function ClientRow({ client }) {
   return (
     <tr>
       <td><a href={Routes.client_path(client.id)}>{fullName}</a></td>
-      <td>{client.ssn}</td>
+      <td>{client.personalNumber}</td>
       <td>{client.user.fullName}</td>
     </tr>);
 }

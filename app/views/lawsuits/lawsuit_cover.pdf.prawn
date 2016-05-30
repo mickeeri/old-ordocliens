@@ -33,7 +33,7 @@ prawn_document(:page_layout => :landscape) do |pdf|
     pdf.text "Klient", leading: 2
     pdf.font "app/assets/fonts/pala.ttf"
     pdf.text "#{client.first_name} #{client.last_name}", leading: 2
-    pdf.text client.ssn, leading: 2
+    pdf.text client.personal_number, leading: 2
     pdf.text client.street, leading: 2
     pdf.text "#{client.post_code} #{client.city}", leading: 2
     pdf.move_down 10

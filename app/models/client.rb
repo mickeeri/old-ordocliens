@@ -19,7 +19,7 @@ class Client < ActiveRecord::Base
                         length: { minimum: 5, maximum: 5 },
                         numericality: true
   VALID_SSN_REGEX = /\A[0-9]{6}-[0-9]{4}\z/
-  validates :ssn, presence: true, format: { with: VALID_SSN_REGEX }
+  validates :personal_number, presence: true, format: { with: VALID_SSN_REGEX }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
@@ -29,7 +29,7 @@ class Client < ActiveRecord::Base
   scope :within_firm, -> (current_user) { where(user_id: User.in_same_firm(current_user)) }
   scope :sorted, -> { order(last_name: :asc, first_name: :asc) }
   pg_search_scope :search,
-                  against: [:first_name, :last_name, :ssn],
+                  against: [:first_name, :last_name, :personal_number],
                   using: { tsearch: { prefix: true, normalization: 2 }
     }
 

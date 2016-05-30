@@ -7,7 +7,7 @@ class ClientInfo extends React.Component {
           <h4 className="card-title">{client.first_name} {client.last_name}</h4>
           <dl>
             <dt>Personnummer</dt>
-            <dd>{client.ssn}</dd>
+            <dd>{client.personalNumber}</dd>
             <dt>E-post</dt>
             <dd>{client.email}</dd>
             <dt>Mobil</dt>
