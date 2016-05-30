@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160529083600) do
+ActiveRecord::Schema.define(version: 20160530093828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,8 +45,10 @@ ActiveRecord::Schema.define(version: 20160529083600) do
     t.datetime "updated_at",      null: false
     t.string   "last_name"
     t.string   "first_name"
+    t.integer  "firm_id"
   end
 
+  add_index "counterparts", ["firm_id"], name: "index_counterparts_on_firm_id", using: :btree
   add_index "counterparts", ["first_name"], name: "index_counterparts_on_first_name", using: :btree
   add_index "counterparts", ["last_name"], name: "index_counterparts_on_last_name", using: :btree
   add_index "counterparts", ["personal_number"], name: "index_counterparts_on_personal_number", using: :btree
@@ -166,6 +168,7 @@ ActiveRecord::Schema.define(version: 20160529083600) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "clients", "users"
+  add_foreign_key "counterparts", "firms"
   add_foreign_key "disputes", "clients"
   add_foreign_key "disputes", "counterparts"
   add_foreign_key "expenses", "lawsuits"

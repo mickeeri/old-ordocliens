@@ -101,7 +101,8 @@ User.all.each do |user|
       # Counterparts
       number_of_counterparts = rand(1..2)
       number_of_counterparts.times do
-        lawsuit.counterparts.create(
+        # Adding counterpart to firm.
+        counterpart = user.firm.counterparts.create!(
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
           personal_number:
@@ -109,6 +110,8 @@ User.all.each do |user|
           info: Faker::Lorem.sentence(sentece_lenght),
           representative: Faker::Name.name
         )
+        # Adding lawsuit to counterpart.
+        counterpart.lawsuits << lawsuit
       end
 
       # Add the client to all counterparts involved in lawsuit.

@@ -34,7 +34,8 @@ class CounterpartsController < ApplicationController
   end
 
   def create
-    @counterpart = Counterpart.new(counterpart_params.except(:lawsuit_id))
+    firm = current_user.firm
+    @counterpart = firm.counterparts.build(counterpart_params.except(:lawsuit_id))
     if @counterpart.save
       if counterpart_params[:lawsuit_id]
         add_counterpart_to_lawsuit
@@ -89,7 +90,7 @@ class CounterpartsController < ApplicationController
 
   def search_counterparts
     # Select all the counterparts that is involved with the users in the firm.
-    @counterparts = Counterpart.within_firm(current_user)
+    @counterparts = Counterpart.within_firm(current_user.firm)
     @counterparts =
       if params[:search].present?
         @counterparts = @counterparts.search(params[:search])
@@ -99,7 +100,9 @@ class CounterpartsController < ApplicationController
   end
 
   def add_counterpart_to_lawsuit
-    lawsuit = Lawsuit.within_firm(current_user).find(counterpart_params[:lawsuit_id])
+    lawsuit = Lawsuit
+              .within_firm(current_user)
+              .find(counterpart_params[:lawsuit_id])
     @counterpart.lawsuits << lawsuit
     # Add the counterpart to all clients involved in lawsuit.
     lawsuit.clients.each do |client|
@@ -108,7 +111,7 @@ class CounterpartsController < ApplicationController
   end
 
   def fetch_counterpart
-    @counterpart = Counterpart.within_firm(current_user).find(params[:id])
+    @counterpart = Counterpart.within_firm(current_user.firm).find(params[:id])
   end
 
   def show_props

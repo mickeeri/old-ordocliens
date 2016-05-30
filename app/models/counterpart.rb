@@ -1,9 +1,10 @@
 class Counterpart < ActiveRecord::Base
   include PgSearch
+  belongs_to :firm, required: true
+  has_many :clients, -> { distinct }, through: :disputes
+  has_many :disputes, dependent: :destroy
   has_many :involvements, dependent: :destroy
   has_many :lawsuits, -> { distinct }, through: :involvements
-  has_many :disputes, dependent: :destroy
-  has_many :clients, -> { distinct }, through: :disputes
   # Validation
   validates :first_name, presence: true, length: { maximum: 60 }
   validates :last_name, presence: true, length: { maximum: 60 }
@@ -13,9 +14,7 @@ class Counterpart < ActiveRecord::Base
   validates :info, allow_blank: true, length: { maximum: 1000 }
   # Scopes
   scope :sorted, -> { order(last_name: :asc, first_name: :asc) }
-  scope :within_firm, -> (current_user) {
-    joins(:lawsuits)
-      .merge(Lawsuit.where(user_id: User.in_same_firm(current_user))) }
+  scope :within_firm, -> (firm) { where(firm_id: firm.id) }
   pg_search_scope :search,
                   against: [:last_name, :first_name, :personal_number],
                   using: { tsearch: { prefix: true, normalization: 2 }
