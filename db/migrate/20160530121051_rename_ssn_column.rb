@@ -1,5 +1,5 @@
 class RenameSsnColumn < ActiveRecord::Migration
   def change
-    rename_column :clients, :personal_number, :personal_number
+    rename_column :clients, :ssn, :personal_number
   end
 end
