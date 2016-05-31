@@ -2,6 +2,7 @@
 firm = Firm.create!(name: "Familjejuristerna Alverlind & Cederberg")
 test_firm = Firm.create!(name: "Testfirma")
 
+# Users
 test_firm.users.create!(
   last_name: "Eriksson",
   first_name: "Mikael",
@@ -10,7 +11,6 @@ test_firm.users.create!(
   password_confirmation: "password"
 )
 
-# Users
 firm.users.create(
   last_name: "Alverlind",
   first_name: "Daniel",
@@ -136,6 +136,15 @@ User.all.each do |user|
         lawsuit.expenses.create!(
           entry: Faker::Lorem.sentence(rand(3..15)),
           price: Faker::Number.between(500, 3000)
+        )
+      end
+      # Client funds
+      number_of_funds = rand(5..10)
+      number_of_funds.times do
+        lawsuit.client_funds.create!(
+          entry: Faker::Lorem.sentence(rand(3..15)),
+          balance: Faker::Number.between(500, 3000),
+          date: Faker::Time.between(2.years.ago, Time.zone.today, :day)
         )
       end
     end

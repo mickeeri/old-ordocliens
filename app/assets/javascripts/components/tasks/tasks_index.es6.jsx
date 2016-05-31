@@ -24,6 +24,13 @@ class TasksIndex extends React.Component {
     return false;
   }
 
+  scrollToClientFunds() {
+    $('html, body').animate({
+      scrollTop: $('#clientFunds').offset().top,
+    }, 'slow');
+    return false;
+  }
+
   handleAddButtonClicked(e) {
     e.preventDefault();
     this.renderForm(e.target.name);
@@ -46,12 +53,16 @@ class TasksIndex extends React.Component {
   renderForm(target) {
     let form;
     let header;
+    // Assigning form based on which add button user clicks.
     if (target === 'addExpense') {
       form = <ExpenseForm lawsuitId={this.props.lawsuitId} />;
       header = 'Lägg till utlägg';
     } else if (target === 'addWork') {
       form = <TaskForm lawsuitId={this.props.lawsuitId} />;
       header = 'Lägg till arbete';
+    } else if (target === 'addClientFund') {
+      form = <ClientFundForm lawsuitId={this.props.lawsuitId} />
+      header = 'Lägg till klientmedel';
     }
 
     // Render modal with specified form.
@@ -82,6 +93,10 @@ class TasksIndex extends React.Component {
         <div className="row">
           <h3 className="col-md-4">Arbeten</h3>
           <div className="col-md-8 content-right task-menu">
+            <button
+              className="btn btn-primary-outline"
+              onClick={this.scrollToClientFunds}
+            >Gå till klientmedel</button>
             <button
               className="btn btn-primary-outline"
               onClick={this.scrollToExpenses}
@@ -137,6 +152,27 @@ class TasksIndex extends React.Component {
           expenses={this.props.expenses}
           lawsuitId={this.props.lawsuitId}
         />
+        <div className="row">
+          <h3 id="clientFunds" className="col-md-4">Klientmedel</h3>
+          <div className="col-md-8 content-right task-menu">
+            <button
+              className="btn btn-primary-outline"
+              onClick={this.scrollToTop}
+            >Tillbaka till toppen</button>
+            <button
+              className="btn btn-primary disabled"
+            >Spara som pdf</button>
+            <button
+              className="btn btn-success"
+              onClick={this.handleAddButtonClicked}
+              name="addClientFund"
+            >Lägg till klientmedel</button>
+          </div>
+        </div>
+        <ClientFundsIndex
+          clientFunds={this.props.clientFunds}
+          lawsuitId={this.props.lawsuitId}
+        />
       </div>
     );
   }
@@ -145,6 +181,7 @@ class TasksIndex extends React.Component {
 TasksIndex.propTypes = {
   clientId: React.PropTypes.number,
   expenses: React.PropTypes.array.isRequired,
+  clientFunds: React.PropTypes.array.isRequired,
   lawsuitId: React.PropTypes.number.isRequired,
   tasks: React.PropTypes.array.isRequired,
 };

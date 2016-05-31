@@ -110,6 +110,7 @@ class LawsuitsController < ApplicationController
     { lawsuit: prepare(@lawsuit, LawsuitShowSerializer, root: false),
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),
       expenses: prepare_array(@lawsuit.expenses.sorted),
+      client_funds: prepare_array(@lawsuit.client_funds.sorted),
       primary_client: prepare(@lawsuit.primary_client, ClientSerializer, root: false) }
   end
 

@@ -231,6 +231,11 @@ h1 {
   }
 }
 
+input[type="date"] {
+  width: 170px;
+  height: 31px;
+}
+
 .task-form {
 
   button {
@@ -241,10 +246,10 @@ h1 {
     width: 100px;
   }
 
-  input[type="date"] {
-    width: 170px;
-    height: 31px;
-  }
+  // input[type="date"] {
+  //   width: 170px;
+  //   height: 31px;
+  // }
 
   textarea {
     width: 300px !important;

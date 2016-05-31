@@ -3,8 +3,9 @@ class LawsuitShow extends React.Component {
     super(props);
     this.state = {
       closed: props.lawsuit.closed,
-      expenses: this.props.expenses,
+      expenses: props.expenses,
       primaryClient: props.lawsuit.primaryClient,
+      clientFunds: props.clientFunds,
       message: '',
       page: 'time',
       tasks: this.props.tasks };
@@ -15,10 +16,12 @@ class LawsuitShow extends React.Component {
     this.setMessage = this.setMessage.bind(this);
     this.toggleClosed = this.toggleClosed.bind(this);
     this.togglePage = this.togglePage.bind(this);
+    this.refreshClientFunds = this.refreshClientFunds.bind(this);
   }
 
   componentDidMount() {
     PubSub.subscribe('expensesTouched', this.refreshExpenses);
+    PubSub.subscribe('clientFundsTouched', this.refreshClientFunds);
     PubSub.subscribe('lawsuitClosedOpened', this.toggleClosed);
     PubSub.subscribe('lawsuitUpdated', this.displayUpdateMessage);
     PubSub.subscribe('noPrimaryClient', this.removePrimaryClientHeader);
@@ -31,6 +34,7 @@ class LawsuitShow extends React.Component {
     PubSub.unsubscribe('lawsuitUpdated');
     PubSub.unsubscribe('noPrimaryClient');
     PubSub.unsubscribe('tasksTouched');
+    PubSub.unsubscribe('clientFundsTouched');
   }
 
   // Show success message on update.
@@ -84,6 +88,19 @@ class LawsuitShow extends React.Component {
       });
   }
 
+  refreshClientFunds() {
+    const url = Routes.lawsuit_client_funds_path(this.props.lawsuit.id);
+    makeGetRequest(url)
+      .success(response => {
+        this.setState({ clientFunds: response.client_funds });
+        PubSub.publish('dismissEdit');
+      })
+      .error(xhr => {
+        // TODO: Message in dom.
+        console.error(url, xhr.status, xhr.statusText);
+      });
+  }
+
   render() {
     return (
       <div>
@@ -122,9 +139,10 @@ class LawsuitShow extends React.Component {
             primaryClientId={this.props.primaryClient.id}
           /> :
           <TasksIndex
-            tasks={this.state.tasks}
+            clientFunds={this.state.clientFunds}
             expenses={this.state.expenses}
             lawsuitId={this.props.lawsuit.id}
+            tasks={this.state.tasks}
           />}
       </div>
     );
@@ -132,9 +150,10 @@ class LawsuitShow extends React.Component {
 }
 
 LawsuitShow.propTypes = {
+  clientFunds: React.PropTypes.array,
   clientId: React.PropTypes.number,
+  expenses: React.PropTypes.array,
   lawsuit: React.PropTypes.object.isRequired,
   primaryClient: React.PropTypes.object.isRequired,
   tasks: React.PropTypes.array,
-  expenses: React.PropTypes.array,
 };

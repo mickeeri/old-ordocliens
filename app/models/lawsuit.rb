@@ -1,15 +1,16 @@
 class Lawsuit < ActiveRecord::Base
   include PgSearch
-  belongs_to :user, required: true
-  has_many :participations, dependent: :destroy
-  has_many :clients, -> { distinct }, through: :participations
-  belongs_to :primary_client, class_name: "Client", required: true
   belongs_to :client
-  has_many :involvements, dependent: :destroy
-  has_many :counterparts, -> { distinct }, through: :involvements
-  has_many :tasks, dependent: :destroy
-  has_many :expenses, dependent: :destroy
   belongs_to :lawsuit_type
+  belongs_to :primary_client, class_name: "Client", required: true
+  belongs_to :user, required: true
+  has_many :client_funds, dependent: :destroy
+  has_many :clients, -> { distinct }, through: :participations
+  has_many :counterparts, -> { distinct }, through: :involvements
+  has_many :expenses, dependent: :destroy
+  has_many :involvements, dependent: :destroy
+  has_many :participations, dependent: :destroy
+  has_many :tasks, dependent: :destroy
 
   # Validation
   validates :lawsuit_type, presence: :true
