@@ -88,6 +88,7 @@ class ClientsController < ApplicationController
       :first_name,
       :last_name,
       :lawsuit_id,
+      :mobile,
       :note,
       :personal_number,
       :phone_number,
