@@ -50,6 +50,8 @@ prawn_document(:page_layout => :landscape) do |pdf|
       pdf.font "app/assets/fonts/pala.ttf"
       pdf.text "#{counterpart.first_name} #{counterpart.last_name}", leading: 2
       pdf.text counterpart.personal_number, leading: 2
+      pdf.move_down 10
+      pdf.text counterpart.info, leading: 2
       pdf.font "app/assets/fonts/palab.ttf", leading: 2
       pdf.move_down 20
       pdf.text "Ombud", leading: 2
