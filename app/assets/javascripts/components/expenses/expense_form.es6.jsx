@@ -103,6 +103,7 @@ class ExpenseForm extends React.Component {
               >
               </textarea>
               <small id="entryHelpBlock" className="text-muted"></small>
+              <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
             </div>
             <div className="form-group">
               <label htmlFor="price">Kostnad</label>
