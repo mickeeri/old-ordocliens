@@ -63,7 +63,8 @@ class ClientsController < ApplicationController
       # Delete relation between client and lawsuit.
       Participation.find_by_client_id_and_lawsuit_id(
         params[:id],
-        params[:lawsuit_id]).delete
+        params[:lawsuit_id]
+      ).delete
     else
       # Destroy client.
       @client.destroy
@@ -120,6 +121,16 @@ class ClientsController < ApplicationController
 
   def show_props
     { initial_client: prepare(@client, ClientShowSerializer, root: false),
-      lawsuits: prepare_array(@client.lawsuits.sorted) }
+      lawsuits: prepare_array(@client.lawsuits.sorted),
+      primary: primary? }
+  end
+
+  # Check if client is primary_client in some lawsuit.
+  def primary?
+    @client.lawsuits.each do |lawsuit|
+      next unless lawsuit.primary_client_id == @client.id
+      return true
+    end
+    return false
   end
 end
