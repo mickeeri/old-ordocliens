@@ -93,6 +93,7 @@ class TasksIndex extends React.Component {
             <a
               href={`/lawsuits/${this.props.lawsuitId}/Aktomslag.pdf`}
               className="btn btn-primary"
+              target="_blank"
             >Aktomslag .pdf</a>
             <button
               className="btn btn-success"

@@ -175,7 +175,7 @@ class CounterpartForm extends React.Component {
               <label htmlFor="info" className="form-control-label">Kontaktinfo</label>
               <div className="col-sm-12">
                 <textarea
-                  placeholder="Kontaktinfo/Anteckning"
+                  placeholder="Kontaktinfo"
                   className="form-control"
                   type="text-area"
                   value={this.state ? this.state.info : ''}
@@ -184,6 +184,7 @@ class CounterpartForm extends React.Component {
                   onChange={this.handleInputChange}
                 >
                 </textarea>
+                <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
               </div>
             </div>
             <hr />
