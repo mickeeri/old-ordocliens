@@ -5,18 +5,25 @@ class ClientDeleteButton extends React.Component {
       <div className="card">
         <ConfirmDeleteModal
           target={target}
+          resourceName="klient"
           url={Routes.client_path(this.props.clientId)}
           redirectTo={Routes.clients_path()}
           subToPublish="deleteClientConfirmed"
         />
         <div className="card-block">
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-md-12">
               <h3>Radera klient</h3>
+              {this.props.primary ?
+                <p>Obs, det går inte att radera en klient som är huvudklient i ett ärende.</p> :
+                ''}
             </div>
-            <div className="col-md-4">
+            <div className="col-md-12">
               <a
-                href="#" className="btn btn-danger-outline"
+                href="#"
+                className={this.props.primary ?
+                  'btn btn-danger-outline disabled' :
+                  'btn btn-danger-outline'}
                 data-toggle="modal"
                 data-target={`#${target}`}
               >Radera klient
@@ -31,4 +38,5 @@ class ClientDeleteButton extends React.Component {
 
 ClientDeleteButton.propTypes = {
   clientId: React.PropTypes.number.isRequired,
+  primary: React.PropTypes.bool.isRequired,
 };

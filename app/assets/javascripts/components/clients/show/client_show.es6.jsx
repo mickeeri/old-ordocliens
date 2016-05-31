@@ -46,7 +46,10 @@ class ClientShow extends React.Component {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <ClientDeleteButton clientId={this.props.initialClient.id} />
+                <ClientDeleteButton
+                  clientId={this.props.initialClient.id}
+                  primary={this.props.primary}
+                />
               </div>
             </div>
           </div>
@@ -98,5 +101,5 @@ ClientShow.propTypes = {
     counterparts: React.PropTypes.array,
   }),
   lawsuits: React.PropTypes.array.isRequired,
-  // counterparts: React.PropTypes.array.isRequired,
+  primary: React.PropTypes.bool.isRequired,
 };

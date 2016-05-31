@@ -8,6 +8,7 @@ class TaskRow extends React.Component {
       <ConfirmDeleteModal
         target="deleteTask"
         subToPublish="tasksTouched"
+        resourceName="arbete"
         url={
           Routes.lawsuit_task_path(
             this.props.lawsuitId,

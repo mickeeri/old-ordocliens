@@ -28,6 +28,7 @@ class ExpensesIndex extends React.Component {
       <ConfirmDeleteModal
         target="deleteExpense"
         subToPublish="expensesTouched"
+        resourceName="utlägg"
         url={Routes.lawsuit_expense_path(this.props.lawsuitId, expenseId)}
       />,
       document.getElementById('editModalContainer')

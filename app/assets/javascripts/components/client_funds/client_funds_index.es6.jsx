@@ -28,6 +28,7 @@ class ClientFundsIndex extends React.Component {
       <ConfirmDeleteModal
         target="deleteClientFund"
         subToPublish="clientFundsTouched"
+        resourceName="klientmedel"
         url={Routes.lawsuit_client_fund_path(this.props.lawsuitId, clientFundId)}
       />,
       document.getElementById('editModalContainer')
@@ -94,7 +95,7 @@ class ClientFundsIndex extends React.Component {
 ClientFundsIndex.propTypes = {
   clientFunds: React.PropTypes.shape({
     clientFundsArray: React.PropTypes.array.isRequired,
-    sum: React.PropTypes.number.isRequired,
+    sum: React.PropTypes.string.isRequired,
   }),
   lawsuitId: React.PropTypes.number.isRequired,
 };

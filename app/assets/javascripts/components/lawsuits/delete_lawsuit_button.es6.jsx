@@ -5,6 +5,7 @@ class DeleteLawsuitButton extends React.Component {
       <div className="card card-block">
         <ConfirmDeleteModal
           target={target}
+          resourceName="ärende"
           url={Routes.lawsuit_path(this.props.lawsuitId)}
           redirectTo={this.props.clientId ?
             Routes.client_path(this.props.clientId) :

@@ -4,6 +4,7 @@ function DeleteCounterpartButton({ counterpartId }) {
     <div>
       <ConfirmDeleteModal
         target={target}
+        resourceName="motpart"
         url={Routes.counterpart_path(counterpartId)}
         redirectTo={Routes.counterparts_path()}
       />
