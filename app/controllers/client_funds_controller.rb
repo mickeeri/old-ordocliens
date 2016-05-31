@@ -8,7 +8,10 @@ class ClientFundsController < ApplicationController
                     .within_firm(current_user)
                     .find(params[:lawsuit_id])
                     .client_funds.sorted
-    respond_with @client_funds
+    balance_sum = @client_funds.sum(:balance)
+    render json: {
+      clientFundsArray: prepare_array(@client_funds),
+      sum: balance_sum }
   end
 
   def create

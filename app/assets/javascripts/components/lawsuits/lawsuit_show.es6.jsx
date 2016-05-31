@@ -92,7 +92,7 @@ class LawsuitShow extends React.Component {
     const url = Routes.lawsuit_client_funds_path(this.props.lawsuit.id);
     makeGetRequest(url)
       .success(response => {
-        this.setState({ clientFunds: response.client_funds });
+        this.setState({ clientFunds: response });
         PubSub.publish('dismissEdit');
       })
       .error(xhr => {
@@ -150,7 +150,7 @@ class LawsuitShow extends React.Component {
 }
 
 LawsuitShow.propTypes = {
-  clientFunds: React.PropTypes.array,
+  clientFunds: React.PropTypes.object,
   clientId: React.PropTypes.number,
   expenses: React.PropTypes.array,
   lawsuit: React.PropTypes.object.isRequired,

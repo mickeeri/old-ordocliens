@@ -48,8 +48,18 @@ class ClientFundsIndex extends React.Component {
               <th></th>
             </tr>
           </thead>
+          <tfoot>
+            <tr>
+              <td>Summa: </td>
+              <td></td>
+              <td className="text-nowrap">{parseFloat(this.props.clientFunds.sum)
+                  .toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' })} </td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tfoot>
           <tbody>
-            {this.props.clientFunds.map(clientFund =>
+            {this.props.clientFunds.clientFundsArray.map(clientFund =>
               <tr key={clientFund.id}>
                 <td className="text-nowrap">{clientFund.date}</td>
                 <td>{clientFund.entry}</td>
@@ -82,6 +92,9 @@ class ClientFundsIndex extends React.Component {
 }
 
 ClientFundsIndex.propTypes = {
-  clientFunds: React.PropTypes.array.isRequired,
+  clientFunds: React.PropTypes.shape({
+    clientFundsArray: React.PropTypes.array.isRequired,
+    sum: React.PropTypes.number.isRequired,
+  }),
   lawsuitId: React.PropTypes.number.isRequired,
 };

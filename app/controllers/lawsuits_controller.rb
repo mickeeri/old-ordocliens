@@ -110,7 +110,9 @@ class LawsuitsController < ApplicationController
     { lawsuit: prepare(@lawsuit, LawsuitShowSerializer, root: false),
       tasks: prepare_array(@lawsuit.tasks.sorted_by_date),
       expenses: prepare_array(@lawsuit.expenses.sorted),
-      client_funds: prepare_array(@lawsuit.client_funds.sorted),
+      client_funds: {
+        client_funds_array: prepare_array(@lawsuit.client_funds.sorted),
+        sum: @lawsuit.client_funds.sum(:balance) },
       primary_client: prepare(@lawsuit.primary_client, ClientSerializer, root: false) }
   end
 
