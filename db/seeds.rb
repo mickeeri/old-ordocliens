@@ -107,7 +107,6 @@ User.all.each do |user|
           last_name: Faker::Name.last_name,
           personal_number:
             "#{Faker::Number.number(6)}-#{Faker::Number.number(4)}",
-          info: Faker::Lorem.sentence(sentece_lenght),
           representative: Faker::Name.name
         )
         # Adding lawsuit to counterpart.
