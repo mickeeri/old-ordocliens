@@ -15,7 +15,10 @@ class ClientDeleteButton extends React.Component {
             <div className="col-md-12">
               <h3>Radera klient</h3>
               {this.props.primary ?
-                <p>Obs, det går inte att radera en klient som är huvudklient i ett ärende.</p> :
+                <p className="text-warning">
+                  Klienten kan inte raderas eftersom denne är huvudklient i ett ärende.
+                  Radera ärendet först för att kunna radera klienten.
+                </p> :
                 ''}
             </div>
             <div className="col-md-12">
