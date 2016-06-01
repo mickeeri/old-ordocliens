@@ -1,3 +1,18 @@
+// TODO: Method for adding, removing class to avoid DRY.
+
+function addError(formGroup, helper, message) {
+  $(formGroup).addClass('has-danger');
+  $(formGroup).removeClass('has-success');
+  $(helper).text(message);
+}
+
+function addSuccess(formGroup, helper) {
+  $(formGroup).removeClass('has-danger');
+  $(formGroup).addClass('has-success');
+  $(helper).text('');
+}
+
+
 function validateStringLength(string, maxLength, minLength, inputName, label) {
   const helper = `#${inputName}Helper`;
   const formGroup = `#${inputName}Group`;
@@ -47,11 +62,38 @@ function validateStringLength(string, maxLength, minLength, inputName, label) {
 //   return false;
 // }
 
+/**
+ * Validates that select is selected.
+ * @param  {string} value     the selected value.
+ * @param  {string} inputName id or name of the input element
+ * @param  {string} label     label of the input.
+ * @return {bool}          true if valid
+ */
+function validateRequiredSelect(value, inputName, label) {
+  const helper = `#${inputName}Helper`;
+  const formGroup = `#${inputName}Group`;
+
+  if (value === '') {
+    $(helper).text(`Du måste välja en ${label}.`);
+    $(formGroup).addClass('has-danger');
+    $(formGroup).removeClass('has-success');
+  } else {
+    $(formGroup).removeClass('has-danger');
+    $(formGroup).removeClass('has-success');
+    $(helper).text('');
+    return true;
+  }
+
+  return false;
+}
+
 function validateCheckBox(value, inputName) {
   if (!isNaN(value)) {
     const formGroup = `#${inputName}Group`;
     $(formGroup).addClass('has-success');
+    return true;
   }
+  return false;
 }
 
 function validateEmail(string, inputName, required) {
@@ -106,7 +148,32 @@ function validatePostCode(string, inputName, required) {
   return false;
 }
 
-function validatePersonalNumber(string, inputName, isOnBlur) {
+function validateHours(value, inputName, label, min, max, steps, required) {
+  const helper = `#${inputName}Helper`;
+  const formGroup = `#${inputName}Group`;
+
+  let valid = false;
+
+  // TODO: Better validation.
+  if (required && value !== '') {
+    addSuccess(formGroup, helper);
+    valid = true;
+
+    if (value > max || value <= min) {
+      addError(formGroup, helper, `${label} ska vara mellan ${min} och ${max}.`);
+      valid = false;
+    } else {
+      addSuccess(formGroup, helper);
+      valid = true;
+    }
+  } else {
+    addError(formGroup, helper, `${label} måste anges.`);
+    valid = false;
+  }
+  return valid;
+}
+
+function validatePersonalNumber(string, inputName, onBlur) {
   const helper = `#${inputName}Helper`;
   const formGroup = `#${inputName}Group`;
 
@@ -125,7 +192,8 @@ function validatePersonalNumber(string, inputName, isOnBlur) {
     valid = true;
   }
 
-  if (isOnBlur) {
+  // Validate lenght on blur.
+  if (onBlur) {
     if (string.length !== 11) {
       valid = false;
     }
@@ -144,6 +212,10 @@ function validatePersonalNumber(string, inputName, isOnBlur) {
     $(formGroup).addClass('has-danger');
     $(formGroup).removeClass('has-success');
   }
-
   return valid;
+}
+
+function validateDate(value, inputName) {
+  const helper = `#${inputName}Helper`;
+  const formGroup = `#${inputName}Group`;
 }

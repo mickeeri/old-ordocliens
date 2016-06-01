@@ -26,6 +26,13 @@ class CounterpartForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
+    // Validate all input fields before submitting. Only on POST.
+    if (!this.state.id) {
+      Array.from(e.target.getElementsByClassName('form-control'))
+        .forEach((input) => {
+          this.validate(input);
+        });
+    }
     // List in LawsuitCounterpartList;
     if (this.state.id) { // If it has id it is update.
       makePutRequest(Routes.counterpart_path(this.state.id),
@@ -77,14 +84,39 @@ class CounterpartForm extends React.Component {
   }
 
   handleInputChange(e) {
-    const nextState = {};
-    nextState[e.target.name] = e.target.value;
-    this.setState(nextState);
+    if (this.validate(e)) {
+      const nextState = {};
+      nextState[e.target.name] = e.target.value;
+      this.setState(nextState);
+    }
   }
 
   handleCancelButtonClick(e) {
     e.preventDefault();
     PubSub.publish('dismissEdit');
+  }
+
+  validate(e) {
+    const input = e.target ? e.target : e;
+
+    if (input.id === 'firstName') {
+      return validateStringLength(input.value, 100, 1, input.id, 'Förnamn');
+    }
+    if (input.id === 'lastName') {
+      return validateStringLength(input.value, 100, 1, input.id, 'Efternamn');
+    }
+    if (input.id === 'representative') {
+      return validateStringLength(input.value, 100, '', input.id, 'Motpartsombud');
+    }
+    if (input.id === 'personalNumber') {
+      const onBlur = e.type !== 'change';
+      return validatePersonalNumber(input.value, input.name, onBlur);
+    }
+    if (input.name === 'info') {
+      return validateStringLength(input.value, 1000, '', input.name, 'Kontaktinfo');
+    }
+
+    return false;
   }
 
   render() {
@@ -96,7 +128,11 @@ class CounterpartForm extends React.Component {
           <span id="counterpart-modal-alert-span"></span>
         </div>
         {this.state.showForm ?
-          <form onSubmit={this.handleOnSubmit} onKeyPress={this.handleKeyPress}>
+          <form
+            onSubmit={this.handleOnSubmit}
+            onKeyPress={this.handleKeyPress}
+            noValidate
+          >
             <p className="hidden message" id="counterpart-form-message"></p>
             <div id="firstNameGroup" className="form-group row">
               <label className="col-sm-4 form-control-label" htmlFor="firstName">Förnamn</label>
@@ -171,7 +207,7 @@ class CounterpartForm extends React.Component {
                 <small id="representativeHelper" className="text-muted"></small>
               </div>
             </div>
-            <div className="form-group row">
+            <div id="infoGroup" className="form-group row">
               <label htmlFor="info" className="form-control-label">Kontaktinfo</label>
               <div className="col-sm-12">
                 <textarea
@@ -180,10 +216,12 @@ class CounterpartForm extends React.Component {
                   type="text-area"
                   value={this.state ? this.state.info : ''}
                   name="info"
+                  id="info"
                   rows="4"
                   onChange={this.handleInputChange}
                 >
                 </textarea>
+                <small id="infoHelper" className="text-muted"></small>
                 <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
               </div>
             </div>
