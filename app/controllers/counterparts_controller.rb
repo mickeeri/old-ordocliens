@@ -16,7 +16,7 @@ class CounterpartsController < ApplicationController
           render json: @counterparts, meta: pagination_dict(@counterparts)
         else
           # For dropdown.
-          respond_with @counterparts
+          respond_with Counterpart.within_firm(current_user.firm).sorted
         end
       end
     end
