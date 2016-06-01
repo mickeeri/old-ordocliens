@@ -35,6 +35,13 @@ class LawsuitForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
+    // Validate all input fields before submitting. Only on POST.
+    if (!this.state.id) {
+      Array.from(e.target.getElementsByClassName('form-control'))
+        .forEach((input) => {
+          this.validate(input);
+        });
+    }
     const alert = $('#lawsuit-form-message');
     if (this.state.id) { // If it has id it is update.
       makePutRequest(
@@ -106,7 +113,7 @@ class LawsuitForm extends React.Component {
       return validateStringLength(input.value, 20, '', input.id, 'Målnummer');
     }
     if (input.id === 'lawsuitTypes') {
-      console.log(input.value);
+      return validateRequiredSelect(input.value, input.id, 'ärendetyp');
     }
 
     return false;
@@ -119,7 +126,8 @@ class LawsuitForm extends React.Component {
         this.setState({ lawsuitTypes: response.lawsuitTypes });
       })
       .error(xhr => {
-        console.error(url, xhr.status, xhr.statusText);
+        showErrorText(`Fel när ärendetyper skulle hämtas. Status: ${xhr.status}`,
+          ('#lawsuit-modal-alert-span'));
       });
   }
 
@@ -134,7 +142,11 @@ class LawsuitForm extends React.Component {
           <span id="lawsuit-modal-alert-span"></span>
         </div>
         {this.state.showForm ?
-          <form onKeyPress={this.handleKeyPress} onSubmit={this.handleOnSubmit}>
+          <form
+            onKeyPress={this.handleKeyPress}
+            onSubmit={this.handleOnSubmit}
+            noValidate
+          >
             <p className="hidden message" id="lawsuit-form-message"></p>
             {isEdit ?
               <div className="form-group row">
@@ -148,6 +160,7 @@ class LawsuitForm extends React.Component {
                   selectedId={parseInt(this.state.lawsuitTypeId, 10)}
                   changeEvent={this.setLawsuitType}
                 />
+                <small id="lawsuitTypesHelper" className="text-muted"></small>
               </div>
             </div>
             <div id="courtGroup" className="form-group row">
