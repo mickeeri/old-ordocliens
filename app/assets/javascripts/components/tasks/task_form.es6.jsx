@@ -15,6 +15,7 @@ class TaskForm extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.fetchPriceCategories = this.fetchPriceCategories.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   componentDidMount() {
@@ -23,6 +24,13 @@ class TaskForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
+    // Validate all input fields before submitting. Only on POST.
+    if (!this.state.id) {
+      Array.from(e.target.getElementsByClassName('form-control'))
+        .forEach((input) => {
+          this.validate(input);
+        });
+    }
     if (this.state.id) { // If it has id it is update.
       makePutRequest(
         Routes.lawsuit_task_path(this.props.lawsuitId, this.state.id),
@@ -41,11 +49,10 @@ class TaskForm extends React.Component {
           }, 1000);
         })
         .fail(xhr => {
-          showAlertInModal(
-            `Ett fel uppstod. Status: ${xhr.status} ${xhr.statusText}`,
-            '#task-form-alert',
-            'alert-danger',
-            'fa-exclamation-circle');
+          const message = xhr.status === 422 ?
+            'Formuläret innehåller fel. Rätta till dem och försök igen.' :
+            `Fel uppstod. Statuskod: ${xhr.status}`;
+          showErrorText(message, '#task-form-message');
         });
     } else { // Otherwise post.
       const url = Routes.lawsuit_tasks_path(this.props.lawsuitId);
@@ -62,11 +69,10 @@ class TaskForm extends React.Component {
         }, 1000);
       })
       .fail(xhr => {
-        showAlertInModal(
-          `Ett fel uppstod. Status: ${xhr.status} ${xhr.statusText}`,
-          '#task-form-alert',
-          'alert-danger',
-          'fa-exclamation-circle');
+        const message = xhr.status === 422 ?
+          'Formuläret innehåller fel. Rätta till dem och försök igen.' :
+          `Fel uppstod. Statuskod: ${xhr.status}`;
+        showErrorText(message, '#task-form-message');
       });
     }
   }
@@ -99,6 +105,26 @@ class TaskForm extends React.Component {
       });
   }
 
+  validate(e) {
+    const input = e.target ? e.target : e;
+
+    if (input.id === 'date') {
+      validateDate();
+      // TODO: validateDate();
+    }
+    if (input.id === 'entry') {
+      return validateStringLength(input.value, 1000, 1, input.name, 'Notering');
+    }
+    if (input.id === 'workedHours') {
+      return validateHours(input.value, input.id, 'Arbetade timmar', 0, 24, 0.05, true);
+    }
+    if (input.id === 'priceCategory') {
+      return validateRequiredSelect(input.value, input.id, 'priskategori');
+    }
+
+    return false;
+  }
+
   render() {
     let priceCategoriesOptions = this.state.priceCategories.map(priceCategory =>
       <option key={priceCategory.id} value={priceCategory.id}>
@@ -112,61 +138,74 @@ class TaskForm extends React.Component {
         </div>
       {this.state.showForm ?
         <form
-          className="form-inline task-form"
           onSubmit={this.handleOnSubmit}
           onKeyPress={this.handleKeyPress}
+          noValidate
         >
-          <div className="form-group">
-            <label htmlFor="date">Datum</label>
-            <input
-              type="date"
-              name="date"
-              className="form-control form-control-sm"
-              value={this.state.date}
-              onChange={this.handleInputChange}
-              required
-            />
+          <p className="hidden message" id="task-form-message"></p>
+          <div id="dateGroup" className="form-group row">
+            <label className="col-sm-7" htmlFor="date">Datum</label>
+            <div className="col-sm-5">
+              <input
+                type="date"
+                name="date"
+                id="date"
+                className="form-control form-control-sm"
+                value={this.state.date}
+                onChange={this.handleInputChange}
+                onBlur={this.validate}
+              />
+              <small id="dateHelper" className="text-muted"></small>
+            </div>
           </div>
-          <div id="entry" className="form-group form-group-textarea">
-            <label htmlFor="entry">Notering</label>
-            <textarea
-              className="form-control"
-              type="text-area"
-              value={this.state.entry}
-              name="entry"
-              rows="4"
-              onChange={this.handleInputChange}
-              required
-            >
-            </textarea>
-            <small id="entryHelpBlock" className="text-muted"></small>
-            <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
+          <div id="entryGroup" className="form-group row">
+            <label className="col-sm-3" htmlFor="entry">Notering</label>
+            <div className="col-sm-9">
+              <small id="entryHelper" className="text-muted text-danger"></small>
+              <textarea
+                placeholder="Notering"
+                className="form-control"
+                type="text-area"
+                value={this.state.entry}
+                name="entry"
+                id="entry"
+                rows="4"
+                onChange={this.handleInputChange}
+                onBlur={this.validate}
+              ></textarea>
+              <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
+            </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="workedHours">Arbetad tid</label>
-            <input
-              type="number"
-              name="workedHours"
-              className="form-control form-control-sm"
-              value={this.state.workedHours}
-              onChange={this.handleInputChange}
-              min="0"
-              step="0.05"
-              required
-            />
-            <span id="entryHelpBlock" className="help-block"></span>
+          <div id="workedHoursGroup" className="form-group row">
+            <label className="col-sm-9" htmlFor="workedHours">Arbetad tid</label>
+            <div className="col-sm-3">
+              <input
+                placeholder="Timmar"
+                type="number"
+                name="workedHours"
+                id="workedHours"
+                className="form-control form-control-sm"
+                value={this.state.workedHours}
+                onChange={this.handleInputChange}
+                onBlur={this.validate}
+                min="0"
+                step="0.05"
+              />
+            <small id="workedHoursHelper" className="text-muted text-danger"></small>
+            </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="priceCategoryId">Priskategori</label>
-            <select
-              className="form-control"
-              onChange={this.handleInputChange}
-              name="priceCategoryId"
-              value={this.state.priceCategoryId}
-              required
-            >
-              {priceCategoriesOptions}
-            </select>
+          <div id="priceCategoryGroup" className="form-group row">
+            <label className="col-sm-6" htmlFor="priceCategoryId">Priskategori</label>
+            <div className="col-sm-6">
+              <select
+                className="form-control"
+                onChange={this.handleInputChange}
+                onBlur={this.validate}
+                id="priceCategoryId"
+                name="priceCategoryId"
+                value={this.state.priceCategoryId}
+              >{priceCategoriesOptions}</select>
+            </div>
           </div>
           <hr />
           <div className="content-right">
