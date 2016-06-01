@@ -30,7 +30,7 @@ function validateStringLength(string, maxLength, minLength, inputName, label) {
     $(formGroup).removeClass('has-success');
   } else if (string.length < minLength) {
     const message = minLength === 1 ?
-      `${label} får inte vara tomt.` :
+      `${label} måste anges.` :
       `${label} ska bestå av minst ${minLength} tecken.`;
     $(helper).text(message);
     $(formGroup).addClass('has-danger');
@@ -73,13 +73,15 @@ function validateRequiredSelect(value, inputName, label) {
   const helper = `#${inputName}Helper`;
   const formGroup = `#${inputName}Group`;
 
+  console.log(value);
+
   if (value === '') {
     $(helper).text(`Du måste välja en ${label}.`);
     $(formGroup).addClass('has-danger');
     $(formGroup).removeClass('has-success');
   } else {
     $(formGroup).removeClass('has-danger');
-    $(formGroup).removeClass('has-success');
+    $(formGroup).addClass('has-success');
     $(helper).text('');
     return true;
   }
@@ -148,7 +150,7 @@ function validatePostCode(string, inputName, required) {
   return false;
 }
 
-function validateHours(value, inputName, label, min, max, steps, required) {
+function validateNumber(value, inputName, label, min, max, steps, required) {
   const helper = `#${inputName}Helper`;
   const formGroup = `#${inputName}Group`;
 
@@ -218,4 +220,10 @@ function validatePersonalNumber(string, inputName, onBlur) {
 function validateDate(value, inputName) {
   const helper = `#${inputName}Helper`;
   const formGroup = `#${inputName}Group`;
+  if (value !== '') {
+    addSuccess(formGroup, helper);
+  } else {
+    // TODO: Better validation of date.
+    addError(formGroup, helper, 'Datum måste anges.');
+  }
 }

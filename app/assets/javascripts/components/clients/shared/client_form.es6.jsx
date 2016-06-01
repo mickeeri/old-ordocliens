@@ -33,9 +33,10 @@ class ClientForm extends React.Component {
     e.preventDefault();
     // Validate all input fields before submitting. Only on POST.
     if (!this.state.id) {
-      Array.from(e.target.getElementsByClassName('form-control')).forEach((input) => {
-        this.validate(input);
-      });
+      Array.from(e.target.getElementsByClassName('form-control'))
+        .forEach((input) => {
+          this.validate(input);
+        });
     }
 
     const alert = $('#client-form-message');
@@ -128,7 +129,7 @@ class ClientForm extends React.Component {
       validateStringLength(input.value, 100, '', input.name, 'Ort');
     }
     if (input.name === 'note') {
-      validateStringLength(input.value, 1000, '', input.name, 'Ort');
+      validateStringLength(input.value, 500, '', input.name, 'Anteckning');
     }
   }
 
@@ -162,8 +163,8 @@ class ClientForm extends React.Component {
                 onBlur={this.validate}
                 autoFocus={!isEdit}
               />
-              <small id="firstNameHelper" className="text-muted"></small>
             </div>
+            <small id="firstNameHelper" className="text-muted text-danger helper"></small>
           </div>
           <div id="lastNameGroup" className="form-group row">
             <label htmlFor="lastName" className="col-sm-4 form-control-label">Efternamn</label>
@@ -178,11 +179,13 @@ class ClientForm extends React.Component {
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
-              <small id="lastNameHelper" className="text-muted"></small>
             </div>
+            <small id="lastNameHelper" className="text-muted text-danger helper"></small>
           </div>
           <div id="personalNumberGroup" className="form-group row">
-            <label htmlFor="personalNumber" className="col-sm-8 form-control-label">Personnummer</label>
+            <label htmlFor="personalNumber" className="col-sm-8 form-control-label">
+              Personnummer
+            </label>
             <div className="col-sm-4">
               <input
                 placeholder="ÅÅMMDD-XXXX"
@@ -194,8 +197,8 @@ class ClientForm extends React.Component {
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
-              <small id="personalNumberHelper" className="text-muted"></small>
             </div>
+            <small id="personalNumberHelper" className="text-muted text-danger helper"></small>
           </div>
           <hr />
           <div id="emailGroup" className="form-group row">
@@ -228,8 +231,8 @@ class ClientForm extends React.Component {
                 onBlur={this.validate}
               />
             </div>
-            <small id="mobileHelper" className="text-muted"></small>
           </div>
+          <small id="mobileHelper" className="text-muted text-danger helper"></small>
           <div id="phoneNumberGroup" className="form-group row">
             <label htmlFor="phoneNumber" className="col-sm-6 form-control-label">Telefon</label>
             <div className="col-sm-6">
@@ -244,8 +247,8 @@ class ClientForm extends React.Component {
                 onBlur={this.validate}
               />
             </div>
-            <small id="phoneNumberHelper" className="text-muted"></small>
           </div>
+          <small id="phoneNumberHelper" className="text-muted text-danger helper"></small>
           <hr />
           <div id="streetGroup" className="form-group row">
             <label htmlFor="street" className="col-sm-4 form-control-label">Gatuadress</label>
@@ -261,8 +264,8 @@ class ClientForm extends React.Component {
                 onBlur={this.validate}
               />
             </div>
-            <small id="streetHelper" className="text-muted"></small>
           </div>
+          <small id="streetHelper" className="text-muted text-danger helper"></small>
           <div id="postCodeGroup" className="form-group row">
             <label htmlFor="postCode" className="col-sm-8 form-control-label">Postnummer</label>
             <div className="col-sm-4">
@@ -293,11 +296,13 @@ class ClientForm extends React.Component {
                 onBlur={this.validate}
               />
             </div>
-            <small id="cityCodeHelper" className="text-muted"></small>
+            <small id="cityCodeHelper" className="text-muted text-danger helper"></small>
           </div>
           <hr />
           <div id="noteGroup" className="form-group row">
-            <label htmlFor="note" className="form-control-label">Anteckningar</label>
+            <label htmlFor="note" className="form-control-label">
+              Anteckningar
+            </label>
             <div className="col-sm-12">
               <textarea
                 placeholder="Anteckningar"
@@ -311,8 +316,9 @@ class ClientForm extends React.Component {
                 onBlur={this.validate}
               >
               </textarea>
+              <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
             </div>
-            <small id="noteHelper" className="text-muted"></small>
+            <small id="noteHelper" className="text-muted text-danger helper"></small>
           </div>
           <hr />
           <div className="content-right">

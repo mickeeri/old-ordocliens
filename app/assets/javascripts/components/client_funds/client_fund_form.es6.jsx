@@ -14,6 +14,7 @@ class ClientFundForm extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   handleOnSubmit(e) {
@@ -40,6 +41,11 @@ class ClientFundForm extends React.Component {
           showErrorText(errorMessage, '#client-fund-form-message');
         });
     } else { // Otherwise post.
+      // Validate all input fields before submitting. Only on POST.
+      Array.from(e.target.getElementsByClassName('form-control'))
+        .forEach((input) => {
+          this.validate(input);
+        });
       makePostRequest(
         Routes.lawsuit_client_funds_path(this.props.lawsuitId),
         { clientFund: this.state })
@@ -65,7 +71,7 @@ class ClientFundForm extends React.Component {
 
   handleInputChange(e) {
     const nextState = {};
-    nextState[e.target.name] = e.target.value;
+    nextState[e.target.id] = e.target.value;
     this.setState(nextState);
   }
 
@@ -81,6 +87,22 @@ class ClientFundForm extends React.Component {
     PubSub.publish('dismissEdit');
   }
 
+  validate(e) {
+    const input = e.target ? e.target : e;
+
+    if (input.id === 'date') {
+      return validateDate(input.value, input.id);
+    }
+    if (input.id === 'entry') {
+      return validateStringLength(input.value, 500, 1, input.id, 'Notering');
+    }
+    if (input.id === 'balance') {
+      return validateNumber(input.value, input.id, 'Kostnad', -100000, 100000, '', true);
+    }
+
+    return false;
+  }
+
   render() {
     return (
       <div>
@@ -90,51 +112,57 @@ class ClientFundForm extends React.Component {
         </div>
         {this.state.showForm ?
           <form
-            className="form-inline client-fund-form"
             onSubmit={this.handleOnSubmit}
             onKeyPress={this.handleKeyPress}
+            noValidate
           >
             <p className="hidden message" id="client-fund-form-message"></p>
-            <div className="form-group">
-              <label htmlFor="date">Datum</label>
-              <input
-                type="date"
-                name="date"
-                className="form-control form-control-sm"
-                value={this.state.date}
-                onChange={this.handleInputChange}
-                required
-              />
+            <div id="dateGroup" className="form-group row">
+              <label className="col-sm-7" htmlFor="date">Datum</label>
+              <div className="col-sm-5">
+                <input
+                  className="form-control form-control-sm"
+                  id="date"
+                  onBlur={this.validate}
+                  onChange={this.handleInputChange}
+                  type="date"
+                  value={this.state.date}
+                />
+              </div>
+              <small id="dateHelper" className="text-muted text-danger helper"></small>
             </div>
-            <div id="entry" className="form-group form-group-textarea">
-              <label htmlFor="entry">Notering</label>
-              <textarea
-                className="form-control"
-                type="text-area"
-                value={this.state.entry}
-                name="entry"
-                rows="5"
-                onChange={this.handleInputChange}
-                required
-              >
-              </textarea>
-              <small id="entryHelpBlock" className="text-muted"></small>
-              <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
+            <div id="entryGroup" className="form-group row">
+              <label className="col-sm-3 text-area-label" htmlFor="entry">Notering</label>
+              <div className="col-sm-9">
+                <small className="text-muted helper">Tryck Shift + Enter för att byta rad</small>
+                <textarea
+                  className="form-control"
+                  id="entry"
+                  onBlur={this.validate}
+                  onChange={this.handleInputChange}
+                  rows="5"
+                  type="text-area"
+                  value={this.state.entry}
+                ></textarea>
+              </div>
+              <small id="entryHelper" className="text-muted text-danger helper"></small>
             </div>
-            <div className="form-group">
-              <label htmlFor="balance">Saldo</label>
-              <input
-                placeholder="Saldo"
-                type="number"
-                name="balance"
-                className="form-control form-control-sm"
-                value={this.state.balance}
-                onChange={this.handleInputChange}
-                min="0"
-                step="0.05"
-                required
-              />
-              <span id="entryHelpBlock" className="help-block"></span>
+            <div id="balanceGroup" className="form-group row">
+              <label className="col-sm-8" htmlFor="balance">Saldo</label>
+              <div className="col-sm-4">
+                <input
+                  className="form-control form-control-sm"
+                  id="balance"
+                  min="0"
+                  onBlur={this.validate}
+                  onChange={this.handleInputChange}
+                  placeholder="Saldo"
+                  step="0.05"
+                  type="number"
+                  value={this.state.balance}
+                />
+              </div>
+              <small id="balanceHelper" className="text-muted text-danger helper"></small>
             </div>
             <hr />
             <div className="content-right">

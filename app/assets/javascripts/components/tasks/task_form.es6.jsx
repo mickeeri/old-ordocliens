@@ -24,13 +24,6 @@ class TaskForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    // Validate all input fields before submitting. Only on POST.
-    if (!this.state.id) {
-      Array.from(e.target.getElementsByClassName('form-control'))
-        .forEach((input) => {
-          this.validate(input);
-        });
-    }
     if (this.state.id) { // If it has id it is update.
       makePutRequest(
         Routes.lawsuit_task_path(this.props.lawsuitId, this.state.id),
@@ -55,6 +48,11 @@ class TaskForm extends React.Component {
           showErrorText(message, '#task-form-message');
         });
     } else { // Otherwise post.
+      // Validate all input fields before submitting. Only on POST.
+      Array.from(e.target.getElementsByClassName('form-control'))
+        .forEach((input) => {
+          this.validate(input);
+        });
       const url = Routes.lawsuit_tasks_path(this.props.lawsuitId);
       const payload = { task: this.state };
       $.post(url, payload, () => {
@@ -85,7 +83,7 @@ class TaskForm extends React.Component {
 
   handleInputChange(e) {
     const nextState = {};
-    nextState[e.target.name] = e.target.value;
+    nextState[e.target.id] = e.target.value;
     this.setState(nextState);
   }
 
@@ -109,14 +107,13 @@ class TaskForm extends React.Component {
     const input = e.target ? e.target : e;
 
     if (input.id === 'date') {
-      validateDate();
-      // TODO: validateDate();
+      return validateDate(input.value, input.id);
     }
     if (input.id === 'entry') {
-      return validateStringLength(input.value, 1000, 1, input.name, 'Notering');
+      return validateStringLength(input.value, 500, 1, input.name, 'Notering');
     }
     if (input.id === 'workedHours') {
-      return validateHours(input.value, input.id, 'Arbetade timmar', 0, 24, 0.05, true);
+      return validateNumber(input.value, input.id, 'Arbetade timmar', 0, 24, 0.05, true);
     }
     if (input.id === 'priceCategory') {
       return validateRequiredSelect(input.value, input.id, 'priskategori');
@@ -159,9 +156,11 @@ class TaskForm extends React.Component {
             </div>
           </div>
           <div id="entryGroup" className="form-group row">
-            <label className="col-sm-3" htmlFor="entry">Notering</label>
+            <label className="col-sm-3 text-area-label" htmlFor="entry">Notering</label>
             <div className="col-sm-9">
-              <small id="entryHelper" className="text-muted text-danger"></small>
+              <small className="text-muted helper">
+                Tryck Shift + Enter för att byta rad
+              </small>
               <textarea
                 placeholder="Notering"
                 className="form-control"
@@ -173,8 +172,8 @@ class TaskForm extends React.Component {
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               ></textarea>
-              <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
             </div>
+            <small id="entryHelper" className="text-muted text-danger helper"></small>
           </div>
           <div id="workedHoursGroup" className="form-group row">
             <label className="col-sm-9" htmlFor="workedHours">Arbetad tid</label>
@@ -191,18 +190,18 @@ class TaskForm extends React.Component {
                 min="0"
                 step="0.05"
               />
-            <small id="workedHoursHelper" className="text-muted text-danger"></small>
             </div>
+            <small id="workedHoursHelper" className="text-muted text-danger helper"></small>
           </div>
           <div id="priceCategoryGroup" className="form-group row">
-            <label className="col-sm-6" htmlFor="priceCategoryId">Priskategori</label>
+            <label className="col-sm-6" htmlFor="priceCategory">Priskategori</label>
             <div className="col-sm-6">
               <select
                 className="form-control"
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
-                id="priceCategoryId"
-                name="priceCategoryId"
+                id="priceCategory"
+                name="priceCategory"
                 value={this.state.priceCategoryId}
               >{priceCategoriesOptions}</select>
             </div>

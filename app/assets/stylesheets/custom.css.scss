@@ -181,6 +181,11 @@ h1 {
   input { width: 50px; }
 }
 
+.paginator-row {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
 //-----------------------------------------------------
 // Cards
 //-----------------------------------------------------
@@ -236,9 +241,13 @@ h1 {
 }
 
 input[type="date"] {
-  width: 170px;
   height: 31px;
 }
+
+.text-area-label {
+  margin-top: 15px !important;
+}
+
 
 .task-form {
 
@@ -250,10 +259,6 @@ input[type="date"] {
     width: 100px;
   }
 
-  // input[type="date"] {
-  //   width: 170px;
-  //   height: 31px;
-  // }
 
   textarea {
     width: 300px !important;
@@ -262,6 +267,11 @@ input[type="date"] {
   select {
     width: 300px;
   }
+}
+
+.helper {
+  float: right;
+  margin-right: 20px;
 }
 
 //-----------------------------------------------------
@@ -331,13 +341,6 @@ input[type="date"] {
     }
  }
 
-// .alert-success {
-//     background-color: #dff0d8;
-//     border-color: #d6e9c6;
-//     color: #468847;
-//     text-align: left;
-//  }
-
 .alert-notice {
     background-color: #D9EDF7;
     border-color: #bcdff1;
@@ -349,10 +352,6 @@ input[type="date"] {
       margin-right: 5px;
     }
  }
-
-.message {
-  // font-weight: 600;
-}
 
 .message.text-danger {
   &:before {
@@ -380,27 +379,7 @@ input[type="date"] {
 #tasks-index-alert {
   display: none;
   margin: 0;
-  // position: absolute;
-  // top: 25%;
-  // left: 25%;
-  // width: 50%;
-  // right: 50%;
-  // opacity: 0.93;
-  // z-index: 1000;
 }
-
-#task-form-alert {
-  // display: none;
-
-  // position: absolute;
-  // top: 25%;
-  // left: 25%;
-  // width: 50%;
-  // right: 50%;
-  // opacity: 0.93;
-  // z-index: 1000;
-}
-
 
 #task-form-alert.alert-success, #counterpart-modal-alert.alert-success {
   margin: 0;
@@ -420,38 +399,22 @@ input[type="date"] {
   padding: 20px;
 }
 
-
 #updatedLawsuitMessage {
   display:none;
   position: absolute;
   top: 196px;
-  // left: 760px;
-  // width: 500px;
-  // height: 45px;
   font-weight: 600;
-  // border: 2px solid #5CBD8E;
-  // padding: 5px 5px 5px 10px;
-  // margin-bottom: 10px;
 }
 
 #updatedClientMessage, #updatedCounterpartMessage {
   display: none;
   position: absolute;
-  // top: 90px;
   top: 88px;
   font-weight: 600;
-  // border: 1px dotted;
   padding: 5px 15px;
 }
 
-.paginator-row {
-  margin-bottom: 15px;
-  margin-top: 15px;
-  // .checkbox {
-  //   margin-top: 10px;
-  //   margin-bottom: 0;
-  // }
-}
+
 
 // Devise error message.
 #error_explanation {
@@ -551,8 +514,5 @@ input[type="date"] {
     margin-bottom: 20px;
   }
 
-  // .nav-item.nav-li {
-  //   width: 100%;
-  //   margin-left: 0;
-  // }
+
 }

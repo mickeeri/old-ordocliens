@@ -35,6 +35,11 @@ class ExpenseForm extends React.Component {
           showErrorText(errorMessage, '#expense-form-message');
         });
     } else { // Otherwise post.
+      // Validate all input fields before submitting. Only on POST.
+      Array.from(e.target.getElementsByClassName('form-control'))
+        .forEach((input) => {
+          this.validate(input);
+        });
       makePostRequest(
         Routes.lawsuit_expenses_path(this.props.lawsuitId),
         { expense: this.state })
@@ -60,7 +65,7 @@ class ExpenseForm extends React.Component {
 
   handleInputChange(e) {
     const nextState = {};
-    nextState[e.target.name] = e.target.value;
+    nextState[e.target.id] = e.target.value;
     this.setState(nextState);
   }
 
@@ -76,6 +81,17 @@ class ExpenseForm extends React.Component {
     PubSub.publish('dismissEdit');
   }
 
+  validate(e) {
+    const input = e.target ? e.target : e;
+    if (input.id === 'entry') {
+      return validateStringLength(input.value, 500, 1, input.id, 'Notering');
+    }
+    if (input.id === 'price') {
+      return validateNumber(input.value, input.id, 'Kostnad', 0, 100000, '', true);
+    }
+    return false;
+  }
+
   render() {
     return (
       <div>
@@ -85,40 +101,46 @@ class ExpenseForm extends React.Component {
         </div>
         {this.state.showForm ?
           <form
-            className="form-inline expense-form"
             onSubmit={this.handleOnSubmit}
             onKeyPress={this.handleKeyPress}
+            noValidate
           >
             <p className="hidden message" id="expense-form-message"></p>
-            <div id="entry" className="form-group form-group-textarea">
-              <label htmlFor="entry">Notering</label>
-              <textarea
-                className="form-control"
-                type="text-area"
-                value={this.state.entry}
-                name="entry"
-                rows="5"
-                onChange={this.handleInputChange}
-                required
-              >
-              </textarea>
-              <small id="entryHelpBlock" className="text-muted"></small>
-              <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
+            <div id="entryGroup" className="form-group row">
+              <label className="col-sm-3 text-area-label" htmlFor="entry">Notering</label>
+              <div className="col-sm-9">
+                <small className="text-muted helper">Tryck Shift + Enter för att byta rad</small>
+                <textarea
+                  className="form-control"
+                  type="text-area"
+                  value={this.state.entry}
+                  name="entry"
+                  id="entry"
+                  rows="5"
+                  onChange={this.handleInputChange}
+                  onBlur={this.validate}
+                  autoFocus
+                >
+                </textarea>
+              </div>
+              <small id="entryHelper" className="text-muted text-danger helper"></small>
             </div>
-            <div className="form-group">
-              <label htmlFor="price">Kostnad</label>
-              <input
-                placeholder="Kostnad"
-                type="number"
-                name="price"
-                className="form-control form-control-sm"
-                value={this.state.price}
-                onChange={this.handleInputChange}
-                min="0"
-                step="0.05"
-                required
-              />
-              <span id="entryHelpBlock" className="help-block"></span>
+            <div id="priceGroup" className="form-group row">
+              <label className="col-sm-8" htmlFor="price">Kostnad</label>
+              <div className="col-sm-4">
+                <input
+                  placeholder="Kostnad"
+                  type="number"
+                  id="price"
+                  className="form-control form-control-sm"
+                  value={this.state.price}
+                  onChange={this.handleInputChange}
+                  onBlur={this.validate}
+                  min="0"
+                  step="0.05"
+                />
+              </div>
+              <small id="priceHelper" className="text-muted text-danger helper"></small>
             </div>
             <hr />
             <div className="content-right">

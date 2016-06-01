@@ -148,8 +148,8 @@ class CounterpartForm extends React.Component {
                   onBlur={this.validate}
                   autoFocus={!isEdit}
                 />
-                <small id="firstNameHelper" className="text-muted"></small>
               </div>
+              <small id="firstNameHelper" className="text-muted text-danger helper"></small>
             </div>
             <div id="lastNameGroup" className="form-group row">
               <label htmlFor="lastName" className="col-sm-4 form-control-label">Efternamn</label>
@@ -165,8 +165,8 @@ class CounterpartForm extends React.Component {
                   onBlur={this.validate}
                   required="true"
                 />
-                <small id="lastNameHelper" className="text-muted"></small>
               </div>
+              <small id="lastNameHelper" className="text-muted text-danger helper"></small>
             </div>
             <div id="personalNumberGroup" className="form-group row">
               <label
@@ -184,8 +184,8 @@ class CounterpartForm extends React.Component {
                   onChange={this.handleInputChange}
                   onBlur={this.validate}
                 />
-                <small id="personalNumberHelper" className="text-muted"></small>
               </div>
+              <small id="personalNumberHelper" className="text-muted text-danger helper"></small>
             </div>
             <div id="representativeGroup" className="form-group row">
               <label
@@ -204,11 +204,13 @@ class CounterpartForm extends React.Component {
                   onBlur={this.validate}
                   autoFocus={!isEdit}
                 />
-                <small id="representativeHelper" className="text-muted"></small>
               </div>
+              <small id="representativeHelper" className="text-muted text-danger helper"></small>
             </div>
             <div id="infoGroup" className="form-group row">
-              <label htmlFor="info" className="form-control-label">Kontaktinfo</label>
+              <label htmlFor="info" className="form-control-label">
+                Kontaktinfo
+              </label>
               <div className="col-sm-12">
                 <textarea
                   placeholder="Kontaktinfo"
@@ -221,7 +223,7 @@ class CounterpartForm extends React.Component {
                   onChange={this.handleInputChange}
                 >
                 </textarea>
-                <small id="infoHelper" className="text-muted"></small>
+                <small id="infoHelper" className="text-muted text-danger"></small>
                 <small className="text-muted">Tryck Shift + Enter för att byta rad</small>
               </div>
             </div>
