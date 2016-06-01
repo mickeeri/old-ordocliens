@@ -1,14 +1,16 @@
 #-----------------------------------------------------
 # page settings
 #-----------------------------------------------------
-
-
 docx.font name: 'Courier New'
 
 docx.style id: 'Normal', name: 'Normal', font: 'Palatino Linotype', size: 22, line: 200
 
-docx.h1 @lawsuit.lawsuit_type.name
 
+#-----------------------------------------------------
+# Header
+#-----------------------------------------------------
+docx.h1 @lawsuit.lawsuit_type.name
+docx.h1 "Ärende: #{@lawsuit.slug}"
 
 #-----------------------------------------------------
 # Works table
@@ -17,29 +19,14 @@ docx.h2 "Arbete"
 table_data = [['Datum','Notering','Priskategori','Tid']]
 
 @tasks.each do |task|
-  # Creates new array and inserts first row.
-
-  # Category header and task rows.
-  # docx.h2 category.name
-  # tasks.each do |task|
-  #
-  # end
-
   row = [task.date, task.entry, task.price_category.name, task.worked_hours]
   table_data.push(row)
-
-  # Last row displays sum of category.
-
-
 end
 
 @price_categories.each do |category|
   sum_row = ['', "Summa #{category.name}", '', category.tasks.where(lawsuit_id: @lawsuit.id).sum(:worked_hours)]
   table_data.push(sum_row)
 end
-
-# last_row = ['Summa','', '', category.tasks.where(lawsuit_id: @lawsuit.id).sum(:worked_hours)]
-# table_data.push(last_row)
 
 docx.table table_data, border_size: 4 do
   border_color   'eceeef'
