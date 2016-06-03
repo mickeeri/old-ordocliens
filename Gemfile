@@ -61,6 +61,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
   gem 'capistrano-ssh-doctor'
+  gem 'guard-rspec', require: false
 end
 
 group :production do
