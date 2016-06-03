@@ -6,6 +6,13 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 require 'database_cleaner'
+require "capybara/rails"
+require "capybara/rspec"
+require "capybara/poltergeist"
+
+# Specs flagged with `js: true` will use Capybara's JS driver. Set
+# that JS driver to :poltergeist
+Capybara.javascript_driver = :poltergeist
 
 # Including settings i spec/support folder.
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }

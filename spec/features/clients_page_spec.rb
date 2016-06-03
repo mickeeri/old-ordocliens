@@ -26,6 +26,13 @@ RSpec.feature "Create new client", type: :feature, js: true do
     expect(page).to have_content("Klient sparad")
     expect(page).to have_selector("input[value='Mikael']")
     expect(page).to have_selector("input[value='Eriksson']")
+    expect(page).to have_selector("input[value='881015-8272']")
+    expect(page).to have_selector("input[value='mikael@mail.com']")
+    expect(page).to have_selector("input[value='Södra gatan 10 lgh 1301']")
+    expect(page).to have_selector("input[value='25254']")
+    expect(page).to have_selector("input[value='Stockholm']")
+    expect(page).to have_selector("textarea", text: "Lorem ipsum...")
+
 
     click_link "Klienter"
     expect(page).to have_content("Eriksson")

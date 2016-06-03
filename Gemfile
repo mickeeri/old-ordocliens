@@ -46,7 +46,9 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara', '~> 2.6', '>= 2.6.2'
   gem 'database_cleaner'
-  # gem 'sqlite3'
+  gem 'poltergeist'
+  gem 'sqlite3'
+  gem 'launchy'
 end
 
 group :development do
