@@ -96,19 +96,21 @@ class ClientsIndex extends React.Component {
           </div>
         </div>
         <div className="row">
-          <table className="table table-bordered col-md-12">
-            <thead className="thead-inverse">
-              <tr>
-                <th>Namn</th>
-                <th>Personnummer</th>
-                <th>Handläggare</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.clients.map(client =>
-                <ClientRow key={client.id} client={client} />)}
-            </tbody>
-          </table>
+          <div className="table-responsive">
+            <table className="table table-bordered col-md-12">
+              <thead className="thead-inverse">
+                <tr>
+                  <th>Namn</th>
+                  <th>Personnummer</th>
+                  <th>Handläggare</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.clients.map(client =>
+                  <ClientRow key={client.id} client={client} />)}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

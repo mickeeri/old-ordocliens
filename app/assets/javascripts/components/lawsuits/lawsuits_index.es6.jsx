@@ -111,22 +111,24 @@ class LawsuitsIndex extends React.Component {
         </div>
         <div className="row message" id="lawsuit-index-message"></div>
         <div className="row">
-          <table className="table table-hover table-bordered">
-            <thead className="thead-inverse">
-              <tr>
-                <th>Huvudklient</th>
-                <th>Uppdrag</th>
-                <th>Ärendenummer</th>
-                <th>Upplagt</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.lawsuits.map(lawsuit =>
-                <LawsuitIndexRow key={lawsuit.id} lawsuit={lawsuit} />
-              )}
-            </tbody>
-          </table>
+          <div className="table-responsive">
+            <table className="table table-hover table-bordered">
+              <thead className="thead-inverse">
+                <tr>
+                  <th>Huvudklient</th>
+                  <th>Uppdrag</th>
+                  <th>Ärendenummer</th>
+                  <th>Upplagt</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.lawsuits.map(lawsuit =>
+                  <LawsuitIndexRow key={lawsuit.id} lawsuit={lawsuit} />
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

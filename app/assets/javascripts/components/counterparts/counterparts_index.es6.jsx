@@ -74,22 +74,24 @@ class CounterpartsIndex extends React.Component {
           </div>
         </div>
         <div className="row">
-          <table className="table table-bordered col-md-12">
-            <thead className="thead-inverse">
-              <tr>
-                <th>Namn</th>
-                <th>Personnummer</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.counterparts.map(counterpart =>
-                <tr key={counterpart.id}>
-                  <td><a href={Routes.counterpart_path(counterpart.id)}>{counterpart.fullName}</a></td>
-                  <td>{counterpart.personalNumber}</td>
+          <div className="table-responsive">
+            <table className="table table-bordered col-md-12">
+              <thead className="thead-inverse">
+                <tr>
+                  <th>Namn</th>
+                  <th>Personnummer</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {this.state.counterparts.map(counterpart =>
+                  <tr key={counterpart.id}>
+                    <td><a href={Routes.counterpart_path(counterpart.id)}>{counterpart.fullName}</a></td>
+                    <td>{counterpart.personalNumber}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );
