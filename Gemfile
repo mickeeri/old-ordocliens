@@ -8,13 +8,11 @@ gem 'active_model_serializers'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'caracal-rails'
 gem 'caracal'
-gem 'coffee-rails', '~> 4.1.0'
 gem 'devise'
 gem 'faker', '~> 1.6', '>= 1.6.3'
 gem 'jbuilder', '~> 2.0' # TODO: Using this?
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
-gem 'lodash-rails'
 gem 'pg_search'
 gem 'pg'
 gem 'prawn-rails', '0.1.1', git: 'https://github.com/cortiz/prawn-rails.git'
@@ -36,32 +34,32 @@ end
 
 group :development, :test do
   gem 'byebug'
+  gem 'factory_girl_rails', '~> 4.6'
   gem 'rspec-rails', '~> 3.4'
   gem 'rubocop', '~> 0.39.0', require: false
-  gem 'factory_girl_rails', '~> 4.6'
   gem 'spring-commands-rspec'
 end
 
 group :test do
-  gem 'shoulda-matchers'
   gem 'capybara', '~> 2.6', '>= 2.6.2'
   gem 'database_cleaner'
-  gem 'poltergeist'
-  gem 'sqlite3'
   gem 'launchy'
+  gem 'poltergeist'
+  gem 'shoulda-matchers'
+  gem 'sqlite3'
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
   gem 'better_errors'
-  gem 'spring'
-  gem 'capistrano',         require: false
-  gem 'capistrano-rvm',     require: false
-  gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
-  gem 'capistrano3-puma',   require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-rvm',     require: false
   gem 'capistrano-ssh-doctor'
+  gem 'capistrano',         require: false
+  gem 'capistrano3-puma',   require: false
   gem 'guard-rspec', require: false
+  gem 'spring'
+  gem 'web-console', '~> 2.0'
 end
 
 group :production do
