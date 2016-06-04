@@ -3,7 +3,8 @@ class ClientFund < ActiveRecord::Base
   # t.decimal  "balance"
   # t.date     "date"
   # t.integer  "lawsuit_id"
-  validates :balance, presence: true
+  validates :lawsuit, presence: true
+  validates :balance, presence: true, numericality: true
   validates :date, presence: true
   validates :entry, presence: true, length: { maximum: 500 }
   belongs_to :lawsuit
