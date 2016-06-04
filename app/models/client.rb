@@ -4,7 +4,6 @@ class Client < ActiveRecord::Base
   belongs_to :user, required: true
   has_many :participations, dependent: :destroy
   has_many :lawsuits, -> { distinct }, through: :participations
-  # has_many :lawsuits, foreign_key: :primary_client_id
   has_many :disputes, dependent: :destroy
   has_many :counterparts, -> { distinct }, through: :disputes
 
