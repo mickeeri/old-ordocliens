@@ -53,7 +53,7 @@ class ClientFundsIndex extends React.Component {
             <tr>
               <td>Summa: </td>
               <td></td>
-              <td className="text-nowrap">{parseFloat()
+              <td className="text-nowrap">{parseFloat(this.props.clientFunds.sum)
                   .toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' })} </td>
               <td></td>
               <td></td>

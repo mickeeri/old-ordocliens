@@ -1,4 +1,10 @@
 class TaskRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.editTaskButtonClicked = this.editTaskButtonClicked.bind(this);
+    this.deleteTaskButtonClicked = this.deleteTaskButtonClicked.bind(this);
+  }
+
   deleteTaskButtonClicked(e) {
     e.preventDefault();
 
@@ -51,7 +57,7 @@ class TaskRow extends React.Component {
         <td className="center-content">
           <i
             className="fa fa-pencil-square-o"
-            onClick={this.editTaskButtonClicked.bind(this)}
+            onClick={this.editTaskButtonClicked}
             aria-hidden="true"
           >
           </i>
@@ -59,7 +65,7 @@ class TaskRow extends React.Component {
         <td className="center-content">
           <i
             className="fa fa-times"
-            onClick={this.deleteTaskButtonClicked.bind(this)}
+            onClick={this.deleteTaskButtonClicked}
             aria-hidden="true"
           >
           </i>
@@ -72,5 +78,4 @@ class TaskRow extends React.Component {
 TaskRow.propTypes = {
   task: React.PropTypes.object.isRequired,
   lawsuitId: React.PropTypes.number.isRequired,
-  clientId: React.PropTypes.number,
 };

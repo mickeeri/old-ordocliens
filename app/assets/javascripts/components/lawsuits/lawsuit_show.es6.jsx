@@ -139,7 +139,7 @@ class LawsuitShow extends React.Component {
             closed={this.state.closed}
             primaryClientId={this.props.primaryClient.id}
           /> :
-          <TasksIndex
+          <LawsuitTime
             clientFunds={this.state.clientFunds}
             expenses={this.state.expenses}
             lawsuitId={this.props.lawsuit.id}
