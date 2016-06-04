@@ -24,8 +24,8 @@ prawn_document(page_layout: :landscape) do |pdf|
     pdf.text "Handläggare: #{@lawsuit.user.first_name} #{@lawsuit.user.last_name}", leading: 5
     pdf.text "Startdatum: #{@lawsuit.created_at.strftime('%F')}", leading: 5
     pdf.text "Ärendetyp: #{@lawsuit.lawsuit_type.name}", leading: 5
-    pdf.text "Målnummer: #{@lawsuit.case_number}", leading: 5 if @lawsuit.case_number
-    pdf.text "Domstol: #{@lawsuit.court}", leading: 5 if @lawsuit.court
+    pdf.text "Målnummer: #{@lawsuit.case_number}", leading: 5 if @lawsuit.case_number.present?
+    pdf.text "Domstol: #{@lawsuit.court}", leading: 5 if @lawsuit.court.present?
   end
 
 
