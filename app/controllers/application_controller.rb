@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   # include ActionController::Serialization
   before_action :deep_snake_case_params!
 
+  rescue_from ActiveRecord::RecordNotFound, with: :raise_not_found
+
   private
 
   # To render pagination info as json.
@@ -56,6 +58,11 @@ class ApplicationController < ActionController::Base
     else
       val
     end
+  end
+
+  # 404 not found
+  def raise_not_found
+    render json: "Resurs kunde inte hittas", status: :not_found
   end
 
   # def default_serializer_options
