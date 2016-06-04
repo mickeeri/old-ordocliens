@@ -73,8 +73,6 @@ function validateRequiredSelect(value, inputName, label) {
   const helper = `#${inputName}Helper`;
   const formGroup = `#${inputName}Group`;
 
-  console.log(value);
-
   if (value === '') {
     $(helper).text(`Du måste välja en ${label}.`);
     $(formGroup).addClass('has-danger');
