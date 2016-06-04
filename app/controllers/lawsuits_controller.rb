@@ -25,7 +25,7 @@ class LawsuitsController < ApplicationController
           @lawsuits = Client
                       .within_firm(current_user)
                       .find(params[:client_id]).lawsuits
-          respond_with @lawsuits.sorted
+          respond_with @lawsuits
         end
       end
     end
@@ -50,10 +50,9 @@ class LawsuitsController < ApplicationController
     client = Client.within_firm(current_user).find(params[:client_id])
     # Assigning primary client.
     @lawsuit.primary_client_id = client.id
-    # Saving
-    add_slug if @lawsuit.save
     # Then adding client to has_many through relation.
     @lawsuit.clients << client
+    @lawsuit.save
     respond_with @lawsuit
   end
 
@@ -114,15 +113,5 @@ class LawsuitsController < ApplicationController
         client_funds_array: prepare_array(@lawsuit.client_funds.sorted),
         sum: @lawsuit.client_funds.sum(:balance) },
       primary_client: prepare(@lawsuit.primary_client, ClientSerializer, root: false) }
-  end
-
-  # Buildning slug with initials, year and id.
-  # Should be in model, but cannot access current_user there.
-  def add_slug
-    first_name_initial = current_user.first_name[0, 1].downcase
-    last_name_initial = current_user.last_name[0, 1].downcase
-    initials = first_name_initial << last_name_initial
-    slug = @lawsuit.created_at.strftime("#{initials}%y-#{@lawsuit.id}")
-    @lawsuit.update(slug: slug)
   end
 end

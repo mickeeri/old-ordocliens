@@ -1,5 +1,6 @@
 class Lawsuit < ActiveRecord::Base
   include PgSearch
+  after_create :add_slug
   belongs_to :client
   belongs_to :lawsuit_type
   belongs_to :primary_client, class_name: "Client", required: true
@@ -49,4 +50,12 @@ class Lawsuit < ActiveRecord::Base
                                       normalization: 2,
                                       negation: true }
     }
+
+  # Buildning slug with initials, year and id.
+  def add_slug
+    initials = user.first_name[0, 2].downcase <<
+               user.last_name[0, 2].downcase
+    year = Time.new.strftime("%y")
+    update(slug: "#{initials}#{year}-#{id}")
+  end
 end
