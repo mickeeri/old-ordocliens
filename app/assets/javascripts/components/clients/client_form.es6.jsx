@@ -72,7 +72,6 @@ class ClientForm extends React.Component {
   }
 
   handleInputChange(e) {
-    this.setState({ formTouched: true });
     const nextState = {};
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);

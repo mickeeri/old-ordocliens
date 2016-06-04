@@ -74,7 +74,7 @@ class LawsuitsIndex extends React.Component {
             <form>
               <input
                 className="form-control"
-                placeholder="Sök på ärendenummer, uppdrag, klient eller målnummer"
+                placeholder="Sök på ärende, klient eller motpart"
                 autoFocus="true"
                 onChange={this.handleOnSearch}
                 ref="search"

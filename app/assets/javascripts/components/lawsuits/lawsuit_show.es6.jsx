@@ -2,17 +2,16 @@ class LawsuitShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      clientFunds: props.clientFunds,
       closed: props.lawsuit.closed,
       expenses: props.expenses,
-      primaryClient: props.lawsuit.primaryClient,
-      clientFunds: props.clientFunds,
       message: '',
       page: 'time',
-      tasks: this.props.tasks };
+      primaryClient: props.lawsuit.primaryClient,
+      tasks: props.tasks };
     this.displayUpdateMessage = this.displayUpdateMessage.bind(this);
     this.refreshExpenses = this.refreshExpenses.bind(this);
     this.refreshTasks = this.refreshTasks.bind(this);
-    this.removePrimaryClientHeader = this.removePrimaryClientHeader.bind(this);
     this.setMessage = this.setMessage.bind(this);
     this.toggleClosed = this.toggleClosed.bind(this);
     this.togglePage = this.togglePage.bind(this);
@@ -24,7 +23,6 @@ class LawsuitShow extends React.Component {
     PubSub.subscribe('clientFundsTouched', this.refreshClientFunds);
     PubSub.subscribe('lawsuitClosedOpened', this.toggleClosed);
     PubSub.subscribe('lawsuitUpdated', this.displayUpdateMessage);
-    PubSub.subscribe('noPrimaryClient', this.removePrimaryClientHeader);
     PubSub.subscribe('tasksTouched', this.refreshTasks);
   }
 
@@ -32,7 +30,6 @@ class LawsuitShow extends React.Component {
     PubSub.unsubscribe('expensesTouched');
     PubSub.unsubscribe('lawsuitClosedOpened');
     PubSub.unsubscribe('lawsuitUpdated');
-    PubSub.unsubscribe('noPrimaryClient');
     PubSub.unsubscribe('tasksTouched');
     PubSub.unsubscribe('clientFundsTouched');
   }
@@ -60,6 +57,10 @@ class LawsuitShow extends React.Component {
 
   togglePage(e) {
     e.preventDefault();
+    // TODO: Reloads to update info.
+    if (e.target.name === 'time') {
+      window.location.reload();
+    }
     this.setState({ page: e.target.name });
   }
 
