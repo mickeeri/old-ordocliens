@@ -54,7 +54,7 @@ class ClientForm extends React.Component {
           this.validate(input);
         });
         makePostRequest(Routes.clients_path(), { client: this.state })
-          .done(() => {
+          .done(res => {
             if (this.props.lawsuitId) {
               PubSub.publish('clientListUpdated');
             } else {
