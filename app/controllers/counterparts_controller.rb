@@ -62,6 +62,12 @@ class CounterpartsController < ApplicationController
       Involvement.find_by_counterpart_id_and_lawsuit_id(
         params[:id],
         params[:lawsuit_id]).delete
+      # Also remove the connection to clients in the lawsuit.
+      Lawsuit.find(params[:lawsuit_id]).clients.each do |client|
+        Dispute.find_by_counterpart_id_and_client_id(
+          params[:id],
+          client.id).delete
+      end
     else
       # Delete counterpart altogether.
       @counterpart.destroy
