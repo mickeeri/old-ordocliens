@@ -44,14 +44,6 @@ class ClientShow extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-12">
-                <ClientDeleteButton
-                  clientId={this.props.initialClient.id}
-                  primary={this.props.primary}
-                />
-              </div>
-            </div>
           </div>
           <div className="col-md-6">
             <div className="row">
@@ -77,6 +69,12 @@ class ClientShow extends React.Component {
                     )}
                   </ul>
                 </div>
+              </div>
+              <div className="col-md-12">
+                <ClientDeleteButton
+                  clientId={this.props.initialClient.id}
+                  primary={this.props.primary}
+                />
               </div>
             </div>
           </div>
