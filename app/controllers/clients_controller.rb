@@ -122,6 +122,7 @@ class ClientsController < ApplicationController
 
   def show_props
     { initial_client: prepare(@client, ClientShowSerializer, root: false),
+      counterparts: prepare_array(@client.counterparts.sorted),
       lawsuits: prepare_array(@client.lawsuits.sorted),
       primary: primary? }
   end

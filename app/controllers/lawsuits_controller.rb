@@ -26,7 +26,7 @@ class LawsuitsController < ApplicationController
           @lawsuits = Client
                       .within_firm(current_user)
                       .find(params[:client_id]).lawsuits
-          respond_with @lawsuits
+          respond_with @lawsuits.sorted
         end
       end
     end
