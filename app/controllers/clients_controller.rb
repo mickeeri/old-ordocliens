@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_action :authenticate_user!
-  before_action :search_clients, only: [:index]
+  before_action :filter_clients, only: [:index]
   before_action :fetch_client, only: [:show, :update, :destroy]
   respond_to :json, :html
 
@@ -16,7 +16,7 @@ class ClientsController < ApplicationController
           render json: @clients, meta: pagination_dict(@clients)
         else
           # For dropdown.
-          respond_with @clients
+          respond_with Client.within_firm(current_user).sorted
         end
       end
     end
@@ -38,7 +38,7 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @client = current_user.clients.create!(client_params.except(:lawsuit_id))
+    @client = current_user.clients.create(client_params.except(:lawsuit_id))
     # Add client to lawsuit if lawsuit_id is provided.
     if client_params[:lawsuit_id]
       add_client_to_lawsuit
@@ -98,9 +98,10 @@ class ClientsController < ApplicationController
     )
   end
 
-  def search_clients
-    @clients = Client.where(user_id: User.in_same_firm(current_user))
+  def filter_clients
+    @clients = Client.where(nil)
     @clients = @clients.users_clients(current_user) unless params[:all] == "true"
+    @clients = @clients.within_firm(current_user) if params[:all] == "true"
     @clients = @clients.search(params[:search]) if params[:search].present?
     @clients = @clients.sorted.page(params[:page]).per_page(50)
   end
