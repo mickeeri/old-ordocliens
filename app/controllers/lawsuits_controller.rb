@@ -1,4 +1,5 @@
 class LawsuitsController < ApplicationController
+  include ActionView::Helpers::NumberHelper
   before_action :authenticate_user!
   before_action :filter_lawsuits, only: [:index]
   before_action :fetch_lawsuit, only: [:show,
@@ -111,7 +112,7 @@ class LawsuitsController < ApplicationController
       expenses: prepare_array(@lawsuit.expenses.sorted),
       client_funds: {
         client_funds_array: prepare_array(@lawsuit.client_funds.sorted),
-        sum: @lawsuit.client_funds.sum(:balance) },
+        sum: number_to_currency(@lawsuit.client_funds.sum(:balance), delimiter: " ") },
       primary_client: prepare(@lawsuit.primary_client, ClientSerializer, root: false) }
   end
 end
