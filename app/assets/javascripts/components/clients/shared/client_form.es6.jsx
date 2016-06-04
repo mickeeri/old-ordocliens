@@ -31,14 +31,6 @@ class ClientForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    // Validate all input fields before submitting. Only on POST.
-    if (!this.state.id) {
-      Array.from(e.target.getElementsByClassName('form-control'))
-        .forEach((input) => {
-          this.validate(input);
-        });
-    }
-
     const alert = $('#client-form-message');
 
     // If it has id it is an update.
@@ -69,6 +61,9 @@ class ClientForm extends React.Component {
         });
     } else { // Otherwise create new client.
       if (this.state) {
+        $('#client-form *').filter(':input').each((key, input) => {
+          this.validate(input);
+        });
         // TODO: Use makePostRequest instead.
         $.post(Routes.clients_path(), { client: this.state }, res => {
           this.props.lawsuitId ?
@@ -147,7 +142,12 @@ class ClientForm extends React.Component {
     return (
       <div>
         <h3>{this.props.header}</h3>
-        <form onSubmit={this.handleOnSubmit} onKeyPress={this.handleKeyPress} noValidate>
+        <form
+          id="client-form"
+          onSubmit={this.handleOnSubmit}
+          onKeyPress={this.handleKeyPress}
+          noValidate
+        >
           <p className="hidden message" id="client-form-message"></p>
           <div id="firstNameGroup" className="form-group row">
             <label className="col-sm-4 form-control-label" htmlFor="firstName">Förnamn</label>

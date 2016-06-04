@@ -8,6 +8,7 @@ class LawsuitForm extends React.Component {
       id: props.initialLawsuit ? props.initialLawsuit.id : '',
       lawsuitTypeId: props.initialLawsuit ? props.initialLawsuit.lawsuitType.id : '',
       showForm: true,
+      lawsuitTypes: [],
     };
     this.fetchLawsuitTypes = this.fetchLawsuitTypes.bind(this);
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this);
@@ -35,13 +36,6 @@ class LawsuitForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    // Validate all input fields before submitting. Only on POST.
-    if (!this.state.id) {
-      Array.from(e.target.getElementsByClassName('form-control'))
-        .forEach((input) => {
-          this.validate(input);
-        });
-    }
     const alert = $('#lawsuit-form-message');
     if (this.state.id) { // If it has id it is update.
       makePutRequest(
@@ -63,6 +57,10 @@ class LawsuitForm extends React.Component {
           alert.slideDown(300);
         });
     } else { // Otherwise post.
+      // Validate all input fields before submitting.
+      $('#lawsuit-form *').filter(':input').each((key, input) => {
+        this.validate(input);
+      });
       makePostRequest(
         `${Routes.lawsuits_path()}?client_id=${this.props.clientId}`,
         { lawsuit: this.state })
@@ -123,7 +121,7 @@ class LawsuitForm extends React.Component {
     const url = Routes.lawsuit_types_path();
     makeGetRequest(url)
       .success(response => {
-        this.setState({ lawsuitTypes: response.lawsuitTypes });
+        this.setState({ lawsuitTypes: response.lawsuit_types });
       })
       .error(xhr => {
         showErrorText(`Fel när ärendetyper skulle hämtas. Status: ${xhr.status}`,
@@ -145,6 +143,7 @@ class LawsuitForm extends React.Component {
           <form
             onKeyPress={this.handleKeyPress}
             onSubmit={this.handleOnSubmit}
+            id="lawsuit-form"
             noValidate
           >
             <p className="hidden message" id="lawsuit-form-message"></p>
@@ -155,10 +154,12 @@ class LawsuitForm extends React.Component {
               </div>
               : ''}
             <div id="lawsuitTypesGroup" className="form-group row">
-              <div className="col-sm-6 col-sm-offset-6">
+              <label className="col-sm-6" htmlFor="lawsuitTypes">Ärendetyp</label>
+              <div className="col-sm-6">
                 <LawsuitTypesDropdown
                   selectedId={parseInt(this.state.lawsuitTypeId, 10)}
                   changeEvent={this.setLawsuitType}
+                  lawsuitTypes={this.state.lawsuitTypes}
                 />
                 <small id="lawsuitTypesHelper" className="text-muted"></small>
               </div>
