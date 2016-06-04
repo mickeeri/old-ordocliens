@@ -37,6 +37,9 @@ class ClientFundsIndex extends React.Component {
   }
 
   render() {
+    const sum = this.props.clientFunds.sum !== "0.0" ?
+      parseFloat(this.props.clientFunds.sum).format(2, 3, ' ', ',') :
+      "0,00";
     return (
       <div className="table-responsive">
         <table className="table table-bordered">
@@ -53,8 +56,7 @@ class ClientFundsIndex extends React.Component {
             <tr>
               <td>Summa: </td>
               <td></td>
-              <td className="text-nowrap">{parseFloat(this.props.clientFunds.sum)
-                  .toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' })} </td>
+              <td className="text-nowrap">{sum}</td>
               <td></td>
               <td></td>
             </tr>
@@ -64,8 +66,9 @@ class ClientFundsIndex extends React.Component {
               <tr key={clientFund.id}>
                 <td className="text-nowrap">{clientFund.date}</td>
                 <td>{clientFund.entry}</td>
-                <td className="text-nowrap">{parseFloat(clientFund.balance)
-                    .toLocaleString('sv-SE', { style: 'currency', currency: 'SEK' })} </td>
+                <td className="text-nowrap">
+                  {parseFloat(clientFund.balance).format(2, 3, ' ', ',')}
+                </td>
                 <td className="center-content">
                   <i
                     className="fa fa-pencil-square-o"
