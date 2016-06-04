@@ -26,13 +26,6 @@ class CounterpartForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    // Validate all input fields before submitting. Only on POST.
-    if (!this.state.id) {
-      Array.from(e.target.getElementsByClassName('form-control'))
-        .forEach((input) => {
-          this.validate(input);
-        });
-    }
     // List in LawsuitCounterpartList;
     if (this.state.id) { // If it has id it is update.
       makePutRequest(Routes.counterpart_path(this.state.id),
@@ -60,6 +53,10 @@ class CounterpartForm extends React.Component {
           alert.slideDown(300);
         });
     } else { // Otherwise post.
+      // Validate all input fields before submitting.
+      $('#counterpart-form *').filter(':input').each((key, input) => {
+        this.validate(input);
+      });
       makePostRequest(Routes.counterparts_path(), { counterpart: this.state })
         .done(() => {
           // Replace form with success message.
@@ -132,9 +129,10 @@ class CounterpartForm extends React.Component {
         </div>
         {this.state.showForm ?
           <form
-            onSubmit={this.handleOnSubmit}
-            onKeyPress={this.handleKeyPress}
+            id="counterpart-form"
             noValidate
+            onKeyPress={this.handleKeyPress}
+            onSubmit={this.handleOnSubmit}
           >
             <p className="hidden message" id="counterpart-form-message"></p>
             <div id="firstNameGroup" className="form-group row">
@@ -251,10 +249,10 @@ class CounterpartForm extends React.Component {
 
 CounterpartForm.propTypes = {
   initialCounterpart: React.PropTypes.shape({
-    id: React.PropTypes.number.isRequired,
     firstName: React.PropTypes.string.isRequired,
-    lastName: React.PropTypes.string.isRequired,
+    id: React.PropTypes.number.isRequired,
     info: React.PropTypes.string.isRequired,
+    lastName: React.PropTypes.string.isRequired,
     personalNumber: React.PropTypes.string.isRequired,
     representative: React.PropTypes.string.isRequired,
   }),

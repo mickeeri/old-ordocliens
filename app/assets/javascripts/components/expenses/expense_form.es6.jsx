@@ -35,11 +35,10 @@ class ExpenseForm extends React.Component {
           showErrorText(errorMessage, '#expense-form-message');
         });
     } else { // Otherwise post.
-      // Validate all input fields before submitting. Only on POST.
-      Array.from(e.target.getElementsByClassName('form-control'))
-        .forEach((input) => {
-          this.validate(input);
-        });
+      // Validate all input fields before submitting.
+      $('#expense-form *').filter(':input').each((key, input) => {
+        this.validate(input);
+      });
       makePostRequest(
         Routes.lawsuit_expenses_path(this.props.lawsuitId),
         { expense: this.state })
@@ -101,9 +100,10 @@ class ExpenseForm extends React.Component {
         </div>
         {this.state.showForm ?
           <form
-            onSubmit={this.handleOnSubmit}
-            onKeyPress={this.handleKeyPress}
+            id="expense-form"
             noValidate
+            onKeyPress={this.handleKeyPress}
+            onSubmit={this.handleOnSubmit}
           >
             <p className="hidden message" id="expense-form-message"></p>
             <div id="entryGroup" className="form-group row">

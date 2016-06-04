@@ -31,55 +31,42 @@ class ClientForm extends React.Component {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    const alert = $('#client-form-message');
-
     // If it has id it is an update.
     if (this.state.id) {
       makePutRequest(
         Routes.client_path(this.state.id),
         { client: this.state })
         .done(() => {
-          alert.text('Klient uppdaterad');
-          alert.removeClass('text-danger');
-          alert.addClass('text-success');
-          alert.slideDown();
-          alert.delay(1000).slideUp(300);
+          showSuccessText('Klient uppdaterad', '#client-form-message');
           // Remove green or red text when updated successfully.
           $('.form-group').removeClass('has-success');
           $('.form-group').removeClass('has-error');
         })
         .fail(xhr => {
-          // TODO: DRY. Use util methods.
-          if (xhr.status === 422) {
-            alert.text('Formuläret innehåller fel. Rätta till dem och försök igen.');
-          } else {
-            alert.text(`Fel uppstod. Statuskod: ${xhr.status}`);
-          }
-          alert.removeClass('text-success');
-          alert.addClass('text-danger');
-          alert.slideDown(300);
+          errorMessage = xhr.status === 422 ?
+            'Formuläret innehåller fel. Rätta till dem och försök igen.' :
+            `Fel uppstod. Statuskod: ${xhr.status}`;
+          showErrorText(errorMessage, '#client-form-message');
         });
     } else { // Otherwise create new client.
       if (this.state) {
         $('#client-form *').filter(':input').each((key, input) => {
           this.validate(input);
         });
-        // TODO: Use makePostRequest instead.
-        $.post(Routes.clients_path(), { client: this.state }, res => {
-          this.props.lawsuitId ?
-            PubSub.publish('clientListUpdated') :
-            window.location = res.client.link;
-        })
-        .fail(xhr => {
-          if (xhr.status === 422) {
-            alert.text('Formuläret innehåller fel. Rätta till dem och försök igen.');
-          } else {
-            alert.text(`Fel uppstod. Statuskod: ${xhr.status}`);
-          }
-          alert.removeClass('text-success');
-          alert.addClass('text-danger');
-          alert.slideDown(300);
-        });
+        makePostRequest(Routes.clients_path(), { client: this.state })
+          .done(() => {
+            if (this.props.lawsuitId) {
+              PubSub.publish('clientListUpdated');
+            } else {
+              window.location = res.client.link;
+            }
+          })
+          .fail(xhr => {
+            errorMessage = xhr.status === 422 ?
+              'Formuläret innehåller fel. Rätta till dem och försök igen.' :
+              `Fel uppstod. Statuskod: ${xhr.status}`;
+            showErrorText(errorMessage, '#client-form-message');
+          });
       }
     }
   }

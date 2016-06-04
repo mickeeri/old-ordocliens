@@ -48,11 +48,10 @@ class TaskForm extends React.Component {
           showErrorText(message, '#task-form-message');
         });
     } else { // Otherwise post.
-      // Validate all input fields before submitting. Only on POST.
-      Array.from(e.target.getElementsByClassName('form-control'))
-        .forEach((input) => {
-          this.validate(input);
-        });
+      // Validate all input fields before submitting.
+      $('#task-form *').filter(':input').each((key, input) => {
+        this.validate(input);
+      });
       const url = Routes.lawsuit_tasks_path(this.props.lawsuitId);
       const payload = { task: this.state };
       $.post(url, payload, () => {
@@ -135,9 +134,10 @@ class TaskForm extends React.Component {
         </div>
       {this.state.showForm ?
         <form
-          onSubmit={this.handleOnSubmit}
-          onKeyPress={this.handleKeyPress}
+          id="task-form"
           noValidate
+          onKeyPress={this.handleKeyPress}
+          onSubmit={this.handleOnSubmit}
         >
           <p className="hidden message" id="task-form-message"></p>
           <div id="dateGroup" className="form-group row">

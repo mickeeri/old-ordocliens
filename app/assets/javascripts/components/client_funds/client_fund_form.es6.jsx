@@ -41,11 +41,10 @@ class ClientFundForm extends React.Component {
           showErrorText(errorMessage, '#client-fund-form-message');
         });
     } else { // Otherwise post.
-      // Validate all input fields before submitting. Only on POST.
-      Array.from(e.target.getElementsByClassName('form-control'))
-        .forEach((input) => {
-          this.validate(input);
-        });
+      // Validate all input fields before submitting.
+      $('#fund-form *').filter(':input').each((key, input) => {
+        this.validate(input);
+      });
       makePostRequest(
         Routes.lawsuit_client_funds_path(this.props.lawsuitId),
         { clientFund: this.state })
@@ -112,9 +111,10 @@ class ClientFundForm extends React.Component {
         </div>
         {this.state.showForm ?
           <form
-            onSubmit={this.handleOnSubmit}
-            onKeyPress={this.handleKeyPress}
+            if="fund-form"
             noValidate
+            onKeyPress={this.handleKeyPress}
+            onSubmit={this.handleOnSubmit}
           >
             <p className="hidden message" id="client-fund-form-message"></p>
             <div id="dateGroup" className="form-group row">
