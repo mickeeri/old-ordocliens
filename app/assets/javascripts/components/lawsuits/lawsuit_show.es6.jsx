@@ -127,6 +127,7 @@ class LawsuitShow extends React.Component {
             <a
               className={this.state.page === 'info' ? 'active' : ''}
               href="#" name="info"
+              id="info-link"
               onClick={this.togglePage}
             >Info</a>
           </div>
