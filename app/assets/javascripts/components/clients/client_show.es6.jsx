@@ -1,24 +1,14 @@
 class ClientShow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      client: props.initialClient,
-      editMode: false,
-      links: [{ id: 1, path: Routes.clients_path(), name: 'Klienter' }],
-    };
-
     this.setMessage = this.setMessage.bind(this);
   }
 
   componentDidMount() {
-    PubSub.subscribe('editModeButtonClicked', this.toggleEditMode);
-    PubSub.subscribe('deleteClientConfirmed', this.deleteClient);
     PubSub.subscribe('clientUpdated', this.setMessage);
   }
 
   componentWillUnmount() {
-    PubSub.unsubscribe('editModeButtonClicked');
-    PubSub.unsubscribe('deleteClientConfirmed');
     PubSub.unsubscribe('clientUpdated');
   }
 
@@ -40,7 +30,7 @@ class ClientShow extends React.Component {
               <div className="col-md-12">
                 <div className="card card-block">
                   <h3 className="card-title">Uppgifter</h3>
-                  <ClientForm client={this.state.client} header="" />
+                  <ClientForm client={this.props.initialClient} header="" />
                 </div>
               </div>
             </div>
@@ -60,7 +50,7 @@ class ClientShow extends React.Component {
                   <h3 className="card-title">Motparter</h3>
                   <hr />
                   <ul className="show-page-list">
-                    {this.props.initialClient.counterparts.map(counterpart =>
+                    {this.props.counterparts.map(counterpart =>
                       <li key={counterpart.id}>
                         <a href={Routes.counterpart_path(counterpart.id)}>
                           {counterpart.firstName} {counterpart.lastName} ({counterpart.personalNumber})
@@ -86,18 +76,17 @@ class ClientShow extends React.Component {
 
 ClientShow.propTypes = {
   initialClient: React.PropTypes.shape({
-    id: React.PropTypes.number.isRequired,
-    firstName: React.PropTypes.string.isRequired,
-    lastName: React.PropTypes.string.isRequired,
-    personalNumber: React.PropTypes.string.isRequired,
     email: React.PropTypes.string,
+    firstName: React.PropTypes.string.isRequired,
+    id: React.PropTypes.number.isRequired,
+    lastName: React.PropTypes.string.isRequired,
+    note: React.PropTypes.string,
+    personalNumber: React.PropTypes.string.isRequired,
     phoneNumber: React.PropTypes.string,
     postCode: React.PropTypes.string,
     street: React.PropTypes.string,
-    note: React.PropTypes.string,
-    lawsuits: React.PropTypes.array,
-    counterparts: React.PropTypes.array,
   }),
+  counterparts: React.PropTypes.array.isRequired,
   lawsuits: React.PropTypes.array.isRequired,
   primary: React.PropTypes.bool.isRequired,
 };
