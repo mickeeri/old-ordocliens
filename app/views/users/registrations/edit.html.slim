@@ -13,11 +13,11 @@
           div = "Currently waiting confirmation for: #{resource.unconfirmed_email}"
 
         .form-group
-          = f.label :password
+          = f.label :password, "Nytt lösenord"
           = f.password_field :password, autocomplete: "off", class: "form-control"
 
         .form-group
-          = f.label :password_confirmation
+          = f.label :password_confirmation, "Bekräfta nytt lösenord"
           = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
 
         .form-group
@@ -26,14 +26,6 @@
 
         .actions.content-right
           = f.submit "Uppdatera", class: "btn btn-primary"
-
-.row
-  .col-md-6.col-md-offset-3
-    .card.card-block
-        h3.card-title Avsluta konto
-        p Varning. Ditt konto kommer att tas bort och aldrig kunna användas igen.
-        .content-right
-          = button_to "Säg upp mitt konto", registration_path(resource_name), data: { confirm: "Är du säker?" }, method: :delete, class: "btn btn-danger"
 
 .row
   .col-md-6.col-md-offset-3
