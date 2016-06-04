@@ -207,7 +207,7 @@ function validatePersonalNumber(string, inputName, onBlur) {
     $(helper).text('');
   } else {
     if (string === '') {
-      $(helper).text('Personnummer får inte vara tomt.');
+      $(helper).text('Personnummer måste anges.');
     } else {
       $(helper).text('Personnummer har fel format.');
     }
