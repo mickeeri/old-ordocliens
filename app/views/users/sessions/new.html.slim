@@ -5,10 +5,10 @@
       =form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
         .form-group
           = f.label :email
-          = f.text_field :email, autofocus: true, class: "form-control", value: "anders@exempel.com"
+          = f.text_field :email, autofocus: true, class: "form-control"
         .form-group
           = f.label :password
-          = f.password_field :password, autocomlete: "off", class: "form-control", value: "password"
+          = f.password_field :password, autocomlete: "off", class: "form-control"
         - if devise_mapping.rememberable?
           = f.label :remember_me, class: "c-input c-checkbox"
             = f.check_box :remember_me
