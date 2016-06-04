@@ -21,12 +21,12 @@ class AddLawsuitButton extends React.Component {
       <div>
         <div id="editModalContainer"></div>
         <div className="content-right">
-          <a
+          <button
             onClick={this.handleClick}
             className="btn btn-success-outline btn-sm"
             id="add-lawsuit-button"
           >Lägg till ärende
-          </a>
+          </button>
         </div>
       </div>
     );
