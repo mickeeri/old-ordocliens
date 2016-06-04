@@ -6,7 +6,7 @@ class TaskForm extends React.Component {
       date: props.initialTask ? props.initialTask.date : new Date().toISOString().substring(0, 10),
       entry: props.initialTask ? props.initialTask.entry : '',
       workedHours: props.initialTask ? props.initialTask.workedHours : '',
-      priceCategoryId: props.initialTask ? props.initialTask.priceCategoryId : 3,
+      priceCategoryId: props.initialTask ? props.initialTask.priceCategory.id : 3,
       priceCategories: [],
       showForm: true,
     };
@@ -81,6 +81,8 @@ class TaskForm extends React.Component {
   }
 
   handleInputChange(e) {
+    console.log(e.target.id);
+    console.log(e.target.value);
     const nextState = {};
     nextState[e.target.id] = e.target.value;
     this.setState(nextState);
@@ -114,7 +116,7 @@ class TaskForm extends React.Component {
     if (input.id === 'workedHours') {
       return validateNumber(input.value, input.id, 'Arbetade timmar', 0, 24, 0.05, true);
     }
-    if (input.id === 'priceCategory') {
+    if (input.id === 'priceCategoryId') {
       return validateRequiredSelect(input.value, input.id, 'priskategori');
     }
 
@@ -200,8 +202,7 @@ class TaskForm extends React.Component {
                 className="form-control"
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
-                id="priceCategory"
-                name="priceCategory"
+                id="priceCategoryId"
                 value={this.state.priceCategoryId}
               >{priceCategoriesOptions}</select>
             </div>
@@ -225,6 +226,6 @@ TaskForm.propTypes = {
     date: React.PropTypes.string,
     entry: React.PropTypes.string,
     workedHours: React.PropTypes.string,
-    priceCategoryId: React.PropTypes.number,
+    priceCategory: React.PropTypes.number,
   }),
 };
