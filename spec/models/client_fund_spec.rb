@@ -1,5 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ClientFund, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should belong_to :lawsuit }
+  it { should validate_numericality_of :balance }
+  it { should validate_presence_of :balance }
+  it { should validate_presence_of :date }
+  it { should validate_presence_of :entry }
 end

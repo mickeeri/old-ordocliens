@@ -10,8 +10,9 @@ RSpec.feature "Create new lawsuit", type: :feature, js: true do
   scenario "with valid input" do
     LawsuitType.create!(name: "Bodelning")
     sign_in_with(user.email, user.password)
-    expect(page).to have_content("Ärenden")
     create_client_with(client)
+    expect(page).to have_content("Ärenden")
+    expect(page).to have_content("Lägg till ärende")
     create_lawsuit_with(lawsuit, "Bodelning")
     expect(page).to have_content("Ärende sparat")
     expect(page).to have_content("Bodelning")
@@ -50,7 +51,7 @@ RSpec.feature "Create new lawsuit", type: :feature, js: true do
   end
 
   def create_lawsuit_with(lawsuit, lawsuit_type)
-    page.find('#add-lawsuit-button').click
+    click_button "Lägg till ärende"
     expect(page).to have_content("Lägg till ärende")
     select lawsuit_type, from: "Ärendetyp"
     fill_in "Domstol", with: lawsuit.court
