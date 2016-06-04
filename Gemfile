@@ -8,6 +8,7 @@ gem 'active_model_serializers'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'caracal-rails'
 gem 'caracal'
+gem 'coffee-rails', '~> 4.1.0' 
 gem 'devise'
 gem 'faker', '~> 1.6', '>= 1.6.3'
 gem 'jbuilder', '~> 2.0' # TODO: Using this?
