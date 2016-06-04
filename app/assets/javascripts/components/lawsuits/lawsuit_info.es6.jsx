@@ -23,6 +23,7 @@ class LawsuitInfo extends React.Component {
               closed={this.props.closed}
             />
             <DeleteLawsuitButton
+              clientId={this.props.primaryClientId}
               lawsuitId={this.props.initialLawsuit.id}
             />
           </div>
