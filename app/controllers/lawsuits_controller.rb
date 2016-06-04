@@ -97,7 +97,8 @@ class LawsuitsController < ApplicationController
     # TODO: Search and sort without crashing.
     # https://github.com/Casecommons/pg_search/issues/109
     # https://github.com/Casecommons/pg_search/issues/206
-    @lawsuits = @lawsuits.sorted_by_primary_client unless params[:search].present?
+    @lawsuits =
+      @lawsuits.sorted_by_primary_client unless params[:search].present?
     @lawsuits = @lawsuits.page(params[:page]).per_page(20)
   end
 
