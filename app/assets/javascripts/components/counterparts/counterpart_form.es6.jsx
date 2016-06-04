@@ -45,6 +45,9 @@ class CounterpartForm extends React.Component {
           alert.addClass('text-success');
           alert.slideDown();
           alert.delay(1000).slideUp(300);
+          // Remove green or red text when updated successfully.
+          $('.form-group').removeClass('has-success');
+          $('.form-group').removeClass('has-error');
         })
         .fail(xhr => {
           const alert = $('#counterpart-form-message');
