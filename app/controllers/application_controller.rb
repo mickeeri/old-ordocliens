@@ -64,8 +64,4 @@ class ApplicationController < ActionController::Base
   def raise_not_found
     render json: "Resurs kunde inte hittas", status: :not_found
   end
-
-  # def default_serializer_options
-  #   {root: false}
-  # end
 end
