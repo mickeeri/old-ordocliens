@@ -3,20 +3,14 @@ require "rails_helper"
 RSpec.describe ClientsController, type: :controller do
   # TODO: Create client.
   # TODO: Try to update, destroy, show other firms clients.
+  let(:firm) { create(:firm) }
+  let(:user) { create(:user, firm: firm) }
+  let(:client) { create(:client, user: user) }
 
-  let(:firm) do
-    create(:firm)
-  end
-
-  # User that belongs to firm above.
-  let(:user) do
-    create(:user, firm: firm)
-  end
-
-  # Client that belongs to user.
-  let(:client) do
-    create(:client, user: user)
-  end
+  # Create another client.
+  let(:another_firm) { create(:another_firm) }
+  let(:another_user) { create(:user, firm: another_firm) }
+  let(:another_client) { create(:client, user: another_user) }
 
   let(:new_attributes) do
     { last_name: "Edited last name", first_name: "Edited first name" }
@@ -44,7 +38,6 @@ RSpec.describe ClientsController, type: :controller do
     end
   end
 
-
   describe "GET show" do
     context "when not signed in" do
       it "should fail" do
@@ -61,6 +54,12 @@ RSpec.describe ClientsController, type: :controller do
         get :show, id: client.id
         expect(response).to be_success
         expect(response).to have_http_status(200)
+      end
+
+      it "should not show other firms client" do
+        sign_in user
+        get :show, id: another_client.id
+        expect(response).to have_http_status(404)
       end
     end
   end
@@ -79,6 +78,13 @@ RSpec.describe ClientsController, type: :controller do
         sign_in user
         delete :destroy, format: :json, id: client.id
         expect(Client.where(id: client.id)).to be_empty
+      end
+
+      it "should delete the client" do
+        sign_in user
+        delete :destroy, format: :json, id: another_client.id
+        expect(response).to have_http_status(404)
+        expect(Client.where(id: another_client.id)).not_to be_empty
       end
     end
   end
@@ -102,6 +108,15 @@ RSpec.describe ClientsController, type: :controller do
         client.reload
         expect(client.last_name).to eq("Edited last name")
         expect(client.first_name).to eq("Edited first name")
+      end
+
+      it "should not update other firms client" do
+        sign_in user
+        put :update, id: another_client.id, client: new_attributes, format: :json
+        expect(response).to have_http_status(404)
+        another_client.reload
+        expect(another_client.last_name).not_to eq("Edited last name")
+        expect(another_client.first_name).not_to eq("Edited first name")
       end
 
       let(:new_attributes_with_id) do

@@ -9,6 +9,14 @@ RSpec.describe LawsuitsController, type: :controller do
   let(:lawsuit_type) { create(:lawsuit_type) }
   let(:another_lawsuit_type) { create(:another_lawsuit_type) }
 
+  # Create another lawsuit.
+  let(:another_firm) { create(:another_firm) }
+  let(:another_user) { create(:user, firm: another_firm) }
+  let(:another_client) { create(:client, user: another_user) }
+  let(:another_lawsuit) do
+    create(:lawsuit, user: another_user, primary_client: another_client)
+  end
+
   it { should use_before_action(:authenticate_user!) }
 
   describe "POST create" do
@@ -23,16 +31,14 @@ RSpec.describe LawsuitsController, type: :controller do
       user.last_name = "Cederberg"
       user.save
       sign_in user
-      post :create,
-        client_id:
-        client.id, lawsuit:
-        lawsuit_attributes,
-        format: :json
+      post :create, client_id: client.id,
+                    lawsuit: lawsuit_attributes,
+                    format: :json
       expect(response).to have_http_status(201)
       lawsuit = Lawsuit.find(assigns(:lawsuit).id)
       lawsuit.reload
       expect(lawsuit.slug).to eq(
-        lawsuit.created_at.strftime("ac%y-#{lawsuit.id}"))
+        lawsuit.created_at.strftime("ance%y-#{lawsuit.id}"))
       expect(lawsuit.closed).to eq(false)
     end
   end
@@ -50,7 +56,32 @@ RSpec.describe LawsuitsController, type: :controller do
     context "when signed in" do
       it "should succeed" do
         sign_in user
-        get :show, id: lawsuit.id, client_id: client.id
+        get :show, id: lawsuit.id
+        expect(response).to have_http_status(200)
+      end
+
+      it "should not get another firms lawsuit" do
+        sign_in user
+        get :show, id: another_lawsuit.id
+        expect(response).to have_http_status(404)
+      end
+    end
+  end
+
+  describe "GET index" do
+    context "when not signed in" do
+      it "should fail" do
+        get :index
+        expect(response).to_not be_success
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to be_present
+      end
+    end
+
+    context "when signed in" do
+      it "should succeed" do
+        sign_in user
+        get :index
         expect(response).to have_http_status(200)
       end
     end
@@ -68,8 +99,15 @@ RSpec.describe LawsuitsController, type: :controller do
     context "when signed in" do
       it "should delete the lawsuit" do
         sign_in user
-        delete :destroy, format: :json, id: lawsuit.id, client_id: client.id
+        delete :destroy, format: :json, id: lawsuit.id
         expect(Lawsuit.where(id: lawsuit.id)).to be_empty
+      end
+
+      it "should not delete other firms lawsuit" do
+        sign_in user
+        delete :destroy, format: :json, id: another_lawsuit.id
+        expect(response).to have_http_status(404)
+        expect(Lawsuit.where(id: lawsuit.id)).not_to be_empty
       end
     end
   end
@@ -120,9 +158,19 @@ RSpec.describe LawsuitsController, type: :controller do
         sign_in user
         put :update,
             id: lawsuit.id,
-            client_id: client.id,
             lawsuit: new_attributes_with_id,
             format: :json
+        lawsuit.reload
+        expect(lawsuit.id).to_not eq(89)
+      end
+
+      it "should not be able to edit other lawsuit" do
+        sign_in user
+        put :update,
+            id: another_lawsuit.id,
+            lawsuit: new_attributes,
+            format: :json
+        expect(response).to have_http_status(404)
         lawsuit.reload
         expect(lawsuit.id).to_not eq(89)
       end
