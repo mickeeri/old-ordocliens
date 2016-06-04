@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe ClientsController, type: :controller do
   # TODO: Create client.
-  # TODO: Try to update, destroy, show other firms clients.
   let(:firm) { create(:firm) }
   let(:user) { create(:user, firm: firm) }
   let(:client) { create(:client, user: user) }
@@ -80,7 +79,7 @@ RSpec.describe ClientsController, type: :controller do
         expect(Client.where(id: client.id)).to be_empty
       end
 
-      it "should delete the client" do
+      it "should not delete other firms client" do
         sign_in user
         delete :destroy, format: :json, id: another_client.id
         expect(response).to have_http_status(404)
