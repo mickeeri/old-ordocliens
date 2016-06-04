@@ -1,5 +1,6 @@
 # Firms
-firm = Firm.create!(name: "Familjejuristerna Alverlind & Cederberg")
+firm = Firm.create!(name: "Familjejuristerna Alverlind & Cederberg",
+                    logo: "http://familjejuristerna.com/images/fj%20transp.png")
 test_firm = Firm.create!(name: "Testfirma")
 
 # Users
