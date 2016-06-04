@@ -84,11 +84,9 @@ class CounterpartForm extends React.Component {
   }
 
   handleInputChange(e) {
-    if (this.validate(e)) {
-      const nextState = {};
-      nextState[e.target.name] = e.target.value;
-      this.setState(nextState);
-    }
+    const nextState = {};
+    nextState[e.target.name] = e.target.value;
+    this.setState(nextState);
   }
 
   handleCancelButtonClick(e) {
