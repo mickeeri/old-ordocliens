@@ -103,7 +103,7 @@ class ClientsController < ApplicationController
     @clients = @clients.users_clients(current_user) unless params[:all] == "true"
     @clients = @clients.within_firm(current_user) if params[:all] == "true"
     @clients = @clients.search(params[:search]) if params[:search].present?
-    @clients = @clients.sorted.page(params[:page]).per_page(50)
+    @clients = @clients.sorted.page(params[:page]).per_page(20)
   end
 
   def fetch_client
