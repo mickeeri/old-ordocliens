@@ -11,9 +11,10 @@ PostgreSQL
 4. Skapa en `database.yml`-fil. 
 5. Skapa en `secrets.yml`-fil. 
 6. `bundle install`.
-7. `rspec` för att köra testsviten. 
-8. `rails s`
-9. `http://localhost:3000/` 
+7. `rake db:setup`.
+8. `rspec` för att köra testsviten. 
+9. `rails s`
+10. `http://localhost:3000/` 
 
 ### Körbar applikation
 [ordocliens.se](https://ordocliens.se/)
