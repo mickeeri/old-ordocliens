@@ -20,9 +20,9 @@ test_firm.users.create!(
 )
 
 another_firm.users.create!(
-  last_name: "Olsson",
-  first_name: "Advokat",
-  email: "olsson@advokat.se",
+  last_name: "Advokat",
+  first_name: "Pelle",
+  email: "pelle@advokat.se",
   password: "password",
   password_confirmation: "password"
 )
@@ -71,7 +71,7 @@ end
 
 User.all.each do |user|
   # Clients
-  number_of_clients = rand(50.100)
+  number_of_clients = rand(50..100)
   sentece_lenght = rand(6..25)
   number_of_clients.times do
     client = user.clients.create(
@@ -98,13 +98,6 @@ User.all.each do |user|
         primary_client_id: client.id
       )
       lawsuit.clients << client
-
-      # Add slug
-      first_name_initial = user.first_name[0, 1].downcase
-      last_name_initial = user.last_name[0, 1].downcase
-      initials = first_name_initial << last_name_initial
-      slug = lawsuit.created_at.strftime("#{initials}%y-#{lawsuit.id}")
-      lawsuit.update(slug: slug)
 
       # Counterparts
       number_of_counterparts = rand(1..2)
