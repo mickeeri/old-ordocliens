@@ -19,7 +19,7 @@ test_firm.users.create!(
   password_confirmation: "password"
 )
 
-antoher_firm.users.create!(
+another_firm.users.create!(
   last_name: "Olsson",
   first_name: "Advokat",
   email: "olsson@advokat.se",
@@ -27,7 +27,7 @@ antoher_firm.users.create!(
   password_confirmation: "password"
 )
 
-antoher_firm.users.create!(
+another_firm.users.create!(
   last_name: "Persson",
   first_name: "Jurist",
   email: "jurist@mail.com",
