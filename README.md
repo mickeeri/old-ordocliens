@@ -28,3 +28,6 @@ password
 jurist@mail.com
 password
 ```
+
+### Dokumentation
+Finns [här](https://github.com/me222wm/1dv42e-me222wm-docs).
