@@ -249,10 +249,10 @@ CounterpartForm.propTypes = {
   initialCounterpart: React.PropTypes.shape({
     firstName: React.PropTypes.string.isRequired,
     id: React.PropTypes.number.isRequired,
-    info: React.PropTypes.string.isRequired,
+    info: React.PropTypes.string,
     lastName: React.PropTypes.string.isRequired,
     personalNumber: React.PropTypes.string.isRequired,
-    representative: React.PropTypes.string.isRequired,
+    representative: React.PropTypes.string,
   }),
   lawsuitId: React.PropTypes.number,
 };
