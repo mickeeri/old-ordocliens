@@ -1,9 +1,6 @@
 # Firms
-firm1 = Firm.create!(name: "FamiljeJuristen",
-                    logo: "")
-firm2 = Firm.create!(name: "Advokat Ljunggren",
-                    logo: "")
 test_firm = Firm.create!(name: "Testfirma")
+another_firm = Firm.create!(name: "Advokatfirman")
 
 # Users
 test_firm.users.create!(
@@ -15,33 +12,25 @@ test_firm.users.create!(
 )
 
 test_firm.users.create!(
-  last_name: "Användare",
-  first_name: "Test",
+  last_name: "Olsson",
+  first_name: "Advokat",
   email: "test@mail.com",
   password: "password",
   password_confirmation: "password"
 )
 
-firm1.users.create(
-  last_name: "Carlsson",
-  first_name: "Marcus",
-  email: "marcus.carlsson@familjejuristen.com",
+antoher_firm.users.create!(
+  last_name: "Olsson",
+  first_name: "Advokat",
+  email: "olsson@advokat.se",
   password: "password",
   password_confirmation: "password"
 )
 
-firm1.users.create(
-  last_name: "Immerstrand",
-  first_name: "Bo",
-  email: "bo.immerstrand@familjejuristen.com",
-  password: "password",
-  password_confirmation: "password"
-)
-
-firm2.users.create(
-  last_name: "Ljunggren",
-  first_name: "Pontus",
-  email: "pontus@advokatljunggren.se",
+antoher_firm.users.create!(
+  last_name: "Persson",
+  first_name: "Jurist",
+  email: "jurist@mail.com",
   password: "password",
   password_confirmation: "password"
 )
@@ -80,9 +69,9 @@ lawsuit_types.each do |type|
   LawsuitType.create(name: type)
 end
 
-test_firm.users.all.each do |user|
+User.all.each do |user|
   # Clients
-  number_of_clients = rand(40)
+  number_of_clients = rand(50.100)
   sentece_lenght = rand(6..25)
   number_of_clients.times do
     client = user.clients.create(
