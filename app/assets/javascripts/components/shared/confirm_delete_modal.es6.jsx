@@ -5,6 +5,10 @@ class ConfirmDeleteModal extends React.Component {
     this.handleOnConfirmDeleteClick = this.handleOnConfirmDeleteClick.bind(this);
   }
 
+  componentDidMount() {
+    $('modal-body').removeClass('no-padding');
+  }
+
   handleOnConfirmDeleteClick() {
     makeDeleteRequest(this.props.url)
       .success(response => {

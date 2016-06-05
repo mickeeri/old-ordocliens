@@ -75,8 +75,7 @@ class ClientsController < ApplicationController
   end
 
   def lawsuit_client_list
-    # TODO: check if authorized.
-    lawsuit = Lawsuit.find(params[:id])
+    lawsuit = Lawsuit.within_firm(current_user).find(params[:id])
     respond_with lawsuit.clients
   end
 

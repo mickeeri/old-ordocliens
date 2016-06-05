@@ -9,7 +9,7 @@ FactoryGirl.define do
     firm nil
   end
 
-  factory :another_user, class: User do # TODO: never used I think.
+  factory :another_user, class: User do 
     last_name Faker::Name.last_name
     first_name Faker::Name.first_name
     email Faker::Internet.email

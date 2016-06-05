@@ -27,7 +27,6 @@ class ApplicationController < ActionController::Base
     ActiveModel::ArraySerializer.new(array, each_serializer: this_serializer)
   end
 
-  # TODO: Check if correct serializer is used.
   def prepare(resource, pref_serializer = nil, options = {})
     if pref_serializer
       pref_serializer.new(resource, options)
