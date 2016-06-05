@@ -16,4 +16,15 @@ PostgreSQL
 9. `http://localhost:3000/` 
 
 ### Körbar applikation
-[Ordocliens.se](https://ordocliens.se/)
+[ordocliens.se](https://ordocliens.se/)
+
+### Testkonton med exempeldata
+```
+test@mail.com
+password
+```
+
+```
+jurist@mail.com
+password
+```
