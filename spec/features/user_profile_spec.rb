@@ -45,8 +45,8 @@ RSpec.feature "User visits user profile page", type: :feature do
   end
 
   def change_password_with(password, password_confirmation, current_password)
-    fill_in "Lösenord", with: password
-    fill_in "Lösenordsbekräftelse", with: password_confirmation
+    fill_in "Nytt lösenord", with: password
+    fill_in "Bekräfta nytt lösenord", with: password_confirmation
     fill_in "Nuvarande lösenord", with: current_password
     click_button "Uppdatera"
   end
