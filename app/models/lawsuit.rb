@@ -1,6 +1,8 @@
 class Lawsuit < ActiveRecord::Base
   include PgSearch
   after_create :add_slug
+  before_destroy :delete_disputes
+
   belongs_to :client
   belongs_to :lawsuit_type
   belongs_to :primary_client, class_name: "Client", required: true
@@ -57,5 +59,18 @@ class Lawsuit < ActiveRecord::Base
                user.last_name[0, 2].downcase
     year = Time.new.strftime("%y")
     update(slug: "#{initials}#{year}-#{id}")
+  end
+
+  # Destroy client lawsuit connection if they are
+  # involved in destroyed lawsuit. TODO: Write test for this.
+  def delete_disputes
+    clients.each do |client|
+      client.counterparts.each do |counterpart|
+        if counterpart.lawsuits.include?(self)
+          Dispute.find_by_counterpart_id_and_client_id(counterpart.id,
+                                                       client.id).delete
+        end
+      end
+    end
   end
 end
