@@ -62,6 +62,9 @@ class ApplicationController < ActionController::Base
 
   # 404 not found
   def raise_not_found
-    render json: "Resurs kunde inte hittas", status: :not_found
+    respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/404", layout: false, status: :not_found }
+      format.json { render json: "Resurs kunde inte hittas", status: :not_found }
+    end
   end
 end
