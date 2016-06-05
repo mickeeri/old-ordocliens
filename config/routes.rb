@@ -2,14 +2,6 @@ Rails.application.routes.draw do
   get "reports/show"
 
   devise_for :users, controllers: { sessions: "users/sessions" }
-  # get 'users/edit'
-  # get 'users/update'
-  # get 'users/show'
-  # get 'sessions/new'
-  # mount Knock::Engine => "/knock"
-
-  # root "clients#index"
-  # root "users/sessions#new"
   devise_scope :user do
     authenticated :user do
       root "lawsuits#index", as: :authenticated_root
@@ -23,83 +15,18 @@ Rails.application.routes.draw do
   resources :clients
   resources :counterparts
 
-  resources :lawsuits do # show, index
-    resources :tasks, except: :show
-    resources :price_categories, only: :index
-    resources :expenses, except: :show
+  resources :lawsuits do
     resources :client_funds, except: :show
+    resources :expenses, except: :show
+    resources :price_categories, only: :index
+    resources :tasks, except: :show
   end
 
   resources :lawsuit_types, only: :index
   resources :users, only: :index
-  # #root "sessions#new"
-  # # get    "login"   => "sessions#new"
-  # post "/" => "sessions#create"
-  # delete "logout" => "sessions#destroy"
-  # resources :users
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
   get "lawsuits/:id/clients" => "clients#lawsuit_client_list"
-  # get "lawsuits/:id/tasks/price_categories" => "tasks#price_categories"
   get "lawsuits/:id/counterparts" => "counterparts#lawsuit_counterpart_list"
-
   get "lawsuits/:id/Aktomslag" => "lawsuits#lawsuit_cover"
-  # post "lawsuits/:id/clients" => "clients#lawsuit_client_list"
-
-  #get "report/:id" => "lawsuits#report"
   get "report/:id" => "reports#show"
-  get "lawsuit_cover/:id" => "reports#cover"
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end
