@@ -1,6 +1,6 @@
 class Lawsuit < ActiveRecord::Base
   include PgSearch
-  after_create :add_slug
+  before_create :add_slug
   before_destroy :delete_disputes
 
   belongs_to :client
@@ -16,9 +16,10 @@ class Lawsuit < ActiveRecord::Base
   has_many :tasks, dependent: :destroy
 
   # Validation
-  validates :lawsuit_type, presence: :true
-  validates :court, allow_blank: true, length: { maximum: 100 }
   validates :case_number, allow_blank: true, length: { maximum: 20 }
+  validates :court, allow_blank: true, length: { maximum: 100 }
+  validates :lawsuit_type, presence: :true
+  validates :slug, uniqueness: true
 
   # Scopes
   scope :sorted, -> { includes(:lawsuit_type).order("lawsuit_types.name asc") }
@@ -55,10 +56,13 @@ class Lawsuit < ActiveRecord::Base
 
   # Buildning slug with initials, year and id.
   def add_slug
-    initials = user.first_name[0, 2].downcase <<
-               user.last_name[0, 2].downcase
-    year = Time.new.strftime("%y")
-    update(slug: "#{initials}#{year}-#{id}")
+    loop do
+      initials = user.first_name[0, 2].downcase <<
+                 user.last_name[0, 2].downcase
+      year = Time.current.strftime("%y")
+      self.slug = "#{initials}#{year}-#{rand(100..9999)}"
+      break unless self.class.exists?(slug: slug)
+    end
   end
 
   # Destroy client lawsuit connection if they are
