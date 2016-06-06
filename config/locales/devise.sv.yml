@@ -49,8 +49,8 @@ sv:
       failure: 'Kunde inte autentisera dig med %{kind} för "%{reason}".'
     mailer:
       confirmation_instructions:
-        subject: 'Instruktioner om bekräftning av konto'
+        subject: 'Instruktioner för bekräftning av konto'
       reset_password_instructions:
-        subject: 'Instrukionter om återställning av lösenord'
+        subject: 'Instruktioner för återställning av lösenord'
       unlock_instructions:
-        subject: 'Instruktioner om upplåsning av konto'
+        subject: 'Instruktioner för upplåsning av konto'
