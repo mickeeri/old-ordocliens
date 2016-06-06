@@ -42,7 +42,7 @@ class ClientsController < ApplicationController
     # Add client to lawsuit if lawsuit_id is provided.
     if client_params[:lawsuit_id]
       add_client_to_lawsuit
-    else
+    elsif @client.valid?
       flash[:success] = "Klient sparad!"
     end
     respond_with @client
