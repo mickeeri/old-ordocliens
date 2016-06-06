@@ -4,23 +4,23 @@ another_firm = Firm.create!(name: "Advokatfirman")
 
 # Users
 test_firm.users.create!(
-  last_name: "Eriksson",
+  last_name: "Karlsson",
   first_name: "Mikael",
-  email: "micke_eri@hotmail.com",
+  email: "mikael@test.se",
   password: "password",
   password_confirmation: "password"
 )
 
 test_firm.users.create!(
   last_name: "Olsson",
-  first_name: "Advokat",
+  first_name: "Nils",
   email: "test@mail.com",
   password: "password",
   password_confirmation: "password"
 )
 
 another_firm.users.create!(
-  last_name: "Advokat",
+  last_name: "Svensson",
   first_name: "Pelle",
   email: "pelle@advokat.se",
   password: "password",
@@ -29,49 +29,49 @@ another_firm.users.create!(
 
 another_firm.users.create!(
   last_name: "Persson",
-  first_name: "Jurist",
+  first_name: "Olle",
   email: "jurist@mail.com",
   password: "password",
   password_confirmation: "password"
 )
 
-# Price Categories
-PriceCategory.create(name: "Tidsspillan (låg)", price: 700.00)
-PriceCategory.create(name: "Tidsspillan (hög)", price: 1250.00)
-PriceCategory.create(name: "Arbete", price: 1302.00)
+# # Price Categories
+# PriceCategory.create(name: "Tidsspillan (låg)", price: 700.00)
+# PriceCategory.create(name: "Tidsspillan (hög)", price: 1250.00)
+# PriceCategory.create(name: "Arbete", price: 1302.00)
+#
+# lawsuit_types = ["Aktieägaravtal",
+#                  "Arvsrätt",
+#                  "Bodelning",
+#                  "Bodelningsförrättare",
+#                  "Bouppteckning",
+#                  "Boutredningsman",
+#                  "Dödsboförvaltning",
+#                  "Familjerättsliga avtal",
+#                  "Fastighetsrätt",
+#                  "Felregisterad",
+#                  "God man",
+#                  "LVU/LPT/LVM",
+#                  "Målsägandebiträde",
+#                  "Medling",
+#                  "Migrationsrätt",
+#                  "Offentlig försvarare",
+#                  "Övriga förordnanden",
+#                  "Övrigt",
+#                  "Partsombud",
+#                  "Rättegångsbiträde",
+#                  "Särskild företrädare barn",
+#                  "Underhåll",
+#                  "Vårdnadstvist"
+#                  ]
+#
+# lawsuit_types.each do |type|
+#   LawsuitType.create(name: type)
+# end
 
-lawsuit_types = ["Aktieägaravtal",
-                 "Arvsrätt",
-                 "Bodelning",
-                 "Bodelningsförrättare",
-                 "Bouppteckning",
-                 "Boutredningsman",
-                 "Dödsboförvaltning",
-                 "Familjerättsliga avtal",
-                 "Fastighetsrätt",
-                 "Felregisterad",
-                 "God man",
-                 "LVU/LPT/LVM",
-                 "Målsägandebiträde",
-                 "Medling",
-                 "Migrationsrätt",
-                 "Offentlig försvarare",
-                 "Övriga förordnanden",
-                 "Övrigt",
-                 "Partsombud",
-                 "Rättegångsbiträde",
-                 "Särskild företrädare barn",
-                 "Underhåll",
-                 "Vårdnadstvist"
-                 ]
-
-lawsuit_types.each do |type|
-  LawsuitType.create(name: type)
-end
-
-User.all.each do |user|
+[test_firm, another_firm].each do |user|
   # Clients
-  number_of_clients = 30
+  number_of_clients = 100
   sentece_lenght = rand(6..25)
   number_of_clients.times do
     client = user.clients.create(
