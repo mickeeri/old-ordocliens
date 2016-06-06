@@ -64,7 +64,7 @@ namespace :deploy do
     on primary fetch(:migration_role) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, "db:reset"
+          # execute :rake, "db:reset"
           # execute :rake, "db:seed"
         end
       end
@@ -88,7 +88,7 @@ namespace :deploy do
 
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
-  after  :finishing,    :seed
+  # after  :finishing,    :seed
   after  :finishing,    :cleanup
   after  :finishing,    :restart
 end
