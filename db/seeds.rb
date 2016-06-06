@@ -71,7 +71,7 @@ end
 
 User.all.each do |user|
   # Clients
-  number_of_clients = rand(50..100)
+  number_of_clients = 30
   sentece_lenght = rand(6..25)
   number_of_clients.times do
     client = user.clients.create(
