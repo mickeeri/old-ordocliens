@@ -257,7 +257,7 @@ class ClientForm extends React.Component {
             <div className="col-sm-4">
               <input
                 placeholder="Postnummer"
-                type="number"
+                type="tel"
                 name="postCode"
                 id="postCode"
                 className="form-control form-control-sm"

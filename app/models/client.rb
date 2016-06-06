@@ -15,8 +15,7 @@ class Client < ActiveRecord::Base
   validates :street, allow_blank: true, length: { maximum: 255 }
   validates :city, allow_blank: true, length: { maximum: 100 }
   validates :post_code, allow_blank: true,
-                        length: { minimum: 5, maximum: 5 },
-                        numericality: true
+                        length: { minimum: 5, maximum: 6 }
   VALID_SSN_REGEX = /\A[0-9]{6}-[0-9]{4}\z/
   validates :personal_number, presence: true, format: { with: VALID_SSN_REGEX }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i

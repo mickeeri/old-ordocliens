@@ -134,7 +134,8 @@ function validatePostCode(string, inputName, required) {
   }
 
   const regex = /^([0-9]{5})$/;
-  if (!string.match(regex)) {
+  const alternativeRegex = /^\d{3} \d{2}$/;
+  if (!string.match(regex) && !string.match(alternativeRegex)) {
     $(helper).text('Postnummer har fel format.');
     $(formGroup).addClass('has-danger');
     $(formGroup).removeClass('has-success');
