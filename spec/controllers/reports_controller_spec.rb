@@ -1,18 +1,8 @@
 require "rails_helper"
+require "requests_helper"
 
 RSpec.describe ReportsController, type: :controller do
-  let(:firm) { create(:firm) }
-  let(:user) { create(:user, firm: firm) }
-  let(:client) { create(:client, user: user) }
-  let(:lawsuit) { create(:lawsuit, user: user, primary_client: client) }
-
-  # Create another lawsuit.
-  let(:another_firm) { create(:another_firm) }
-  let(:another_user) { create(:user, firm: another_firm) }
-  let(:another_client) { create(:client, user: another_user) }
-  let(:another_lawsuit) do
-    create(:lawsuit, user: another_user, primary_client: another_client)
-  end
+  create_lawsuits
 
   describe "GET show" do
     context "when not signed in" do

@@ -27,9 +27,6 @@ RSpec.describe LawsuitsController, type: :controller do
     end
 
     it "should create new lawsuit with slug" do
-      user.first_name = "Anders"
-      user.last_name = "Cederberg"
-      user.save
       sign_in user
       post :create, client_id: client.id,
                     lawsuit: lawsuit_attributes,
@@ -37,8 +34,6 @@ RSpec.describe LawsuitsController, type: :controller do
       expect(response).to have_http_status(201)
       lawsuit = Lawsuit.find(assigns(:lawsuit).id)
       lawsuit.reload
-      expect(lawsuit.slug).to eq(
-        lawsuit.created_at.strftime("ance%y-#{lawsuit.id}"))
       expect(lawsuit.closed).to eq(false)
     end
   end

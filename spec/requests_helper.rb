@@ -59,3 +59,12 @@ def create_client_with(client)
   fill_in "Anteckningar", with: client.note
   click_button "Spara klient"
 end
+
+def create_lawsuit_with(lawsuit, lawsuit_type)
+  click_button "Lägg till ärende"
+  expect(page).to have_content("Lägg till ärende")
+  select lawsuit_type, from: "Ärendetyp"
+  fill_in "Domstol", with: lawsuit.court
+  fill_in "Målnummer", with: lawsuit.case_number
+  click_button "Spara ärende"
+end

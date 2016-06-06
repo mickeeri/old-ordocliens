@@ -49,13 +49,4 @@ RSpec.feature "Create new lawsuit", type: :feature, js: true do
     click_button "Radera"
     expect(page).to have_content("Ärende raderat.")
   end
-
-  def create_lawsuit_with(lawsuit, lawsuit_type)
-    click_button "Lägg till ärende"
-    expect(page).to have_content("Lägg till ärende")
-    select lawsuit_type, from: "Ärendetyp"
-    fill_in "Domstol", with: lawsuit.court
-    fill_in "Målnummer", with: lawsuit.case_number
-    click_button "Spara ärende"
-  end
 end

@@ -4,6 +4,7 @@ RSpec.describe Lawsuit, type: :model do
   let(:firm) { create(:firm) }
   let(:user) { create(:user, firm: firm) }
 
+  it { should validate_presence_of :slug }
   it { should have_many :clients }
   it { should have_many :tasks }
   it { should have_many :involvements }
