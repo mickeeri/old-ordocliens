@@ -71,7 +71,7 @@ Rails.application.configure do
         :domain               => "ordocliens.se",
         :user_name            => Rails.application.secrets.gmail_username,
         :password             => Rails.application.secrets.gmail_password,
-        :authentication       => :plain,
+        :authentication       => :login,
         :enable_starttls_auto => true
   }
 
