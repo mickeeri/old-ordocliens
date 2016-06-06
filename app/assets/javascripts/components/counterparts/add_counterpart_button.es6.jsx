@@ -21,12 +21,12 @@ class AddCounterpartButton extends React.Component {
 
   render() {
     return (
-      <a
+      <button
         onClick={this.handleOnClick}
         className="btn btn-success-outline btn-sm"
       >{this.props.addNewCounterpart ? 'Lägg till ny motpart' :
         'Lägg till befintlig motpart'}
-      </a>
+      </button>
     );
   }
 }
