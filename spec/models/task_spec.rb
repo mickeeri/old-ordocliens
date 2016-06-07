@@ -6,7 +6,7 @@ RSpec.describe Task, type: :model do
   it { should validate_presence_of :worked_hours }
   it do
     should validate_numericality_of(:worked_hours)
-      .is_greater_than(0).is_less_than_or_equal_to(24)
+      .is_greater_than_or_equal_to(0).is_less_than_or_equal_to(24)
   end
   it { should validate_presence_of :price_category }
 end

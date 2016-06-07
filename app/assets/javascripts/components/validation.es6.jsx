@@ -160,7 +160,7 @@ function validateNumber(value, inputName, label, min, max, steps, required) {
     addSuccess(formGroup, helper);
     valid = true;
 
-    if (value > max || value <= min) {
+    if (value > max || value < min) {
       addError(formGroup, helper, `${label} ska vara mellan ${min} och ${max}.`);
       valid = false;
     } else {

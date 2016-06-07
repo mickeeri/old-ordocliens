@@ -7,9 +7,9 @@ class Task < ActiveRecord::Base
   belongs_to :lawsuit
   belongs_to :price_category, required: true
   validates :entry, presence: true, length: { maximum: 500 }
-  validates :worked_hours,
-    presence: true,
-    numericality: { greater_than: 0, less_than_or_equal_to: 24 }
+  validates :worked_hours, presence: true,
+                           numericality: { greater_than_or_equal_to: 0,
+                                           less_than_or_equal_to: 24 }
   scope :sorted_by_date, -> { order(date: :asc, created_at: :asc) }
   scope :within_firm, -> (current_user) {
     joins(:lawsuit)
