@@ -196,7 +196,7 @@ class TaskForm extends React.Component {
             <small id="workedHoursHelper" className="text-muted text-danger helper"></small>
           </div>
           <div id="priceCategoryGroup" className="form-group row">
-            <label className="col-sm-6" htmlFor="priceCategory">Priskategori</label>
+            <label className="col-sm-6" htmlFor="priceCategory">Kategori</label>
             <div className="col-sm-6">
               <select
                 className="form-control"

@@ -13,7 +13,7 @@ class TasksIndex extends React.Component {
               <th>Datum</th>
               <th>Notering</th>
               <th className="text-nowrap">Arbetad tid</th>
-              <th className="text-nowrap">Priskategori</th>
+              <th className="text-nowrap">Kategori</th>
               <th></th>
               <th></th>
             </tr>
