@@ -81,8 +81,6 @@ class TaskForm extends React.Component {
   }
 
   handleInputChange(e) {
-    console.log(e.target.id);
-    console.log(e.target.value);
     const nextState = {};
     nextState[e.target.id] = e.target.value;
     this.setState(nextState);

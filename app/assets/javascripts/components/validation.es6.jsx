@@ -167,10 +167,17 @@ function validateNumber(value, inputName, label, min, max, steps, required) {
       addSuccess(formGroup, helper);
       valid = true;
     }
+
+    if (isNaN(value)) {
+      addError(formGroup, helper, `${label} måste vara ett nummer.`);
+      valid = false;
+    }
   } else {
     addError(formGroup, helper, `${label} måste anges.`);
     valid = false;
   }
+
+
   return valid;
 }
 
