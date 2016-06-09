@@ -40,6 +40,8 @@ class TasksController < ApplicationController
   end
 
   def convert_hours
-    params[:task][:worked_hours] = params[:task][:worked_hours].gsub(",", ".")
+    if params[:task][:worked_hours]
+      params[:task][:worked_hours] = params[:task][:worked_hours].tr(",", ".")
+    end
   end
 end

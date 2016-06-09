@@ -61,6 +61,7 @@ RSpec.describe TasksController, type: :controller do
     let(:new_attributes) do
       { entry: "Edited entry",
         date: Faker::Time.between(2.days.ago, Time.zone.today, :day),
+        worked_hours: "2,5",
         price_category_id: antoher_price_category.id }
     end
 
