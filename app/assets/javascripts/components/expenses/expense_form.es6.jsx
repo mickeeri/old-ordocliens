@@ -130,14 +130,12 @@ class ExpenseForm extends React.Component {
               <div className="col-sm-4">
                 <input
                   placeholder="Kostnad"
-                  type="number"
+                  type="tel"
                   id="price"
                   className="form-control form-control-sm"
                   value={this.state.price}
                   onChange={this.handleInputChange}
                   onBlur={this.validate}
-                  min="0"
-                  step="0.05"
                 />
               </div>
               <small id="priceHelper" className="text-muted text-danger helper"></small>

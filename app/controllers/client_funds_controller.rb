@@ -1,5 +1,6 @@
 class ClientFundsController < ApplicationController
   include ActionView::Helpers::NumberHelper
+  before_action :convert_balance, only: [:create, :update]
   before_action :authenticate_user!
   before_action :fetch_client_fund, only: [:destroy, :update]
   respond_to :json
@@ -39,5 +40,11 @@ class ClientFundsController < ApplicationController
 
   def fetch_client_fund
     @client_fund = ClientFund.within_firm(current_user).find(params[:id])
+  end
+
+  def convert_balance
+    if params[:client_fund][:balance]
+      params[:client_fund][:balance] = params[:client_fund][:balance].tr(",", ".")
+    end
   end
 end

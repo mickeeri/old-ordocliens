@@ -1,5 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :authenticate_user!
+  before_action :convert_price, only: [:create, :update]
   before_action :fetch_expense, only: [:destroy, :update]
   respond_to :json
 
@@ -35,5 +36,11 @@ class ExpensesController < ApplicationController
 
   def fetch_expense
     @expense = Expense.within_firm(current_user).find(params[:id])
+  end
+
+  def convert_price
+    if params[:expense][:price]
+      params[:expense][:price] = params[:expense][:price].tr(",", ".")
+    end
   end
 end
