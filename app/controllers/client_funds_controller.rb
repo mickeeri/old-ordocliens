@@ -1,4 +1,5 @@
 class ClientFundsController < ApplicationController
+  include ActionView::Helpers::NumberHelper
   before_action :authenticate_user!
   before_action :fetch_client_fund, only: [:destroy, :update]
   respond_to :json
@@ -8,7 +9,7 @@ class ClientFundsController < ApplicationController
                     .within_firm(current_user)
                     .find(params[:lawsuit_id])
                     .client_funds.sorted
-    balance_sum = @client_funds.sum(:balance)
+    balance_sum = number_to_currency(@client_funds.sum(:balance), delimiter: " ")
     render json: {
       clientFundsArray: prepare_array(@client_funds),
       sum: balance_sum }
@@ -16,7 +17,7 @@ class ClientFundsController < ApplicationController
 
   def create
     lawsuit = Lawsuit.within_firm(current_user).find(params[:lawsuit_id])
-    @client_fund = lawsuit.client_funds.create!(client_fund_params)
+    @client_fund = lawsuit.client_funds.create(client_fund_params)
     respond_with(lawsuit, @client_fund)
   end
 
