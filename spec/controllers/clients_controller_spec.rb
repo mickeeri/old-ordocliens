@@ -17,6 +17,30 @@ RSpec.describe ClientsController, type: :controller do
 
   it { should use_before_action(:authenticate_user!) }
 
+  describe "POST create" do
+    let(:test_client) { build(:client) }
+
+    it "should succeed" do
+      sign_in user
+      post :create,
+           format: :json,
+           user_id: user.id,
+           client: { first_name: test_client.first_name,
+                     last_name: test_client.last_name,
+                     personal_number: test_client.personal_number,
+                     street: test_client.street,
+                     post_code: test_client.post_code,
+                     citry: test_client.city,
+                     note: test_client.note,
+                     email: test_client.email,
+                     phone_number: test_client.phone_number,
+                     mobile: test_client.mobile,
+                     co: test_client.co
+                   }
+      expect(response).to have_http_status(201)
+    end
+  end
+
   describe "GET index" do
     context "when not signed in" do
       it "should fail" do

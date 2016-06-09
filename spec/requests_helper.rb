@@ -53,6 +53,7 @@ def create_client_with(client)
   fill_in "Personnummer", with: client.personal_number if client.personal_number
   fill_in "E-post", with: client.email
   fill_in "Mobil", with: client.mobile
+  fill_in "C/O", with: client.co
   fill_in "Gatuadress", with: client.street
   fill_in "Postnummer", with: client.post_code
   fill_in "Ort", with: client.city

@@ -3,6 +3,7 @@ class ClientForm extends React.Component {
     super(props);
     this.state = {
       city: props.client ? props.client.city : '',
+      co: props.client ? props.client.co : '',
       email: props.client ? props.client.email : '',
       firstName: props.client ? props.client.firstName : '',
       id: props.client ? props.client.id : '',
@@ -101,6 +102,9 @@ class ClientForm extends React.Component {
     }
     if (input.name === 'street') {
       validateStringLength(input.value, 255, '', input.name, 'Gatuadress');
+    }
+    if (input.name === 'co') {
+      validateStringLength(input.value, 255, '', input.name, 'C/O');
     }
     if (input.name === 'postCode') {
       validateStringLength(input.value, 6, '', input.name, 'Postnummer');
@@ -236,6 +240,21 @@ class ClientForm extends React.Component {
           </div>
           <small id="phoneNumberHelper" className="text-muted text-danger helper"></small>
           <hr />
+          <div id="coGroup" className="form-group row">
+            <label htmlFor="co" className="col-sm-4 form-control-label">C/O</label>
+            <div className="col-sm-8">
+              <input
+                placeholder="C/O"
+                type="text"
+                name="co"
+                id="co"
+                className="form-control form-control-sm"
+                value={this.state.co}
+                onChange={this.handleInputChange}
+                onBlur={this.validate}
+              />
+            </div>
+          </div>
           <div id="streetGroup" className="form-group row">
             <label htmlFor="street" className="col-sm-4 form-control-label">Gatuadress</label>
             <div className="col-sm-8">

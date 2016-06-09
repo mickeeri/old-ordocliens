@@ -84,6 +84,7 @@ class ClientsController < ApplicationController
   def client_params
     params.require(:client).permit(
       :city,
+      :co,
       :email,
       :first_name,
       :last_name,
@@ -132,6 +133,6 @@ class ClientsController < ApplicationController
       next unless lawsuit.primary_client_id == @client.id
       return true
     end
-    return false
+    false
   end
 end

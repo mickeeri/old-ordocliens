@@ -13,6 +13,7 @@ class Client < ActiveRecord::Base
   validates :mobile, allow_blank: true, length: { maximum: 20 }
   validates :phone_number, allow_blank: true, length: { maximum: 20 }
   validates :street, allow_blank: true, length: { maximum: 255 }
+  validates :co, allow_blank: true, length: { maximum: 255 }
   validates :city, allow_blank: true, length: { maximum: 100 }
   validates :post_code, allow_blank: true,
                         length: { minimum: 5, maximum: 6 }

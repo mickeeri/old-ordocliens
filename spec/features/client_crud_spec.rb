@@ -17,6 +17,7 @@ RSpec.feature "Create new client", type: :feature, js: true do
     expect(page).to have_selector("input[value='#{client.last_name}']")
     expect(page).to have_selector("input[value='#{client.personal_number}']")
     expect(page).to have_selector("input[value='#{client.email}']")
+    expect(page).to have_selector("input[value='#{client.co}']")
     expect(page).to have_selector("input[value='#{client.street}']")
     expect(page).to have_selector("input[value='#{client.post_code}']")
     expect(page).to have_selector("input[value='#{client.city}']")

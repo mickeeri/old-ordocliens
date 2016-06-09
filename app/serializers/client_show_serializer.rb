@@ -1,6 +1,7 @@
 class ClientShowSerializer < ActiveModel::Serializer
   attributes :id,
              :city,
+             :co,
              :email,
              :first_name,
              :last_name,
