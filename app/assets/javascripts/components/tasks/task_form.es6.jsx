@@ -180,15 +180,13 @@ class TaskForm extends React.Component {
             <div className="col-sm-3">
               <input
                 placeholder="Timmar"
-                type="number"
+                type="text"
                 name="workedHours"
                 id="workedHours"
                 className="form-control form-control-sm"
                 value={this.state.workedHours}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
-                min="0"
-                step="0.05"
               />
             </div>
             <small id="workedHoursHelper" className="text-muted text-danger helper"></small>

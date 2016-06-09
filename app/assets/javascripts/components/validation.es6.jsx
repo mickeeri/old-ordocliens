@@ -168,7 +168,8 @@ function validateNumber(value, inputName, label, min, max, steps, required) {
       valid = true;
     }
 
-    if (isNaN(value)) {
+    // Also allow number with comma delimiter.
+    if (!value.match(/^[0-9.,]+$/)) {
       addError(formGroup, helper, `${label} måste vara ett nummer.`);
       valid = false;
     }

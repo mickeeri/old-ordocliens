@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
+  before_action :convert_hours, only: [:create, :update]
   respond_to :json
 
   def index
@@ -36,5 +37,9 @@ class TasksController < ApplicationController
       :entry,
       :worked_hours,
       :price_category_id)
+  end
+
+  def convert_hours
+    params[:task][:worked_hours] = params[:task][:worked_hours].gsub(",", ".")
   end
 end
