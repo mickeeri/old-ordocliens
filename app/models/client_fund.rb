@@ -1,12 +1,14 @@
 class ClientFund < ActiveRecord::Base
-  # t.text     "entry"
-  # t.decimal  "balance"
   # t.date     "date"
+  # t.decimal  "balance"
   # t.integer  "lawsuit_id"
-  validates :lawsuit, presence: true
+  # t.text     "entry"
+
   validates :balance, presence: true, numericality: true
   validates :date, presence: true
   validates :entry, presence: true, length: { maximum: 1000 }
+  validates :lawsuit, presence: true
+
   belongs_to :lawsuit
   scope :sorted, -> { order(created_at: :asc) }
   scope :within_firm, -> (current_user) {
