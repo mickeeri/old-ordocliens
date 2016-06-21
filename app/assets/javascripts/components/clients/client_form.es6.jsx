@@ -114,7 +114,7 @@ class ClientForm extends React.Component {
       validateStringLength(input.value, 100, '', input.name, 'Ort');
     }
     if (input.name === 'note') {
-      validateStringLength(input.value, 500, '', input.name, 'Anteckning');
+      validateStringLength(input.value, 1000, '', input.name, 'Anteckning');
     }
   }
 

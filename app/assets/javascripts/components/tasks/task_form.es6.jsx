@@ -109,7 +109,7 @@ class TaskForm extends React.Component {
       return validateDate(input.value, input.id);
     }
     if (input.id === 'entry') {
-      return validateStringLength(input.value, 500, 1, input.name, 'Notering');
+      return validateStringLength(input.value, 1000, 1, input.name, 'Notering');
     }
     if (input.id === 'workedHours') {
       return validateNumber(input.value, input.id, 'Arbetade timmar', 0, 24, 0.05, true);

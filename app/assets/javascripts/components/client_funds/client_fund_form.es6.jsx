@@ -93,7 +93,7 @@ class ClientFundForm extends React.Component {
       return validateDate(input.value, input.id);
     }
     if (input.id === 'entry') {
-      return validateStringLength(input.value, 500, 1, input.id, 'Notering');
+      return validateStringLength(input.value, 1000, 1, input.id, 'Notering');
     }
     if (input.id === 'balance') {
       return validateNumber(input.value, input.id, 'Kostnad', -100000, 100000, '', true);

@@ -83,7 +83,7 @@ class ExpenseForm extends React.Component {
   validate(e) {
     const input = e.target ? e.target : e;
     if (input.id === 'entry') {
-      return validateStringLength(input.value, 500, 1, input.id, 'Notering');
+      return validateStringLength(input.value, 1000, 1, input.id, 'Notering');
     }
     if (input.id === 'price') {
       return validateNumber(input.value, input.id, 'Kostnad', 0, 100000, '', true);

@@ -1,4 +1,17 @@
 class Client < ActiveRecord::Base
+  # t.integer  "user_id"
+  # t.string   "city"
+  # t.string   "co"
+  # t.string   "email"
+  # t.string   "first_name"
+  # t.string   "last_name"
+  # t.string   "mobile"
+  # t.string   "personal_number"
+  # t.string   "phone_number"
+  # t.string   "post_code"
+  # t.string   "street"
+  # t.text     "note"
+
   include PgSearch
   # Relations
   belongs_to :user, required: true
@@ -8,15 +21,16 @@ class Client < ActiveRecord::Base
   has_many :counterparts, -> { distinct }, through: :disputes
 
   # Validation
+  validates :city, allow_blank: true, length: { maximum: 100 }
+  validates :co, allow_blank: true, length: { maximum: 255 }
   validates :first_name, presence: true, length: { maximum: 40 }
   validates :last_name, presence: true, length: { maximum: 60 }
   validates :mobile, allow_blank: true, length: { maximum: 20 }
+  validates :note, allow_blank: true, length: { maximum: 1000 }
   validates :phone_number, allow_blank: true, length: { maximum: 20 }
-  validates :street, allow_blank: true, length: { maximum: 255 }
-  validates :co, allow_blank: true, length: { maximum: 255 }
-  validates :city, allow_blank: true, length: { maximum: 100 }
   validates :post_code, allow_blank: true,
                         length: { minimum: 5, maximum: 6 }
+  validates :street, allow_blank: true, length: { maximum: 255 }
   VALID_SSN_REGEX = /\A[0-9]{6}-[0-9]{4}\z/
   validates :personal_number, presence: true, format: { with: VALID_SSN_REGEX }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
