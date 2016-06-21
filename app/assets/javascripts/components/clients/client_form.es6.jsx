@@ -204,6 +204,10 @@ class ClientForm extends React.Component {
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
+            {isEdit ? <a href={`mailto:${this.state.email}`}
+                         target="_top"
+                         className="fa fa-envelope"
+                         aria-hidden="true"></a> : ''}
               <small id="emailHelper" className="text-muted"></small>
             </div>
           </div>

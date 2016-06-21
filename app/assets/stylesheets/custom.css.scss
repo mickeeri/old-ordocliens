@@ -12,8 +12,6 @@ body {
   background: #F9F9F9;
 }
 
-
-
 main {
   margin-top: 40px;
   margin-bottom: 100px;
@@ -38,8 +36,6 @@ main {
   background: #FFFFFF;
   box-shadow: 0 1px 4px rgba(0,0,0,.15);
 }
-
-
 
 //-----------------------------------------------------
 // Navbar
@@ -209,9 +205,18 @@ h1 {
 // Forms
 //-----------------------------------------------------
 
-// input[type="date"] {
-//   height: 31px;
-// }
+// Mail icon in mail input field.
+.fa-envelope {
+  float: right;
+  margin-right: 10px !important;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+#client-form #email {
+  padding-right: 30px;
+}
 
 .text-area-label {
   margin-top: 15px;
