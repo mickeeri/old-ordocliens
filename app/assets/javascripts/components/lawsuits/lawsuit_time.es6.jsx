@@ -66,8 +66,8 @@ class LawsuitTime extends React.Component {
         <div className="alert" id="tasks-index-alert"></div>
         <div id="editModalContainer"></div>
         <div className="row">
-          <h3 className="col-md-4">Arbeten</h3>
-          <div className="col-md-8 content-right task-menu">
+          <h3 className="col-md-2">Arbeten</h3>
+          <div className="col-md-10 content-right task-menu">
             <button
               className="btn btn-primary-outline"
               onClick={this.scrollToClientFunds}
@@ -77,14 +77,18 @@ class LawsuitTime extends React.Component {
               onClick={this.scrollToExpenses}
             >Gå till utlägg</button>
             <a
-              href={`/report/${this.props.lawsuitId}.docx`}
+              href={`/report/${this.props.lawsuitId}/arbetsrapport.docx`}
               className="btn btn-primary"
-            >Rapport .docx</a>
+            ><i className="fa fa-file-word-o" aria-hidden="true"></i>Arbetsrapport</a>
+            <a
+              href={`/report/${this.props.lawsuitId}/tidrapport.docx`}
+              className="btn btn-primary"
+            ><i className="fa fa-file-word-o" aria-hidden="true"></i>Tidrapport</a>
             <a
               href={`/lawsuits/${this.props.lawsuitId}/Aktomslag.pdf`}
               className="btn btn-primary"
               target="_blank"
-            >Aktomslag .pdf</a>
+            ><i className="fa fa-file-pdf-o" aria-hidden="true"></i>Aktomslag</a>
             <button
               className="btn btn-success"
               onClick={this.handleAddButtonClicked}
@@ -123,9 +127,10 @@ class LawsuitTime extends React.Component {
             >Tillbaka till toppen</button>
             <a
               href={`/lawsuits/${this.props.lawsuitId}/Klientmedel.pdf`}
-              className="btn btn-primary"
+              className={this.props.clientFunds.clientFundsArray.length === 0 ?
+                'btn btn-primary disabled' : 'btn btn-primary'}
               target="_blank"
-            >Generera .pdf</a>
+            ><i className="fa fa-file-pdf-o" aria-hidden="true"></i>Generera rapport</a>
             <button
               className="btn btn-success"
               onClick={this.handleAddButtonClicked}
