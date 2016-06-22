@@ -62,9 +62,9 @@ prawn_document(page_layout: :landscape) do |pdf|
         pdf.text "#{counterpart.first_name} #{counterpart.last_name}", leading: 2
         pdf.text counterpart.personal_number, leading: 2
         pdf.text counterpart.info, leading: 2
-        pdf.text "Ombud", leading: 2
-        pdf.font "app/assets/fonts/pala.ttf", leading: 2
-        pdf.text counterpart.representative, leading: 2
+        next unless counterpart.representative.present?
+        pdf.text "Ombud: #{counterpart.representative}", leading: 2
+
       end
     end
   end

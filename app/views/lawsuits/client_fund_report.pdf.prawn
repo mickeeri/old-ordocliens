@@ -1,5 +1,6 @@
-prawn_document(page_size: "A4", page_layout: :portrait) do |pdf|
+prawn_document(page_size: "A4", page_layout: :portrait, margin: [30, 50]) do |pdf|
   require "open-uri"
+
 
   # Header
   pdf.font "app/assets/fonts/pala.ttf"
@@ -23,10 +24,11 @@ prawn_document(page_size: "A4", page_layout: :portrait) do |pdf|
              number_to_currency(@funds.sum(:balance),
                                 delimiter: " ")]
   table_data.push(sum_row)
-  pdf.table(table_data, cell_style: { border_color: "ECECEC" }) do
+  pdf.table(table_data, cell_style: { border_color: "ECECEC" }, width: 490) do
     style(row(0), font: "app/assets/fonts/palab.ttf")
     style(column(0), width: 60, overflow: :expand)
     style(column(2), single_line: true, width: 70, align: :right)
     style(row(-1), font: "app/assets/fonts/palab.ttf")
   end
+
 end
