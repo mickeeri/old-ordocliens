@@ -175,7 +175,7 @@ class CounterpartForm extends React.Component {
               <div className="col-sm-4">
                 <input
                   placeholder="ÅÅMMDD-XXXX"
-                  type="tel"
+                  type="text"
                   name="personalNumber"
                   id="personalNumber"
                   className="form-control form-control-sm"

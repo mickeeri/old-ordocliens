@@ -130,7 +130,7 @@ class ExpenseForm extends React.Component {
               <div className="col-sm-4">
                 <input
                   placeholder="Kostnad"
-                  type="tel"
+                  type="text"
                   id="price"
                   className="form-control form-control-sm"
                   value={this.state.price}

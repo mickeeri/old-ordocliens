@@ -157,7 +157,7 @@ class ClientFundForm extends React.Component {
                   onBlur={this.validate}
                   onChange={this.handleInputChange}
                   placeholder="Saldo"
-                  type="tel"
+                  type="text"
                   value={this.state.balance}
                 />
               </div>

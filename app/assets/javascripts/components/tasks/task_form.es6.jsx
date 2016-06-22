@@ -180,7 +180,7 @@ class TaskForm extends React.Component {
             <div className="col-sm-3">
               <input
                 placeholder="Timmar"
-                type="tel"
+                type="text"
                 name="workedHours"
                 id="workedHours"
                 className="form-control form-control-sm"

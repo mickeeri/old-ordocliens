@@ -179,7 +179,7 @@ class ClientForm extends React.Component {
             <div className="col-sm-4">
               <input
                 placeholder="ÅÅMMDD-XXXX"
-                type="tel"
+                type="text"
                 name="personalNumber"
                 id="personalNumber"
                 className="form-control form-control-sm"
@@ -216,7 +216,7 @@ class ClientForm extends React.Component {
             <div className="col-sm-6">
               <input
                 placeholder="Mobil"
-                type="tel"
+                type="text"
                 name="mobile"
                 id="mobile"
                 className="form-control form-control-sm"
@@ -232,7 +232,7 @@ class ClientForm extends React.Component {
             <div className="col-sm-6">
               <input
                 placeholder="Telefon"
-                type="tel"
+                type="text"
                 name="phoneNumber"
                 id="phoneNumber"
                 className="form-control form-control-sm"
@@ -280,7 +280,7 @@ class ClientForm extends React.Component {
             <div className="col-sm-4">
               <input
                 placeholder="Postnummer"
-                type="tel"
+                type="text"
                 name="postCode"
                 id="postCode"
                 className="form-control form-control-sm"
