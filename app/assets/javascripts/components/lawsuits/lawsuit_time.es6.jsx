@@ -121,9 +121,11 @@ class LawsuitTime extends React.Component {
               className="btn btn-primary-outline"
               onClick={this.scrollToTop}
             >Tillbaka till toppen</button>
-            <button
-              className="btn btn-primary disabled"
-            >Spara som pdf</button>
+            <a
+              href={`/lawsuits/${this.props.lawsuitId}/Klientmedel.pdf`}
+              className="btn btn-primary"
+              target="_blank"
+            >Generera .pdf</a>
             <button
               className="btn btn-success"
               onClick={this.handleAddButtonClicked}

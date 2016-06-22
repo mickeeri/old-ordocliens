@@ -28,5 +28,6 @@ Rails.application.routes.draw do
   get "lawsuits/:id/clients" => "clients#lawsuit_client_list"
   get "lawsuits/:id/counterparts" => "counterparts#lawsuit_counterpart_list"
   get "lawsuits/:id/Aktomslag" => "lawsuits#lawsuit_cover"
+  get "lawsuits/:id/Klientmedel" => "lawsuits#client_fund_report"
   get "report/:id" => "reports#show"
 end

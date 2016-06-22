@@ -7,7 +7,8 @@ class LawsuitsController < ApplicationController
                                        :destroy,
                                        :report,
                                        :client_list,
-                                       :lawsuit_cover]
+                                       :lawsuit_cover,
+                                       :client_fund_report]
   respond_to :json, :html, :docx
 
   def index
@@ -66,6 +67,10 @@ class LawsuitsController < ApplicationController
     @lawsuit.destroy
     flash.keep[:notice] = "Ärende raderat."
     respond_with @lawsuit
+  end
+
+  def client_fund_report
+    @funds = @lawsuit.client_funds.sorted
   end
 
   def lawsuit_cover
