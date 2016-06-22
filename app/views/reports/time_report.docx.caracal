@@ -49,6 +49,7 @@ table_data = []
 #-----------------------------------------------------
 # Header
 docx.h2 "Utlägg"
+
 # First row
 expenses_table_data = [['Notering','Kostnad']]
 

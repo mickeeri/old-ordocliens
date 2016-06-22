@@ -1,0 +1,33 @@
+#-----------------------------------------------------
+# page settings
+#-----------------------------------------------------
+docx.font name: "Courier New"
+
+docx.style id: "Normal", name: "Normal", font: "Palatino Linotype", size: 22, line: 200
+
+#-----------------------------------------------------
+# Header
+#-----------------------------------------------------
+docx.h1 @lawsuit.lawsuit_type.name
+docx.h1 "Ärende: #{@lawsuit.slug}"
+
+#-----------------------------------------------------
+# Works table
+#-----------------------------------------------------
+docx.h2 "Arbete"
+table_data = [["Datum", "Notering", "Kategori"]]
+
+@tasks.each do |task|
+  unless task.price_category.name == "Anteckning"
+    row = [task.date, task.entry, task.price_category.name]
+    table_data.push(row)
+  end
+end
+
+docx.table table_data, border_size: 4 do
+  border_color   "eceeef"
+  cell_style rows[0], background: "ECECEC", bold: true
+  cell_style cols[1], width: 5700
+end
+
+docx.p "Arbetat tid: #{@tasks.sum(:worked_hours)} timmar", bold: true
