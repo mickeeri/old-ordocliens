@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
   # t.decimal  "worked_hours"
   # t.integer  "lawsuit_id"
   # t.integer  "price_category_id"
+  
   belongs_to :lawsuit
   belongs_to :price_category, required: true
   validates :entry, presence: true, length: { maximum: 1000 }
