@@ -6,7 +6,8 @@ prawn_document(page_size: "A4", page_layout: :portrait, margin: [30, 50]) do |pd
   pdf.font "app/assets/fonts/pala.ttf"
   pdf.move_down 30
   pdf.font_size 22
-  pdf.text "Klientmedel för ärende #{@lawsuit.slug}"
+  pdf.text "Klientmedel"
+  pdf.text "Ärende #{@lawsuit.slug}"
 
   # Table
   pdf.move_down 20

@@ -10,7 +10,9 @@ docx.style id: 'Normal', name: 'Normal', font: 'Palatino Linotype', size: 22, li
 # Header
 #-----------------------------------------------------
 docx.h1 @lawsuit.lawsuit_type.name
+docx.p
 docx.h1 "Ärende: #{@lawsuit.slug}"
+docx.p
 
 #-----------------------------------------------------
 # Works table
@@ -47,6 +49,7 @@ table_data = []
 #-----------------------------------------------------
 # Expenses table
 #-----------------------------------------------------
+docx.p
 # Header
 docx.h2 "Utlägg"
 

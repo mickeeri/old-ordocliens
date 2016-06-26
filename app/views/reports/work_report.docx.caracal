@@ -9,17 +9,19 @@ docx.style id: "Normal", name: "Normal", font: "Palatino Linotype", size: 22, li
 # Header
 #-----------------------------------------------------
 docx.h1 @lawsuit.lawsuit_type.name
+docx.p
 docx.h1 "Ärende: #{@lawsuit.slug}"
+docx.p
 
 #-----------------------------------------------------
 # Works table
 #-----------------------------------------------------
 docx.h2 "Arbete"
-table_data = [["Datum", "Notering", "Kategori"]]
+table_data = [["Datum", "Notering"]]
 
 @tasks.each do |task|
   unless task.price_category.name == "Anteckning"
-    row = [task.date, task.entry, task.price_category.name]
+    row = [task.date, task.entry]
     table_data.push(row)
   end
 end
