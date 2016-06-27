@@ -45,7 +45,7 @@ class ExpenseForm extends React.Component {
         .done(() => {
           this.setState({ showForm: false });
           showAlertInModal(
-            'Utlägg sparad!',
+            'Utlägg sparat!',
             '#expense-form-alert-modal',
             'alert-success',
             'fa-check');
@@ -157,6 +157,6 @@ ExpenseForm.propTypes = {
   initialExpense: React.PropTypes.shape({
     id: React.PropTypes.number,
     entry: React.PropTypes.string,
-    price: React.PropTypes.number,
+    price: React.PropTypes.string,
   }),
 };
