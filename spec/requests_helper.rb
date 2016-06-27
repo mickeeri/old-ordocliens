@@ -36,6 +36,20 @@ def create_lawsuits
   end
 end
 
+def create_client_and_lawsuit
+  firm = create(:firm)
+  user = create(:user, firm: firm)
+  client = create(:client, user: user)
+  lawsuit = build_stubbed(:lawsuit)
+
+  lawsuit_type_name = "Bodelning"
+  LawsuitType.create(name: lawsuit_type_name)
+  sign_in_with(user.email, user.password)
+  create_client_with(client)
+  create_lawsuit_with(lawsuit, lawsuit_type_name)
+  click_link lawsuit_type_name
+end
+
 def sign_in_with(email, password)
   visit("/")
   fill_in "E-post", with: email
