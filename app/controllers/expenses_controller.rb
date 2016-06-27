@@ -14,7 +14,7 @@ class ExpensesController < ApplicationController
 
   def create
     lawsuit = Lawsuit.within_firm(current_user).find(params[:lawsuit_id])
-    @expense = lawsuit.expenses.create!(expense_params)
+    @expense = lawsuit.expenses.create(expense_params)
     respond_with(lawsuit, @expense)
   end
 
