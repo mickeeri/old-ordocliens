@@ -56,12 +56,15 @@ RSpec.feature "Create new client", type: :feature, js: true do
   end
 
   scenario "followed by update" do
+    new_name = "Ett annat namn"
     sign_in_with(user.email, user.password)
     create_client_with(client)
     expect(page).to have_selector("input[value='#{client.first_name}']")
-    fill_in "Förnamn", with: "Ett annat namn"
+    fill_in "Förnamn", with: new_name
     click_button "Uppdatera"
     expect(page).to have_content("Klient uppdaterad")
+    visit current_path # Reload page.
+    expect(page).to have_selector("input[value='#{new_name}']")
     expect(Client.where(first_name: "Ett annat namn")).to exist
   end
 

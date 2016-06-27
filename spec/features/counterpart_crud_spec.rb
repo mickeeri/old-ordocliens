@@ -43,10 +43,11 @@ RSpec.feature "Create new countepart", type: :feature, js: true do
     expect(page).to have_selector("input[value='#{counterpart.personal_number}']")
 
     # Update
-    fill_in "Förnamn", with: "Ett annat namn"
+    new_name = "Ett annat namn"
+    fill_in "Förnamn", with: new_name
     click_button "Uppdatera"
     expect(page).to have_content("Motpart uppdaterad")
-    expect(Counterpart.where(first_name: "Ett annat namn")).to exist
+    expect(Counterpart.where(first_name: new_name)).to exist
 
     # Delete
     click_link "Radera motpart"
