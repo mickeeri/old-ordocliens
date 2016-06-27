@@ -52,7 +52,7 @@ class TaskRow extends React.Component {
       <tr>
         <td className="text-nowrap">{task.date}</td>
         <td>{task.entry}</td>
-        <td>{task.workedHours}</td>
+        <td>{task.workedHours.replace('.', ',')}</td>
         <td className="text-nowrap">{task.priceCategory.name}</td>
         <td className="center-content">
           <i
@@ -75,6 +75,7 @@ class TaskRow extends React.Component {
   }
 }
 
+// TODO: Object shape validation.
 TaskRow.propTypes = {
   task: React.PropTypes.object.isRequired,
   lawsuitId: React.PropTypes.number.isRequired,

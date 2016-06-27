@@ -5,7 +5,7 @@ class TaskForm extends React.Component {
       id: props.initialTask ? props.initialTask.id : '',
       date: props.initialTask ? props.initialTask.date : new Date().toISOString().substring(0, 10),
       entry: props.initialTask ? props.initialTask.entry : '',
-      workedHours: props.initialTask ? props.initialTask.workedHours : '',
+      workedHours: props.initialTask ? props.initialTask.workedHours.replace('.', ',') : '',
       priceCategoryId: props.initialTask ? props.initialTask.priceCategory.id : 3,
       priceCategories: [],
       showForm: true,
@@ -192,7 +192,7 @@ class TaskForm extends React.Component {
             <small id="workedHoursHelper" className="text-muted text-danger helper"></small>
           </div>
           <div id="priceCategoryGroup" className="form-group row">
-            <label className="col-sm-6" htmlFor="priceCategory">Kategori</label>
+            <label className="col-sm-6" htmlFor="priceCategoryId">Kategori</label>
             <div className="col-sm-6">
               <select
                 className="form-control"
@@ -222,6 +222,6 @@ TaskForm.propTypes = {
     date: React.PropTypes.string,
     entry: React.PropTypes.string,
     workedHours: React.PropTypes.string,
-    priceCategory: React.PropTypes.number,
+    priceCategory: React.PropTypes.object,
   }),
 };
