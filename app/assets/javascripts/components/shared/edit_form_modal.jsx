@@ -6,6 +6,20 @@ class EditFormModal extends React.Component {
   }
 
   componentDidMount() {
+    // Remove modal when clicking on backdrop.
+    // Bootstrap has own function for doing this, but it doesn't remove
+    // modal completely, only hides it.
+    $('.modal').click((e) => {
+      if (e.target.id === 'editFormModal') {
+        this.removeModal();
+      }
+    });
+    // Remove modal when clicking Esc.
+    $(document).keyup((e) => {
+      if (e.keyCode === 27) {
+        this.removeModal();
+      }
+    });
     PubSub.subscribe('dismissEdit', this.removeModal);
   }
 
@@ -28,6 +42,8 @@ class EditFormModal extends React.Component {
       <div
         className="modal fade"
         id="editFormModal"
+        data-backdrop="static"
+        data-keyboard="false"
         tabIndex={-1} role="dialog" aria-labelledby="modalLabel"
       >
         <div className="modal-dialog" role="document">
