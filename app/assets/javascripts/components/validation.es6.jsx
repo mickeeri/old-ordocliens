@@ -12,7 +12,6 @@ function addSuccess(formGroup, helper) {
   $(helper).text('');
 }
 
-
 function validateStringLength(string, maxLength, minLength, inputName, label) {
   const helper = `#${inputName}Helper`;
   const formGroup = `#${inputName}Group`;
@@ -45,30 +44,7 @@ function validateStringLength(string, maxLength, minLength, inputName, label) {
   return false;
 }
 
-// function validateRequired(string, inputName, label) {
-//   const helper = `#${inputName}Helper`;
-//   const formGroup = `#${inputName}Group`;
-//   if (string.length === 0) {
-//     $(helper).text(`${label} får inte vara tomt.`);
-//     $(formGroup).addClass('has-danger');
-//     $(formGroup).removeClass('has-success');
-//   } else {
-//     $(formGroup).removeClass('has-danger');
-//     $(formGroup).addClass('has-success');
-//     $(helper).text('');
-//     return true;
-//   }
-//
-//   return false;
-// }
-
-/**
- * Validates that select is selected.
- * @param  {string} value     the selected value.
- * @param  {string} inputName id or name of the input element
- * @param  {string} label     label of the input.
- * @return {bool}          true if valid
- */
+// Validates that select is selected.
 function validateRequiredSelect(value, inputName, label) {
   const helper = `#${inputName}Helper`;
   const formGroup = `#${inputName}Group`;
@@ -87,6 +63,7 @@ function validateRequiredSelect(value, inputName, label) {
   return false;
 }
 
+// Adds "has-success" class to check box.
 function validateCheckBox(value, inputName) {
   if (!isNaN(value)) {
     const formGroup = `#${inputName}Group`;
