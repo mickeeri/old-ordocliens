@@ -14,9 +14,11 @@ docx.style id: 'Normal', name: 'Normal', font: 'Palatino Linotype', size: 22, li
 # Logo
 #-----------------------------------------------------
 docx.p
-docx.img @client.user.firm.logo do
-  width   228       # sets the image width. units specified in pixels.
-  height  52       # sets the image height. units specified in pixels.
+if @client.user.firm.logo.present?
+  docx.img @client.user.firm.logo do
+    width   228       # sets the image width. units specified in pixels.
+    height  52       # sets the image height. units specified in pixels.
+  end
 end
 
 3.times do
