@@ -26,7 +26,7 @@ class ClientFundForm extends React.Component {
         .done(() => {
           this.setState({ showForm: false });
           showAlertInModal(
-            'Rad uppdaterad!',
+            'Klientmedel uppdaterat!',
             '#client-fund-form-alert-modal',
             'alert-success',
             'fa-check');
@@ -51,7 +51,7 @@ class ClientFundForm extends React.Component {
         .done(() => {
           this.setState({ showForm: false });
           showAlertInModal(
-            'Klientmedel sparad!',
+            'Klientmedel sparat!',
             '#client-fund-form-alert-modal',
             'alert-success',
             'fa-check');
@@ -88,7 +88,6 @@ class ClientFundForm extends React.Component {
 
   validate(e) {
     const input = e.target ? e.target : e;
-
     if (input.id === 'date') {
       return validateDate(input.value, input.id);
     }
@@ -96,9 +95,8 @@ class ClientFundForm extends React.Component {
       return validateStringLength(input.value, 1000, 1, input.id, 'Notering');
     }
     if (input.id === 'balance') {
-      return validateNumber(input.value, input.id, 'Kostnad', -100000, 100000, '', true);
+      return validateNumber(input.value, input.id, 'Saldo', -1000000, 1000000, '', true);
     }
-
     return false;
   }
 
@@ -111,7 +109,7 @@ class ClientFundForm extends React.Component {
         </div>
         {this.state.showForm ?
           <form
-            if="fund-form"
+            id="fund-form"
             noValidate
             onKeyPress={this.handleKeyPress}
             onSubmit={this.handleOnSubmit}
@@ -181,6 +179,6 @@ ClientFundForm.propTypes = {
     id: React.PropTypes.number,
     date: React.PropTypes.date,
     entry: React.PropTypes.string,
-    balance: React.PropTypes.number,
+    balance: React.PropTypes.string,
   }),
 };
