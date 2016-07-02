@@ -103,48 +103,50 @@ class LawsuitShow extends React.Component {
   }
 
   render() {
+    const props = this.props;
+    const state = this.state;
     return (
       <div>
         <div className="row lawsuit-header">
           <div className="col-md-6">
-            <h2>Ärende {this.props.lawsuit.slug}
+            <h2>Ärende {props.lawsuit.slug}
               <span className="text-danger">
-                {this.state.closed ? ' (Arkiverat)' : ''}
+                {state.closed ? ' (Arkiverat)' : ''}
               </span>
             </h2>
             <h5>
-              <a href={this.props.primaryClient.link}>
-                {this.props.primaryClient.firstName} {this.props.primaryClient.lastName}
+              <a href={props.primaryClient.link}>
+                {props.primaryClient.firstName} {props.primaryClient.lastName}
               </a>
             </h5>
           </div>
           <div className="col-md-6 content-right lawsuit-menu">
             <a
-              className={this.state.page === 'time' ? 'active' : ''}
+              className={state.page === 'time' ? 'active' : ''}
               href="#"
               name="time"
               onClick={this.togglePage}
             >Tidrapportering</a>
             <a
-              className={this.state.page === 'info' ? 'active' : ''}
+              className={state.page === 'info' ? 'active' : ''}
               href="#" name="info"
               id="info-link"
               onClick={this.togglePage}
-            >Info</a>
+            >Info, klienter och motparter</a>
           </div>
         </div>
-        <p id="updatedLawsuitMessage" className="text-success">{this.state.message}</p>
-        {this.state.page === 'info' ?
+        <p id="updatedLawsuitMessage" className="text-success">{state.message}</p>
+        {state.page === 'info' ?
           <LawsuitInfo
-            initialLawsuit={this.props.lawsuit}
-            closed={this.state.closed}
-            primaryClientId={this.props.primaryClient.id}
+            initialLawsuit={props.lawsuit}
+            closed={state.closed}
+            primaryClientId={props.primaryClient.id}
           /> :
           <LawsuitTime
-            clientFunds={this.state.clientFunds}
-            expenses={this.state.expenses}
-            lawsuitId={this.props.lawsuit.id}
-            tasks={this.state.tasks}
+            clientFunds={state.clientFunds}
+            expenses={state.expenses}
+            lawsuitId={props.lawsuit.id}
+            tasks={state.tasks}
           />}
       </div>
     );

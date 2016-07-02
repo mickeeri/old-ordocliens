@@ -18,7 +18,7 @@ class DeleteLawsuitButton extends React.Component {
               className="btn btn-danger-outline width-fill"
               data-toggle="modal"
               data-target={`#${target}`}
-            >Radera ärende
+            ><i className="fa fa-trash-o" aria-hidden="true"></i>Radera ärende
             </a>
           </div>
         </div>

@@ -18,23 +18,25 @@ class CloseLawsuitButton extends React.Component {
         PubSub.publish('lawsuitClosedOpened');
       })
       .fail(xhr => {
-        console.log(xhr);
         showErrorText(`Fel uppstod. Statuskod: ${xhr.status}`, '#lawsuit-form-message');
       });
   }
 
   render() {
+    const state = this.state;
     return (
       <div className="card card-block">
         <div className="row">
           <div className="col-md-12">
             <a
               href="#"
-              className={this.state.closed ?
+              className={state.closed ?
                 'btn btn-success-outline width-fill' :
                 'btn btn-warning-outline width-fill'}
               onClick={this.handleOnClick}
-            >{this.state.closed ? 'Öppna ärende' : 'Arkivera ärende'}
+            >
+              {!state.closed ? <i className="fa fa-archive" aria-hidden="true"></i> : ''}
+              {state.closed ? 'Öppna ärende' : 'Arkivera ärende'}
             </a>
           </div>
         </div>
