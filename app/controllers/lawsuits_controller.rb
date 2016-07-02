@@ -99,9 +99,6 @@ class LawsuitsController < ApplicationController
       end) unless params[:user] == "0"
     @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
     @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
-    # TODO: Search and sort without crashing.
-    # https://github.com/Casecommons/pg_search/issues/109
-    # https://github.com/Casecommons/pg_search/issues/206
     @lawsuits =
       @lawsuits.sorted_by_primary_client unless params[:search].present?
     @lawsuits = @lawsuits.page(params[:page]).per_page(20)
