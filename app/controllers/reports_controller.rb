@@ -15,6 +15,12 @@ class ReportsController < ApplicationController
       "attachment; filename=\"Arbetsrapport-#{@lawsuit.slug}.docx\""
   end
 
+  def letter_template
+    @client = Client.within_firm(current_user).find(params[:id])
+    headers["Content-Disposition"] =
+      "attachment; filename=\"Brevmall.docx\""
+  end
+
   private
 
   def fetch_report_data

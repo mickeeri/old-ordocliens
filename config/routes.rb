@@ -27,8 +27,11 @@ Rails.application.routes.draw do
 
   get "lawsuits/:id/clients" => "clients#lawsuit_client_list"
   get "lawsuits/:id/counterparts" => "counterparts#lawsuit_counterpart_list"
+  # Pdf:s
   get "lawsuits/:id/Aktomslag" => "lawsuits#lawsuit_cover"
   get "lawsuits/:id/Klientmedel" => "lawsuits#client_fund_report"
+  # Docx:s
   get "report/:id/tidrapport" => "reports#time_report"
   get "report/:id/arbetsrapport" => "reports#work_report"
+  get "report/:id/brevmall" => "reports#letter_template"
 end

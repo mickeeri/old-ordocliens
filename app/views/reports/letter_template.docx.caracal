@@ -1,0 +1,60 @@
+#-----------------------------------------------------
+# Page settings
+#-----------------------------------------------------
+docx.style id: 'Normal', name: 'Normal', font: 'Palatino Linotype', size: 22, line: 200
+
+# docx.page_margins do
+#   left    720     # sets the left margin. units in twips.
+#   right   720     # sets the right margin. units in twips.
+#   top     1440    # sets the top margin. units in twips.
+#   bottom  1440    # sets the bottom margin. units in twips.
+# end
+
+#-----------------------------------------------------
+# Logo
+#-----------------------------------------------------
+docx.p
+docx.img @client.user.firm.logo do
+  width   228       # sets the image width. units specified in pixels.
+  height  52       # sets the image height. units specified in pixels.
+end
+
+3.times do
+  docx.p
+end
+
+#-----------------------------------------------------
+# Adress
+#-----------------------------------------------------
+table_data = [['', "#{@client.first_name} #{@client.last_name}"]]
+table_data.push(['', "C/O #{@client.co}"]) if @client.co.present?
+table_data.push(['', @client.street]) if @client.street.present?
+table_data.push(['', "#{@client.post_code} #{@client.city}"]) if @client.post_code.present? && @client.city.present?
+table_data.push(["", ""])
+
+docx.table table_data, border_size: 4, border_spacing: 0 do
+  border_color   'FFFFFF'
+  cell_style rows,  bold: false, margins: { top: 20, bottom: 0, left: 0, right: 20 }
+  cell_style cols[1], width: 4000
+end
+
+7.times do
+  docx.p
+end
+
+#-----------------------------------------------------
+# Body
+#-----------------------------------------------------
+docx.p "Rubrik", bold: true
+
+3.times do
+  docx.p
+end
+docx.p Time.new.strftime("%F")
+
+3.times do
+  docx.p
+end
+
+docx.p "#{@client.user.first_name} #{@client.user.last_name}"
+docx.p "Titel", italic: true

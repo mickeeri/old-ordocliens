@@ -129,9 +129,11 @@ class ClientForm extends React.Component {
 
   render() {
     const isEdit = this.state !== '' && this.state.id !== '';
+    const props = this.props;
+    const state = this.state;
     return (
       <div>
-        <h3>{this.props.header}</h3>
+        <h3>{props.header}</h3>
         <form
           id="client-form"
           onSubmit={this.handleOnSubmit}
@@ -148,7 +150,7 @@ class ClientForm extends React.Component {
                 name="firstName"
                 id="firstName"
                 className="form-control form-control-sm"
-                value={this.state.firstName}
+                value={state.firstName}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
                 autoFocus={!isEdit}
@@ -165,7 +167,7 @@ class ClientForm extends React.Component {
                 name="lastName"
                 id="lastName"
                 className="form-control form-control-sm"
-                value={this.state.lastName}
+                value={state.lastName}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
@@ -183,7 +185,7 @@ class ClientForm extends React.Component {
                 name="personalNumber"
                 id="personalNumber"
                 className="form-control form-control-sm"
-                value={this.state.personalNumber}
+                value={state.personalNumber}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
@@ -200,14 +202,17 @@ class ClientForm extends React.Component {
                 type="email"
                 name="email"
                 className="form-control form-control-sm"
-                value={this.state.email}
+                value={state.email}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
-            {isEdit ? <a href={`mailto:${this.state.email}`}
-                         target="_top"
-                         className="fa fa-envelope"
-                         aria-hidden="true"></a> : ''}
+            {isEdit ?
+              <a
+                href={`mailto:${state.email}`}
+                target="_top"
+                className="fa fa-envelope"
+                aria-hidden="true"
+              ></a> : ''}
               <small id="emailHelper" className="text-muted"></small>
             </div>
           </div>
@@ -220,7 +225,7 @@ class ClientForm extends React.Component {
                 name="mobile"
                 id="mobile"
                 className="form-control form-control-sm"
-                value={this.state.mobile}
+                value={state.mobile}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
@@ -236,7 +241,7 @@ class ClientForm extends React.Component {
                 name="phoneNumber"
                 id="phoneNumber"
                 className="form-control form-control-sm"
-                value={this.state.phoneNumber}
+                value={state.phoneNumber}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
@@ -253,7 +258,7 @@ class ClientForm extends React.Component {
                 name="co"
                 id="co"
                 className="form-control form-control-sm"
-                value={this.state.co}
+                value={state.co}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
@@ -268,7 +273,7 @@ class ClientForm extends React.Component {
                 name="street"
                 id="street"
                 className="form-control form-control-sm"
-                value={this.state.street}
+                value={state.street}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
@@ -284,7 +289,7 @@ class ClientForm extends React.Component {
                 name="postCode"
                 id="postCode"
                 className="form-control form-control-sm"
-                value={this.state.postCode}
+                value={state.postCode}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
@@ -300,13 +305,23 @@ class ClientForm extends React.Component {
                 name="city"
                 id="city"
                 className="form-control form-control-sm"
-                value={this.state.city}
+                value={state.city}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               />
             </div>
             <small id="cityCodeHelper" className="text-muted text-danger helper"></small>
           </div>
+          {isEdit ?
+            <div className="content-right">
+              <a
+                href={`/report/${props.client.id}/brevmall.docx`}
+                className="btn btn-primary-outline btn-sm"
+              >
+                <i className="fa fa-file-word-o" aria-hidden="true"></i>Brevmall
+              </a>
+            </div>
+          : ''}
           <hr />
           <div id="noteGroup" className="form-group row">
             <label htmlFor="note" className="form-control-label">
@@ -320,7 +335,7 @@ class ClientForm extends React.Component {
                 name="note"
                 id="note"
                 rows="4"
-                value={this.state.note}
+                value={state.note}
                 onChange={this.handleInputChange}
                 onBlur={this.validate}
               >
