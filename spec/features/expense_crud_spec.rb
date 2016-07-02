@@ -33,7 +33,7 @@ RSpec.feature "Create new expense", type: :feature, js: true do
     create_expense
     expect(page).to have_content("Formuläret innehåller fel")
     expect(page).to have_content("Notering måste anges.")
-    expect(Expense.where(entry: expense[:entry])).not_to exist
+    expect(Expense.where(entry: expense[:price])).not_to exist
   end
 
   scenario "without price should fail" do
@@ -58,19 +58,24 @@ RSpec.feature "Create new expense", type: :feature, js: true do
     create_expense
     find(".fa-pencil-square-o").click
     expect(page).to have_content("Redigera utlägg")
+
     # Check for pre-filled inputs.
     expect(page).to have_selector("textarea", text: expense[:entry])
     expect(page).to have_selector("input[value='#{expense[:price].tr(",", ".")}']")
+
     # Enter new input.
     fill_in "Notering", with: new_entry
     fill_in "Kostnad", with: new_price
     click_button "Spara"
+
     # Check if page is updated
     expect(page).to have_content("Utläggsrad uppdaterad!")
     check_page_after_update(new_entry, new_price, expense[:entry], expense[:price])
+
     # Visit the info page...
     click_link "Info"
     click_link "Tidrapportering"
+
     # ...changes should remain.
     check_page_after_update(new_entry, new_price, expense[:entry], expense[:price])
     expect(Expense.where(entry: new_entry)).to exist
