@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
-  before_action :fetch_report_data
-  respond_to :json, :html, :docx
+  before_action :fetch_report_data, only: [:time_report, :work_report]
+  respond_to :docx
 
   def time_report
     headers["Content-Disposition"] =
@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
   def letter_template
     @client = Client.within_firm(current_user).find(params[:id])
     headers["Content-Disposition"] =
-      "attachment; filename=\"Brevmall.docx\""
+      "attachment; filename=\"Brevmall-#{@client.last_name}.docx\""
   end
 
   private
