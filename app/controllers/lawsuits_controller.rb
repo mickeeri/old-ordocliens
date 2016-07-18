@@ -97,7 +97,6 @@ class LawsuitsController < ApplicationController
       @lawsuits = @lawsuits.sorted_by_primary_client
     end
     @lawsuits = @lawsuits.page(params[:page]).per_page(20)
-    # http://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
   end
 
   def filter_by_search
@@ -105,16 +104,26 @@ class LawsuitsController < ApplicationController
   end
 
   def filter_by_user
-    @lawsuits = @lawsuits.users_lawsuits(
-      if params[:user].present?
-        params[:user]
-      else
-        current_user.id
-      end) unless params[:user] == "0"
+    # Fetch all users in firm.
+    if params[:user].to_i == 0
+      @lawsuits
+    # Fetch lawsuits belonging to specific user.
+    else
+      @lawsuits.users_lawsuits(
+        if params[:user].present?
+          params[:user]
+        else
+          current_user.id
+        end)
+    end
   end
 
   def filter_by_status
-    @lawsuits.without_closed unless params[:all] == "true"
+    if params[:fetch_all].to_i == 1
+      @lawsuits
+    else
+      @lawsuits.without_closed
+    end
   end
 
   def fetch_lawsuit
