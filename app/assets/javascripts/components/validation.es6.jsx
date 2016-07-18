@@ -1,5 +1,3 @@
-// TODO: Method for adding, removing class to avoid DRY.
-
 function addError(formGroup, helper, message) {
   $(formGroup).addClass('has-danger');
   $(formGroup).removeClass('has-success');
@@ -27,7 +25,7 @@ function validateStringLength(string, maxLength, minLength, inputName, label) {
     $(helper).text(`${label} får inte överskrida ${maxLength} tecken.`);
     $(formGroup).addClass('has-danger');
     $(formGroup).removeClass('has-success');
-  } else if (string.length < minLength) {
+  } else if (string.trim().length < minLength) {
     const message = minLength === 1 ?
       `${label} måste anges.` :
       `${label} ska bestå av minst ${minLength} tecken.`;
