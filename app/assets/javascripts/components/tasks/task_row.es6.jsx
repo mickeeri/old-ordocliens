@@ -49,7 +49,10 @@ class TaskRow extends React.Component {
   render() {
     const task = this.props.task;
     return (
-      <tr>
+      <tr
+        className={task.priceCategory.name === 'Anteckning' ?
+          'task-note-row' : ''}
+      >
         <td className="text-nowrap">{task.date}</td>
         <td>{task.entry}</td>
         <td>{task.workedHours.replace('.', ',')}</td>
