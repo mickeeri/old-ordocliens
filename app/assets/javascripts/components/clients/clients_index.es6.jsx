@@ -57,6 +57,7 @@ class ClientsIndex extends React.Component {
   }
 
   render() {
+    const state = this.state;
     return (
       <div>
         <div className="row index-header">
@@ -76,21 +77,24 @@ class ClientsIndex extends React.Component {
           </div>
         </div>
         <div className="row paginator-row">
-          <div className="checkbox col-md-6">
+          <fieldset
+            className="checkbox col-md-6"
+            disabled={state.fetchData.search.length > 0}
+          >
             <label>
               <input
                 type="checkbox"
                 onChange={this.handleOnCheckboxChange}
               /> Visa alla klienter
             </label>
-          </div>
+          </fieldset>
           <div className="col-md-6">
             {this.state.meta.totalPages === 1 ? '' :
               <Paginator
-                totalPages={this.state.meta.totalPages}
-                currentPage={this.state.meta.currentPage}
-                nextPage={this.state.meta.nextPage}
-                prevPage={this.state.meta.previousPage}
+                totalPages={state.meta.totalPages}
+                currentPage={state.meta.currentPage}
+                nextPage={state.meta.nextPage}
+                prevPage={state.meta.previousPage}
                 onPaginate={this.handleOnPaginate}
               />}
           </div>
@@ -106,7 +110,7 @@ class ClientsIndex extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.clients.map(client =>
+                {state.clients.map(client =>
                   <ClientRow key={client.id} client={client} />)}
               </tbody>
             </table>

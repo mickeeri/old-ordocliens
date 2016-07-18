@@ -47,7 +47,7 @@ class LawsuitsIndex extends React.Component {
   fetchLawsuits() {
     const data = this.state.fetchData;
     // Building url with paramaters based on input.
-    let url = `${Routes.lawsuits_path()}?page=${data.page}&all=${data.fetchAll}&user=${data.user}`;
+    let url = `${Routes.lawsuits_path()}?page=${data.page}&fetch_all=${data.fetchAll ? '1' : '0'}&user=${data.user}`;
     if (data.search) {
       this.state.fetchData.page = 1;
       url += `&search=${data.search}`;
@@ -64,6 +64,7 @@ class LawsuitsIndex extends React.Component {
   }
 
   render() {
+    const state = this.state;
     return (
       <div>
         <div className="row">
@@ -83,27 +84,33 @@ class LawsuitsIndex extends React.Component {
           </div>
         </div>
         <div className="row paginator-row">
-          <div className="checkbox col-lg-3">
+          <fieldset
+            className="checkbox col-lg-3"
+            disabled={state.fetchData.search.length > 0}
+          >
             <label>
               <input
                 type="checkbox"
                 onChange={this.handleOnCheckboxChange}
               /> Visa arkiverade ärenden
             </label>
-          </div>
-          <div className="col-lg-5">
+          </fieldset>
+          <fieldset
+            className="col-lg-5"
+            disabled={state.fetchData.search.length > 0}
+          >
             <UsersDropdown
               changeEvent={this.setSelectedUser}
-              selectedUser={this.state.fetchData.user}
+              selectedUser={state.fetchData.user}
             />
-          </div>
+          </fieldset>
           <div className="col-lg-4">
-            {this.state.meta.totalPages === 1 ? '' :
+            {state.meta.totalPages === 1 ? '' :
               <Paginator
-                totalPages={this.state.meta.totalPages}
-                currentPage={this.state.meta.currentPage}
-                nextPage={this.state.meta.nextPage}
-                prevPage={this.state.meta.previousPage}
+                totalPages={state.meta.totalPages}
+                currentPage={state.meta.currentPage}
+                nextPage={state.meta.nextPage}
+                prevPage={state.meta.previousPage}
                 onPaginate={this.handleOnPaginate}
               />
             }
@@ -123,7 +130,7 @@ class LawsuitsIndex extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.lawsuits.map(lawsuit =>
+                {state.lawsuits.map(lawsuit =>
                   <LawsuitIndexRow key={lawsuit.id} lawsuit={lawsuit} />
                 )}
               </tbody>
