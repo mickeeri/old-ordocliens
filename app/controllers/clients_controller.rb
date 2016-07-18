@@ -99,10 +99,14 @@ class ClientsController < ApplicationController
   end
 
   def filter_clients
-    @clients = Client.where(nil)
-    @clients = @clients.users_clients(current_user) unless params[:all] == "true"
-    @clients = @clients.within_firm(current_user) if params[:all] == "true"
-    @clients = @clients.search(params[:search]) if params[:search].present?
+    @clients = Client.within_firm(current_user)
+    # Filter by search.
+    if params[:search].present?
+      @clients = @clients.search(params[:search])
+    # Filter by user.
+    elsif params[:all] != "true"
+      @clients = @clients.users_clients(current_user)
+    end
     @clients = @clients.sorted.page(params[:page]).per_page(20)
   end
 

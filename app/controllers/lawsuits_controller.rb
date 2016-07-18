@@ -88,20 +88,33 @@ class LawsuitsController < ApplicationController
 
   # Filter lawsuits based on different paramaters.
   def filter_lawsuits
-    # http://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
     @lawsuits = Lawsuit.within_firm(current_user)
-    # Find specific users lawsuits. If user_id = "0" select all within firm.
+    if params[:search].present?
+      @lawsuits = filter_by_search
+    else
+      @lawsuits = filter_by_user
+      @lawsuits = filter_by_status
+      @lawsuits = @lawsuits.sorted_by_primary_client
+    end
+    @lawsuits = @lawsuits.page(params[:page]).per_page(20)
+    # http://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
+  end
+
+  def filter_by_search
+    @lawsuits.search(params[:search])
+  end
+
+  def filter_by_user
     @lawsuits = @lawsuits.users_lawsuits(
       if params[:user].present?
         params[:user]
       else
         current_user.id
       end) unless params[:user] == "0"
-    @lawsuits = @lawsuits.without_closed unless params[:all] == "true"
-    @lawsuits = @lawsuits.search(params[:search]) if params[:search].present?
-    @lawsuits =
-      @lawsuits.sorted_by_primary_client unless params[:search].present?
-    @lawsuits = @lawsuits.page(params[:page]).per_page(20)
+  end
+
+  def filter_by_status
+    @lawsuits.without_closed unless params[:all] == "true"
   end
 
   def fetch_lawsuit
@@ -115,7 +128,10 @@ class LawsuitsController < ApplicationController
       expenses: prepare_array(@lawsuit.expenses.sorted),
       client_funds: {
         client_funds_array: prepare_array(@lawsuit.client_funds.sorted),
-        sum: number_to_currency(@lawsuit.client_funds.sum(:balance), delimiter: " ") },
-      primary_client: prepare(@lawsuit.primary_client, ClientSerializer, root: false) }
+        sum: number_to_currency(@lawsuit.client_funds.sum(:balance),
+                                delimiter: " ") },
+      primary_client: prepare(@lawsuit.primary_client,
+                              ClientSerializer,
+                              root: false) }
   end
 end
