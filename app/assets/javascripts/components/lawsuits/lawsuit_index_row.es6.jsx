@@ -1,4 +1,4 @@
-function LawsuitIndexRow({ lawsuit }) {
+const LawsuitIndexRow = ({ lawsuit }) => {
   function handleOnRowClick(lawsuitId) {
     window.location = Routes.lawsuit_path(lawsuitId);
   }
@@ -13,7 +13,7 @@ function LawsuitIndexRow({ lawsuit }) {
         className={lawsuit.closed ? 'text-danger' : 'text-success'}
       >{lawsuit.closed ? 'Arkiverat' : 'Aktivt'}</td>
     </tr>);
-}
+};
 
 LawsuitIndexRow.propTypes = {
   lawsuit: React.PropTypes.shape({
