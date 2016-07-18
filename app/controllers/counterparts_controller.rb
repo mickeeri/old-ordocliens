@@ -35,7 +35,8 @@ class CounterpartsController < ApplicationController
 
   def create
     firm = current_user.firm
-    @counterpart = firm.counterparts.build(counterpart_params.except(:lawsuit_id))
+    @counterpart =
+      firm.counterparts.build(counterpart_params.except(:lawsuit_id))
     if @counterpart.save
       if counterpart_params[:lawsuit_id]
         add_counterpart_to_lawsuit
