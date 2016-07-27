@@ -1,18 +1,22 @@
 class Paginator extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currentPage: props.currentPage };
     this.handleNextClick = this.handleNextClick.bind(this);
     this.handlePrevClick = this.handlePrevClick.bind(this);
     this.handleNumChange = this.handleNumChange.bind(this);
+  }
+
+  componentDidUpdate() {
+    // Make sure number in input field is updated.
+    paginationInput.value = this.props.currentPage;
   }
 
   handleNextClick(e) {
     e.preventDefault();
     if (this.props.nextPage) {
       $('.page-number').focus();
-      this.setState({ currentPage: this.props.nextPage });
-      return this.props.onPaginate(this.props.nextPage);
+      paginationInput.value = this.props.nextPage;
+      this.props.onPaginate(this.props.nextPage);
     }
 
     return false;
@@ -22,8 +26,8 @@ class Paginator extends React.Component {
     e.preventDefault();
     if (this.props.prevPage) {
       $('.page-number').focus();
-      this.setState({ currentPage: this.props.prevPage });
-      return this.props.onPaginate(this.props.prevPage);
+      paginationInput.value = this.props.prevPage;
+      this.props.onPaginate(this.props.prevPage);
     }
 
     return false;
@@ -31,9 +35,8 @@ class Paginator extends React.Component {
 
   handleNumChange(e) { // If page number is changed by input.
     if (e.target.value <= this.props.totalPages || e.target.value === '') {
-      this.setState({ currentPage: e.target.value });
       if (e.target.value !== '') {
-        return this.props.onPaginate(parseInt(e.target.value, 10));
+        this.props.onPaginate(parseInt(e.target.value, 10));
       }
     }
 
@@ -66,8 +69,10 @@ class Paginator extends React.Component {
             className="form-control form-control-sm page-number"
             onChange={this.handleNumChange}
             type="text"
-            value={this.state.currentPage}
-            onFocus={this.handleOnFocus}>
+            defaultValue={this.props.currentPage}
+            onFocus={this.handleOnFocus}
+            ref={node => { paginationInput = node; }}
+          >
           </input>
           <p>av {this.props.totalPages}</p>
         </div>

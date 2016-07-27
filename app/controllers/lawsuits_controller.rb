@@ -92,10 +92,10 @@ class LawsuitsController < ApplicationController
     if params[:search].present?
       @lawsuits = filter_by_search
     else
-      @lawsuits = filter_by_user
-      @lawsuits = filter_by_status
       @lawsuits = @lawsuits.sorted_by_primary_client
     end
+    @lawsuits = filter_by_user
+    @lawsuits = filter_by_status
     @lawsuits = @lawsuits.page(params[:page]).per_page(20)
   end
 
@@ -104,22 +104,26 @@ class LawsuitsController < ApplicationController
   end
 
   def filter_by_user
-    # Fetch all users in firm.
-    if params[:user].to_i == 0
-      @lawsuits
-    # Fetch lawsuits belonging to specific user.
+    if params[:user].present?
+      # Fetch all users in firm.
+      if params[:user].to_i == 0
+        @lawsuits
+      else
+        # Fetch lawsuits belonging to specific user.
+        @lawsuits.users_lawsuits(
+          if params[:user].present?
+            params[:user]
+          else
+            current_user.id
+          end)
+      end
     else
-      @lawsuits.users_lawsuits(
-        if params[:user].present?
-          params[:user]
-        else
-          current_user.id
-        end)
+      @lawsuits.users_lawsuits(current_user)
     end
   end
 
   def filter_by_status
-    if params[:fetch_all].to_i == 1
+    if params[:status] == "all"
       @lawsuits
     else
       @lawsuits.without_closed

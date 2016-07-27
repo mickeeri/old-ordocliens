@@ -4,53 +4,20 @@ class LawsuitsIndex extends React.Component {
     this.state = {
       lawsuits: props.initialLawsuits,
       meta: props.meta,
-      fetchData: {
-        search: '',
-        page: 1,
-        fetchAll: false,
-        user: props.currentUserId,
-      },
     };
-    this.fetchLawsuits = this.fetchLawsuits.bind(this);
-    this.handleOnSearch = this.handleOnSearch.bind(this);
-    this.handleOnPaginate = this.handleOnPaginate.bind(this);
-    this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this);
-    this.setSelectedUser = this.setSelectedUser.bind(this);
-  }
-
-  // Select user in dropdown to only show that users lawsuits.
-  setSelectedUser(e) {
-    this.state.fetchData.user = parseInt(e.target.value, 10);
-    this.state.fetchData.page = 1;
-    this.fetchLawsuits();
-  }
-
-  handleOnSearch() {
-    this.state.fetchData.search = this.refs.search.value;
-    this.fetchLawsuits();
   }
 
   handleTableRowClick(row, e) {
     window.location = Routes.lawsuit_path(row);
   }
 
-  handleOnPaginate(pageNumber) {
-    this.state.fetchData.page = pageNumber;
-    this.fetchLawsuits();
-  }
-
-  handleOnCheckboxChange(e) {
-    this.state.fetchData.fetchAll = e.target.checked;
-    this.fetchLawsuits();
-  }
-
-  fetchLawsuits() {
-    const data = this.state.fetchData;
+  fetchLawsuits(pageNumber) {
     // Building url with paramaters based on input.
-    let url = `${Routes.lawsuits_path()}?page=${data.page}&fetch_all=${data.fetchAll ? '1' : '0'}&user=${data.user}`;
-    if (data.search) {
-      this.state.fetchData.page = 1;
-      url += `&search=${data.search}`;
+    let url = `${Routes.lawsuits_path()}?page=${pageNumber}&status=${statusCheckbox.checked ? 'all' : 'active'}&user=${usersDropdown.value}`;
+
+    // Add search parameter if provided.
+    if (searchInput.value.trim) {
+      url += `&search=${searchInput.value}`;
     }
 
     makeGetRequest(url)
@@ -75,43 +42,38 @@ class LawsuitsIndex extends React.Component {
             <form>
               <input
                 className="form-control"
-                placeholder="Sök på ärende, klient eller motpart"
+                placeholder="Sök på klient, uppdrag eller ärendenummer"
                 autoFocus="true"
-                onChange={this.handleOnSearch}
-                ref="search"
+                onChange={() => this.fetchLawsuits(1)}
+                ref={node => { searchInput = node; }}
               />
             </form>
           </div>
         </div>
         <div className="row paginator-row">
-          <fieldset
-            className="checkbox col-lg-3"
-            disabled={state.fetchData.search.length > 0}
-          >
+          <fieldset className="checkbox col-lg-3">
             <label>
               <input
                 type="checkbox"
-                onChange={this.handleOnCheckboxChange}
+                onChange={() => this.fetchLawsuits(1)}
+                ref={node => { statusCheckbox = node; }}
               /> Visa arkiverade ärenden
             </label>
           </fieldset>
-          <fieldset
-            className="col-lg-5"
-            disabled={state.fetchData.search.length > 0}
-          >
+          <fieldset className="col-lg-5">
             <UsersDropdown
-              changeEvent={this.setSelectedUser}
-              selectedUser={state.fetchData.user}
+              changeEvent={() => this.fetchLawsuits(1)}
+              selectedUser={this.props.currentUserId}
             />
           </fieldset>
           <div className="col-lg-4">
-            {state.meta.totalPages === 1 ? '' :
+            {state.meta.totalPages === 0 ? '' :
               <Paginator
                 totalPages={state.meta.totalPages}
                 currentPage={state.meta.currentPage}
                 nextPage={state.meta.nextPage}
                 prevPage={state.meta.previousPage}
-                onPaginate={this.handleOnPaginate}
+                onPaginate={(pageNumber) => this.fetchLawsuits(pageNumber)}
               />
             }
           </div>

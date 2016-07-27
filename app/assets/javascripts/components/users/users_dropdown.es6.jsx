@@ -3,13 +3,19 @@ class UsersDropdown extends React.Component {
     super(props);
     this.state = {
       users: [],
-      selectedUser: '',
+      selectedUser: props.selectedUser,
     };
     this.fetchUsers = this.fetchUsers.bind(this);
+    this.onSelectChange = this.onSelectChange.bind(this);
   }
 
   componentDidMount() {
     this.fetchUsers();
+  }
+
+  onSelectChange(e) {
+    this.setState({ selectedUser: parseInt(e.target.value, 10) });
+    this.props.changeEvent();
   }
 
   fetchUsers() {
@@ -29,9 +35,10 @@ class UsersDropdown extends React.Component {
         <label>Handläggare: </label>
         <select
           className="form-control form-control-sm"
-          onChange={this.props.changeEvent}
+          onChange={this.onSelectChange}
+          ref={node => { usersDropdown = node; }}
           name="users"
-          value={this.props.selectedUser}
+          value={this.state.selectedUser}
           required
         >
           <option value="0">Visa alla</option>
