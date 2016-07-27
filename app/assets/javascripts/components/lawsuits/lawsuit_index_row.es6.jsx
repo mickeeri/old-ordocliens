@@ -5,7 +5,7 @@ const LawsuitIndexRow = ({ lawsuit }) => {
   const date = new Date(lawsuit.createdAt).yyyymmdd();
   return (
     <tr onClick={() => handleOnRowClick(lawsuit.id)} >
-      <td>{lawsuit.primaryClient.lastName}, {lawsuit.primaryClient.firstName}</td>
+      <td>{lawsuit.primaryClient.lastName}, {lawsuit.primaryClient.firstName} <span className="text-muted">({lawsuit.primaryClient.personalNumber})</span></td>
       <td>{lawsuit.lawsuitType.name}</td>
       <td>{lawsuit.slug}</td>
       <td>{date}</td>
