@@ -1,24 +1,18 @@
 <ul class="nav nav-inline">
   <li class="nav-item nav-li">
-    <%=
-      link_to "Ärenden",
-      authenticated_root_path,
-      class: active_class?(authenticated_root_path)
-    %>
+    <%= link_to authenticated_root_path, class: active_class?(authenticated_root_path) do %>
+      <i class="fa fa-balance-scale"></i>  Ärenden
+    <% end %>
   </li>
   <li class="nav-item nav-li">
-    <%=
-      link_to "Klienter",
-      clients_path,
-      class: active_class?(clients_path)
-    %>
+    <%= link_to clients_path, class: active_class?(clients_path) do %>
+      <i class="fa fa-users"></i> Klienter
+    <% end %>
   </li>
   <li class="nav-item nav-li">
-    <%=
-      link_to "Motparter",
-      counterparts_path,
-      class: active_class?(counterparts_path)
-    %>
+    <%= link_to counterparts_path, class: active_class?(counterparts_path) do %>
+      <i class="fa fa-search"></i> Motparter
+    <% end %>
   </li>
   <li class="nav-item dropdown pull-xs-right">
     <button type="button" class="nav-link btn btn-secondary dropdown-toggle" data-toggle="dropdown"
