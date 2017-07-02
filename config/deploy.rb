@@ -1,6 +1,6 @@
 server "188.166.165.105", port: 22, roles: [:web, :app, :db], primary: true
 
-set :repo_url,        "git@github.com:me222wm/1dv42e-me222wm.git"
+set :repo_url,        "git@github.com:mickeeri/old-ordocliens.git"
 set :application,     "lawfirm"
 set :user,            "deployer"
 set :puma_threads,    [4, 16]

@@ -7,7 +7,6 @@ class Counterpart < ActiveRecord::Base
   # t.text     "info"
 
   include PgSearch
-  belongs_to :firm, required: true
   has_many :clients, -> { distinct }, through: :disputes
   has_many :disputes, dependent: :destroy
   has_many :involvements, dependent: :destroy
