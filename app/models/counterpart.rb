@@ -23,13 +23,17 @@ class Counterpart < ActiveRecord::Base
 
   # Scopes
   scope :sorted, -> { order(last_name: :asc, first_name: :asc) }
-  scope :within_firm, -> (firm) { where(firm_id: firm.id) }
   pg_search_scope :search,
                   against: [:last_name, :first_name, :personal_number],
-                  using: { tsearch: { prefix: true, normalization: 2 }
-    }
+                  using: { tsearch: { prefix: true, normalization: 2 } }
 
   def full_name
     "#{last_name}, #{first_name}"
+  end
+
+  def self.within_firm(current_user)
+    Counterpart.joins(:lawsuits)
+               .merge(Lawsuit.within_firm(current_user))
+               .distinct
   end
 end
